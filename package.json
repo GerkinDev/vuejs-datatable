@@ -1,0 +1,20 @@
+{
+  "name": "vue-datatable",
+  "version": "0.1.0",
+  "description": "A Vue.js component for filterable and paginated tables.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Vue.js",
+    "vue",
+    "datatable",
+    "table",
+    "filter",
+    "paginate",
+    "pagination"
+  ],
+  "author": "Patrick Stephan <pstephan1187@gmail.com>",
+  "license": "ISC"
+}
