@@ -148,8 +148,12 @@ module.exports = {
 			return rows;
 		},
 		paginated_rows: function(){
-			var beginning = this.pageSize * (this.page_number - 1);
-			return this.filtered_rows.slice(beginning, beginning + this.pageSize);
+			if(this.paginate){
+				var beginning = this.pageSize * (this.page_number - 1);
+				return this.filtered_rows.slice(beginning, beginning + this.pageSize);
+			}
+
+			return this.filtered_rows;
 		},
 		last_page: function(){
 			return Math.ceil(this.filtered_rows.length / this.pageSize);
