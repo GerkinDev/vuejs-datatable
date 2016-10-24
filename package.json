@@ -1,6 +1,6 @@
 {
   "name": "vuejs-datatable",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Vue.js component for filterable and paginated tables.",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,7 @@
     "pagination"
   ],
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
-  "repository" :
-  {
+  "repository": {
     "type": "git",
     "url": "https://github.com/pstephan1187/vue-datatable"
   },
