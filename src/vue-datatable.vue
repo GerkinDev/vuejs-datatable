@@ -62,23 +62,23 @@
 					</div>
 
 					<div v-if="paginate" class="btn-group pull-right">
-						<button class="btn btn-default" v-if="page_number - 3 >= 1" @click="page_number = 1">1</button>
+						<button class="btn btn-default" v-if="page_number - 3 >= 1" @click="setPage(1, $event)">1</button>
 						<button class="btn btn-default" v-if="page_number - 4 >= 1" disabled>...</button>
 
 
-						<button class="btn btn-default" v-if="page_number - 2 >= 1" @click="page_number -= 2">{{ page_number - 2 }}</button>
-						<button class="btn btn-default" v-if="page_number - 1 >= 1" @click="page_number -= 1">{{ page_number - 1 }}</button>
+						<button class="btn btn-default" v-if="page_number - 2 >= 1" @click="setPage(page_number - 2, $event)">{{ page_number - 2 }}</button>
+						<button class="btn btn-default" v-if="page_number - 1 >= 1" @click="setPage(page_number - 1, $event)">{{ page_number - 1 }}</button>
 
 
 						<button class="btn btn-default active">{{ page_number }}</button>
 
 
-						<button class="btn btn-default" v-if="page_number + 1 <= last_page" @click="page_number += 1">{{ page_number + 1 }}</button>
-						<button class="btn btn-default" v-if="page_number + 2 <= last_page" @click="page_number += 2">{{ page_number + 2 }}</button>
+						<button class="btn btn-default" v-if="page_number + 1 <= last_page" @click="setPage(page_number + 1, $event)">{{ page_number + 1 }}</button>
+						<button class="btn btn-default" v-if="page_number + 2 <= last_page" @click="setPage(page_number + 2, $event)">{{ page_number + 2 }}</button>
 
 
 						<button class="btn btn-default" v-if="page_number + 4 <= last_page" disabled>...</button>
-						<button class="btn btn-default" v-if="page_number + 3 <= last_page" @click="page_number = last_page">{{ last_page }}</button>
+						<button class="btn btn-default" v-if="page_number + 3 <= last_page" @click="setPage(last_page, $event)">{{ last_page }}</button>
 					</div>
 				</div>
 			</div>
@@ -157,6 +157,12 @@ module.exports = {
 		},
 		last_page: function(){
 			return Math.ceil(this.filtered_rows.length / this.pageSize);
+		}
+	},
+	methods: {
+		setPage: function(page_numer, event){
+			this.page_number = page_numer;
+			event.target.blur();
 		}
 	}
 }
