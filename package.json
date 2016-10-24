@@ -16,5 +16,10 @@
     "pagination"
   ],
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
-  "license": "ISC"
+  "repository" :
+  {
+    "type": "git",
+    "url": "https://github.com/metrogistics/vue-datatable"
+  },
+  "license": "MIT"
 }
