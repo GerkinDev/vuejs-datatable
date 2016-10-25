@@ -119,7 +119,12 @@ module.exports = {
 				return rows.filter(function(row){
 
 					for(var f in filter_words){
-						var filter_word = filter_words[f].toLowerCase();
+						var filter_word = filter_words[f];
+
+						if(typeof filter_word.toLowerCase === 'function'){
+							filter_word = filter_word.toLowerCase();
+						}
+
 						var pass = false;
 
 						for(var c in row){
@@ -129,7 +134,11 @@ module.exports = {
 								continue;
 							}
 
-							column = column.toLowerCase();
+							column = '' + column + '';
+
+							if(typeof column.toLowerCase === 'function'){
+								column = column.toLowerCase();
+							}
 
 							if(column.indexOf(filter_word) !== -1){
 								var pass = true;
