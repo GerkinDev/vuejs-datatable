@@ -127,6 +127,10 @@ This will inject the given component into the cell for the cooresponding row. Th
 </tr>
 ```
 
+#### align
+
+This will align the text in both the header cells and the body cells as defined. Uses inline styles. Default: left.
+
 ### rows
 
 This is the data that is represented by each row in the table. It must be an array of objects where the key of each object is the value for your column.field entries. For example, if you have a column entry like this:

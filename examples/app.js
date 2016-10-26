@@ -6,14 +6,14 @@ window.vm = new Vue({
 	el: '.container',
 	data: {
 		columns: [
-			{label: 'ID', field: 'id'},
+			{label: 'ID', field: 'id', align: 'center'},
 			{label: 'Username', field: 'username'},
 			{label: 'First Name', field: 'first_name'},
 			{label: 'Last Name', field: 'last_name'},
-			{label: 'Email', field: 'email'},
+			{label: 'Email', field: 'email', align: 'right'},
 			{label: 'Address', callback: function(row){
 				return row.address + ', ' + row.city + ', ' + row.state;
-			}}
+			}, align: 'right'}
 		],
 		rows: [
 			{

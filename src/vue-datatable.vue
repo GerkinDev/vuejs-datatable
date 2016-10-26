@@ -38,12 +38,12 @@
 			<table class="table table-hover table-striped">
 				<thead>
 					<tr>
-						<th v-for="column in columns">{{ column.label }}</th>
+						<th v-for="column in columns" :style="{'text-align': column.align ? column.align : 'left'}">{{ column.label }}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="row in paginated_rows">
-						<td v-for="column in columns">
+						<td v-for="column in columns" :style="{'text-align': column.align ? column.align : 'left'}">
 							<span v-if="column.field">{{ row[column.field] }}</span>
 							<span v-if="column.callback">{{ column.callback(row) }}</span>
 							<component v-if="column.component" :is="column.component" :row="row"></component>
