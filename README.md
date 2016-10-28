@@ -163,6 +163,12 @@ This is a boolean flag that denotes whether you want to expose a field that allo
 
 This is a boolean flag that denotes whether you want to paginate the rows in your table.
 
-### page-size
+### filter-bar
 
-An integer that denotes how many rows you want to display on each page.
+If you want to customize the display or functionality of the filter/pagination bar, you can register a custom global component and pass it's name here. Then the datatable will utilize your custom component instead of the default one. It will require the following props:
+
+* rows: a list of objects representing the entries to be displayed in the table
+* filterable: a boolean value determining whether or not to utilize filtering
+* paginate: a boolean value determining wheter or not to utilize pagination
+
+It will also need to supply a `change` event that will pass back the filtered and paginate rows. This should occur whenever pagination or filtering has taken place.

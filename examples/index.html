@@ -9,16 +9,75 @@
   </head>
   <body>
 
-  	<div class="container">
-  		<div class="row">
-  			<div class="col-xs-12 table-responsive">
-  				<datatable :columns="columns" :rows="rows" filterable paginate></datatable>
-  			</div>
-  		</div>
-  	</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <datatable :columns="columns" :rows="rows" filterable paginate></datatable>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <datatable :columns="columns" :rows="rows" filterable paginate filter-bar="custom-filter-bar"></datatable>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <datatable :columns="columns" :rows="rows" paginate></datatable>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <datatable :columns="columns" :rows="rows" filterable></datatable>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/x-template" id="custom-filter-bar-template">
+      <div class="row">
+        <div class="col-xs-12 form-inline" style="padding: 15px 30px;">
+          
+          <div v-if="filterable" class="form-group">
+            <label for="filter">Filter</label>
+            <input type="text" id="filter" class="form-control" v-model="filter_text">
+          </div>
+          
+          <div v-if="filterable" class="form-group">
+            <label for="filter">Page Size</label>
+            <select v-model="page_size" class="form-control">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+
+          <div v-if="paginate" class="btn-group pull-right">
+            <button class="btn btn-default" v-if="page_number - 3 >= 1" @click="setPage(1, $event)">1</button>
+            <button class="btn btn-default" v-if="page_number - 4 >= 1" disabled>...</button>
+
+
+            <button class="btn btn-default" v-if="page_number - 2 >= 1" @click="setPage(page_number - 2, $event)">{{ page_number - 2 }}</button>
+            <button class="btn btn-default" v-if="page_number - 1 >= 1" @click="setPage(page_number - 1, $event)">{{ page_number - 1 }}</button>
+
+
+            <button class="btn btn-default active">{{ page_number }}</button>
+
+
+            <button class="btn btn-default" v-if="page_number + 1 <= last_page" @click="setPage(page_number + 1, $event)">{{ page_number + 1 }}</button>
+            <button class="btn btn-default" v-if="page_number + 2 <= last_page" @click="setPage(page_number + 2, $event)">{{ page_number + 2 }}</button>
+
+
+            <button class="btn btn-default" v-if="page_number + 4 <= last_page" disabled>...</button>
+            <button class="btn btn-default" v-if="page_number + 3 <= last_page" @click="setPage(last_page, $event)">{{ last_page }}</button>
+          </div>
+        </div>
+      </div>
+    </script>
   	
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  	<script src="build/app.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="build/app.js"></script>
   </body>
 </html>
