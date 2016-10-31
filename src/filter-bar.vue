@@ -4,7 +4,7 @@
 			
 			<div v-if="filterable" class="form-group">
 				<label for="filter">Filter</label>
-				<input type="text" id="filter" class="form-control" v-model="filter_text">
+				<input type="text" id="filter" class="form-control" v-model="filter_text" @change.stop="">
 			</div>
 
 			<div v-if="paginate" class="btn-group pull-right">
