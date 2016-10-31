@@ -18,6 +18,7 @@
   "devDependencies": {
     "gulp": "^3.8.8",
     "laravel-elixir": "^6.0.0-11",
+    "laravel-elixir-vue": "^0.1.8",
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.16.2",
