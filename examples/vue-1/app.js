@@ -10,10 +10,10 @@ vm = new Vue({
 			{label: 'Username', field: 'username'},
 			{label: 'First Name', field: 'first_name'},
 			{label: 'Last Name', field: 'last_name'},
-			{label: 'Email', field: 'email', align: 'right'},
+			{label: 'Email', field: 'email', align: 'right', sortable: false},
 			{label: 'Address', callback: function(row){
 				return row.address + ', ' + row.city + ', ' + row.state;
-			}, align: 'right'}
+			}, align: 'right', sortable: false}
 		],
 		rows: [
 			{

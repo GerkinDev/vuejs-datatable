@@ -1,6 +1,6 @@
 # Vue.js Datatable Component
 
-Allows for quick and easy setup of filterable and paginated tables.
+Allows for quick and easy setup of filterable, sortable, and paginated tables.
 
 ## Installation
 
@@ -151,6 +151,18 @@ This will inject the given component into the cell for the cooresponding row. Th
 #### align
 
 This will align the text in both the header cells and the body cells as defined. Uses inline styles. Default: left.
+
+#### sortable
+
+This is a boolean value that determines whether or not that column can be sorted. Sorting is enabled by default on all columns except for component columns. Component columns do not currently support sorting. To disable sorting on any particular column, define `sortable` as `false`:
+
+```
+{
+	label: 'Email',
+	field: 'email',
+	sortable: false
+}
+```
 
 ### rows
 
