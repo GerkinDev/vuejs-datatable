@@ -1,10 +1,10 @@
 {
   "name": "vuejs-datatable",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A Vue.js component for filterable and paginated tables.",
   "main": "index.js",
   "scripts": {
-    "build" : "gulp --production && gulp --gulpfile examples/vue-2/gulpfile.js",
+    "build": "gulp --production && gulp --gulpfile examples/vue-2/gulpfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
