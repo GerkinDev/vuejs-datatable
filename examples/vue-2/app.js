@@ -1,6 +1,6 @@
 window.Vue = require('vue');
 
-Vue.component('datatable', require('../src/vue-datatable.vue'));
+Vue.component('datatable', require('../../src/vue-datatable.vue'));
 
 Vue.component('custom-filter-bar', {
   template: '#custom-filter-bar-template',
