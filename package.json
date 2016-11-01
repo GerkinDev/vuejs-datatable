@@ -4,6 +4,7 @@
   "description": "A Vue.js component for filterable and paginated tables.",
   "main": "index.js",
   "scripts": {
+    "build" : "gulp --production && gulp --gulpfile examples/vue-2/gulpfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
