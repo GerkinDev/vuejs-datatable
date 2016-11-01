@@ -12,24 +12,25 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12 table-responsive">
-          <datatable :columns="columns" :rows="rows" filterable paginate></datatable>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 table-responsive">
-          <datatable :columns="columns" :rows="rows" filterable paginate filter-bar="custom-filter-bar"></datatable>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col-xs-12 table-responsive">
-          <datatable :columns="columns" :rows="rows" paginate></datatable>
+          <datatable :columns="table_1.columns" :rows="table_1.rows" filterable paginate></datatable>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12 table-responsive">
-          <datatable :columns="columns" :rows="rows" filterable></datatable>
+          <datatable :columns="table_2.columns" :rows="table_2.rows" filterable paginate filter-bar="custom-filter-bar"></datatable>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <datatable :columns="table_3.columns" :rows="table_3.rows" paginate></datatable>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <datatable :columns="table_4.columns" :rows="table_4.rows" filterable></datatable>
         </div>
       </div>
     </div>

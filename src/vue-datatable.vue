@@ -20,28 +20,28 @@
 			<table class="table table-hover table-striped">
 				<thead>
 					<tr>
-						<th v-for="column in column_props" :style="{'text-align': column.align}">
-							{{ column.label }}
+						<th v-for="head_column in column_props" :style="{'text-align': head_column.align}">
+							{{ head_column.label }}
 							<span
-								v-if="column.sortable"
+								v-if="head_column.sortable"
 								:class="{
 									'sort': true,
 									'glyphicon': true,
-									'glyphicon-sort': column.id !== sort_by || !sort_dir,
-									'glyphicon-sort-by-alphabet': column.id === sort_by && sort_dir === 'asc',
-									'glyphicon-sort-by-alphabet-alt': column.id === sort_by && sort_dir === 'dsc',
+									'glyphicon-sort': head_column.id !== sort_by || !sort_dir,
+									'glyphicon-sort-by-alphabet': head_column.id === sort_by && sort_dir === 'asc',
+									'glyphicon-sort-by-alphabet-alt': head_column.id === sort_by && sort_dir === 'dsc',
 								}"
-								@click="sortBy(column.id)"
+								@click="sortBy(head_column.id)"
 							></span>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="row in visible_rows">
-						<td v-for="column in column_props" :style="{'text-align': column.align}">
-							<span v-if="column.field">{{ row[column.field] }}</span>
-							<span v-if="column.callback">{{ column.callback(row) }}</span>
-							<component v-if="column.component" :is="column.component" :row="row"></component>
+						<td v-for="row_column in column_props" :style="{'text-align': row_column.align}">
+							<span v-if="row_column.field">{{ row[row_column.field] }}</span>
+							<span v-if="row_column.callback">{{ row_column.callback(row) }}</span>
+							<component v-if="row_column.component" :is="row_column.component" :row="row"></component>
 						</td>
 					</tr>
 				</tbody>
