@@ -1,13 +1,21 @@
 <template>
-	<div class="row">
-		<div class="col-xs-12 form-inline" style="padding: 15px 30px;">
-			
+	<div class="row form-inline" style="padding: 15px 30px;">
+		<div class="col-xs-12 col-sm-3">
 			<div v-if="filterable" class="form-group">
-				<label for="filter">Filter</label>
-				<input type="text" id="filter" class="form-control" v-model="filter_text" @change.stop="">
+				<label for="filter" class="sr-only">Filter</label>
+				<input type="text" id="filter" class="form-control" v-model="filter_text" @change.stop="" placeholder="Filter">
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-9 text-right">
+
+			<div v-if="paginate" class="form-group">
+				<label for="filter">Page Size</label>
+				<select v-model="page_size" class="form-control" @change.stop="">
+					<option v-for="size in size_options" :value="size">{{ size }}</option>
+				</select>
 			</div>
 
-			<div v-if="paginate" class="btn-group pull-right">
+			<span v-if="paginate" class="btn-group">
 				<button class="btn btn-default" v-if="page_number - 3 >= 1" @click="setPage(1, $event)">1</button>
 				<button class="btn btn-default" v-if="page_number - 4 >= 1" disabled>...</button>
 
@@ -25,7 +33,7 @@
 
 				<button class="btn btn-default" v-if="page_number + 4 <= last_page" disabled>...</button>
 				<button class="btn btn-default" v-if="page_number + 3 <= last_page" @click="setPage(last_page, $event)">{{ last_page }}</button>
-			</div>
+			</span>
 		</div>
 	</div>
 </template>
@@ -46,7 +54,8 @@ module.exports = {
 	data: function(){return {
 		filter_text: '',
 		page_size: 10,
-		page_number: 1
+		page_number: 1,
+		size_options: [10, 25, 50, 100]
 	}},
 	computed: {
 		filtered_rows: function(){
@@ -118,6 +127,9 @@ module.exports = {
 			this.$emit('change', this.paginated_rows);
 		},
 		filter_text: function(){
+			this.page_number = 1;
+		},
+		page_size: function(){
 			this.page_number = 1;
 		}
 	},
