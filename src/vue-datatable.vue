@@ -10,6 +10,7 @@
 			
 			<component :is="filterBar"
 				v-if="filterable || paginate"
+				:columns="column_props"
 				:rows="sorted_rows"
 				:filterable="filterable"
 				:paginate="paginate"
@@ -80,12 +81,16 @@ module.exports = {
 			return this.columns.map(function(column){
 				var sortable = typeof column.sortable === 'undefined' ? true : column.sortable;
 				sortable = column.component ? false : sortable;
+				
+				var filterable = typeof column.filterable === 'undefined' ? true : column.filterable;
+				filterable = column.component ? false : filterable;
 
 				return {
 					id: i++,
 					label: column.label || '',
 					align: column.align || 'left',
 					sortable: sortable,
+					filterable: filterable,
 					field: column.field || null,
 					callback: column.callback || null,
 					component: column.component || null

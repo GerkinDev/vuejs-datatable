@@ -6,7 +6,7 @@ vm = new Vue({
 	el: 'body',
 	data: {
 		columns: [
-			{label: 'ID', field: 'id', align: 'center'},
+			{label: 'ID', field: 'id', align: 'center', filterable: false},
 			{label: 'Username', field: 'username'},
 			{label: 'First Name', field: 'first_name'},
 			{label: 'Last Name', field: 'last_name'},

@@ -41,6 +41,7 @@
 <script>
 module.exports = {
 	props: {
+		columns: [Object, Array],
 		rows: [Object, Array],
 		filterable: {
 			type: Boolean,
@@ -74,21 +75,35 @@ module.exports = {
 						}
 
 						var pass = false;
+						// var i = 0;
 
-						for(var c in row){
-							var column = row[c];
+						for(var i in this.columns){
+							var column_definition = this.columns[i];
+							var column_text = '';
 
-							if(column === null){
+							if(!column_definition.filterable){
 								continue;
 							}
 
-							column = '' + column + '';
-
-							if(typeof column.toLowerCase === 'function'){
-								column = column.toLowerCase();
+							if(column_definition.field){
+								column_text = row[column_definition.field];
+							}else if(typeof column_definition.callback === 'function'){
+								column_text = (column_definition.callback)(row);
+							}else{
+								continue;
 							}
 
-							if(column.indexOf(filter_word) !== -1){
+							if(!column_text){
+								continue;
+							}
+
+							column_text = ('' + column_text + '').trim();
+
+							if(typeof column_text.toLowerCase === 'function'){
+								column_text = column_text.toLowerCase();
+							}
+
+							if(column_text.indexOf(filter_word) !== -1){
 								var pass = true;
 							}
 						}
@@ -99,7 +114,7 @@ module.exports = {
 					}
 
 					return true;
-				}.bind(this));
+				}, this);
 			}
 
 			return rows;

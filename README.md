@@ -164,6 +164,20 @@ This is a boolean value that determines whether or not that column can be sorted
 }
 ```
 
+#### filterable
+
+This is a boolean value that determines whether or not that column should be utilized in filtering. Filtering is enabled by default on all columns except for component columns. Component columns do not currently support filtering. To disable filtering on any particular column, define `filterable` as `false`:
+
+```
+{
+	label: 'Email',
+	field: 'email',
+	filterable: false
+}
+```
+
+Filtering works such that the text in the filter input is split by white space, and each word is then checked against every filterable column. If each word appears at least once in any column, then that row passes and is displayed in the table.
+
 ### rows
 
 This is the data that is represented by each row in the table. It must be an array of objects where the key of each object is the value for your column.field entries. For example, if you have a column entry like this:
