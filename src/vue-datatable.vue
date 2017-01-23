@@ -75,6 +75,11 @@ module.exports = {
 		sort_by: null,
 		sort_dir: null,
 	}},
+	watch: {
+		rows: function(val){
+			this.updateRows(val);
+		}
+	},
 	computed: {
 		column_props: function(){
 			var i = 0;
