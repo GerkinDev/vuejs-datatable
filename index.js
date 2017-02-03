@@ -1,2 +1,3 @@
-import VueDatatable from './src/vue-datatable.vue'
-module.exports = VueDatatable
+import VueDatatable from './src/vue-datatable.vue';
+
+export default VueDatatable;
