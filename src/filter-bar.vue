@@ -39,7 +39,7 @@
 </template>
 
 <script>
-module.exports = {
+export default {
 	props: {
 		columns: [Object, Array],
 		rows: [Object, Array],
