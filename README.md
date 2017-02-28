@@ -1,6 +1,6 @@
 # Vue.js Datatable Component
 
-Allows for quick and easy setup of filterable, sortable, and paginated tables.
+Allows for quick and easy setup of filterable, sortable, and paginated tables. Currently supports both Vue.js 1 and Vue.js 2.
 
 ## Installation
 
@@ -46,10 +46,10 @@ Vue.component('datatable', require('vuejs-datatable'));
 Use the component in your HTML or template:
 
 ```
-<datatable :columns="table_columns": :rows="table_rows" filterable paginate></datatable>
+<datatable :columns="table_columns": :data="table_rows" filterable paginate></datatable>
 ```
 
-Then pass in the columns and the rows to your Vue instance:
+Then pass in the columns and the data to your Vue instance:
 
 ```
 Vue.component('edit-button', {
@@ -178,7 +178,7 @@ This is a boolean value that determines whether or not that column should be uti
 
 Filtering works such that the text in the filter input is split by white space, and each word is then checked against every filterable column. If each word appears at least once in any column, then that row passes and is displayed in the table.
 
-### rows
+### data
 
 This is the data that is represented by each row in the table. It must be an array of objects where the key of each object is the value for your column.field entries. For example, if you have a column entry like this:
 
@@ -210,7 +210,7 @@ This is a boolean flag that denotes whether you want to expose a field that allo
 
 This is a boolean flag that denotes whether you want to paginate the rows in your table.
 
-### filter-bar
+### filter-bar (NO LONGER SUPPORTED AS OF 0.7.0)
 
 If you want to customize the display or functionality of the filter/pagination bar, you can register a custom global component and pass it's name here. Then the datatable will utilize your custom component instead of the default one. It will require the following props:
 

@@ -2,8 +2,8 @@
 Vue.config.debug = true;
 Vue.config.devtools = true;
 
-vm = new Vue({
-	el: 'body',
+var vm = new Vue({
+	el: '.container',
 	data: {
 		columns: [
 			{label: 'ID', field: 'id', align: 'center', filterable: false},

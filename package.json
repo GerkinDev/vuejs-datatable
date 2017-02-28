@@ -4,8 +4,10 @@
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
   "main": "index.js",
   "scripts": {
-    "build": "gulp --production && gulp --gulpfile examples/vue-2/gulpfile.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules",
+    "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "keywords": [
     "Vue.js",
@@ -19,14 +21,8 @@
     "pagination"
   ],
   "devDependencies": {
-    "gulp": "^3.8.8",
-    "laravel-elixir": "^6.0.0-11",
-    "laravel-elixir-vue": "^0.1.8",
-    "laravel-elixir-vue-2": "^0.2.0",
-    "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.16.2",
-    "vue": "^2.0.1",
-    "vue-resource": "^1.0.3"
+    "laravel-mix": "^0.8.8",
+    "vue": "^2.2.1"
   },
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
   "repository": {

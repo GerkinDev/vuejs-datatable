@@ -2,21 +2,24 @@
 	table th .sort {
 		cursor: pointer;
 	}
+
+	.table-above, .table-below {
+		padding: 0px 15px;
+	}
 </style>
 
 <template>
 	<div class="row">
 		<div class="col-xs-12">
-			
-			<component :is="filterBar"
-				v-if="filterable || paginate"
-				:columns="column_props"
-				:rows="sorted_rows"
-				:filterable="filterable"
-				:paginate="paginate"
-				@change="updateRows"
-			></component>
 
+			<div class="table-above row form-inline">
+				<div class="col-xs-12">
+					<div v-if="filterable" class="form-group">
+						<label for="filter" class="sr-only">Filter</label>
+						<input type="text" id="filter" class="form-control" v-model="store.filter" placeholder="Filter">
+					</div>
+				</div>
+			</div>
 
 			<table class="table table-hover table-striped">
 				<thead>
@@ -25,20 +28,14 @@
 							{{ head_column.label }}
 							<span
 								v-if="head_column.sortable"
-								:class="{
-									'sort': true,
-									'glyphicon': true,
-									'glyphicon-sort': head_column.id !== sort_by || !sort_dir,
-									'glyphicon-sort-by-alphabet': head_column.id === sort_by && sort_dir === 'asc',
-									'glyphicon-sort-by-alphabet-alt': head_column.id === sort_by && sort_dir === 'dsc',
-								}"
-								@click="sortBy(head_column.id)"
+								:class="getHeaderColumnClass(head_column)"
+								@click="store.sortBy(head_column.id)"
 							></span>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="row in visible_rows">
+					<tr v-for="row in store.visible_rows">
 						<td v-for="row_column in column_props" :style="{'text-align': row_column.align}">
 							<span v-if="row_column.field">{{ row[row_column.field] }}</span>
 							<span v-if="row_column.callback">{{ row_column.callback(row) }}</span>
@@ -48,15 +45,48 @@
 				</tbody>
 			</table>
 
+			<div class="table-below row form-inline">
+				<div class="col-xs-12">
+
+					<div v-if="paginate" class="form-group">
+						<label for="filter">Page Size</label>
+						<select v-model="store.page_size" class="form-control" @change.stop="">
+							<option v-for="size in size_options" :value="size">{{ size }}</option>
+						</select>
+					</div>
+
+					<span v-if="paginate" class="btn-group">
+						<button class="btn btn-default" v-if="store.page - 3 >= 1" @click="store.setPage(1, $event)">1</button>
+						<button class="btn btn-default" v-if="store.page - 4 >= 1" disabled>...</button>
+
+
+						<button class="btn btn-default" v-if="store.page - 2 >= 1" @click="store.setPage(store.page - 2, $event)">{{ store.page - 2 }}</button>
+						<button class="btn btn-default" v-if="store.page - 1 >= 1" @click="store.setPage(store.page - 1, $event)">{{ store.page - 1 }}</button>
+
+
+						<button class="btn btn-default active">{{ store.page }}</button>
+
+
+						<button class="btn btn-default" v-if="store.page + 1 <= store.last_page" @click="store.setPage(store.page + 1, $event)">{{ store.page + 1 }}</button>
+						<button class="btn btn-default" v-if="store.page + 2 <= store.last_page" @click="store.setPage(store.page + 2, $event)">{{ store.page + 2 }}</button>
+
+
+						<button class="btn btn-default" v-if="store.page + 4 <= store.last_page" disabled>...</button>
+						<button class="btn btn-default" v-if="store.page + 3 <= store.last_page" @click="store.setPage(store.last_page, $event)">{{ store.last_page }}</button>
+					</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import json_store from './stores/json.js';
+
 export default {
 	props: {
 		columns: [Object, Array],
-		rows: [Object, Array],
+		data: [Object, Array, String],
 		filterable: {
 			type: Boolean,
 			default: false
@@ -65,21 +95,14 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		filterBar: {
-			type: String,
-			default: 'filter-bar'
+		size_options: {
+			type: [Object, Array],
+			default: function(){return [10, 25, 50, 100]; }
 		}
 	},
-	data: function(){return {
-		visible_rows: [],
-		sort_by: null,
-		sort_dir: null,
-	}},
-	watch: {
-		rows: function(val){
-			this.updateRows(val);
-		}
-	},
+	data: () => ({
+		store: null
+	}),
 	computed: {
 		column_props: function(){
 			var i = 0;
@@ -101,62 +124,37 @@ export default {
 					component: column.component || null
 				};
 			});
-		},
-		sorted_rows: function(){
-			var column = this.column_props[this.sort_by];
-
-			if(!column || this.sort_by === null){
-				return this.rows;
-			}
-
-			return this.rows.sort(function(a,b){
-				var value_a = column.callback ? column.callback(a) : a[column.field];
-				var value_b = column.callback ? column.callback(b) : b[column.field];
-
-				if(value_a == value_b){
-					return 0;
-				}
-
-				var sort_val = value_a > value_b ? 1 : -1;
-
-				if(this.sort_dir === 'dsc'){
-					sort_val *= -1;
-				}
-
-				return sort_val;
-			}.bind(this));
 		}
 	},
 	methods: {
-		updateRows: function(rows){
-			this.visible_rows = rows;
-		},
-		sortBy: function(column_id){
-			if(this.sort_by === column_id){
-				switch(this.sort_dir){
-					case null:
-						this.sort_dir = 'asc';
-						break;
-					case 'asc':
-						this.sort_dir = 'dsc';
-						break;
-					case 'dsc':
-						this.sort_dir = null;
-						break;
-				}
+		getHeaderColumnClass(head_column){
+			const sort_none =
+				head_column.id !== this.store.sort_by || !this.store.sort_dir;
 
-				return;
+			const sort_asc =
+				head_column.id === this.store.sort_by && this.store.sort_dir === 'asc';
+			
+			const sort_dsc =
+				head_column.id === this.store.sort_by && this.store.sort_dir === 'dsc';
+
+			return {
+				'sort': true,
+				'glyphicon': true,
+				'glyphicon-sort': sort_none,
+				'glyphicon-sort-by-alphabet': sort_asc,
+				'glyphicon-sort-by-alphabet-alt': sort_dsc,
 			}
-
-			this.sort_by = column_id;
-			this.sort_dir = 'asc';
 		}
 	},
-	components: {
-		filterBar: require('./filter-bar.vue')
-	},
-	created: function(){
-		this.visible_rows = this.sorted_rows;
+	created(){
+		if(typeof this.data === 'object'){
+			this.store = new Vue(json_store);
+		}
+
+		this.store.table = this;
+		this.store.filterable = this.filterable;
+		this.store.paginate = this.paginate;
+		this.store.data = this.data;
 	}
 }
 </script>
