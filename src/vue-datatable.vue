@@ -144,17 +144,25 @@ export default {
 				'glyphicon-sort-by-alphabet': sort_asc,
 				'glyphicon-sort-by-alphabet-alt': sort_dsc,
 			}
+		},
+		updateStore(data){
+			if(typeof data === 'object'){
+				this.store = new Vue(json_store);
+			}
+
+			this.store.table = this;
+			this.store.filterable = this.filterable;
+			this.store.paginate = this.paginate;
+			this.store.data = data;
 		}
 	},
 	created(){
-		if(typeof this.data === 'object'){
-			this.store = new Vue(json_store);
+		this.updateStore(this.data);
+	},
+	watch: {
+		data(){
+			this.updateStore(this.data);
 		}
-
-		this.store.table = this;
-		this.store.filterable = this.filterable;
-		this.store.paginate = this.paginate;
-		this.store.data = this.data;
 	}
 }
 </script>
