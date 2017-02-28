@@ -71,7 +71,7 @@ export default {
 				}, this);
 			}
 
-			return rows;
+			return rows.filter(function(row){return true;});
 		},
 		sorted_rows(){
 			var column = this.table.column_props[this.sort_by];
