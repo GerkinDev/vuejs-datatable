@@ -128,6 +128,8 @@ export default {
 	},
 	methods: {
 		getHeaderColumnClass(head_column){
+			const can_sort = this.store.sortable;
+
 			const sort_none =
 				head_column.id !== this.store.sort_by || !this.store.sort_dir;
 
@@ -138,22 +140,25 @@ export default {
 				head_column.id === this.store.sort_by && this.store.sort_dir === 'dsc';
 
 			return {
-				'sort': true,
-				'glyphicon': true,
-				'glyphicon-sort': sort_none,
-				'glyphicon-sort-by-alphabet': sort_asc,
-				'glyphicon-sort-by-alphabet-alt': sort_dsc,
+				'sort': can_sort,
+				'glyphicon': can_sort,
+				'glyphicon-sort': can_sort && sort_none,
+				'glyphicon-sort-by-alphabet': can_sort && sort_asc,
+				'glyphicon-sort-by-alphabet-alt': can_sort && sort_dsc,
 			}
 		},
 		updateStore(data){
-			if(typeof data === 'object'){
+			if(this.dataStore){
+				this.store = new Vue(this.dataStore);
+			}else{
 				this.store = new Vue(json_store);
 			}
 
-			this.store.table = this;
-			this.store.filterable = this.filterable;
-			this.store.paginate = this.paginate;
-			this.store.data = data;
+			this.store.setTable(this);
+			this.store.setData(data);
+			this.store.setFilterable(this.filterable);
+			this.store.setPaginate(this.paginate);
+			this.store.setSortable(true);
 		}
 	},
 	created(){

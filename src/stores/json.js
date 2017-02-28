@@ -2,6 +2,7 @@ export default {
 	data: () => ({
 		paginate: false,
 		filterable: false,
+		sortable: false,
 		filter: '',
 		sort_by: '',
 		sort_dir: 'asc',
@@ -130,7 +131,22 @@ export default {
 		setPage(page_number, event){
 			this.page = page_number;
 			event.target.blur();
-		}
+		},
+		setTable(table){
+			this.table = table;
+		},
+		setData(data){
+			this.data = data;
+		},
+		setFilterable(value){
+			this.filterable = value;
+		},
+		setPaginate(value){
+			this.paginate = value;
+		},
+		setSortable(value){
+			this.sortable = value;
+		},
 	},
 	watch: {
 		filter(){
