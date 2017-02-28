@@ -3,6 +3,7 @@ export default {
 		paginate: false,
 		filterable: false,
 		sortable: false,
+		can_resize: true,
 		filter: '',
 		sort_by: '',
 		sort_dir: 'asc',

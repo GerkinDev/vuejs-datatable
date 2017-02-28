@@ -48,10 +48,10 @@
 			<div class="table-below row form-inline">
 				<div class="col-xs-12">
 
-					<div v-if="paginate" class="form-group">
+					<div v-if="paginate && has_size_options" class="form-group">
 						<label for="filter">Page Size</label>
 						<select v-model="store.page_size" class="form-control" @change.stop="">
-							<option v-for="size in size_options" :value="size">{{ size }}</option>
+							<option v-for="size in sizeOptions" :value="size">{{ size }}</option>
 						</select>
 					</div>
 
@@ -95,7 +95,7 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		size_options: {
+		sizeOptions: {
 			type: [Object, Array],
 			default: function(){return [10, 25, 50, 100]; }
 		},
@@ -128,6 +128,11 @@ export default {
 					component: column.component || null
 				};
 			});
+		},
+		has_size_options: function(){
+			const is_array = (this.sizeOptions instanceof Array);
+			const can_resize = this.store.can_resize;
+			return is_array && can_resize;
 		}
 	},
 	methods: {
