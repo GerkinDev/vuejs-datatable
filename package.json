@@ -21,6 +21,7 @@
     "pagination"
   ],
   "devDependencies": {
+    "axios": "^0.15.3",
     "laravel-mix": "^0.8.8",
     "vue": "^2.2.1"
   },
