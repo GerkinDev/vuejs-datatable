@@ -98,6 +98,10 @@ export default {
 		size_options: {
 			type: [Object, Array],
 			default: function(){return [10, 25, 50, 100]; }
+		},
+		dataStore: {
+			type: Object,
+			default: null
 		}
 	},
 	data: () => ({
