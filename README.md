@@ -210,6 +210,14 @@ This is a boolean flag that denotes whether you want to expose a field that allo
 
 This is a boolean flag that denotes whether you want to paginate the rows in your table.
 
+### size-options
+
+Allows you to determine what page sizes to allow the user to choose when viewing the table.
+
+### data-store
+
+Allows you to overwrite the logic for your own custom datastore. An example would be for an ajax table. See the Ajax example for reference.
+
 ### filter-bar (NO LONGER SUPPORTED AS OF 0.7.0)
 
 If you want to customize the display or functionality of the filter/pagination bar, you can register a custom global component and pass it's name here. Then the datatable will utilize your custom component instead of the default one. It will require the following props:
