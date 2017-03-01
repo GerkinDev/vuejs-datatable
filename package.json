@@ -23,6 +23,7 @@
   "devDependencies": {
     "axios": "^0.15.3",
     "laravel-mix": "^0.8.8",
+    "object-path": "^0.11.4",
     "vue": "^2.2.1"
   },
   "author": "Patrick Stephan <pstephan1187@gmail.com>",

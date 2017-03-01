@@ -1,3 +1,5 @@
+import objectPath from 'object-path';
+
 export default {
 	data: () => ({
 		paginate: false,
@@ -42,7 +44,7 @@ export default {
 							}
 
 							if(column_definition.field){
-								column_text = row[column_definition.field];
+								column_text = objectPath.get(row, column_definition.field);
 							}else if(typeof column_definition.callback === 'function'){
 								column_text = (column_definition.callback)(row);
 							}else{
