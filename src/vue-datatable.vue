@@ -6,6 +6,10 @@
 	.table-above, .table-below {
 		padding: 0px 15px;
 	}
+
+	table thead th {
+		white-space: nowrap;
+	}
 </style>
 
 <template>
