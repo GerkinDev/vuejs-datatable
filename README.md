@@ -100,6 +100,29 @@ Here you define the label for the table headers and their cooresponding row fiel
 
 This will add the label "First Name" to the table header, and return the `first_name` property for each row.
 
+You can also use deep object paths as well. If your JSON has nested objects, you can reference the nested fields:
+
+```
+rows: [
+	{
+		"id": 1,
+		"user": {
+			"username": "dprice0",
+			"first_name": "Daniel",
+			"last_name": "Price",
+			"email": "dprice0@blogs.com"
+		},
+		"address": "3 Toban Park",
+		"city": "Pocatello",
+		"state": "Idaho"
+	},
+	//...
+],
+columns: [
+	{label: "Username", field: "user.username"}
+]
+```
+
 #### callback
 
 ```
