@@ -41,7 +41,7 @@
 				<tbody>
 					<tr v-for="row in store.visible_rows">
 						<td v-for="row_column in column_props" :style="{'text-align': row_column.align}">
-							<span v-if="row_column.field">{{ row[row_column.field] }}</span>
+							<span v-if="row_column.field">{{ getRowFromField(row, row_column.field) }}</span>
 							<span v-if="row_column.callback">{{ row_column.callback(row) }}</span>
 							<component v-if="row_column.component" :is="row_column.component" :row="row"></component>
 						</td>
@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import objectPath from 'object-path';
 import json_store from './stores/json.js';
 
 export default {
@@ -172,6 +173,9 @@ export default {
 			this.store.setFilterable(this.filterable);
 			this.store.setPaginate(this.paginate);
 			this.store.setSortable(true);
+		},
+		getRowFromField(row, field) {
+		    return objectPath.get(row, field)
 		}
 	},
 	created(){
