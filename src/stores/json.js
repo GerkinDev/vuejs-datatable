@@ -85,8 +85,8 @@ export default {
 			}
 
 			return this.filtered_rows.sort(function(a,b){
-				var value_a = column.callback ? column.callback(a) : a[column.field];
-				var value_b = column.callback ? column.callback(b) : b[column.field];
+				var value_a = column.callback ? column.callback(a) : objectPath.get(a, column.field);
+				var value_b = column.callback ? column.callback(b) : objectPath.get(b, column.field);
 
 				if(value_a == value_b){
 					return 0;
