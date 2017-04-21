@@ -125,7 +125,7 @@ export default {
 
 				var filterable = typeof column.filterable === 'undefined' ? true : column.filterable;
 				if (column.component) {
-					if (!colum.filter_field) {
+					if (!column.filter_field) {
 						filterable = false;
 					}
 				}
