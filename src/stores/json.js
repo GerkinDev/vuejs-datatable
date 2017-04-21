@@ -45,6 +45,8 @@ export default {
 
 							if(column_definition.field){
 								column_text = objectPath.get(row, column_definition.field);
+							}else if(column_definition.filter_field) {
+								column_text = objectPath.get(row, column_definition.filter_field);
 							}else if(typeof column_definition.callback === 'function'){
 								column_text = (column_definition.callback)(row);
 							}else{
@@ -85,8 +87,21 @@ export default {
 			}
 
 			return this.filtered_rows.sort(function(a,b){
-				var value_a = column.callback ? column.callback(a) : objectPath.get(a, column.field);
-				var value_b = column.callback ? column.callback(b) : objectPath.get(b, column.field);
+				if(column.filter_field) {
+					var value_a = objectPath.get(a, column.filter_field)
+				}else if (column.callback) {
+					var value_a = column.callback(a);
+				}else {
+					var value_a =objectPath.get(a, column.field)
+				}
+
+				if(column.filter_field) {
+					var value_b = objectPath.get(b, column.filter_field)
+				}else if (column.callback) {
+					var value_b = column.callback(b);
+				}else {
+					var value_b =objectPath.get(b, column.field)
+				}
 
 				if(value_a == value_b){
 					return 0;
