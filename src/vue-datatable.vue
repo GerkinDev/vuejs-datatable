@@ -117,15 +117,24 @@ export default {
 			var i = 0;
 			return this.columns.map(function(column){
 				var sortable = typeof column.sortable === 'undefined' ? true : column.sortable;
-				sortable = column.component ? false : sortable;
-				
+				if (column.component) {
+					if (!column.filter_field) {
+						sortable = false;
+					}
+				}
+
 				var filterable = typeof column.filterable === 'undefined' ? true : column.filterable;
-				filterable = column.component ? false : filterable;
+				if (column.component) {
+					if (!column.filter_field) {
+						filterable = false;
+					}
+				}
 
 				return {
 					id: i++,
 					label: column.label || '',
 					align: column.align || 'left',
+					filter_field: column.filter_field || '',
 					sortable: sortable,
 					filterable: filterable,
 					field: column.field || null,
