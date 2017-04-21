@@ -46,7 +46,7 @@ Vue.component('datatable', require('vuejs-datatable'));
 Use the component in your HTML or template:
 
 ```
-<datatable :columns="table_columns": :data="table_rows" filterable paginate></datatable>
+<datatable :columns="table_columns" :data="table_rows" filterable paginate></datatable>
 ```
 
 Then pass in the columns and the data to your Vue instance:
@@ -56,7 +56,7 @@ Vue.component('edit-button', {
 	template: `
 		<button class="btn btn-xs btn-primary" @click="goToUpdatePage">Edit</button>
 	`,
-	props: [row],
+	props: ['row'],
 	methods: {
 		goToUpdatePage: function(){
 			window.location = '/contact/' + this.row.id + '/update';
