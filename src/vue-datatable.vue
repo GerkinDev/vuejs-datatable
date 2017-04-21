@@ -118,7 +118,7 @@ export default {
 			return this.columns.map(function(column){
 				var sortable = typeof column.sortable === 'undefined' ? true : column.sortable;
 				if (column.component) {
-					if (!colum.filter_field) {
+					if (!column.filter_field) {
 						sortable = false;
 					}
 				}
