@@ -56,10 +56,11 @@ Vue.component('edit-button', {
 	template: `
 		<button class="btn btn-xs btn-primary" @click="goToUpdatePage">Edit</button>
 	`,
-	props: ['row'],
+	props: ['row', 'data'],
 	methods: {
 		goToUpdatePage: function(){
-			window.location = '/contact/' + this.row.id + '/update';
+			// window.location = '/contact/' + this.row.id + '/update'; // or
+			window.location = '/' + data.path + '/' + this.row.id + '/' + data.action;
 		}
 	}
 });
@@ -68,15 +69,22 @@ new Vue({
 	el: '#vue-element',
 	data: {
 		table_columns: [
-			label: 'First Name', field: 'first_name',
-			label: 'Last Name', field: 'last_name',
-			label: 'Email', field: 'email',
-			label: 'age', callback: function(row){
+			{label: 'First Name', field: 'first_name'},
+			{label: 'Last Name', field: 'last_name'},
+			{label: 'Email', field: 'email'},
+			{label: 'age', callback: function(row){
 				var ageDiff = Date.now() - (new Date(row.birthdate).getTime());
 				var ageDate = new Date(ageDiff);
 				return Math.abs(ageDate.getUTCFullYear() - 1970);
-			},
-			label: '', component: 'edit-button',
+			}},
+			{
+				label: '',
+				component: 'edit-button',
+				component_data: {
+					path: 'contact',
+					action: 'update'
+				}
+			}
 		],
 		table_rows: []
 	}
@@ -148,7 +156,8 @@ Vue.component('edit-button', {
 	props: [row],
 	methods: {
 		goToUpdatePage: function(){
-			window.location = '/contact/' + this.row.id + '/update';
+			// window.location = '/contact/' + this.row.id + '/update'; // or if you pass some data through _component_data_:
+			window.location = '/' + data.path + '/' + this.row.id + '/' + data.action;
 		}
 	}
 });
@@ -157,16 +166,20 @@ Vue.component('edit-button', {
 ```
 {
 	label: '',
-	component: 'edit-button'
+	component: 'edit-button',
+	component_data: {
+		path: 'contact',
+		action: 'update'
+	}
 }
 ```
 
-This will inject the given component into the cell for the cooresponding row. The datatable will then pass each row to that component via a `row` prop. It compiles something like this:
+This will inject the given component and the given component data into the cell for the cooresponding row. The datatable will then pass each row to that component via a `row` and `data` props. It compiles something like this:
 
 ```
 <tr v-for="row in rows">
 	<td v-for="column in columns">
-		<component :is="column.component" :row="row"></component>
+		<component :is="column.component" :row="row" :data="column.component_data"></component>
 	</td>
 </tr>
 ```
