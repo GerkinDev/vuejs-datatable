@@ -2,6 +2,27 @@ window.Vue = require('vue');
 
 Vue.component('datatable', require('../../src/vue-datatable.vue'));
 
+Vue.component('profile', {
+	template: `
+		<span>
+			<a href="#">Profile Page</a>
+		</span>
+	`,
+	props: ['row'],
+	asPlainText: function(row){
+		return row.user.username;
+	}
+});
+
+Vue.component('projects', {
+	template: `
+		<span>
+			<a href="#">Projects</a>
+		</span>
+	`,
+	props: ['row']
+});
+
 window.vm = new Vue({
 	el: '.container',
 	data: {
@@ -13,7 +34,9 @@ window.vm = new Vue({
 			{label: 'Email', field: 'user.email', align: 'right', sortable: false},
 			{label: 'Address', callback: function(row){
 				return row.address + ', ' + row.city + ', ' + row.state;
-			}, align: 'right', sortable: false}
+			}, align: 'right', sortable: false},
+			{label: 'Projects', component: 'projects'},
+			{label: 'Profile', component: 'profile'}
 		],
 		rows: [
 			{

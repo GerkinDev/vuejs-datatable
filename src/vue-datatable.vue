@@ -117,10 +117,20 @@ export default {
 			var i = 0;
 			return this.columns.map(function(column){
 				var sortable = typeof column.sortable === 'undefined' ? true : column.sortable;
-				sortable = column.component ? false : sortable;
-				
 				var filterable = typeof column.filterable === 'undefined' ? true : column.filterable;
-				filterable = column.component ? false : filterable;
+
+				if(column.component){
+					var component_definition = this.$root.$options.components[column.component];
+					var plain_text_function = component_definition.options.asPlainText;
+
+					if(plain_text_function){
+						sortable = true;
+						filterable = true;
+					}else{
+						sortable = false;
+						filterable = false;
+					}
+				}
 
 				return {
 					id: i++,
@@ -132,7 +142,7 @@ export default {
 					callback: column.callback || null,
 					component: column.component || null
 				};
-			});
+			}.bind(this));
 		},
 		has_size_options: function(){
 			const is_array = (this.sizeOptions instanceof Array);

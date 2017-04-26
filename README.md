@@ -171,6 +171,22 @@ This will inject the given component into the cell for the cooresponding row. Th
 </tr>
 ```
 
+By default, components are not sortable or filterable. This is because components are registered and compiled after any filtering or sorting is done, so there is no way for the datatable to know what the plain text value of the component is. You can, however, enable filtering and sorting on the component by defining a `asPlainText` method on the component. **Please note that the method goes on the root of the component and not in the `methods` property. Also, this method is called statically, so you cannot reference any data in the component, only what is passed in the `row` variable. This is done for performance reasons. See below example:**
+
+```
+Vue.component('profile', {
+	template: `
+		<span>
+			<a href="#">Profile Page</a>
+		</span>
+	`,
+	props: ['row'],
+	asPlainText: function(row){
+		return row.user.username;
+	}
+});
+```
+
 #### align
 
 This will align the text in both the header cells and the body cells as defined. Uses inline styles. Default: left.
