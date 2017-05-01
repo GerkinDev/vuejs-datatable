@@ -1,3 +1,7 @@
+# FORKED FROM: https://github.com/pstephan1187/vue-datatable
+# PACKAGE FOR PERSONAL USE WILL NOT BE MAINTAINED
+# PLEASE USE THE VERSION: https://github.com/pstephan1187/vue-datatable
+
 # Vue.js Datatable Component
 
 Allows for quick and easy setup of filterable, sortable, and paginated tables. Currently supports both Vue.js 1 and Vue.js 2.

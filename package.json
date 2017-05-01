@@ -1,5 +1,5 @@
 {
-  "name": "vuejs-datatable",
+  "name": "budhi_vuejs-datatable",
   "version": "0.9.0",
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
   "main": "index.js",
@@ -29,7 +29,14 @@
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pstephan1187/vue-datatable"
+    "url": "git+https://github.com/evertramos/vue-datatable.git"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pstephan1187/vue-datatable/issues"
+  },
+  "homepage": "https://github.com/pstephan1187/vue-datatable#readme",
+  "directories": {
+    "example": "examples"
+  }
 }
