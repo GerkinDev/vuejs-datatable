@@ -43,7 +43,7 @@
 						<td v-for="row_column in column_props" :style="{'text-align': row_column.align}">
 							<span v-if="row_column.field">{{ getRowFromField(row, row_column.field) }}</span>
 							<span v-if="row_column.callback">{{ row_column.callback(row) }}</span>
-							<component v-if="row_column.component" :is="row_column.component" :row="row"></component>
+							<component v-if="row_column.component" :is="row_column.component" :row="row" :data="row_column.component_data"></component>
 						</td>
 					</tr>
 				</tbody>
@@ -140,7 +140,8 @@ export default {
 					filterable: filterable,
 					field: column.field || null,
 					callback: column.callback || null,
-					component: column.component || null
+					component: column.component || null,
+					component_data: column.component_data || null
 				};
 			}.bind(this));
 		},
