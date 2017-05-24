@@ -37,19 +37,12 @@ export default {
 
 						for(var i in this.table.columns){
 							var column_definition = this.table.column_props[i];
-							var column_text = '';
 
 							if(!column_definition.filterable){
 								continue;
 							}
 
-							if(column_definition.field){
-								column_text = objectPath.get(row, column_definition.field);
-							}else if(typeof column_definition.callback === 'function'){
-								column_text = (column_definition.callback)(row);
-							}else{
-								continue;
-							}
+							var column_text = this.getColumnValue(row, column_definition);
 
 							if(!column_text){
 								continue;
@@ -85,8 +78,8 @@ export default {
 			}
 
 			return this.filtered_rows.sort(function(a,b){
-				var value_a = column.callback ? column.callback(a) : objectPath.get(a, column.field);
-				var value_b = column.callback ? column.callback(b) : objectPath.get(b, column.field);
+				var value_a = this.getColumnValue(a, column);
+				var value_b = this.getColumnValue(b, column);
 
 				if(value_a == value_b){
 					return 0;
@@ -130,6 +123,26 @@ export default {
 
 			this.sort_by = column_id;
 			this.sort_dir = 'asc';
+		},
+		getColumnValue(row, column){
+			if(column.component){
+				var component_definition = this.$root.$options.components[column.component];
+				var plain_text_function = component_definition.options.asPlainText;
+
+				if(plain_text_function){
+					return plain_text_function(row);
+				}
+			}
+
+			if(column.callback){
+				return column.callback(row);
+			}
+
+			if(column.field){
+				return objectPath.get(row, column.field);
+			}
+
+			return null;
 		},
 		setPage(page_number, event){
 			this.page = page_number;
