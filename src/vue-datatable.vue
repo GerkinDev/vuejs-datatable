@@ -87,6 +87,7 @@
 <script>
 import objectPath from 'object-path';
 import json_store from './stores/json.js';
+import Vue from 'vue';
 
 export default {
 	props: {
