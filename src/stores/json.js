@@ -1,19 +1,21 @@
 import objectPath from 'object-path';
 
 export default {
-	data: () => ({
-		paginate: false,
-		filterable: false,
-		sortable: false,
-		can_resize: true,
-		filter: '',
-		sort_by: '',
-		sort_dir: 'asc',
-		page: 1,
-		page_size: 10,
-		data: [],
-		table: null
-	}),
+	data() { 
+		return {
+			paginate: false,
+			filterable: false,
+			sortable: false,
+			can_resize: true,
+			filter: '',
+			sort_by: '',
+			sort_dir: 'asc',
+			page: 1,
+			page_size: 10,
+			data: [],
+			table: null
+		}
+	},
 	computed: {
 		last_page(){
 			return Math.ceil(this.filtered_rows.length / this.page_size);

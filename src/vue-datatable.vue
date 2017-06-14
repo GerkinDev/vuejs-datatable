@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import objectPath from 'object-path';
 import json_store from './stores/json.js';
 
@@ -109,9 +110,11 @@ export default {
 			default: null
 		}
 	},
-	data: () => ({
-		store: null
-	}),
+	data() { 
+		return {
+			store: null
+		}
+	},
 	computed: {
 		column_props: function(){
 			var i = 0;
@@ -150,6 +153,17 @@ export default {
 			return is_array && can_resize;
 		}
 	},
+	beforeMount() {
+		if (this.dataStore) {
+			this.store = new Vue(this.dataStore);
+		} else {
+			this.store = new Vue(json_store);
+		}
+		this.updateStore(this.data);
+	},
+	beforeDestroy() {
+		this.store.$destroy(); // Necessary because store is not a component
+	},
 	methods: {
 		getHeaderColumnClass(head_column){
 			const can_sort = this.store.sortable;
@@ -172,12 +186,6 @@ export default {
 			}
 		},
 		updateStore(data){
-			if(this.dataStore){
-				this.store = new Vue(this.dataStore);
-			}else{
-				this.store = new Vue(json_store);
-			}
-
 			this.store.setTable(this);
 			this.store.setData(data);
 			this.store.setFilterable(this.filterable);
@@ -187,9 +195,6 @@ export default {
 		getRowFromField(row, field) {
 		    return objectPath.get(row, field)
 		}
-	},
-	created(){
-		this.updateStore(this.data);
 	},
 	watch: {
 		data(){
