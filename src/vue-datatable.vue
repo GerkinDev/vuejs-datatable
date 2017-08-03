@@ -39,7 +39,7 @@ export default {
 			type: String,
 			default: null
 		},
-		display: {
+		perPage: {
 			type: Number,
 			default: null
 		},
@@ -91,7 +91,7 @@ export default {
 		paginated_rows(){
 			return this.handler.paginateHandler(
 				this.sorted_rows,
-				this.display,
+				this.perPage,
 				this.page
 			);
 		},

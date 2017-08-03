@@ -167,7 +167,7 @@ export default () => {
 
     it('can limit the number of rows displayed', () => {
         const vm = getTableElement(function(vm){
-			vm.display = 1;
+			vm.perPage = 1;
 		});
 
 		expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
@@ -179,7 +179,7 @@ export default () => {
 
     it('can determine which page of rows to display', () => {
         const vm = getTableElement(function(vm){
-			vm.display = 1;
+			vm.perPage = 1;
 			vm.page = 2;
 		});
 
