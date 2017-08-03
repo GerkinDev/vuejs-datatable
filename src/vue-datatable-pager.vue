@@ -41,7 +41,7 @@ export default {
 		},
 		perPage: {
 			type: Number,
-			default: 10
+			default: null
 		},
 		data: {
 			type: [Object, Array],
