@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/es5.js', 'dist/vuejs-datatable.js')
+mix.js('index.js', 'dist/vuejs-datatable.js')
    .js('examples/vue-2/app.js', 'examples/vue-2/build/app.js')
    .js('examples/ajax/app.js', 'examples/ajax/build/app.js');
 

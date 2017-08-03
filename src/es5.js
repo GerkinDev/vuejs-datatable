@@ -1,1 +1,0 @@
-window.Vue.component('datatable', require('./vue-datatable.vue'));
