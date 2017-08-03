@@ -22,6 +22,10 @@
   ],
   "devDependencies": {
     "axios": "^0.15.3",
+    "jasmine-core": "^2.6.4",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
     "laravel-mix": "^0.8.8",
     "object-path": "^0.11.4",
     "vue": "^2.4"
