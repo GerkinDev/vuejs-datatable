@@ -1,1 +1,3 @@
-window.Vue.component('datatable', require('./vue-datatable.vue'));
+import DatatableFactory from '../index';
+
+window.Vue.use(DatatableFactory)

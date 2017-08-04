@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Pager Types Example</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="filter">&nbsp;</label>
+                    <input type="text" class="form-control" v-model="filter" placeholder="Filter">
+                </div>
+            </div>
+            <div class="col-xs-9">
+                <div class="pull-right">
+                    <datatable-pager v-model="page" type="short"></datatable-pager>
+                </div>
+            </div>
+
+            <div class="col-xs-12 table-responsive">
+                <datatable :columns="columns" :data="rows" :filter-by="filter"></datatable>
+                <datatable-pager v-model="page" type="abbreviated"></datatable-pager>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
+    <script src="../../dist/vuejs-datatable.js"></script>
+    <script src="../rows.json"></script>
+    <script>
+        new Vue({
+            el: '.container',
+            data: {
+                filter: '',
+                columns: [
+                    {label: 'ID', field: 'id', align: 'center', filterable: false},
+                    {label: 'Username', field: 'user.username'},
+                    {label: 'First Name', field: 'user.first_name'},
+                    {label: 'Last Name', field: 'user.last_name'},
+                    {label: 'Email', field: 'user.email', align: 'right', sortable: false},
+                    {label: 'Address', representedAs: function(row){
+                        return row.address + ', ' + row.city + ', ' + row.state;
+                    }, align: 'right', sortable: false},
+                ],
+                rows: window.rows,
+                page: 1,
+            }
+        });
+    </script>
+  </body>
+</html>

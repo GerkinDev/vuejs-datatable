@@ -1,3 +1,3 @@
-import VueDatatable from './src/vue-datatable.vue';
+import DatatableFactory from './src/classes/factory.js';
 
-export default VueDatatable;
+export default (new DatatableFactory());
