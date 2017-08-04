@@ -1,7 +1,7 @@
 <style></style>
 
 <template>
-	<nav v-if="total_pages > 0">
+	<nav v-if="show">
 		<ul v-if="type === 'abbreviated'" :class="pagination_class">
 			<datatable-button v-if="value - 3 >= 1" :value="1" @click="setPageNum"></datatable-button>
 			<datatable-button v-if="value - 4 >= 1" disabled>...</datatable-button>
@@ -43,9 +43,9 @@ export default {
 			type: Number,
 			default: null
 		},
-		data: {
-			type: [Object, Array],
-			default: null
+		totalRows: {
+			type: Number,
+			default: 0
 		},
 		type: {
 			type: String,
@@ -53,6 +53,9 @@ export default {
 		}
 	},
 	computed: {
+		show(){
+			return this.totalRows > 0;
+		},
 		pagination_class(){
 			return this.settings.get('pager.classes.pager');
 		},
@@ -74,11 +77,11 @@ export default {
 			return '';
 		},
 		total_pages(){
-			if(!this.data || this.data.length <= 0 ){
+			if(!(this.totalRows > 0)){
 				return 0;
 			}
 
-			return Math.ceil(this.data.length / this.perPage);
+			return Math.ceil(this.totalRows / this.perPage);
 		},
 		previous_icon(){
 			return this.settings.get('pager.icons.previous');
@@ -103,7 +106,7 @@ export default {
 		}
 	},
 	watch: {
-		data(){
+		totalRows(){
 			if(this.value > this.total_pages){
 				this.setPageNum(this.total_pages);
 			}
