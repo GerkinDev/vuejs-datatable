@@ -8,13 +8,13 @@
 					v-for="head_column in normalized_columns"
 					:column="head_column"
 					:settings="settings"
-					:direction="sortForColumn(head_column)"
-					@change="setSortForColumn"
+					:direction="getSortDirectionForColumn(head_column)"
+					@change="setSortDirectionForColumn"
 				></datatable-header>
 			</tr>
 		</thead>
 		<tbody>
-			<slot name="rows" v-for="row in visible_rows" :row="row">
+			<slot name="rows" v-for="row in processed_rows" :row="row">
 			    <tr>
 					<datatable-cell
 						v-for="column in normalized_columns"
@@ -50,17 +50,18 @@ export default {
 	},
 	data: () => ({
 		sort_by: null,
-		sort_dir: null
+		sort_dir: null,
+		processed_rows: [],
 	}),
 	computed: {
+		rows(){
+			return this.data.slice(0);
+		},
 		settings(){
 			return this.$options.settings;
 		},
 		handler(){
 			return this.$options.handler;
-		},
-		rows(){
-			return this.data;
 		},
 		normalized_columns(){
 			return this.columns.map(function(column){
@@ -70,7 +71,20 @@ export default {
 		table_class(){
 			return this.settings.get('table.class');
 		},
-		filtered_rows(){
+	},
+	methods: {
+		getSortDirectionForColumn(column_definition){
+			if(this.sort_by !== column_definition){
+				return null;
+			}
+
+			return this.sort_dir;
+		},
+		setSortDirectionForColumn(direction, column){
+			this.sort_by = column;
+			this.sort_dir = direction;
+		},
+		processRows(){
 			let filtered_data = this.handler.filterHandler(
 				this.rows,
 				this.filterBy,
@@ -79,40 +93,37 @@ export default {
 
 			this.$emit('filtered', filtered_data);
 
-			return filtered_data;
-		},
-		sorted_rows(){
-			return this.handler.sortHandler(
-				this.filtered_rows,
+			let sorted_rows = this.handler.sortHandler(
+				filtered_data,
 				this.sort_by,
 				this.sort_dir
 			);
-		},
-		paginated_rows(){
-			return this.handler.paginateHandler(
-				this.sorted_rows,
+
+			let paged_data = this.handler.paginateHandler(
+				sorted_rows,
 				this.perPage,
 				this.page
 			);
-		},
-		visible_rows(){
-			return this.handler.displayHandler(
-				this.paginated_rows
-			);
-		}
-	},
-	methods: {
-		sortForColumn(column_definition){
-			if(this.sort_by !== column_definition){
-				return null;
-			}
 
-			return this.sort_dir;
+			this.handler.displayHandler(paged_data, this.setRows);
 		},
-		setSortForColumn(direction, column){
-			this.sort_by = column;
-			this.sort_dir = direction;
-		}
+		setRows(rows){
+			this.processed_rows = rows;
+		},
+	},
+	created(){
+		this.$watch(function(){
+			console.log(this.data);
+			return this.data;
+		}.bind(this), this.processRows, {deep: true});
+
+		this.$watch('columns', this.processRows);
+
+		this.$watch(function(){
+			return this.filterBy + this.perPage + this.page + this.sort_by + this.sort_dir;
+		}.bind(this), this.processRows);
+
+		this.processRows();
 	},
 	handler: null,
 	settings: null

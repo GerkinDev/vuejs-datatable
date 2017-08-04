@@ -23,7 +23,6 @@ class Handler {
         }.bind(this));
     }
     rowMatches(row, filter_string, columns){
-
         for(var i in columns){
             if(columns[i].matches(row, filter_string)){
                 return true;
@@ -68,8 +67,8 @@ class Handler {
 
         return sorted_data.slice(start_index, end_index);
     }
-    handleDisplay(paged_data){
-        return paged_data;
+    handleDisplay(paged_data, setRows){
+        return setRows(paged_data);
     }
 }
 
