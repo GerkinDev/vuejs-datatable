@@ -34,7 +34,7 @@ DatatableFactory.registerTableType('ajaxtable', function(table_type){
 
 		return sorted_url;
 	});
-	table_type.setDisplayHandler(async function(processed_data, process_steps, setRows, setTotalRowCount){
+	table_type.setDisplayHandler(function(processed_data, process_steps, setRows, setTotalRowCount){
 		axios.get(processed_data).then(function(response){
 			let total_rows = response.headers['x-total-count'] * 1;
 
