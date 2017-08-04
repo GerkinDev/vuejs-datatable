@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<slot name="rows" v-for="row in processed_rows" :row="row">
+			<slot v-for="row in processed_rows" :row="row">
 			    <tr>
 					<datatable-cell
 						v-for="column in normalized_columns"
