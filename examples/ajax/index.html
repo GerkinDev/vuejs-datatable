@@ -18,8 +18,8 @@
 
             <div class="row">
                 <div class="col-xs-12 table-responsive">
-                    <ajaxtable :filter-by="filter" :columns="columns" :data="url" :per-page="per_page" :page="page" @filtered="handledFiltered"></ajaxtable>
-                    <ajaxtable-pager :total-rows="total_rows" :per-page="per_page" v-model="page"></ajaxtable-pager>
+                    <ajaxtable :filter-by="filter" :columns="columns" :data="url"></ajaxtable>
+                    <ajaxtable-pager v-model="page"></ajaxtable-pager>
                 </div>
             </div>
         </div>

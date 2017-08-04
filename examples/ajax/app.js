@@ -2,15 +2,6 @@ import Vue from 'vue';
 import axios from 'axios';
 import DatatableFactory from '../../index.js';
 
-// let ajaxHandler = new (Vue.extend({
-// 	methods: {
-// 		filter(){},
-// 		sort(){},
-// 		page(){},
-// 		display(){},
-// 	}
-// }));
-
 DatatableFactory.registerTableType('ajaxtable', function(table_type){
 	table_type.setFilterHandler(function(url, filter_by, columns){
 		if(url.indexOf('?') === -1){
@@ -43,11 +34,11 @@ DatatableFactory.registerTableType('ajaxtable', function(table_type){
 
 		return sorted_url;
 	});
-	table_type.setDisplayHandler(async function(paginated_data, setRows){
-		axios.get(paginated_data).then(function(response){
+	table_type.setDisplayHandler(async function(processed_data, process_steps, setRows, setTotalRowCount){
+		axios.get(processed_data).then(function(response){
 			let total_rows = response.headers['x-total-count'] * 1;
 
-			window.vm.total_rows = total_rows;
+			setTotalRowCount(total_rows);
 			setRows(response.data);
 		});
 	});
@@ -59,10 +50,11 @@ Vue.use(DatatableFactory);
 Vue.config.debug = true;
 Vue.config.devtools = true;
 
+window.Vue = Vue;
+
 window.vm = new Vue({
 	el: '.container',
 	data: {
-		total_rows: 0,
 		filter: '',
 		columns: [
 			{label: 'id', field: 'id'},
@@ -75,12 +67,6 @@ window.vm = new Vue({
 			}, interpolate: true, sortable: false, filterable: false}
 		],
 		url: 'http://localhost:3000/profiles/',
-		per_page: 10,
 		page: 1,
-	},
-	methods: {
-		handledFiltered(filtered_data){
-			this.filtered_data = filtered_data;
-		}
 	}
 });

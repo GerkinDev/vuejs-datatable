@@ -11383,25 +11383,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
+		name: {
+			type: String,
+			default: 'default'
+		},
 		columns: [Object, Array],
 		data: [Object, Array, String],
 		filterBy: {
 			type: String,
 			default: null
-		},
-		perPage: {
-			type: Number,
-			default: null
-		},
-		page: {
-			type: Number,
-			default: 1
 		}
 	},
 	data: function data() {
 		return {
 			sort_by: null,
 			sort_dir: null,
+			total_rows: 0,
+			page: 1,
+			per_page: null,
 			processed_rows: []
 		};
 	},
@@ -11439,28 +11438,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		processRows: function processRows() {
 			var filtered_data = this.handler.filterHandler(this.rows, this.filterBy, this.normalized_columns);
 
-			this.$emit('filtered', filtered_data);
+			var sorted_data = this.handler.sortHandler(filtered_data, this.sort_by, this.sort_dir);
 
-			var sorted_rows = this.handler.sortHandler(filtered_data, this.sort_by, this.sort_dir);
+			var paged_data = this.handler.paginateHandler(sorted_data, this.per_page, this.page);
 
-			var paged_data = this.handler.paginateHandler(sorted_rows, this.perPage, this.page);
-
-			this.handler.displayHandler(paged_data, this.setRows);
+			this.handler.displayHandler(paged_data, {
+				filtered_data: filtered_data,
+				sorted_data: sorted_data,
+				paged_data: paged_data
+			}, this.setRows, this.setTotalRowCount);
 		},
 		setRows: function setRows(rows) {
 			this.processed_rows = rows;
+		},
+		setTotalRowCount: function setTotalRowCount(value) {
+			this.total_rows = value;
 		}
 	},
 	created: function created() {
+		Vue.$datatables[this.name] = this;
+		this.$root.$emit('table.ready', this.name);
+
 		this.$watch(function () {
-			console.log(this.data);
 			return this.data;
 		}.bind(this), this.processRows, { deep: true });
 
 		this.$watch('columns', this.processRows);
 
 		this.$watch(function () {
-			return this.filterBy + this.perPage + this.page + this.sort_by + this.sort_dir;
+			return this.filterBy + this.per_page + this.page + this.sort_by + this.sort_dir;
 		}.bind(this), this.processRows);
 
 		this.processRows();
@@ -11856,6 +11862,8 @@ var DatatableFactory = function () {
     }, {
         key: 'install',
         value: function install(Vue) {
+            Vue.$datatables = {};
+
             Vue.component('datatable-cell', __WEBPACK_IMPORTED_MODULE_0__vue_datatable_cell_vue___default.a);
             Vue.component('datatable-header', __WEBPACK_IMPORTED_MODULE_1__vue_datatable_header_vue___default.a);
             Vue.component('datatable-button', __WEBPACK_IMPORTED_MODULE_2__vue_datatable_pager_button_vue___default.a);
@@ -11972,8 +11980,9 @@ var Handler = function () {
         }
     }, {
         key: 'handleDisplay',
-        value: function handleDisplay(paged_data, setRows) {
-            return setRows(paged_data);
+        value: function handleDisplay(processed_data, process_steps, setRows, setTotalRowCount) {
+            setRows(processed_data);
+            setTotalRowCount(process_steps.filtered_data.length);
         }
     }]);
 
@@ -12567,30 +12576,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	model: {
-		prop: 'value',
+		prop: 'page',
 		event: 'change'
 	},
 	props: {
-		value: {
-			type: Number,
-			default: 1
-		},
-		perPage: {
-			type: Number,
-			default: null
-		},
-		totalRows: {
-			type: Number,
-			default: 0
+		table: {
+			type: String,
+			default: 'default'
 		},
 		type: {
 			type: String,
 			default: 'long'
+		},
+		perPage: {
+			type: Number,
+			default: 10
+		},
+		page: {
+			type: Number,
+			default: 1
 		}
+	},
+	data: function data() {
+		return {
+			table_instance: null
+		};
 	},
 	computed: {
 		show: function show() {
-			return this.totalRows > 0;
+			return this.table_instance && this.total_rows > 0;
+		},
+		total_rows: function total_rows() {
+			if (this.table_instance) {
+				return this.table_instance.total_rows;
+			}
+
+			return 0;
 		},
 		pagination_class: function pagination_class() {
 			return this.settings.get('pager.classes.pager');
@@ -12599,25 +12620,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			return this.settings.get('pager.classes.disabled');
 		},
 		previous_link_classes: function previous_link_classes() {
-			if (this.value - 1 < 1) {
+			if (this.page - 1 < 1) {
 				return this.settings.get('pager.classes.disabled');
 			}
 
 			return '';
 		},
 		next_link_classes: function next_link_classes() {
-			if (this.value + 1 > this.total_pages) {
+			if (this.page + 1 > this.total_pages) {
 				return this.settings.get('pager.classes.disabled');
 			}
 
 			return '';
 		},
 		total_pages: function total_pages() {
-			if (!(this.totalRows > 0)) {
+			if (!(this.total_rows > 0)) {
 				return 0;
 			}
 
-			return Math.ceil(this.totalRows / this.perPage);
+			return Math.ceil(this.total_rows / this.perPage);
 		},
 		previous_icon: function previous_icon() {
 			return this.settings.get('pager.icons.previous');
@@ -12631,10 +12652,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	methods: {
 		setPageNum: function setPageNum(number) {
+			this.table_instance.page = number;
+			this.table_instance.per_page = this.perPage;
 			this.$emit('change', number);
 		},
 		getClassForPage: function getClassForPage(number) {
-			if (this.value == number) {
+			if (this.page == number) {
 				return this.settings.get('pager.classes.selected');
 			}
 
@@ -12642,12 +12665,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		}
 	},
 	watch: {
-		totalRows: function totalRows() {
-			if (this.value > this.total_pages) {
+		total_rows: function total_rows() {
+			if (this.page > this.total_pages) {
 				this.setPageNum(this.total_pages);
 			}
 		}
 	},
+	created: function created() {
+		if (Vue.$datatables[this.table]) {
+			this.table_instance = Vue.$datatables[this.table];
+			this.table_instance.per_page = this.perPage;
+			return;
+		}
+
+		this.$root.$on('table.ready', function (table_name) {
+			if (table_name === this.table) {
+				this.table_instance = Vue.$datatables[this.table];
+				this.table_instance.per_page = this.perPage;
+			}
+		}.bind(this));
+	},
+
 	settings: null
 });
 
@@ -12686,55 +12724,55 @@ exports.push([module.i, "", ""]);
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return (_vm.show) ? _c('nav', [(_vm.type === 'abbreviated') ? _c('ul', {
     class: _vm.pagination_class
-  }, [(_vm.value - 3 >= 1) ? _c('datatable-button', {
+  }, [(_vm.page - 3 >= 1) ? _c('datatable-button', {
     attrs: {
       "value": 1
     },
     on: {
       "click": _vm.setPageNum
     }
-  }) : _vm._e(), _vm._v(" "), (_vm.value - 4 >= 1) ? _c('datatable-button', {
+  }) : _vm._e(), _vm._v(" "), (_vm.page - 4 >= 1) ? _c('datatable-button', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v("...")]) : _vm._e(), _vm._v(" "), (_vm.value - 2 >= 1) ? _c('datatable-button', {
+  }, [_vm._v("...")]) : _vm._e(), _vm._v(" "), (_vm.page - 2 >= 1) ? _c('datatable-button', {
     attrs: {
-      "value": _vm.value - 2
+      "value": _vm.page - 2
     },
     on: {
       "click": _vm.setPageNum
     }
-  }) : _vm._e(), _vm._v(" "), (_vm.value - 1 >= 1) ? _c('datatable-button', {
+  }) : _vm._e(), _vm._v(" "), (_vm.page - 1 >= 1) ? _c('datatable-button', {
     attrs: {
-      "value": _vm.value - 1
+      "value": _vm.page - 1
     },
     on: {
       "click": _vm.setPageNum
     }
   }) : _vm._e(), _vm._v(" "), _c('datatable-button', {
     attrs: {
-      "value": _vm.value,
+      "value": _vm.page,
       "selected": ""
     }
-  }), _vm._v(" "), (_vm.value + 1 <= _vm.total_pages) ? _c('datatable-button', {
+  }), _vm._v(" "), (_vm.page + 1 <= _vm.total_pages) ? _c('datatable-button', {
     attrs: {
-      "value": _vm.value + 1
+      "value": _vm.page + 1
     },
     on: {
       "click": _vm.setPageNum
     }
-  }) : _vm._e(), _vm._v(" "), (_vm.value + 2 <= _vm.total_pages) ? _c('datatable-button', {
+  }) : _vm._e(), _vm._v(" "), (_vm.page + 2 <= _vm.total_pages) ? _c('datatable-button', {
     attrs: {
-      "value": _vm.value + 2
+      "value": _vm.page + 2
     },
     on: {
       "click": _vm.setPageNum
     }
-  }) : _vm._e(), _vm._v(" "), (_vm.value + 4 <= _vm.total_pages) ? _c('datatable-button', {
+  }) : _vm._e(), _vm._v(" "), (_vm.page + 4 <= _vm.total_pages) ? _c('datatable-button', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v("...")]) : _vm._e(), _vm._v(" "), (_vm.value + 3 <= _vm.total_pages) ? _c('datatable-button', {
+  }, [_vm._v("...")]) : _vm._e(), _vm._v(" "), (_vm.page + 3 <= _vm.total_pages) ? _c('datatable-button', {
     attrs: {
       "value": _vm.total_pages
     },
@@ -12747,7 +12785,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('datatable-button', {
       attrs: {
         "value": i,
-        "selected": i === _vm.value
+        "selected": i === _vm.page
       },
       on: {
         "click": _vm.setPageNum
@@ -12757,8 +12795,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: _vm.pagination_class
   }, [_c('datatable-button', {
     attrs: {
-      "disabled": _vm.value - 1 < 1,
-      "value": _vm.value - 1
+      "disabled": _vm.page - 1 < 1,
+      "value": _vm.page - 1
     },
     on: {
       "click": _vm.setPageNum
@@ -12769,12 +12807,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('datatable-button', {
     attrs: {
-      "value": _vm.value
+      "value": _vm.page
     }
   }), _vm._v(" "), _c('datatable-button', {
     attrs: {
-      "disabled": _vm.value + 1 > _vm.total_pages,
-      "value": _vm.value + 1
+      "disabled": _vm.page + 1 > _vm.total_pages,
+      "value": _vm.page + 1
     },
     on: {
       "click": _vm.setPageNum
@@ -13281,15 +13319,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-// let ajaxHandler = new (Vue.extend({
-// 	methods: {
-// 		filter(){},
-// 		sort(){},
-// 		page(){},
-// 		display(){},
-// 	}
-// }));
-
 __WEBPACK_IMPORTED_MODULE_2__index_js__["a" /* default */].registerTableType('ajaxtable', function (table_type) {
 	table_type.setFilterHandler(function (url, filter_by, columns) {
 		if (url.indexOf('?') === -1) {
@@ -13322,11 +13351,11 @@ __WEBPACK_IMPORTED_MODULE_2__index_js__["a" /* default */].registerTableType('aj
 
 		return sorted_url;
 	});
-	table_type.setDisplayHandler(async function (paginated_data, setRows) {
-		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(paginated_data).then(function (response) {
+	table_type.setDisplayHandler(async function (processed_data, process_steps, setRows, setTotalRowCount) {
+		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(processed_data).then(function (response) {
 			var total_rows = response.headers['x-total-count'] * 1;
 
-			window.vm.total_rows = total_rows;
+			setTotalRowCount(total_rows);
 			setRows(response.data);
 		});
 	});
@@ -13337,22 +13366,17 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2__ind
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.debug = true;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.devtools = true;
 
+window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
+
 window.vm = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 	el: '.container',
 	data: {
-		total_rows: 0,
 		filter: '',
 		columns: [{ label: 'id', field: 'id' }, { label: 'Username', field: 'user.username' }, { label: 'First Name', field: 'user.first_name' }, { label: 'Last Name', field: 'user.last_name' }, { label: 'Email', field: 'user.email' }, { label: 'address', representedAs: function representedAs(row) {
 				return row.address + '<br />' + row.city + ', ' + row.state;
 			}, interpolate: true, sortable: false, filterable: false }],
 		url: 'http://localhost:3000/profiles/',
-		per_page: 10,
 		page: 1
-	},
-	methods: {
-		handledFiltered: function handledFiltered(filtered_data) {
-			this.filtered_data = filtered_data;
-		}
 	}
 });
 

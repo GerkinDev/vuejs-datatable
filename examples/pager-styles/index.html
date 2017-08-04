@@ -19,20 +19,20 @@
             </div>
             <div class="col-xs-9">
                 <div class="pull-right">
-                    <datatable-pager :total-rows="total_rows" :per-page="per_page" v-model="page" type="short"></datatable-pager>
+                    <datatable-pager v-model="page" type="short"></datatable-pager>
                 </div>
             </div>
 
             <div class="col-xs-12 table-responsive">
-                <datatable :columns="columns" :data="rows" :filter-by="filter" :per-page="per_page" :page="page" @filtered="handledFiltered"></datatable>
-                <datatable-pager :total-rows="total_rows" :per-page="per_page" v-model="page" type="abbreviated"></datatable-pager>
+                <datatable :columns="columns" :data="rows" :filter-by="filter"></datatable>
+                <datatable-pager v-model="page" type="abbreviated"></datatable-pager>
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
     <script src="../../dist/vuejs-datatable.js"></script>
     <script src="../rows.json"></script>
     <script>
@@ -40,7 +40,6 @@
             el: '.container',
             data: {
                 filter: '',
-                total_rows: 0,
                 columns: [
                     {label: 'ID', field: 'id', align: 'center', filterable: false},
                     {label: 'Username', field: 'user.username'},
@@ -52,13 +51,7 @@
                     }, align: 'right', sortable: false},
                 ],
                 rows: window.rows,
-                per_page: 10,
                 page: 1,
-            },
-            methods: {
-                handledFiltered(filtered_data){
-                    this.total_rows = filtered_data.length;
-                }
             }
         });
     </script>
