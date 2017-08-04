@@ -1,14 +1,7 @@
 import Vue from 'vue';
 import DatatableFactory from '../../../src/classes/factory.js';
-// import Settings from '../../../src/classes/settings.js';
-// import Datatable from '../../../src/vue-datatable.vue';
-// import DatatableHeader from '../../../src/vue-datatable-header.vue';
-// import DatatableCell from '../../../src/vue-datatable-cell.vue';
 
 Vue.use((new DatatableFactory));
-// console.log(Vue.options.components.datatable);
-// Vue.component('datatable-header', DatatableHeader);
-// Vue.component('datatable-cell', DatatableCell);
 
 const Ctor = Vue.options.components.datatable;
 
@@ -20,8 +13,12 @@ Vue.component('test-component', {
 });
 
 export default () => {
+	beforeEach(function(){
+		window.Vue = Vue;
+	});
+
     it('imports default settings', () => {
-        const settings = (new Ctor()).settings;
+        const settings = (new Ctor({propsData: {columns: [], data: []}})).settings;
 
         expect(settings.get('table.class')).toBe('table table-hover table-striped');
     });
@@ -81,14 +78,14 @@ export default () => {
 			vm.sort_by = vm.normalized_columns[1];
 		});
 
-		expect(vm.sortForColumn(vm.normalized_columns[0])).toBe(null);
-		expect(vm.sortForColumn(vm.normalized_columns[1])).toBe('asc');
-		expect(vm.sortForColumn(vm.normalized_columns[2])).toBe(null);
+		expect(vm.getSortDirectionForColumn(vm.normalized_columns[0])).toBe(null);
+		expect(vm.getSortDirectionForColumn(vm.normalized_columns[1])).toBe('asc');
+		expect(vm.getSortDirectionForColumn(vm.normalized_columns[2])).toBe(null);
 	});
 
-	it('determines if a column is being sorted by', () => {
+	it('can set column to b sorted by', () => {
 		const vm = getTableElement(function(vm){
-			vm.setSortForColumn('desc', vm.normalized_columns[2]);
+			vm.setSortDirectionForColumn('desc', vm.normalized_columns[2]);
 		});
 
 		expect(vm.sort_by).toBe(vm.normalized_columns[2]);
@@ -116,6 +113,7 @@ export default () => {
     it('can filter rows', () => {
         const vm = getTableElement(function(vm){
 			vm.filterBy = 'Jo do';
+			vm.processRows();
 		});
 
 		expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
@@ -135,6 +133,7 @@ export default () => {
 					return row.id === 2;
 				});
 			};
+			vm.processRows();
 		});
 
 		expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
@@ -149,6 +148,7 @@ export default () => {
     it('will not filter component cells by default', () => {
         const vm = getTableElement(function(vm){
 			vm.filterBy = 'Test';
+			vm.processRows();
 		});
 
 		expect(vm.$el.querySelectorAll('tbody tr').length).toBe(0);
@@ -167,7 +167,8 @@ export default () => {
 
     it('can limit the number of rows displayed', () => {
         const vm = getTableElement(function(vm){
-			vm.perPage = 1;
+			vm.per_page = 1;
+			vm.processRows();
 		});
 
 		expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
@@ -179,8 +180,9 @@ export default () => {
 
     it('can determine which page of rows to display', () => {
         const vm = getTableElement(function(vm){
-			vm.perPage = 1;
+			vm.per_page = 1;
 			vm.page = 2;
+			vm.processRows();
 		});
 
 		expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);

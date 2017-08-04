@@ -8,6 +8,12 @@ Vue.component('datatable-button', DatatablePagerButton);
 DatatablePager.settings = new Settings;
 const Ctor = Vue.extend(DatatablePager);
 
+
+function setupVue(data){
+    window.Vue = Vue;
+    window.Vue.$datatables = data || {};
+}
+
 export default () => {
     // TODO: figure out how to test this component
     it('builds base HTML for long type', () => {
@@ -15,6 +21,8 @@ export default () => {
     });
 
     it('returns the correct pagination class', () => {
+        setupVue();
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -23,6 +31,8 @@ export default () => {
     });
 
     it('returns the correct disabled class', () => {
+        setupVue();
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -31,23 +41,30 @@ export default () => {
     });
 
     it('returns the correct next link classes', () => {
+        setupVue({
+            default: {
+                total_rows: 15
+            }
+        });
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
 
-        expect(vm.next_link_classes).toBe('disabled');
+        expect(vm.next_link_classes).toBe('');
 
         let vm2 = (new Ctor({
             propsData: {
-                perPage: 2,
-                data: [{},{},{},{}]
+                perPage: 15,
             }
         })).$mount();
 
-        expect(vm2.next_link_classes).toBe('');
+        expect(vm2.next_link_classes).toBe('disabled');
     });
 
     it('returns the correct previous link classes', () => {
+        setupVue();
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -56,8 +73,7 @@ export default () => {
 
         let vm2 = (new Ctor({
             propsData: {
-                perPage: 2,
-                data: [{},{},{},{}]
+                perPage: 2
             }
         })).$mount();
 
@@ -66,8 +82,7 @@ export default () => {
         let vm3 = (new Ctor({
             propsData: {
                 perPage: 2,
-                value: 2,
-                data: [{},{},{},{}]
+                page: 2
             }
         })).$mount();
 
@@ -75,25 +90,29 @@ export default () => {
     });
 
     it('returns the correct total number of pages', () => {
+        setupVue({
+            default: {
+                total_rows: 15
+            }
+        });
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
 
-        expect(vm.total_pages).toBe(0);
+        expect(vm.total_pages).toBe(2);
 
         let vm2 = (new Ctor({
             propsData: {
                 perPage: 2,
-                data: [{},{},{},{}]
             }
         })).$mount();
 
-        expect(vm2.total_pages).toBe(2);
+        expect(vm2.total_pages).toBe(8);
 
         let vm3 = (new Ctor({
             propsData: {
                 perPage: 5,
-                data: [{},{},{},{},{},{},{},{},{},{},{},{},]
             }
         })).$mount();
 
@@ -101,6 +120,8 @@ export default () => {
     });
 
     it('returns the correct next icon', () => {
+        setupVue();
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -109,6 +130,8 @@ export default () => {
     });
 
     it('returns the correct previous icon', () => {
+        setupVue();
+
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -117,10 +140,15 @@ export default () => {
     });
 
     it('returns the correct page class', () => {
+        setupVue({
+            default: {
+                total_rows: 15
+            }
+        });
+
         let vm = (new Ctor({
             propsData: {
                 perPage: 2,
-                data: [{},{},{},{}]
             }
         })).$mount();
 
@@ -129,8 +157,7 @@ export default () => {
         let vm2 = (new Ctor({
             propsData: {
                 perPage: 2,
-                value: 2,
-                data: [{},{},{},{}]
+                page: 2,
             }
         })).$mount();
 

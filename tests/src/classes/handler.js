@@ -112,11 +112,15 @@ export default () => {
 
     it('can manipulate data', () => {
         let handler = new Handler();
+        var manipulated = [];
 
-        var manipulated = handler.displayHandler(rows);
+        handler.displayHandler(rows, {filtered_data: [{}]}, function(rows){
+            manipulated = rows.slice(1);
+        }, function(total_rows){
+            expect(total_rows).toBe(1);
+        });
 
-        expect(manipulated.length).toBe(2);
-        expect(manipulated[0].id).toBe(1);
-        expect(manipulated[1].id).toBe(2);
+        expect(manipulated.length).toBe(1);
+        expect(manipulated[0].id).toBe(2);
     });
 }
