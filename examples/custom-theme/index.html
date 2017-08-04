@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Custom Theme Example</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.1/css/foundation.min.css" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+
+        <style>
+            .pagination li.current a {
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid-container">
+            <div class="grid-x">
+                <div class="cell medium-4 large-3">
+                    <label>Filter
+                        <input type="text" v-model="filter" placeholder="Filter">
+                    </label>
+                </div>
+            </div>
+
+            <div class="grid-x">
+                <div class="cell">
+                    <datatable :filter-by="filter" :columns="columns" :data="rows"></datatable>
+                    <datatable-pager v-model="page"></datatable-pager>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.1/js/foundation.min.js" crossorigin="anonymous"></script>
+        <script src="../rows.json"></script>
+        <script src="build/app.js"></script>
+    </body>
+</html>
