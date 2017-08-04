@@ -10,6 +10,10 @@
     <body>
         <div class="container">
             <div class="col-xs-12 form-inline">
+                <div class="alert alert-info">This example requires the usage of a JSON server. We recommend <a href="https://github.com/typicode/json-server" target="_blank">typicode/json-server</a> and find it easy to use. Once installed globally, you can run `json-server --watch examples/rows-db.json` from the root directory of this project and then refresh this page.</div>
+            </div>
+
+            <div class="col-xs-12 form-inline">
                 <div class="form-group">
                     <label for="filter" class="sr-only">Filter</label>
                     <input type="text" class="form-control" v-model="filter" placeholder="Filter">
