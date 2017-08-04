@@ -20,14 +20,14 @@
 
             <div class="col-xs-12 table-responsive">
                 <datatable :columns="columns" :data="rows" :filter-by="filter" :per-page="per_page" :page="page" @filtered="handledFiltered"></datatable>
-                <datatable-pager :data="filtered_data" :per-page="per_page" v-model="page"></datatable-pager>
+                <datatable-pager :total-rows="total_rows" :per-page="per_page" v-model="page"></datatable-pager>
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
     <script src="../../dist/vuejs-datatable.js"></script>
     <script src="../rows.json"></script>
     <script>
@@ -35,7 +35,7 @@
             el: '.container',
             data: {
                 filter: '',
-                filtered_data: null,
+                total_rows: 0,
                 columns: [
                     {label: 'ID', field: 'id', align: 'center', filterable: false},
                     {label: 'Username', field: 'user.username'},
@@ -52,7 +52,7 @@
             },
             methods: {
                 handledFiltered(filtered_data){
-                    this.filtered_data = filtered_data;
+                    this.total_rows = filtered_data.length;
                 }
             }
         });

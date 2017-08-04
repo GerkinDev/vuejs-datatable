@@ -19,13 +19,13 @@
             </div>
             <div class="col-xs-9">
                 <div class="pull-right">
-                    <datatable-pager :data="filtered_data" :per-page="per_page" v-model="page" type="short"></datatable-pager>
+                    <datatable-pager :total-rows="total_rows" :per-page="per_page" v-model="page" type="short"></datatable-pager>
                 </div>
             </div>
 
             <div class="col-xs-12 table-responsive">
                 <datatable :columns="columns" :data="rows" :filter-by="filter" :per-page="per_page" :page="page" @filtered="handledFiltered"></datatable>
-                <datatable-pager :data="filtered_data" :per-page="per_page" v-model="page" type="abbreviated"></datatable-pager>
+                <datatable-pager :total-rows="total_rows" :per-page="per_page" v-model="page" type="abbreviated"></datatable-pager>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
             el: '.container',
             data: {
                 filter: '',
-                filtered_data: null,
+                total_rows: 0,
                 columns: [
                     {label: 'ID', field: 'id', align: 'center', filterable: false},
                     {label: 'Username', field: 'user.username'},
@@ -57,7 +57,7 @@
             },
             methods: {
                 handledFiltered(filtered_data){
-                    this.filtered_data = filtered_data;
+                    this.total_rows = filtered_data.length;
                 }
             }
         });
