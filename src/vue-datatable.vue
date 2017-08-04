@@ -33,24 +33,23 @@ import Column from './classes/column.js';
 
 export default {
 	props: {
+		name: {
+			type: String,
+			default: 'default'
+		},
 		columns: [Object, Array],
 		data: [Object, Array, String],
 		filterBy: {
 			type: String,
 			default: null
 		},
-		perPage: {
-			type: Number,
-			default: null
-		},
-		page: {
-			type: Number,
-			default: 1
-		},
 	},
 	data: () => ({
 		sort_by: null,
 		sort_dir: null,
+		total_rows: 0,
+		page: 1,
+		per_page: null,
 		processed_rows: [],
 	}),
 	computed: {
@@ -91,36 +90,48 @@ export default {
 				this.normalized_columns
 			);
 
-			this.$emit('filtered', filtered_data);
-
-			let sorted_rows = this.handler.sortHandler(
+			let sorted_data = this.handler.sortHandler(
 				filtered_data,
 				this.sort_by,
 				this.sort_dir
 			);
 
 			let paged_data = this.handler.paginateHandler(
-				sorted_rows,
-				this.perPage,
+				sorted_data,
+				this.per_page,
 				this.page
 			);
 
-			this.handler.displayHandler(paged_data, this.setRows);
+			this.handler.displayHandler(
+				paged_data,
+				{
+					filtered_data: filtered_data,
+					sorted_data: sorted_data,
+					paged_data: paged_data,
+				},
+				this.setRows,
+				this.setTotalRowCount
+			);
 		},
 		setRows(rows){
 			this.processed_rows = rows;
 		},
+		setTotalRowCount(value){
+			this.total_rows = value;
+		},
 	},
 	created(){
+		Vue.$datatables[this.name] = this;
+		this.$root.$emit('table.ready', this.name);
+
 		this.$watch(function(){
-			console.log(this.data);
 			return this.data;
 		}.bind(this), this.processRows, {deep: true});
 
 		this.$watch('columns', this.processRows);
 
 		this.$watch(function(){
-			return this.filterBy + this.perPage + this.page + this.sort_by + this.sort_dir;
+			return this.filterBy + this.per_page + this.page + this.sort_by + this.sort_dir;
 		}.bind(this), this.processRows);
 
 		this.processRows();

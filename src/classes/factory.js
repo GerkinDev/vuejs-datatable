@@ -28,6 +28,8 @@ class DatatableFactory {
     }
 
     install(Vue){
+        Vue.$datatables = {};
+
         Vue.component('datatable-cell', VueDatatableCell);
         Vue.component('datatable-header', VueDatatableHeader);
         Vue.component('datatable-button', VueDatatablePagerButton);

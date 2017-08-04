@@ -67,8 +67,9 @@ class Handler {
 
         return sorted_data.slice(start_index, end_index);
     }
-    handleDisplay(paged_data, setRows){
-        return setRows(paged_data);
+    handleDisplay(processed_data, process_steps, setRows, setTotalRowCount){
+        setRows(processed_data);
+        setTotalRowCount(process_steps.filtered_data.length);
     }
 }
 
