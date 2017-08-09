@@ -1,3 +1,5 @@
+import '../helpers/wait-for-update.js';
+
 import TableTest from './components/table.js';
 import PagerTest from './components/pager.js';
 import HeaderCellTest from './components/header-cell.js';
