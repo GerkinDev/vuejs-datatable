@@ -20,7 +20,6 @@
 						v-for="column in normalized_columns"
 						:column="column"
 						:row="row"
-						:settings="settings"
 					></datatable-cell>
 			    </tr>
 			</slot>
