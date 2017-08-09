@@ -1,28 +1,97 @@
 import Vue from 'vue';
-import DatatablePager from '../../../src/vue-datatable-pager.vue';
-import DatatablePagerButton from '../../../src/vue-datatable-pager-button.vue';
+// import DatatablePager from '../../../src/vue-datatable-pager.vue';
+// import DatatablePagerButton from '../../../src/vue-datatable-pager-button.vue';
+import DatatableFactory from '../../../src/classes/factory.js';
 import Settings from '../../../src/classes/settings.js';
 
-Vue.component('datatable-button', DatatablePagerButton);
+Vue.use((new DatatableFactory));
 
-DatatablePager.settings = new Settings;
-const Ctor = Vue.extend(DatatablePager);
+// Vue.component('datatable-button', DatatablePagerButton);
+//
+// DatatablePager.settings = new Settings;
+// const Ctor = Vue.extend(DatatablePager);
+const DtCtor = Vue.options.components['datatable'];
+const Ctor = Vue.options.components['datatable-pager'];
 
+function setupVue(propsData, callback){
+    if(!propsData){
+        propsData = {};
+    }
 
-function setupVue(data){
-    window.Vue = Vue;
-    window.Vue.$datatables = data || {};
+    window.vim = new DtCtor({propsData: propsData});
+
+    if(typeof callback === 'function'){
+        callback(window.vim);
+    }
+
+    window.vim.$mount();
+
+    return window.vim;
 }
 
 export default () => {
-    // TODO: figure out how to test this component
-    it('builds base HTML for long type', () => {
-        pending('Need to figure out how to compile chilren');
+    afterEach(function(){
+        if(window.vm){
+            window.vm.$destroy(true);
+        }
+
+        if(Vue.$datatables.default){
+            Vue.$datatables.default = null;
+        }
+    });
+
+    it('builds base HTML for long type', done => {
+        let dt = setupVue({
+            data: [{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1}],
+            columns: [{'label': 'ID', field: 'id'}]
+        });
+
+        let vm = (new Ctor({
+            propsData: {}
+        })).$mount();
+
+        expect(vm.$el.nodeName).toBe('NAV');
+        expect(vm.$el.textContent).toBe('12');
+        expect(vm.$el.children.length).toBe(1);
+        expect(vm.$el.children[0].nodeName).toBe('UL');
+        expect(vm.$el.children[0].children.length).toBe(2);
+
+        vm.type = 'short';
+
+        waitForUpdate(() => {
+            expect(vm.$el.nodeName).toBe('NAV');
+            expect(vm.$el.textContent).toBe('< 1 >');
+            expect(vm.$el.children.length).toBe(1);
+            expect(vm.$el.children[0].nodeName).toBe('UL');
+            expect(vm.$el.children[0].children.length).toBe(3);
+
+            vm.type = 'abbreviated';
+            dt.data = [
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+                {id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},
+            ]
+        }).then(() => {
+            expect(vm.$el.nodeName).toBe('NAV');
+            expect(vm.$el.textContent.trim()).toBe('1 2 3 ... 10');
+            expect(vm.$el.children.length).toBe(1);
+            expect(vm.$el.children[0].nodeName).toBe('UL');
+            expect(vm.$el.children[0].children.length).toBe(5);
+
+            vm.page = 5;
+        }).then(() => {
+            expect(vm.$el.textContent.trim()).toBe('1 ... 3 4 5 6 7 ... 10');
+        }).then(done);
     });
 
     it('returns the correct pagination class', () => {
-        setupVue();
-
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -31,8 +100,6 @@ export default () => {
     });
 
     it('returns the correct disabled class', () => {
-        setupVue();
-
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -42,9 +109,8 @@ export default () => {
 
     it('returns the correct next link classes', () => {
         setupVue({
-            default: {
-                total_rows: 15
-            }
+            data: [{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1}],
+            columns: [{'label': 'ID', field: 'id'}]
         });
 
         let vm = (new Ctor({
@@ -63,8 +129,6 @@ export default () => {
     });
 
     it('returns the correct previous link classes', () => {
-        setupVue();
-
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -91,9 +155,8 @@ export default () => {
 
     it('returns the correct total number of pages', () => {
         setupVue({
-            default: {
-                total_rows: 15
-            }
+            data: [{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1}],
+            columns: [{'label': 'ID', field: 'id'}]
         });
 
         let vm = (new Ctor({
@@ -120,8 +183,6 @@ export default () => {
     });
 
     it('returns the correct next icon', () => {
-        setupVue();
-
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -130,8 +191,6 @@ export default () => {
     });
 
     it('returns the correct previous icon', () => {
-        setupVue();
-
         let vm = (new Ctor({
             propsData: {}
         })).$mount();
@@ -140,12 +199,6 @@ export default () => {
     });
 
     it('returns the correct page class', () => {
-        setupVue({
-            default: {
-                total_rows: 15
-            }
-        });
-
         let vm = (new Ctor({
             propsData: {
                 perPage: 2,
@@ -164,8 +217,29 @@ export default () => {
         expect(vm2.getClassForPage(1)).toBe('');
     });
 
-    // TODO: figure out how to test this
-    it('properly adjusts the selected page when total pages changes', () => {
-        pending('need to figure out how to update the data bindings to test this.');
+    it('properly adjusts the selected page when total pages changes', done => {
+        let dt = setupVue({
+            data: [{id: 4},{id: 4},{id: 4},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1},{id: 1}],
+            columns: [{'label': 'ID', field: 'id'}]
+        });
+
+        let vm = (new Ctor({
+            propsData: {
+                page: 5,
+                perPage: 2
+            }
+        })).$mount();
+
+        expect(vm.page).toBe(5);
+        let spy = jasmine.createSpy('changeCallback');
+
+        vm.$on('change', spy);
+
+        vm.table_instance.filterBy = '4';
+
+        waitForUpdate(() => {
+            expect(spy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalledWith(2);
+        }).then(done);
     });
 }
