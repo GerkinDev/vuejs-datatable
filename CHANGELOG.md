@@ -5,14 +5,32 @@ This project will adhere as close as reasonably possible to [Semantic Versioning
 
 ## [Unreleased]
 
-## [1.0.0] - 2017-08-04
+## [1.1.0] - 2017-10-02
+
 ### Added
+
+ - Support in settings for classes on the pager `li` and `a` tags (This adds better support for Bootstrap 4).
+ - Ability to overrided default table settings via `DatatableFactory.default_table_settings`.
+ - Logic for updating components in tests.
+ - Support for NPM's `link` functionality for local development.
+
+### Bugfixes
+
+ - Added list-render keys to the `datatable head` and body cells.
+ - Added list-render keys to the `datatable-pager` buttons.
+ - Added active class to "current page" pager button in the short style pager.
+
+## [1.0.0] - 2017-08-04
+
+### Added
+
  - 3 Total pagination types: long (default), abbreviated, and short. [Pager examples](examples/pager-styles/index.html)
  - You can now customize the classes used by the table. It uses Bootstrap 3 by default, but can be changed manually. This currently requires you to transpile your own JS. [Custom theme example](examples/custom-theme/app.js)
  - TESTS!
  - The ability to completely override the table row output via slot template override. [Custom template example](examples/custom-template/app.js)
 
 ### Changed
+
  - Dropped support for Vue.js 1. Minimum required version is now 2.4
  - Almost entire rebuild. Old syntax for datatables is largely incompatible with new syntax
  - Changed the way logic customizations are made. Stores no longer exist. A handler has been added in their place. You can customize the logic in the handlers. [AJAX example](examples/ajax/app.js)
