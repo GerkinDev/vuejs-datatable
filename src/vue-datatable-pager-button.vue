@@ -2,7 +2,7 @@
 
 <template>
 	<li :class="li_classes">
-		<a href="javascript: void(0);" @click="sendClick">
+		<a href="javascript: void(0);" :class="a_classes" @click="sendClick">
 			<slot>{{ value }}</slot>
 		</a>
 	</li>
@@ -30,12 +30,25 @@ export default {
 		li_classes(){
 			var classes = [];
 
+			if(this.settings.get('pager.classes.li')){
+				classes.push(this.settings.get('pager.classes.li'));
+			}
+
 			if(this.disabled){
 				classes.push(this.settings.get('pager.classes.disabled'));
 			}
 
 			if(this.selected){
 				classes.push(this.settings.get('pager.classes.selected'));
+			}
+
+			return classes.join(' ');
+		},
+		a_classes(){
+			var classes = [];
+
+			if(this.settings.get('pager.classes.a')){
+				classes.push(this.settings.get('pager.classes.a'));
 			}
 
 			return classes.join(' ');

@@ -17,6 +17,8 @@ class Settings {
             pager: {
                 classes: {
                     pager: 'pagination',
+                    li: '',
+                    a: '',
                     selected: 'active',
                     disabled: 'disabled'
                 },
