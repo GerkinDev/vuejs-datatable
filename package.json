@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "axios": "^0.15.3",
+    "babel-preset-env": "^1.6.0",
     "jasmine-core": "^2.6.4",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.2.0",
