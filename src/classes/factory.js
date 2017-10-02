@@ -2,11 +2,13 @@ import VueDatatableCell from '../vue-datatable-cell.vue';
 import VueDatatableHeader from '../vue-datatable-header.vue';
 import VueDatatablePagerButton from '../vue-datatable-pager-button.vue';
 import TableType from './table-type.js';
+import Settings from './settings.js';
 
 class DatatableFactory {
     constructor(){
         this.table_types = [];
         this.use_default_type = true;
+        this.default_table_settings = new Settings();
     }
 
     useDefaultType(value){
@@ -35,7 +37,9 @@ class DatatableFactory {
         Vue.component('datatable-button', VueDatatablePagerButton);
 
         if(this.use_default_type){
-            this.registerTableType('datatable');
+            this.registerTableType('datatable', function(table_type){
+                table_type.mergeSettings(this.default_table_settings.properties);
+            }.bind(this));
         }
 
         for(var i in this.table_types){
