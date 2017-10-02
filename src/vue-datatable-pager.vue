@@ -22,7 +22,7 @@
 		</ul>
 		<ul v-else-if="type === 'short'" :class="pagination_class">
 			<datatable-button :disabled="page - 1 < 1" :value="page - 1" @click="setPageNum"><span v-html="previous_icon"></span></datatable-button>
-			<datatable-button :value="page"></datatable-button>
+			<datatable-button :value="page" selected></datatable-button>
 			<datatable-button :disabled="page + 1 > total_pages" :value="page + 1" @click="setPageNum"><span v-html="next_icon"></span></datatable-button>
 		</ul>
 	</nav>
