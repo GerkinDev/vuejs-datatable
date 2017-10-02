@@ -5,7 +5,8 @@
 		<thead>
 			<tr>
 				<datatable-header
-					v-for="head_column in normalized_columns"
+					v-for="(head_column, i) in normalized_columns"
+					:key="i"
 					:column="head_column"
 					:settings="settings"
 					:direction="getSortDirectionForColumn(head_column)"
@@ -17,7 +18,8 @@
 			<slot v-for="row in processed_rows" :row="row">
 			    <tr>
 					<datatable-cell
-						v-for="column in normalized_columns"
+						v-for="(column, j) in normalized_columns"
+						:key="j"
 						:column="column"
 						:row="row"
 					></datatable-cell>
