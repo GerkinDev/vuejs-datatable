@@ -25,6 +25,11 @@
 					></datatable-cell>
 			    </tr>
 			</slot>
+			<tr v-if="processed_rows.length == 0">
+				<td :colspan="normalized_columns.length">
+					<slot name="no-results"></slot>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </template>
