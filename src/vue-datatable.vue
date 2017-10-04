@@ -39,7 +39,7 @@ export default {
 			default: 'default'
 		},
 		columns: [Object, Array],
-		data: [Object, Array, String],
+		data: [Object, Array, String, Function],
 		filterBy: {
 			type: String,
 			default: null
@@ -85,6 +85,23 @@ export default {
 			this.sort_dir = direction;
 		},
 		processRows(){
+			if(typeof this.data === 'function'){
+				let params = {
+					filter: this.filterBy,
+					sort_by: this.sort_by ? this.sort_by.field : null,
+					sort_dir: this.sort_dir,
+					page_length: this.per_page,
+					page_number: this.page,
+				};
+
+				let processed_data = this.data(params, function(rows, row_count){
+					this.setRows(rows);
+					this.setTotalRowCount(row_count);
+				}.bind(this));
+
+				return;
+			}
+
 			let filtered_data = this.handler.filterHandler(
 				this.rows,
 				this.filterBy,
