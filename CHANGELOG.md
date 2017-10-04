@@ -5,6 +5,15 @@ This project will adhere as close as reasonably possible to [Semantic Versioning
 
 ## [Unreleased]
 
+ - Working on much better documentation.
+
+## [1.2.0] - 2017-10-04
+
+### Added
+
+ - Support for a function to be used in the datatable `data` param. This function will be used to process the rows to display
+ - Support for displaying content when no row are shown in the datatable.
+
 ## [1.1.0] - 2017-10-02
 
 ### Added
