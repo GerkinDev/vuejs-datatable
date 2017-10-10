@@ -16,7 +16,7 @@
 		</thead>
 		<tbody>
 			<slot v-for="row in processed_rows" :row="row">
-			    <tr>
+			    <tr :class="getRowClasses(row)">
 					<datatable-cell
 						v-for="(column, j) in normalized_columns"
 						:key="j"
@@ -49,6 +49,10 @@ export default {
 			type: String,
 			default: null
 		},
+		rowClasses: {
+			type: [String, Array, Object, Function],
+			default: null
+		}
 	},
 	data: () => ({
 		sort_by: null,
@@ -142,6 +146,19 @@ export default {
 		setTotalRowCount(value){
 			this.total_rows = value;
 		},
+		getRowClasses(row){
+			var row_classes = this.rowClasses;
+
+			if(row_classes === null){
+				row_classes = this.settings.get('table.row.classes');
+			}
+
+			if(typeof row_classes === 'function'){
+				return row_classes(row);
+			}
+
+			return row_classes;
+		}
 	},
 	created(){
 		Vue.$datatables[this.name] = this;

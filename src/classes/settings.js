@@ -5,6 +5,9 @@ class Settings {
         this.properties = {
             table: {
                 class: 'table table-hover table-striped',
+                row: {
+                    classes: ['']
+                },
                 sorting: {
                     classes: {
                         canSort: ['sort'],

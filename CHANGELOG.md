@@ -7,6 +7,12 @@ This project will adhere as close as reasonably possible to [Semantic Versioning
 
  - Working on much better documentation.
 
+## [1.3.0] - 2017-10-10
+
+### Added
+
+ - Support to apply classes to rows on the datatable as a whole or individually.
+
 ## [1.2.0] - 2017-10-04
 
 ### Added
