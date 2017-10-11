@@ -107,6 +107,7 @@ export default {
 		setPageNum(number){
 			this.table_instance.page = number;
 			this.table_instance.per_page = this.perPage;
+
 			this.$emit('change', number);
 		},
 		getClassForPage(number){
@@ -122,6 +123,15 @@ export default {
 			if(this.page > this.total_pages){
 				this.setPageNum(this.total_pages);
 			}
+		},
+		perPage(){
+			var page = this.page;
+
+			if(page > this.total_pages){
+				page = this.total_pages
+			}
+
+			this.setPageNum(page);
 		}
 	},
 	created(){

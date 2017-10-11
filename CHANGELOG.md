@@ -7,6 +7,12 @@ This project will adhere as close as reasonably possible to [Semantic Versioning
 
  - Working on much better documentation.
 
+## [1.3.1] - 2017-10-11
+
+### Bugfixes
+
+ - Fixed issue where changing the pager's page length doesn't trigger an update on the table.
+
 ## [1.3.0] - 2017-10-10
 
 ### Added
