@@ -2,7 +2,8 @@
 
 <template>
 	<th :style="{'text-align': column.align}">
-		{{ column.label }}
+        <component v-if="column.headerComponent" :is="column.headerComponent" :column="column"></component>
+        <span v-else>{{ column.label  }}</span>
 		<span
 			v-if="column.sortable"
 			:class="classes"
