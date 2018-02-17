@@ -43,7 +43,7 @@ Register the component in your JS file using the Factory:
 
 ```
 import Vue from 'vue';
-import DatatableFactory from '../../index.js';
+import DatatableFactory from 'vuejs-datatable';
 
 Vue.use(DatatableFactory);
 ```
