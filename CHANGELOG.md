@@ -3,9 +3,11 @@ All notable changes to this project will be documented in this file from 1.0.0 f
 
 This project will adhere as close as reasonably possible to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.4.0] - 2018-02-16
 
- - Working on much better documentation.
+### Added
+
+ - Added the ability to set a custom component for a column header.
 
 ## [1.3.1] - 2017-10-11
 
