@@ -31,6 +31,9 @@
 				</td>
 			</tr>
 		</tbody>
+		<tfoot>
+			<slot name="footer" :rows="processed_rows"></slot>
+		</tfoot>
 	</table>
 </template>
 
