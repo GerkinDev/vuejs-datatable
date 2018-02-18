@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file from 1.0.0 f
 
 This project will adhere as close as reasonably possible to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2018-02-17
+
+### Bugfixes
+
+ - Hide the `tfoot` tag if no footer slot content was provided
+
+## [1.5.0] - 2018-02-17
+
+### Added
+
+ - Added the ability to use a custom footer
+
 ## [1.4.0] - 2018-02-16
 
 ### Added

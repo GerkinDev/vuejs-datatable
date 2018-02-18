@@ -31,7 +31,7 @@
 				</td>
 			</tr>
 		</tbody>
-		<tfoot>
+		<tfoot v-if="$slots.footer">
 			<slot name="footer" :rows="processed_rows"></slot>
 		</tfoot>
 	</table>
