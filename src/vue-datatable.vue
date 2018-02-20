@@ -49,7 +49,7 @@ export default {
 		columns: [Object, Array],
 		data: [Object, Array, String, Function],
 		filterBy: {
-			type: String,
+			type: [String, Array],
 			default: null
 		},
 		rowClasses: {
