@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file from 1.0.0 f
 
 This project will adhere as close as reasonably possible to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.5.2] - 2018-02-20
+
+### Bugfixes
+
+ - Fixed issue where scoping the footer slot would break the table footer.
+
 ## [1.5.1] - 2018-02-17
 
 ### Bugfixes

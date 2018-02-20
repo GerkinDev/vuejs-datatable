@@ -31,7 +31,7 @@
 				</td>
 			</tr>
 		</tbody>
-		<tfoot v-if="$slots.footer">
+		<tfoot v-if="$slots.footer || $scopedSlots.footer">
 			<slot name="footer" :rows="processed_rows"></slot>
 		</tfoot>
 	</table>
