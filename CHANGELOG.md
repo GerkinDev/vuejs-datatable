@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file from 1.0.0 f
 
 This project will adhere as close as reasonably possible to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.5.3] - 2018-02-21
+
+### Added
+
+ - Added normalized columns to the table row slot.
+
 ## [1.5.2] - 2018-02-20
 
 ### Bugfixes
