@@ -10,16 +10,24 @@ class Handler {
             return data;
         }
 
-        let filter_strings = filter.split(/\s/);
+        if(!Array.isArray(filter)) {
+            filter = [filter];
+        }
 
         return data.filter(function(row){
-			for(var i in filter_strings){
-				if(!this.rowMatches(row, filter_strings[i], columns)){
-					return false;
-				}
-			}
-
-			return true;
+            for(var j in filter) {
+                let filter_strings = filter[j].split(/\s/);
+                let matched = true;
+                for(var i in filter_strings){
+                    if(!this.rowMatches(row, filter_strings[i], columns)){
+                        matched = false;
+                    }
+                }
+                if(matched) {
+                    return true;
+                }
+            }
+            return false;
         }.bind(this));
     }
     rowMatches(row, filter_string, columns){
