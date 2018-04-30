@@ -28,7 +28,7 @@ export default {
 	},
 	computed: {
 		li_classes(){
-			var classes = [];
+			var classes = ['page-item'];
 
 			if(this.settings.get('pager.classes.li')){
 				classes.push(this.settings.get('pager.classes.li'));
@@ -45,7 +45,7 @@ export default {
 			return classes.join(' ');
 		},
 		a_classes(){
-			var classes = [];
+			var classes = ['page-link'];
 
 			if(this.settings.get('pager.classes.a')){
 				classes.push(this.settings.get('pager.classes.a'));
