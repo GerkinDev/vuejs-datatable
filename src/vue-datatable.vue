@@ -39,6 +39,7 @@
 
 <script>
 import Column from './classes/column.js';
+import Vue from 'vue';
 
 export default {
 	props: {
