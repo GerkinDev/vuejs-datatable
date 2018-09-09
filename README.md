@@ -62,7 +62,7 @@ new Vue({
 	data: {
 		table_columns: [
 			{label: 'id', field: 'id'},
-			{label: 'Username', field: 'user.username'},
+			{label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
 			{label: 'First Name', field: 'user.first_name'},
 			{label: 'Last Name', field: 'user.last_name'},
 			{label: 'Email', field: 'user.email'},

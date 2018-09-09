@@ -1,7 +1,7 @@
 <style></style>
 
 <template>
-	<th :style="{'text-align': column.align}" :class="column.customClass">
+	<th :style="{'text-align': column.align}" :class="column.headerClass">
         <component v-if="column.headerComponent" :is="column.headerComponent" :column="column"></component>
         <span v-else>{{ column.label  }}</span>
 		<span
