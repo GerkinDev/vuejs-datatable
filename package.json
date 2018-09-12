@@ -21,17 +21,17 @@
     "pagination"
   ],
   "dependencies": {
-    "vue": "^2.4",
-    "object-path": "^0.11.4"
+    "object-path": "^0.11.4",
+    "vue": "^2.5.17"
   },
   "devDependencies": {
-    "axios": "^0.15.3",
-    "babel-preset-env": "^1.6.0",
-    "jasmine-core": "^2.6.4",
-    "karma": "^1.7.0",
+    "axios": "^0.18.0",
+    "babel-preset-env": "^1.7.0",
+    "jasmine-core": "^3.2.1",
+    "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.0",
-    "laravel-mix": "^0.8.8"
+    "karma-jasmine": "^1.1.2",
+    "laravel-mix": "^2.1.4"
   },
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
   "repository": {
