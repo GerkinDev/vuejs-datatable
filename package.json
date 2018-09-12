@@ -1,6 +1,6 @@
 {
   "name": "vuejs-datatable",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
   "main": "index.js",
   "scripts": {
