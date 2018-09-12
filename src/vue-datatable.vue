@@ -164,7 +164,7 @@ export default {
 		}
 	},
 	created(){
-		Vue.$datatables[this.name] = this;
+		this.$datatables[this.name] = this;
 		this.$root.$emit('table.ready', this.name);
 
 		this.$watch(function(){

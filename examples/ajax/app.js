@@ -50,8 +50,6 @@ Vue.use(DatatableFactory);
 Vue.config.debug = true;
 Vue.config.devtools = true;
 
-window.Vue = Vue;
-
 window.vm = new Vue({
 	el: '.container',
 	data: {

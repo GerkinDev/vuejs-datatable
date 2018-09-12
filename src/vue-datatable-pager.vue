@@ -135,15 +135,15 @@ export default {
 		}
 	},
 	created(){
-		if(Vue.$datatables[this.table]){
-			this.table_instance = Vue.$datatables[this.table];
+		if(this.$datatables[this.table]){
+			this.table_instance = this.$datatables[this.table];
 			this.table_instance.per_page = this.perPage;
 			return;
 		}
 
 		this.$root.$on('table.ready', function(table_name){
 			if(table_name === this.table){
-				this.table_instance = Vue.$datatables[this.table];
+				this.table_instance = this.$datatables[this.table];
 				this.table_instance.per_page = this.perPage;
 			}
 		}.bind(this));
