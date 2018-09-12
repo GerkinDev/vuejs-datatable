@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 export default {
 	model: {
 		prop: 'page',

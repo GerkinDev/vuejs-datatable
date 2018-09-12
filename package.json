@@ -1,5 +1,5 @@
 {
-  "name": "vuejs-datatable",
+  "name": "vuejs-datatable-fork",
   "version": "1.5.3",
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
   "main": "index.js",
@@ -33,10 +33,10 @@
     "karma-jasmine": "^1.1.0",
     "laravel-mix": "^0.8.8"
   },
-  "author": "Patrick Stephan <pstephan1187@gmail.com>",
+  "author": "Dmitry Kharlanchuk <dmitry537@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pstephan1187/vue-datatable"
+    "url": "https://github.com/dmitry537/vue-datatable"
   },
   "license": "MIT"
 }
