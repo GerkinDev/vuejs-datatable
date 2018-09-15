@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file from 1.0.0 f
 
 This project will adhere as close as reasonably possible to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2018-09-12
+
+### Added
+
+ - Added ability to add classes to the table header cells.
+
+## [1.5.5] - 2018-09-12
+
+### Bugfixes
+
+ - Added `:key` attribute to iterated element.
+
+## [1.5.4] - 2018-09-12
+
+### Bugfixes
+
+ - Fixed issue where Vue is not defined when Vue is not available globally.
+
 ## [1.5.3] - 2018-02-21
 
 ### Added
