@@ -11,6 +11,7 @@ class Column {
         this.headerComponent = props.headerComponent || null;
         this.sortable = this.isSortable(props);
         this.filterable = this.isFilterable(props);
+        this.headerClass = props.headerClass || '';
     }
 
     setAlignment(value){
