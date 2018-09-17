@@ -4,10 +4,9 @@
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "dev": "rollup -c rollup.config.js",
+    "watch": "rollup -c rollup.config.js --watch",
+    "production": "rollup -c rollup.config.js --environment BUILD:production"
   },
   "keywords": [
     "Vue.js",
@@ -25,13 +24,24 @@
     "vue": "^2.5.17"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.1",
     "axios": "^0.18.0",
     "babel-preset-env": "^1.7.0",
+    "datatables.net": "1.10.19",
     "jasmine-core": "^3.2.1",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.2",
-    "laravel-mix": "^2.1.4"
+    "rollup": "^0.66.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-string": "^2.0.2",
+    "rollup-plugin-terser": "^2.0.2",
+    "rollup-plugin-vue": "^4.3.2",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "peerDependencies": {
+    "datatables.net": "1.10.19"
   },
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
   "repository": {
