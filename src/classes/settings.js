@@ -1,4 +1,4 @@
-import objectPath from 'object-path';
+import { get, set } from 'object-path';
 
 class Settings {
     constructor(){
@@ -34,11 +34,11 @@ class Settings {
     }
 
     get(path){
-        return objectPath.get(this.properties, path);
+        return get(this.properties, path);
     }
 
     set(path, value){
-        objectPath.set(this.properties, path, value);
+        set(this.properties, path, value);
 
         return this;
     }

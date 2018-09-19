@@ -34,6 +34,7 @@
     "karma-jasmine": "^1.1.2",
     "rollup": "^0.66.0",
     "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.1.8",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-terser": "^2.0.2",
