@@ -34,14 +34,24 @@ const outDir = 'dist';
 // Should we generate source maps?
 const sourcemap = true;
 
-export default {
-    input: 'index.js',
-    experimentalCodeSplitting: true,
-    external: ['object-path', 'vue'],
-    sourcemap: true,
-    output: [
-        { name, file: `${outDir}/${name}.umd.js`, format: 'umd', sourcemap},
-        { name, file: `${outDir}/${name}.es.js`, format: 'es', sourcemap},
-    ],
-    plugins
-}
+export default [
+	{
+		input: './src/es5.js',
+		output: {
+			file: `${outDir}/${name}.iife.js`,
+			format: 'iife',
+			// Use `name` as window to hack a bit & avoid exports.
+			name: 'window',
+			sourcemap,
+			globals: { vue: 'Vue' },
+		},
+		plugins,
+		external: ['vue'],
+	},
+	{
+		input: 'index.js',
+		output: { file: `${outDir}/${name}.es.js`, format: 'es', name, sourcemap },
+		plugins,
+		external: ['object-path', 'vue'],
+	},
+]
