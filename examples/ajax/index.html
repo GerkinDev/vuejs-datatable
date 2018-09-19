@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <div class="col-xs-12 form-inline">
-                <div class="alert alert-info">This example requires the usage of a JSON server. We recommend <a href="https://github.com/typicode/json-server" target="_blank">typicode/json-server</a> and find it easy to use. Once installed globally, you can run `json-server --watch examples/rows-db.json` from the root directory of this project and then refresh this page.</div>
+                <div class="alert alert-info">This example requires the usage of a JSON server. We recommend <a href="https://github.com/typicode/json-server" target="_blank">typicode/json-server</a> and find it easy to use. You can run <code>npx concurrently --kill-others 'npx json-server --watch examples/rows-db.json' 'npx http-server'</code> from the root directory of this project and then go to <a href="http://localhost:8080/examples/ajax/index.html">http://localhost:8080/examples/ajax/index.html</a></div>
             </div>
 
             <div class="col-xs-12 form-inline">

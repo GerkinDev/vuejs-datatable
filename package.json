@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",
-    "production": "rollup -c rollup.config.js --environment BUILD:production"
+    "production": "rollup -c rollup.config.js --environment BUILD:production",
+    "examples": "rollup -c examples/rollup.examples.config.js"
   },
   "keywords": [
     "Vue.js",
@@ -35,6 +36,7 @@
     "rollup": "^0.66.0",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-terser": "^2.0.2",

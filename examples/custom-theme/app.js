@@ -1,6 +1,5 @@
 import Vue from 'vue';
-import axios from 'axios';
-import DatatableFactory from '../../index.js';
+import DatatableFactory from '../../dist/vuejs-datatable.es';
 
 DatatableFactory.useDefaultType(false)
 	.registerTableType('datatable', function(table_type){

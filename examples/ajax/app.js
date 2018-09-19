@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import axios from 'axios';
-import DatatableFactory from '../../index.js';
+import { get } from 'axios';
+import DatatableFactory from '../../dist/vuejs-datatable.es';
 
 DatatableFactory.registerTableType('ajaxtable', function(table_type){
 	table_type.setFilterHandler(function(url, filter_by, columns){
@@ -35,7 +35,7 @@ DatatableFactory.registerTableType('ajaxtable', function(table_type){
 		return sorted_url;
 	});
 	table_type.setDisplayHandler(function(processed_data, process_steps, setRows, setTotalRowCount){
-		axios.get(processed_data).then(function(response){
+		get(processed_data).then(function(response){
 			let total_rows = response.headers['x-total-count'] * 1;
 
 			setTotalRowCount(total_rows);
