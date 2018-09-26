@@ -2,7 +2,9 @@
   "name": "vuejs-datatable",
   "version": "1.6.0",
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
-  "main": "dist/vuejs-datatable.es.js",
+  "main": "index.js",
+  "module": "dist/vuejs-datatable.esm.js",
+  "browser": "dist/vuejs-datatable.js",
   "scripts": {
     "dev": "rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",

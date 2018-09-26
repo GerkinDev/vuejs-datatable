@@ -18,14 +18,14 @@ yarn add vuejs-datatable
 
 OR
 
-You can use the pre-compiled [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) version of the component found in `dist/vuejs-datatable.iife.js`. This will automatically register the component to `datatable`.
+You can use the pre-compiled [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) version of the component found in `dist/vuejs-datatable.js`. This will automatically register the component to `datatable`.
 
 ```
 <datatable :columns="columns" :data="rows"></datatable>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
-<script src="/dist/vuejs-datatable.iife.js"></script>
+<script src="/dist/vuejs-datatable.js"></script>
 <script>
 vm = new Vue({
 	el: 'body',

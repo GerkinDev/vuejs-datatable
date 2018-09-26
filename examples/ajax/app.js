@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { get } from 'axios';
-import DatatableFactory from '../../dist/vuejs-datatable.es';
+import DatatableFactory from '../../dist/vuejs-datatable.esm';
 
 DatatableFactory.registerTableType('ajaxtable', function(table_type){
 	table_type.setFilterHandler(function(url, filter_by, columns){

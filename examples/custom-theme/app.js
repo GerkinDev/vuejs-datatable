@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import DatatableFactory from '../../dist/vuejs-datatable.es';
+import DatatableFactory from '../../dist/vuejs-datatable.esm';
 
 DatatableFactory.useDefaultType(false)
 	.registerTableType('datatable', function(table_type){

@@ -38,7 +38,7 @@ export default [
 	{
 		input: './src/es5.js',
 		output: {
-			file: `${outDir}/${name}.iife.js`,
+			file: `${outDir}/${name}.js`,
 			format: 'iife',
 			// Use `name` as window to hack a bit & avoid exports.
 			name: 'window',
@@ -50,7 +50,12 @@ export default [
 	},
 	{
 		input: 'index.js',
-		output: { file: `${outDir}/${name}.es.js`, format: 'es', name, sourcemap },
+		output: {
+			file: `${outDir}/${name}.esm.js`,
+			format: 'esm',
+			name,
+			sourcemap
+		},
 		plugins,
 		external: ['object-path', 'vue'],
 	},
