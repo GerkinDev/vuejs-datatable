@@ -9,7 +9,8 @@
     "dev": "rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",
     "production": "rollup -c rollup.config.js --environment BUILD:production",
-    "examples": "rollup -c examples/rollup.examples.config.js"
+    "examples": "rollup -c examples/rollup.examples.config.js",
+    "build": "npm run production && npm run examples"
   },
   "keywords": [
     "Vue.js",
