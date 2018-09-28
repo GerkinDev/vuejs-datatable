@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file from 1.0.0 f
 
 This project will adhere as close as reasonably possible to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2018-09-28 y6uj
+
+### Changed
+
+ - Using Rollup instead of Laravel Mix/Webpack for building scripts.
+
 ## [1.6.0] - 2018-09-12
 
 ### Added
