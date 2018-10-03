@@ -62,6 +62,7 @@ new Vue({
 	data: {
 		table_columns: [
 			{label: 'id', field: 'id'},
+			{label: 'Range', field: 'range', sortableAsFloat: true},
 			{label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
 			{label: 'First Name', field: 'user.first_name'},
 			{label: 'Last Name', field: 'user.last_name'},
@@ -74,6 +75,7 @@ new Vue({
 			//...
 			{
 				"id": 1,
+				"range": "12 - 20",
 				"user": {
 					"username": "dprice0",
 					"first_name": "Daniel",
