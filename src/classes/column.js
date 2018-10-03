@@ -10,8 +10,9 @@ class Column {
         this.interpolate = props.interpolate || false;
         this.headerComponent = props.headerComponent || null;
         this.sortable = this.isSortable(props);
+        this.sortableAsFloat = props.sortableAsFloat || false;
         this.filterable = this.isFilterable(props);
-        this.headerClass = props.headerClass || '';
+        this.headerClass = props.headerClass || '';        
     }
 
     setAlignment(value){
@@ -77,6 +78,10 @@ class Column {
 
         if(this.component && this.filterable){
             return this.plain_text_function(row, this);
+        }
+        
+        if(this.sortableAsFloat){
+            return parseFloat(objectPath.get(row, this.field));
         }
 
         return objectPath.get(row, this.field);
