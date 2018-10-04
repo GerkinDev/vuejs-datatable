@@ -1,6 +1,5 @@
 import Vue from 'vue';
-import axios from 'axios';
-import DatatableFactory from '../../index.js';
+import DatatableFactory from '../../dist/vuejs-datatable.esm';
 
 DatatableFactory.useDefaultType(false)
 	.registerTableType('datatable', function(table_type){
@@ -31,8 +30,6 @@ Vue.use(DatatableFactory);
 
 Vue.config.debug = true;
 Vue.config.devtools = true;
-
-window.Vue = Vue;
 
 window.vm = new Vue({
 	el: '.grid-container',

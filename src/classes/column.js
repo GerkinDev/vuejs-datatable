@@ -1,4 +1,4 @@
-import objectPath from 'object-path';
+import { get } from 'object-path';
 
 class Column {
     constructor(props){
@@ -79,7 +79,7 @@ class Column {
             return this.plain_text_function(row, this);
         }
 
-        return objectPath.get(row, this.field);
+        return get(row, this.field);
     }
 
     getValue(row){

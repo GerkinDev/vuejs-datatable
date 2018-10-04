@@ -15,8 +15,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<slot v-for="row in processed_rows" :row="row" :columns="normalized_columns">
-			    <tr :class="getRowClasses(row)">
+			<slot v-for="(row, i) in processed_rows" :row="row" :columns="normalized_columns">
+			    <tr :class="getRowClasses(row)" :key="i">
 					<datatable-cell
 						v-for="(column, j) in normalized_columns"
 						:key="j"
@@ -164,7 +164,7 @@ export default {
 		}
 	},
 	created(){
-		Vue.$datatables[this.name] = this;
+		this.$datatables[this.name] = this;
 		this.$root.$emit('table.ready', this.name);
 
 		this.$watch(function(){
