@@ -1,4 +1,4 @@
-import objectPath from 'object-path';
+import { get } from 'object-path';
 
 class Column {
     constructor(props){
@@ -84,7 +84,7 @@ class Column {
             return parseFloat(objectPath.get(row, this.field));
         }
 
-        return objectPath.get(row, this.field);
+        return get(row, this.field);
     }
 
     getValue(row){

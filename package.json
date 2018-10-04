@@ -1,13 +1,16 @@
 {
   "name": "vuejs-datatable",
-  "version": "1.5.3",
+  "version": "1.7.0",
   "description": "A Vue.js component for filterable, sortable, and paginated tables.",
   "main": "index.js",
+  "module": "dist/vuejs-datatable.esm.js",
+  "browser": "dist/vuejs-datatable.js",
   "scripts": {
-    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "dev": "rollup -c rollup.config.js",
+    "watch": "rollup -c rollup.config.js --watch",
+    "production": "rollup -c rollup.config.js --environment BUILD:production",
+    "examples": "rollup -c examples/rollup.examples.config.js",
+    "build": "npm run production && npm run examples"
   },
   "keywords": [
     "Vue.js",
@@ -21,17 +24,31 @@
     "pagination"
   ],
   "dependencies": {
-    "vue": "^2.4",
-    "object-path": "^0.11.4"
+    "object-path": "^0.11.4",
+    "vue": "^2.5.17"
   },
   "devDependencies": {
-    "axios": "^0.15.3",
-    "babel-preset-env": "^1.6.0",
-    "jasmine-core": "^2.6.4",
-    "karma": "^1.7.0",
+    "@babel/core": "^7.0.1",
+    "axios": "^0.18.0",
+    "babel-preset-env": "^1.7.0",
+    "datatables.net": "1.10.19",
+    "jasmine-core": "^3.2.1",
+    "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.0",
-    "laravel-mix": "^0.8.8"
+    "karma-jasmine": "^1.1.2",
+    "rollup": "^0.66.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-string": "^2.0.2",
+    "rollup-plugin-terser": "^2.0.2",
+    "rollup-plugin-vue": "^4.3.2",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "peerDependencies": {
+    "datatables.net": "1.10.19"
   },
   "author": "Patrick Stephan <pstephan1187@gmail.com>",
   "repository": {

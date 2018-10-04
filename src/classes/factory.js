@@ -30,7 +30,7 @@ class DatatableFactory {
     }
 
     install(Vue){
-        Vue.$datatables = {};
+        Vue.prototype.$datatables = {};
 
         Vue.component('datatable-cell', VueDatatableCell);
         Vue.component('datatable-header', VueDatatableHeader);

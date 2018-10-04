@@ -18,7 +18,7 @@ yarn add vuejs-datatable
 
 OR
 
-You can use the pre-compiled ES5 version of the component found in `dist/vuejs-datatable.js`. This will automatically register the component to `datatable`.
+You can use the pre-compiled [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) version of the component found in `dist/vuejs-datatable.js`. This will automatically register the component to `datatable`.
 
 ```
 <datatable :columns="columns" :data="rows"></datatable>
