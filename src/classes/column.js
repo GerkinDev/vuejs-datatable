@@ -81,7 +81,7 @@ class Column {
         }
         
         if(this.sortableAsFloat){
-            return parseFloat(objectPath.get(row, this.field));
+            return parseFloat(get(row, this.field));
         }
 
         return get(row, this.field);
