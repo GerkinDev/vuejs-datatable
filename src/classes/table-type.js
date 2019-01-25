@@ -140,7 +140,7 @@ class TableType {
 	getPagerDefinition(){
 		const definition = this.clone(VueDatatablePager);
 		definition.settings = this.settings;
-		definition.name = this.id;
+        definition.name = this.id + '-pager';
 
 		return definition;
 	}
