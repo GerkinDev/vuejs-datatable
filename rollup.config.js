@@ -36,7 +36,7 @@ const sourcemap = true;
 
 export default [
 	{
-		input: './src/es5.js',
+		input: './src/iife-init.js',
 		output: {
 			file: `${outDir}/${name}.js`,
 			format: 'iife',
@@ -49,7 +49,7 @@ export default [
 		external: ['vue'],
 	},
 	{
-		input: 'index.js',
+		input: './src/index.js',
 		output: {
 			file: `${outDir}/${name}.esm.js`,
 			format: 'esm',
