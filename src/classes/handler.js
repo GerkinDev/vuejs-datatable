@@ -1,84 +1,82 @@
-class Handler {
-    constructor(){
-        this.filterHandler = this.handleFilter;
-        this.sortHandler = this.handleSort;
-        this.paginateHandler = this.handlePaginate;
-        this.displayHandler = this.handleDisplay;
-    }
-    handleFilter(data, filter, columns){
-        if(!filter){
-            return data;
-        }
-
-        if(!Array.isArray(filter)) {
-            filter = [filter];
-        }
-
-        return data.filter(function(row){
-            for(var j in filter) {
-                let filter_strings = filter[j].split(/\s/);
-                let matched = true;
-                for(var i in filter_strings){
-                    if(!this.rowMatches(row, filter_strings[i], columns)){
-                        matched = false;
-                    }
-                }
-                if(matched) {
-                    return true;
-                }
-            }
-            return false;
-        }.bind(this));
-    }
-    rowMatches(row, filter_string, columns){
-        for(var i in columns){
-            if(columns[i].matches(row, filter_string)){
-                return true;
-            }
-        }
-
-        return false;
-    }
-    handleSort(filtered_data, sort_column, sort_dir){
-		if(!sort_column || sort_dir === null){
-			return filtered_data;
+export default class Handler {
+	constructor(){
+		this.filterHandler = this.handleFilter;
+		this.sortHandler = this.handleSort;
+		this.paginateHandler = this.handlePaginate;
+		this.displayHandler = this.handleDisplay;
+	}
+	handleFilter(data, filter, columns){
+		if (!filter){
+			return data;
 		}
 
-		return filtered_data.sort(function(a, b){
-			var value_a = sort_column.getRepresentation(a);
-			var value_b = sort_column.getRepresentation(b);
+		if (!Array.isArray(filter)) {
+			filter = [ filter ];
+		}
 
-			if(value_a == value_b){
+		return data.filter(row => {
+			for (const j in filter) {
+				const filterStrings = filter[j].split(/\s/);
+				let matched = true;
+				for (const i in filterStrings){
+					if (!this.rowMatches(row, filterStrings[i], columns)){
+						matched = false;
+					}
+				}
+				if (matched) {
+					return true;
+				}
+			}
+			return false;
+		});
+	}
+	rowMatches(row, filterString, columns){
+		for (const i in columns){
+			if (columns[i].matches(row, filterString)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+	handleSort(filteredData, sortColumn, sortDir){
+		if (!sortColumn || sortDir === null){
+			return filteredData;
+		}
+
+		return filteredData.sort((a, b) => {
+			const valA = sortColumn.getRepresentation(a);
+			const valB = sortColumn.getRepresentation(b);
+
+			if (valA === valB){
 				return 0;
 			}
 
-			var sort_val = value_a > value_b ? 1 : -1;
+			let sortVal = valA > valB ? 1 : -1;
 
-			if(sort_dir === 'desc'){
-				sort_val *= -1;
+			if (sortDir === 'desc'){
+				sortVal *= -1;
 			}
 
-			return sort_val;
+			return sortVal;
 		});
-    }
-    handlePaginate(sorted_data, page_count, page_number){
-		if(!page_count){
-			return sorted_data;
+	}
+	handlePaginate(sortedData, pageCount, pageNumber){
+		if (!pageCount){
+			return sortedData;
 		}
 
-		if(page_number < 1){
-			page_number = 1;
+		if (pageNumber < 1){
+			pageNumber = 1;
 		}
 
-        let start_index = (page_number - 1) * page_count;
-        let end_index = (page_number * page_count);
+		const startIndex = (pageNumber - 1) * pageCount;
+		const endIndex = (pageNumber * pageCount);
 
-        return sorted_data.slice(start_index, end_index);
-    }
-    handleDisplay(processed_data, process_steps, setRows, setTotalRowCount){
-        setRows(processed_data);
-        setTotalRowCount(process_steps.filtered_data.length);
-    }
+		return sortedData.slice(startIndex, endIndex);
+	}
+	handleDisplay(processedData, processSteps, setRows, setTotalRowCount){
+		setRows(processedData);
+		setTotalRowCount(processSteps.filteredData.length);
+	}
 }
-
-export default Handler;

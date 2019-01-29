@@ -1,66 +1,66 @@
 import Factory from '../../../src/classes/factory.js';
 
 export default () => {
-    it('is initialized with empty types', () => {
-        let handler = new Factory();
+	it('is initialized with empty types', () => {
+		const handler = new Factory();
 
-        expect(Array.isArray(handler.table_types)).toBe(true);
-        expect(handler.table_types.length).toBe(0);
-    });
+		expect(Array.isArray(handler.tableTypes)).toBe(true);
+		expect(handler.tableTypes.length).toBe(0);
+	});
 
-    it('is initialized using default datatable type', () => {
-        let handler = new Factory();
+	it('is initialized using default datatable type', () => {
+		const handler = new Factory();
 
-        expect(handler.use_default_type).toBe(true);
-    });
+		expect(handler.useDefaultType).toBe(true);
+	});
 
-    it('can disable default datatable type', () => {
-        let handler = new Factory();
+	it('can disable default datatable type', () => {
+		const handler = new Factory();
 
-        expect(handler.use_default_type).toBe(true);
+		expect(handler.useDefaultType).toBe(true);
 
-        handler.useDefaultType(false);
+		handler.useDefaultType(false);
 
-        expect(handler.use_default_type).toBe(false);
-    });
+		expect(handler.useDefaultType).toBe(false);
+	});
 
-    it('can register a new datatable type', () => {
-        let handler = new Factory();
+	it('can register a new datatable type', () => {
+		const handler = new Factory();
 
-        expect(handler.table_types.length).toBe(0);
+		expect(handler.tableTypes.length).toBe(0);
 
-        handler.registerTableType('testtable');
+		handler.registerTableType('testtable');
 
-        expect(handler.table_types.length).toBe(1);
-    });
+		expect(handler.tableTypes.length).toBe(1);
+	});
 
-    it('registration passes callback that can customize settings', () => {
-        let handler = new Factory();
+	it('registration passes callback that can customize settings', () => {
+		const handler = new Factory();
 
-        handler.registerTableType('testtable', function(table_type){
-            expect(typeof table_type).toBe('object');
-            expect(typeof table_type.mergeSettings).toBe('function');
-            expect(typeof table_type.setting).toBe('function');
-        });
-    });
+		handler.registerTableType('testtable', tableType => {
+			expect(typeof tableType).toBe('object');
+			expect(typeof tableType.mergeSettings).toBe('function');
+			expect(typeof tableType.setting).toBe('function');
+		});
+	});
 
-    it('registration passes callback that can customize handler', () => {
-        let handler = new Factory();
+	it('registration passes callback that can customize handler', () => {
+		const handler = new Factory();
 
-        handler.registerTableType('testtable', function(table_type){
-            expect(typeof table_type).toBe('object');
-            expect(typeof table_type.setFilterHandler).toBe('function');
-            expect(typeof table_type.setSortHandler).toBe('function');
-            expect(typeof table_type.setPaginateHandler).toBe('function');
-            expect(typeof table_type.setDisplayHandler).toBe('function');
-        });
-    });
+		handler.registerTableType('testtable', tableType => {
+			expect(typeof tableType).toBe('object');
+			expect(typeof tableType.setFilterHandler).toBe('function');
+			expect(typeof tableType.setSortHandler).toBe('function');
+			expect(typeof tableType.setPaginateHandler).toBe('function');
+			expect(typeof tableType.setDisplayHandler).toBe('function');
+		});
+	});
 
-    it('can be installed into Vue', () => {
-        let handler = new Factory();
+	it('can be installed into Vue', () => {
+		const handler = new Factory();
 
-        expect(typeof handler.install).toBe('function');
-    });
+		expect(typeof handler.install).toBe('function');
+	});
 
-    it.todo('Test IIFE register/deregister');
-}
+	it.todo('Test IIFE register/deregister');
+};

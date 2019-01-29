@@ -3,108 +3,106 @@ import VueDatatablePager from '../vue-datatable-pager.vue';
 import Handler from './handler.js';
 import Settings from './settings.js';
 
-class TableType {
-    constructor(id){
-        this.id = id;
+export default class TableType {
+	constructor(id){
+		this.id = id;
 
-        this.handler = new Handler();
-        this.settings = new Settings();
-    }
+		this.handler = new Handler();
+		this.settings = new Settings();
+	}
 
-    getId(){
-        return this.id;
-    }
+	getId(){
+		return this.id;
+	}
 
-    setFilterHandler(closure){
-        this.handler.filterHandler = closure;
+	setFilterHandler(closure){
+		this.handler.filterHandler = closure;
 
-        return this;
-    }
+		return this;
+	}
 
-    setSortHandler(closure){
-        this.handler.sortHandler = closure;
+	setSortHandler(closure){
+		this.handler.sortHandler = closure;
 
-        return this;
-    }
+		return this;
+	}
 
-    setPaginateHandler(closure){
-        this.handler.paginateHandler = closure;
+	setPaginateHandler(closure){
+		this.handler.paginateHandler = closure;
 
-        return this;
-    }
+		return this;
+	}
 
-    setDisplayHandler(closure){
-        this.handler.displayHandler = closure;
+	setDisplayHandler(closure){
+		this.handler.displayHandler = closure;
 
-        return this;
-    }
+		return this;
+	}
 
-    setting(path, value){
-        if(value === undefined){
-            return this.settings.get(path);
-        }
+	setting(path, value){
+		if (value === undefined){
+			return this.settings.get(path);
+		}
 
-        this.settings.set(path, value);
+		this.settings.set(path, value);
 
-        return this;
-    }
+		return this;
+	}
 
-    mergeSettings(settings){
-        this.settings.merge(settings);
+	mergeSettings(settings){
+		this.settings.merge(settings);
 
-        return this;
-    }
+		return this;
+	}
 
-    getTableDefinition(){
-        let definition = this.clone(VueDatatable);
-        definition.handler = this.handler;
-        definition.settings = this.settings;
-        definition.name = this.id;
+	getTableDefinition(){
+		const definition = this.clone(VueDatatable);
+		definition.handler = this.handler;
+		definition.settings = this.settings;
+		definition.name = this.id;
 
-        return definition;
-    }
+		return definition;
+	}
 
-    getPagerDefinition(){
-        let definition = this.clone(VueDatatablePager);
-        definition.settings = this.settings;
-        definition.name = this.id;
+	getPagerDefinition(){
+		const definition = this.clone(VueDatatablePager);
+		definition.settings = this.settings;
+		definition.name = this.id;
 
-        return definition;
-    }
+		return definition;
+	}
 
-    clone(obj) {
-        var copy;
+	clone(obj) {
+		let copy;
 
-        if (obj === null || typeof obj !== "object") {
-            return obj;
-        }
+		if (obj === null || typeof obj !== 'object') {
+			return obj;
+		}
 
-        // Handle Array
-        if (obj instanceof Array) {
-            copy = [];
+		// Handle Array
+		if (obj instanceof Array) {
+			copy = [];
 
-            for (var i = 0; i < obj.length; i++) {
-                copy[i] = this.clone(obj[i]);
-            }
+			for (let i = 0; i < obj.length; i++) {
+				copy[i] = this.clone(obj[i]);
+			}
 
-            return copy;
-        }
+			return copy;
+		}
 
-        // Handle Object
-        if (obj instanceof Object) {
-            copy = {};
+		// Handle Object
+		if (obj instanceof Object) {
+			copy = {};
 
-            for (var attr in obj) {
-                if (obj.hasOwnProperty(attr)) {
-                    copy[attr] = this.clone(obj[attr]);
-                }
-            }
+			for (const attr in obj) {
+				if (obj.hasOwnProperty(attr)) {
+					copy[attr] = this.clone(obj[attr]);
+				}
+			}
 
-            return copy;
-        }
+			return copy;
+		}
 
-        throw new Error("Unable to copy obj! Its type isn't supported.");
-    }
+		throw new Error('Unable to copy obj! Its type isn\'t supported.');
+	}
 }
-
-export default TableType;

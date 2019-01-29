@@ -1,38 +1,43 @@
 <style></style>
 
 <template>
-	<table :class="table_class">
+	<table :class="tableClass">
 		<thead>
 			<tr>
 				<datatable-header
-					v-for="(head_column, i) in normalized_columns"
+					v-for="(head_column, i) in normalizedColumns"
 					:key="i"
 					:column="head_column"
 					:settings="settings"
 					:direction="getSortDirectionForColumn(head_column)"
-					@change="setSortDirectionForColumn"
-				></datatable-header>
+					@change="setSortDirectionForColumn" />
 			</tr>
 		</thead>
 		<tbody>
-			<slot v-for="(row, i) in processed_rows" :row="row" :columns="normalized_columns">
-			    <tr :class="getRowClasses(row)" :key="i">
+			<slot
+				v-for="(row, i) in processedRows"
+				:row="row"
+				:columns="normalizedColumns">
+				<tr
+					:key="i"
+					:class="getRowClasses(row)">
 					<datatable-cell
-						v-for="(column, j) in normalized_columns"
+						v-for="(column, j) in normalizedColumns"
 						:key="j"
 						:column="column"
-						:row="row"
-					></datatable-cell>
-			    </tr>
+						:row="row" />
+				</tr>
 			</slot>
-			<tr v-if="processed_rows.length == 0">
-				<td :colspan="normalized_columns.length">
-					<slot name="no-results"></slot>
+			<tr v-if="processedRows.length == 0">
+				<td :colspan="normalizedColumns.length">
+					<slot name="no-results" />
 				</td>
 			</tr>
 		</tbody>
 		<tfoot v-if="$slots.footer || $scopedSlots.footer">
-			<slot name="footer" :rows="processed_rows"></slot>
+			<slot
+				name="footer"
+				:rows="processedRows" />
 		</tfoot>
 	</table>
 </template>
@@ -43,27 +48,27 @@ import Column from './classes/column.js';
 export default {
 	props: {
 		name: {
-			type: String,
-			default: 'default'
+			type:    String,
+			default: 'default',
 		},
-		columns: [Object, Array],
-		data: [Object, Array, String, Function],
+		columns:  [ Object, Array ],
+		data:     [ Object, Array, String, Function ],
 		filterBy: {
-			type: [String, Array],
-			default: null
+			type:    [ String, Array ],
+			default: null,
 		},
 		rowClasses: {
-			type: [String, Array, Object, Function],
-			default: null
-		}
+			type:    [ String, Array, Object, Function ],
+			default: null,
+		},
 	},
 	data: () => ({
-		sort_by: null,
-		sort_dir: null,
-		total_rows: 0,
-		page: 1,
-		per_page: null,
-		processed_rows: [],
+		sortBy:        null,
+		sortDir:       null,
+		totalRows:     0,
+		page:          1,
+		perPage:       null,
+		processedRows: [],
 	}),
 	computed: {
 		rows(){
@@ -75,111 +80,105 @@ export default {
 		handler(){
 			return this.$options.handler;
 		},
-		normalized_columns(){
-			return this.columns.map(function(column){
-				return new Column(column);
-			});
+		normalizedColumns(){
+			return this.columns.map(column => new Column(column));
 		},
-		table_class(){
+		tableClass(){
 			return this.settings.get('table.class');
 		},
 	},
+	created(){
+		this.$datatables[this.name] = this;
+		this.$root.$emit('table.ready', this.name);
+
+		this.$watch(() => this.data, this.processRows, {deep: true});
+
+		this.$watch('columns', this.processRows);
+
+		this.$watch(() => this.filterBy + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows);
+
+		this.processRows();
+	},
 	methods: {
-		getSortDirectionForColumn(column_definition){
-			if(this.sort_by !== column_definition){
+		getSortDirectionForColumn(columnDefinition){
+			if (this.sortBy !== columnDefinition){
 				return null;
 			}
 
-			return this.sort_dir;
+			return this.sortDir;
 		},
 		setSortDirectionForColumn(direction, column){
-			this.sort_by = column;
-			this.sort_dir = direction;
+			this.sortBy = column;
+			this.sortDir = direction;
 		},
 		processRows(){
-			if(typeof this.data === 'function'){
-				let params = {
-					filter: this.filterBy,
-					sort_by: this.sort_by ? this.sort_by.field : null,
-					sort_dir: this.sort_dir,
-					page_length: this.per_page,
-					page_number: this.page,
+			if (typeof this.data === 'function'){
+				const params = {
+					filter:     this.filterBy,
+					sortBy:     this.sortBy ? this.sortBy.field : null,
+					sortDir:    this.sortDir,
+					pageLength: this.perPage,
+					pageNumber: this.page,
 				};
 
-				let processed_data = this.data(params, function(rows, row_count){
+				this.data(params, (rows, rowCount) => {
 					this.setRows(rows);
-					this.setTotalRowCount(row_count);
-				}.bind(this));
+					this.setTotalRowCount(rowCount);
+				});
 
 				return;
 			}
 
-			let filtered_data = this.handler.filterHandler(
+			const filteredData = this.handler.filterHandler(
 				this.rows,
 				this.filterBy,
-				this.normalized_columns
+				this.normalizedColumns
 			);
 
-			let sorted_data = this.handler.sortHandler(
-				filtered_data,
-				this.sort_by,
-				this.sort_dir
+			const sortedData = this.handler.sortHandler(
+				filteredData,
+				this.sortBy,
+				this.sortDir
 			);
 
-			let paged_data = this.handler.paginateHandler(
-				sorted_data,
-				this.per_page,
+			const pagedData = this.handler.paginateHandler(
+				sortedData,
+				this.perPage,
 				this.page
 			);
 
 			this.handler.displayHandler(
-				paged_data,
+				pagedData,
 				{
-					filtered_data: filtered_data,
-					sorted_data: sorted_data,
-					paged_data: paged_data,
+					filteredData: filteredData,
+					sortedData:   sortedData,
+					pagedData:    pagedData,
 				},
 				this.setRows,
 				this.setTotalRowCount
 			);
 		},
 		setRows(rows){
-			this.processed_rows = rows;
+			this.processedRows = rows;
 		},
 		setTotalRowCount(value){
-			this.total_rows = value;
+			this.totalRows = value;
 		},
 		getRowClasses(row){
-			var row_classes = this.rowClasses;
+			let rowClasses = this.rowClasses;
 
-			if(row_classes === null){
-				row_classes = this.settings.get('table.row.classes');
+			if (rowClasses === null){
+				rowClasses = this.settings.get('table.row.classes');
 			}
 
-			if(typeof row_classes === 'function'){
-				return row_classes(row);
+			if (typeof rowClasses === 'function'){
+				return rowClasses(row);
 			}
 
-			return row_classes;
-		}
+			return rowClasses;
+		},
 	},
-	created(){
-		this.$datatables[this.name] = this;
-		this.$root.$emit('table.ready', this.name);
-
-		this.$watch(function(){
-			return this.data;
-		}.bind(this), this.processRows, {deep: true});
-
-		this.$watch('columns', this.processRows);
-
-		this.$watch(function(){
-			return this.filterBy + this.per_page + this.page + this.sort_by + this.sort_dir;
-		}.bind(this), this.processRows);
-
-		this.processRows();
-	},
-	handler: null,
-	settings: null
-}
+	handler:  null,
+	settings: null,
+};
 </script>
