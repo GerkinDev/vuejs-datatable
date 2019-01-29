@@ -6,7 +6,7 @@
   "module": "dist/vuejs-datatable.esm.js",
   "browser": "dist/vuejs-datatable.esm.js",
   "scripts": {
-    "doc": "echo '`doc` command not configured yet'",
+    "doc": "jsdoc -c jsdoc.conf.js .",
     "test": "echo '`test` command not configured yet'",
     "dev": "rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",
@@ -38,7 +38,10 @@
     "axios": "^0.18.0",
     "babel-preset-env": "^1.7.0",
     "datatables.net": "1.10.19",
+    "foodoc": "0.0.9",
     "jasmine-core": "^3.2.1",
+    "jsdoc": "^3.5.5",
+    "jsdoc-vuejs": "^2.4.0",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.2",
@@ -58,14 +61,16 @@
     "datatables.net": "1.10.19"
   },
   "author": {
-      "name": "Patrick Stephan",
-      "email": "pstephan1187@gmail.com"
+    "name": "Patrick Stephan",
+    "email": "pstephan1187@gmail.com"
   },
-  "contributors": [{
+  "contributors": [
+    {
       "name": "GerkinDev",
       "email": "nihilivin@gmail.com",
       "url": "https://www.gerkindevelopment.net/"
-  }],
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pstephan1187/vue-datatable"
