@@ -6,11 +6,17 @@
   "module": "dist/vuejs-datatable.esm.js",
   "browser": "dist/vuejs-datatable.esm.js",
   "scripts": {
+    "doc": "echo '`doc` command not configured yet'",
+    "test": "echo '`test` command not configured yet'",
     "dev": "rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",
     "production": "rollup -c rollup.config.js --environment BUILD:production",
     "examples": "rollup -c examples/rollup.examples.config.js",
-    "build": "npm run production && npm run examples"
+    "build": "npm run production && npm run examples",
+    "version": "npm run doc && git add docs",
+    "prepublishOnly": "npm run build",
+    "release": "standard-version",
+    "prerelease": "standard-version --prerelease"
   },
   "keywords": [
     "Vue.js",
@@ -45,12 +51,21 @@
     "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-terser": "^2.0.2",
     "rollup-plugin-vue": "^4.3.2",
+    "standard-version": "^4.4.0",
     "vue-template-compiler": "^2.5.17"
   },
   "peerDependencies": {
     "datatables.net": "1.10.19"
   },
-  "author": "Patrick Stephan <pstephan1187@gmail.com>",
+  "author": {
+      "name": "Patrick Stephan",
+      "email": "pstephan1187@gmail.com"
+  },
+  "contributors": [{
+      "name": "GerkinDev",
+      "email": "nihilivin@gmail.com",
+      "url": "https://www.gerkindevelopment.net/"
+  }],
   "repository": {
     "type": "git",
     "url": "https://github.com/pstephan1187/vue-datatable"
