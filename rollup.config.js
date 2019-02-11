@@ -40,8 +40,9 @@ export default [
 		output: {
 			file: `${outDir}/${name}.js`,
 			format: 'iife',
-			// Use `name` as window to hack a bit & avoid exports.
+			// Use `name` as window to hack a bit & avoid exports. The name of the exports is exposed globally. See https://github.com/rollup/rollup/issues/494
 			name: 'window',
+			extend: true,
 			sourcemap,
 			globals: { vue: 'Vue' },
 		},
