@@ -61,4 +61,6 @@ export default () => {
 
         expect(typeof handler.install).toBe('function');
     });
+
+    it.todo('Test IIFE register/deregister');
 }
