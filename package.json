@@ -6,7 +6,7 @@
   "module": "dist/vuejs-datatable.esm.js",
   "browser": "dist/vuejs-datatable.esm.js",
   "scripts": {
-    "doc": "jsdoc -c jsdoc.conf.js .",
+    "doc": "rimraf docs && jsdoc -c jsdoc.conf.js .",
     "test": "echo '`test` command not configured yet'",
     "dev": "rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",
@@ -49,6 +49,7 @@
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.2",
+    "rimraf": "^2.6.3",
     "rollup": "^0.66.0",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",

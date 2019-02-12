@@ -17,10 +17,24 @@
 </template>
 
 <script>
+/**
+ * @module datatable-cell
+ * 
+ * @vue-prop {Column} column - The column of the cell
+ * @vue-prop {Row} row - The row object of the cell
+ * 
+ * @vue-computed {string} content - The string content of the cell. It may be interpolated to HTML if {@link Column#interpolate} is `true`.
+ */
 export default {
 	props: {
-		column: [ Object, Array ],
-		row:    [ Object, Array ],
+		column: {
+			type:     Object,
+			required: true,
+		},
+		row: {
+			type:     Object,
+			required: true,
+		},
 	},
 	computed: {
 		content(){

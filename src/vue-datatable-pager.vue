@@ -80,6 +80,29 @@
 </template>
 
 <script>
+/**
+ * The component that is used to manage & change pages on a {@link datatable}.
+ * 
+ * @module datatable-pager
+ * 
+ * @vue-prop {string} [table = 'default'] - The id of the associated {@link datatable}.
+ * @vue-prop {'long' | 'short' | 'abbreviated'} [type = 'long'] - The kind of the pager
+ * @vue-prop {number} [perPage = 10] - Max number of items to display.
+ * @vue-prop {number} [page = 1] - The page index to display
+ * 
+ * @vue-data {datatable | null} tableInstance - Reference to the associated {@link datatable} through the {@link datatable-pager#table} prop.
+ * 
+ * @vue-computed {boolean} show - Returns `true` if the pager has an associated {@link datatable} with some rows.
+ * @vue-computed {number} totalRows - The total number of rows in the associated {@link datatable}.
+ * @vue-computed {string} paginationClass - HTML class on the wrapping `ul` around the pager buttons.
+ * @vue-computed {string} disabledClass - HTML class to apply on disabled buttons. (unused).
+ * @vue-computed {string} previousLinkClasses - HTML class to apply on the previous page's button. (unused).
+ * @vue-computed {string} nextLinkClasses - HTML class to apply on the next page's button. (unused).
+ * @vue-computed {number} totalPages - The total number of pages in the associated {@link datatable}.
+ * @vue-computed {string} previousIcon - HTML content of the previous page's button.
+ * @vue-computed {string} nextIcon - HTML content of the next page's button.
+ * @vue-computed {Settings} settings - Reference to the {@link Settings} object linked to this pager type.
+ */
 export default {
 	model: {
 		prop:  'page',
@@ -185,14 +208,27 @@ export default {
 		});
 	},
 	methods: {
-		setPageNum(number){
-			this.tableInstance.page = number;
+		/**
+		 * Defines the page index to display.
+		 *
+		 * @emits change
+		 * @param {number} pageIndex - The new page index.
+		 * @returns {void} Nothing.
+		 */
+		setPageNum(pageIndex){
+			this.tableInstance.page = pageIndex;
 			this.tableInstance.perPage = this.perPage;
 
-			this.$emit('change', number);
+			this.$emit('change', pageIndex);
 		},
-		getClassForPage(number){
-			if (this.page === number){
+		/**
+		 * Get the page classes for the specified page index.
+		 *
+		 * @param {number} pageIndex - The page index to get class for.
+		 * @returns {string} HTML classes to apply on the specified page button.
+		 */
+		getClassForPage(pageIndex){
+			if (this.page === pageIndex){
 				return this.settings.get('pager.classes.selected');
 			}
 
