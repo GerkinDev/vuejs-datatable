@@ -60,7 +60,7 @@ Then pass in the columns and the data to your Vue instance:
 new Vue({
 	el: '#vue-element',
 	data: {
-		table_columns: [
+		columns: [
 			{label: 'id', field: 'id'},
 			{label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
 			{label: 'First Name', field: 'user.first_name'},
@@ -70,7 +70,7 @@ new Vue({
 				return row.address + '<br />' + row.city + ', ' + row.state;
 			}, interpolate: true}
 		],
-		table_rows: [
+		rows: [
 			//...
 			{
 				"id": 1,
