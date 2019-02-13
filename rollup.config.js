@@ -12,7 +12,16 @@ const name = 'vuejs-datatable';
 // Plugins used for build
 const plugins = [
 	vue({compileTemplate: true}),
-	babel({exclude: 'node_modules/**'}),
+	babel({
+		exclude: 'node_modules/**',
+		babelrc: false,
+		presets: [
+			[ '@babel/env', {
+				targets:     '> 0.25%, not dead, cover 90%',
+				useBuiltIns: 'usage',
+			}],
+		],
+	}),
 	string({include: [ '**/*.svg', '**/*.html' ]}),
 	commonjs({
 		namedExports: {

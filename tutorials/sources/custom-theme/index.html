@@ -1,0 +1,32 @@
+<div class="grid-container" id="demo-app">
+    <div class="grid-x">
+        <div class="cell medium-4 large-3">
+            <label>Filter
+                <input type="text" v-model="filter" placeholder="Filter">
+            </label>
+        </div>
+    </div>
+    
+    <div class="grid-x">
+        <div class="cell">
+            <datatable :filter-by="filter" :columns="columns" :data="rows"></datatable>
+            <datatable-pager v-model="page"></datatable-pager>
+        </div>
+    </div>
+</div>
+
+<div id="code-samples">
+    <section>
+        <h2>Javascript</h2>
+        <pre><code class="js language-js" id="code-area"></code></pre>
+    </section>
+    <section>
+        <h2>HTML</h2>
+        <pre><code class="html language-html" id="template-area"></code></pre>
+    </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
+<script id="deps"></script>
+<script src="./assets/rows.js" async></script>
+<script id="demo-script"></script>

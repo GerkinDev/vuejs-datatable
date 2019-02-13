@@ -6,13 +6,13 @@ Allows for quick and easy setup of filterable, sortable, and paginated tables. C
 
 ## Installation
 
-```
+```sh
 npm install vuejs-datatable
 ```
 
 OR
 
-```
+```sh
 yarn add vuejs-datatable
 ```
 
@@ -20,7 +20,7 @@ OR
 
 You can use the pre-compiled [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) version of the component found in `dist/vuejs-datatable.js`. This will automatically register the component to `datatable`.
 
-```
+```html
 <datatable :columns="columns" :data="rows"></datatable>
 
 
@@ -41,7 +41,7 @@ vm = new Vue({
 
 Register the component in your JS file using the Factory:
 
-```
+```js
 import Vue from 'vue';
 import DatatableFactory from 'vuejs-datatable';
 
@@ -50,13 +50,13 @@ Vue.use(DatatableFactory);
 
 Use the component in your HTML or template:
 
-```
+```html
 <datatable :columns="columns" :data="rows"></datatable>
 ```
 
 Then pass in the columns and the data to your Vue instance:
 
-```
+```js
 new Vue({
 	el: '#vue-element',
 	data: {

@@ -42,9 +42,17 @@ module.exports = {
 		sort:                 "{boolean|string}",
 		search:               "{boolean}",
 		favicon:              "{string}",
-		stylesheets:          "{array.<string>}",
-		scripts:              "{array.<string>}"
 		*/
+		stylesheets:    [],
+		scripts:        [
+			'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js',
+			'./assets/vuejs-datatable.js',
+		],
+		default: {
+			staticFiles: {
+				include: [ './tutorials/assets' ],
+			},
+		},
 	},
 	opts: {
 		template:    './node_modules/foodoc/template',
@@ -52,5 +60,6 @@ module.exports = {
 		destination: './docs/',
 		recurse:     true,
 		readme:      './README.md',
+		tutorials:   './tutorials/builds',
 	},
 };

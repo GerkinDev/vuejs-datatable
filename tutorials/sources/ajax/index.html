@@ -1,0 +1,23 @@
+<div id="demo-app">    
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <ajaxtable :columns="columns" :data="url"></ajaxtable>
+            <ajaxtable-pager v-model="page"></ajaxtable-pager>
+        </div>
+    </div>
+</div>
+
+<div id="code-samples">
+    <section>
+        <h2>Javascript</h2>
+        <pre><code class="js language-js" id="code-area"></code></pre>
+    </section>
+    <section>
+        <h2>HTML</h2>
+        <pre><code class="html language-html" id="template-area"></code></pre>
+    </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
+<script id="deps"></script>
+<script id="demo-script"></script>
