@@ -5,69 +5,115 @@ import TableType from './table-type.js';
 import Settings from './settings.js';
 
 const DEFAULT_DATATABLE = 'datatable';
+/**
+ * Registers Vuejs-Datatable components globally in VueJS.
+ * You should add table types to the {@link table_types} list before using `Vue.use`.
+ * 
+ * @example import DatatableFactory from 'vuejs-datatable';
+	Vue.use(DatatableFactory);
+ */
 class DatatableFactory {
-    constructor(){
-        this.vueConstructor = undefined;
-        this.table_types = {};
-        this.use_default_type = true;
-        this.default_table_settings = new Settings();
-    }
+	/**
+	 * Initialize the default factory
+	 */
+	constructor(){
+		/** @member {Vue | undefined} - A reference to the Vue instance the plugin is installed in. */
+		this.vueConstructor = undefined;
+		/** @member {Dictionary<TableType>} - Registry of declared table types. */
+		this.tableTypes = {};
+		/** @member {boolean} - Controls whetever the module should register a default table type automatically. */
+		this._useDefaultType = true;
+		/** @member {Settings} - Base settings instance to merge with custom table type settings. */
+		this.defaultTableSettings = new Settings();
+	}
 
-    useDefaultType(value){
-        this.use_default_type = !!value;
+	/**
+	 * Controls the definition of default table type.
+	 * 
+	 * @param {boolean} use - `true` to use the default type, false otherwise.
+	 * @returns {this} - For chaining.
+	 */
+	useDefaultType(use){
+		this._useDefaultType = !!use;
 
-        if(this.vueConstructor){
-            if(value){
-                this.installTableType(this.table_types[DEFAULT_DATATABLE].getId(), this.table_types[DEFAULT_DATATABLE], Vue);
-            } else {
-                delete this.vueConstructor.options.components[DEFAULT_DATATABLE];
-                delete this.vueConstructor.options.components[DEFAULT_DATATABLE + '-pager'];
-            }
-            
-        }
-        return this;
-    }
+		if (this.vueConstructor){
+			if (use){
+				this.installTableType(this.tableTypes[DEFAULT_DATATABLE].getId(), this.tableTypes[DEFAULT_DATATABLE], this.vueConstructor);
+			} else {
+				delete this.vueConstructor.options.components[DEFAULT_DATATABLE];
+				delete this.vueConstructor.options.components[`${ DEFAULT_DATATABLE }-pager`];
+			}
+			
+		}
+		return this;
+	}
 
-    registerTableType(component_name, callback){
-        let table_type = new TableType(component_name);
+	/**
+	 * Creates a new table type with a specified prefix, that you can customize using a callback.
+	 * 
+	 * @param {string} componentName - The name of the component to register.
+	 * @param {function} callback - An optional function to execute, that configures the newly created {@link TableType}. It takes a single parameter: the newly created {@link TableType}
+	 * @returns {this} - For chaining.
+	 */
+	registerTableType(componentName, callback){
+		const tableType = new TableType(componentName);
 
-        this.table_types[component_name] = table_type;
+		this.tableTypes[componentName] = tableType;
 
-        if(callback && typeof callback === 'function'){
-            callback(table_type);
-        }
+		if (callback && typeof callback === 'function'){
+			callback(tableType);
+		}
 
-        if(this.vueConstructor){
-            this.installTableType(component_name, table_type, this.vueConstructor);
-        }
+		if (this.vueConstructor){
+			this.installTableType(componentName, tableType, this.vueConstructor);
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-    install(Vue){
-        Vue.prototype.$datatables = {};
+	/**
+	 * Declares global components exported by vuejs-datatable, & load configs.
+	 * You should add table types to the {@link table_types} list before this function is called.
+	 * 
+	 * @param {Vue} Vue - The global Vue instance.
+	 * @returns {void}
+	 */
+	install(Vue){
+		Vue.prototype.$datatables = {};
 
-        Vue.component(DEFAULT_DATATABLE + '-cell', VueDatatableCell);
-        Vue.component(DEFAULT_DATATABLE + '-header', VueDatatableHeader);
-        Vue.component(DEFAULT_DATATABLE + '-button', VueDatatablePagerButton);
+		Vue.component(`${ DEFAULT_DATATABLE  }-cell`, VueDatatableCell);
+		Vue.component(`${ DEFAULT_DATATABLE  }-header`, VueDatatableHeader);
+		Vue.component(`${ DEFAULT_DATATABLE  }-button`, VueDatatablePagerButton);
 
-        this.registerTableType(DEFAULT_DATATABLE, function(table_type){
-            table_type.mergeSettings(this.default_table_settings.properties);
-        }.bind(this));
-        
-        for(var i in this.table_types){
-            if(this.use_default_type || i !== DEFAULT_DATATABLE){
-                this.installTableType(this.table_types[i].getId(), this.table_types[i], Vue);
-            }
-        }
+		if (this.tableTypes.hasOwnProperty(DEFAULT_DATATABLE)){
+			this._useDefaultType = true;
+		} else {
+			this.registerTableType(DEFAULT_DATATABLE, tableType => {
+				tableType.mergeSettings(this.defaultTableSettings.properties);
+			});
+		}
+		
+		for (const i in this.tableTypes){
+			if (this._useDefaultType || i !== DEFAULT_DATATABLE){
+				this.installTableType(this.tableTypes[i].getId(), this.tableTypes[i], Vue);
+			}
+		}
+		
+		this.vueConstructor = Vue;
+	}
 
-        this.vueConstructor = Vue;
-    }
-
-    installTableType(id, table_type, Vue){
-        Vue.component(id, table_type.getTableDefinition());
-        Vue.component(id + '-pager', table_type.getPagerDefinition());
-    }
+	/**
+	 * Declares a pair of components (a Datatable & a Datatable-Pager) sharing a config.
+	 * 
+	 * @param {string} id - The base name of the datatable type.
+	 * @param {TableType} tableType - The configuration object that describes both datatable & the related pager.
+	 * @param {Vue} Vue - The global Vue instance.
+	 * @returns {void}
+	 */
+	installTableType(id, tableType, Vue){
+		Vue.component(id, tableType.getTableDefinition());
+		Vue.component(`${ id }-pager`, tableType.getPagerDefinition());
+	}
 }
 
 export default DatatableFactory;

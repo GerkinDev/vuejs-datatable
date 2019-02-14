@@ -1,18 +1,16 @@
 import Vue from 'vue';
 import Column from '../../../src/classes/column.js';
 
-const vm = new Vue();
-
 Vue.component('test-component', {
+	props:    [ 'row' ],
 	template: `
 		<span>Test Component</span>
 	`,
-	props: ['row']
 });
 
 export default () => {
-    it('normalizes properties', () => {
-        let column = new Column({});
+	it('normalizes properties', () => {
+		const column = new Column({});
 
 		expect(column.label).toBe('');
 		expect(column.align).toBe('left');
@@ -20,81 +18,79 @@ export default () => {
 		expect(column.representedAs).toBe(null);
 		expect(column.component).toBe(null);
 		expect(column.sortable).toBe(false);
-        expect(column.filterable).toBe(false);
-    });
+		expect(column.filterable).toBe(false);
+	});
 
-    it('sets label', () => {
-        let column = new Column({
-			label: 'test'
+	it('sets label', () => {
+		const column = new Column({
+			label: 'test',
 		});
 
 		expect(column.label).toBe('test');
-    });
+	});
 
 	it('sets alignment', () => {
-		let column_r = new Column({
-			align: 'right'
+		const columnR = new Column({
+			align: 'right',
 		});
-		let column_c = new Column({
-			align: 'center'
+		const columnC = new Column({
+			align: 'center',
 		});
-		let column_l = new Column({
-			align: 'bogus'
+		const columnL = new Column({
+			align: 'bogus',
 		});
-		let column = new Column({
-			align: 'CeNTeR'
+		const column = new Column({
+			align: 'CeNTeR',
 		});
 
-		expect(column_r.align).toBe('right');
-		expect(column_c.align).toBe('center');
-		expect(column_l.align).toBe('left');
+		expect(columnR.align).toBe('right');
+		expect(columnC.align).toBe('center');
+		expect(columnL.align).toBe('left');
 		expect(column.align).toBe('center');
 	});
 
-    it('sets field', () => {
-        let column = new Column({
-			field: 'user.name'
+	it('sets field', () => {
+		const column = new Column({
+			field: 'user.name',
 		});
 
 		expect(column.field).toBe('user.name');
-    });
+	});
 
-    it('sets callback', () => {
-        let column = new Column({
-			representedAs: function(row){
-				return 'test';
-			}
+	it('sets callback', () => {
+		const column = new Column({
+			representedAs: () =>'test',
 		});
 
 		expect(typeof column.representedAs).toBe('function');
 		expect(column.getRepresentation(null)).toBe('test');
 		expect(column.getValue(null)).toBe('test');
-    });
+	});
 
-    it('sets component', () => {
-        let column = new Column({
-			component: 'test-component'
+	it('sets component', () => {
+		const column = new Column({
+			component: 'test-component',
 		});
 
 		expect(column.component).toBe('test-component');
-    });
+	});
 
-    it('sets sortability', () => {
+	it('sets sortability', () => {
 		// components should not be sortable by default
 		expect((new Column({
-			component: 'test-component'
+			component: 'test-component',
 		})).sortable).toBe(false);
 
 		// component columns that specify a field should be sortable
 		expect((new Column({
-			field: 'test',
-			component: 'test-component'
+			field:     'test',
+			component: 'test-component',
 		})).sortable).toBe(true);
 
 		// component columns that specify a representation should be sortable
 		expect((new Column({
-			component: 'test-component',
-			representedAs: function(row){return 'test';}
+			component:     'test-component',
+			representedAs: () =>'test',
 		})).sortable).toBe(true);
 
 		// column with no field or representation should not be sortable
@@ -102,18 +98,18 @@ export default () => {
 
 		// columns with a field should be sortable
 		expect((new Column({
-			field: 'test'
+			field: 'test',
 		})).sortable).toBe(true);
 
 		// columns with a representation should be sortable
 		expect((new Column({
-			representedAs: function(row){return 'test';}
+			representedAs: () =>'test',
 		})).sortable).toBe(true);
 
 		// columns marked as unsortable should not be sortable
 		expect((new Column({
-			field: 'test',
-			sortable: false
+			field:    'test',
+			sortable: false,
 		})).sortable).toBe(false);
-    });
-}
+	});
+};

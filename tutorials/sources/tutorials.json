@@ -1,0 +1,23 @@
+{
+    "basic": {
+        "title": "Basic table"
+    },
+    "ajax": {
+        "title": "Ajax table"
+    },
+    "custom-template": {
+        "title": "Custom template"
+    },
+    "custom-theme": {
+        "title": "Custom theme"
+    },
+    "multiple-tables": {
+        "title": "Multiple tables"
+    },
+    "no-paginator": {
+        "title": "No paginator"
+    },
+    "pager-styles": {
+        "title": "Styling the paginator"
+    }
+}

@@ -1,96 +1,157 @@
 import { get } from 'object-path';
 
+/**
+ * A class responsible for handling a full column with its header.
+ */
 class Column {
-    constructor(props){
-        this.setAlignment(props.align);
-        this.label = props.label || '';
-        this.field = props.field || null;
-        this.representedAs = props.representedAs || null;
-        this.component = props.component || null;
-        this.interpolate = props.interpolate || false;
-        this.headerComponent = props.headerComponent || null;
-        this.sortable = this.isSortable(props);
-        this.filterable = this.isFilterable(props);
-        this.headerClass = props.headerClass || '';
-    }
+	/**
+	 * Defines a new column.
+	 * 
+	 * @param {object} props - A configuration object for the column.
+	 * @param {string} [props.align = ''] - The alignment direction of the cells in this column.
+	 * @param {string} [props.label = ''] - The label displayed in the header.
+	 * @param {string} [props.field = ''] - The name of the field in the row object.
+	 * @param {function} [props.representedAs] - A transformation function that returns the string to display
+	 * @param {*} [props.component] - .... Yeah I don't know what it is.
+	 * @param {boolean} [props.interpolate = false] - Set to true to convert the return value of `props.representedAs` to HTML.
+	 * @param {VueDatatableHeader} [props.headerComponent] - The header cell component of the column.
+	 * @param {boolean} [props.sortable = true] - Controls whetever this column can be sorted.
+	 * @param {boolean} [props.filterable = true] - Controls whetever this column can be filtered.
+	 * @param {string} [props.headerClass = ''] - The base CSS class to apply to the header component.
+	 */
+	constructor(props){
+		/** @member {string} - The alignment direction of the cells in this column. */
+		this.setAlignment(props.align);
+		/** @member {string} - The label displayed in the header. */
+		this.label = props.label || '';
+		/** @member {string} - The name of the field in the row object. */
+		this.field = props.field || null;
+		/** @member {function | null} - A transformation function that returns the string to display */
+		this.representedAs = props.representedAs || null;
+		/** @member {* | null} - .... Yeah I don't know what it is. */
+		this.component = props.component || null;
+		/** @member {boolean} - Set to true to convert the return value of `props.representedAs` to HTML. */
+		this.interpolate = props.interpolate || false;
+		/** @member {VueDatatableHeader | null} - The header cell component of the column. */
+		this.headerComponent = props.headerComponent || null;
+		/** @member {boolean} - Controls whetever this column can be sorted. */
+		this.sortable = this.isSortable(props);
+		/** @member {boolean} - Controls whetever this column can be filtered. */
+		this.filterable = this.isFilterable(props);
+		/** @member {string} - The base CSS class to apply to the header component. */
+		this.headerClass = props.headerClass || '';
+	}
 
-    setAlignment(value){
-        if(!value || typeof value !== 'string'){
-            this.align = 'left';
+	/**
+	 * Set the display alignment of cells of this column. If the provided parameter is not recognized, it will default to `left`.
+	 * 
+	 * @param {string} value - The alignment of the column. Must be one of `left`, `center` or `right`.
+	 * @returns {this} - For chaining.
+	 */
+	setAlignment(value){
+		if (!value || typeof value !== 'string'){
+			this.align = 'left';
 
-            return this;
-        }
+			return this;
+		}
 
-        if(value.toLowerCase() === 'center'){
-            this.align = 'center';
+		if (value.toLowerCase() === 'center'){
+			this.align = 'center';
 
-            return this;
-        }
+			return this;
+		}
 
-        if(value.toLowerCase() === 'right'){
-            this.align = 'right';
+		if (value.toLowerCase() === 'right'){
+			this.align = 'right';
 
-            return this;
-        }
+			return this;
+		}
 
-        this.align = 'left';
+		this.align = 'left';
 
-        return this;
-    }
+		return this;
+	}
 
-    isFilterable(props){
-        if(props.filterable === false){
-            return false;
-        }
+	/**
+	 * Check if the column can be filtered.
+	 * 
+	 * @param {object} props - The column definition object
+	 * @returns {boolean} - `true` if the column can be filtered, `false` otherwise
+	 */
+	isFilterable(props){
+		if (props.filterable === false){
+			return false;
+		}
 
-        if(!props.field && !props.representedAs){
-            return false;
-        }
+		if (!props.field && !props.representedAs){
+			return false;
+		}
 
-        if(this.component && !(this.representedAs || this.field)){
-            return false;
-        }
+		if (this.component && !(this.representedAs || this.field)){
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    isSortable(props){
-        if(props.sortable === false){
-            return false;
-        }
+	/**
+	 * Check if the column can be sorted.
+	 * 
+	 * @param {object} props - The column definition object
+	 * @returns {boolean} - `true` if the column can be sorted, `false` otherwise
+	 */
+	isSortable(props){
+		if (props.sortable === false){
+			return false;
+		}
 
-        if(!props.field && !props.representedAs){
-            return false;
-        }
+		if (!props.field && !props.representedAs){
+			return false;
+		}
 
-        if(this.component && !(this.representedAs || this.field)){
-            return false;
-        }
+		if (this.component && !(this.representedAs || this.field)){
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    getRepresentation(row) {
-        if(this.representedAs && typeof this.representedAs === 'function'){
-            return this.representedAs(row);
-        }
+	/**
+	 * Converts a row to its string representation for the current column.
+	 * 
+	 * @param {object} row - The row to convert
+	 * @returns {string} - The string representation of this row in the current column.
+	 */
+	getRepresentation(row) {
+		if (this.representedAs && typeof this.representedAs === 'function'){
+			return this.representedAs(row);
+		}
 
-        if(this.component && this.filterable){
-            return this.plain_text_function(row, this);
-        }
+		return get(row, this.field);
+	}
 
-        return get(row, this.field);
-    }
+	/**
+	 * Alias for {@link getRepresentation}.
+	 * 
+	 * @param {object} row - The row to convert
+	 * @returns {string} - The string representation of this row in the current column.
+	 */
+	getValue(row){
+		return this.getRepresentation(row);
+	}
 
-    getValue(row){
-        return this.getRepresentation(row);
-    }
+	/**
+	 * Check if the provided row's representation matches a certain filter string.
+	 * 
+	 * @param {object} row - The row to check.
+	 * @param {string} filterString - The filter string to test.
+	 * @returns {boolean} - `true` if the row matches the filter, `false` otherwise.
+	 */
+	matches(row, filterString) {
+		const colRepresentation = (`${  this.getRepresentation(row)  }`).toLowerCase();
 
-    matches(row, filter_string) {
-        let col_representation = ('' + this.getRepresentation(row) + '').toLowerCase();
-
-        return col_representation.indexOf(filter_string.toLowerCase()) !== -1;
-    }
+		return colRepresentation.indexOf(filterString.toLowerCase()) !== -1;
+	}
 }
 
 export default Column;
