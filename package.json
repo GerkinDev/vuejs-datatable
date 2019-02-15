@@ -16,7 +16,9 @@
     "version": "npm run build && npm run doc && git add docs",
     "prepublishOnly": "npm run build",
     "release": "standard-version",
-    "prerelease": "standard-version --prerelease"
+    "prerelease": "standard-version --prerelease",
+
+    "prepare": "npm i && npm run version"
   },
   "keywords": [
     "Vue.js",
