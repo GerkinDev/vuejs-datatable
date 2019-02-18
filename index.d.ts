@@ -114,7 +114,7 @@ declare module 'vuejs-datatable'{
 		 * The name of the field in the row object.
 		 * You can use `representedAs` for further customization
 		 */
-		field: keyof TRow;
+		field?: keyof TRow;
 		/**
 		 * Transformation function that returns the string to display
 		 * 
@@ -124,7 +124,7 @@ declare module 'vuejs-datatable'{
 		/**
 		 * Yeah I don't know what it is.
 		 */
-		component:any;
+		component?:any;
 		/**
 		 * Set to true to convert the return value of `props.representedAs` to HTML.
 		 * Defaults to `false`
