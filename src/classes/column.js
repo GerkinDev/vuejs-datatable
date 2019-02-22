@@ -35,9 +35,9 @@ class Column {
 		/** @member {VueDatatableHeader | null} - The header cell component of the column. */
 		this.headerComponent = props.headerComponent || null;
 		/** @member {boolean} - Controls whetever this column can be sorted. */
-		this.sortable = this.isSortable(props);
+		this.sortable = Column.isSortable(props);
 		/** @member {boolean} - Controls whetever this column can be filtered. */
-		this.filterable = this.isFilterable(props);
+		this.filterable = Column.isFilterable(props);
 		/** @member {string} - The base CSS class to apply to the header component. */
 		this.headerClass = props.headerClass || '';
 	}
@@ -73,25 +73,37 @@ class Column {
 	}
 
 	/**
+	 * Check if the column use plain text value (eg `representedAs` or `field`, but not `component`)
+	 * If multiple representation props are provided, it is considered as plain text if there are alternatives to `component`
+	 * 
+	 * @param {object} props - The column definition object
+	 * @returns {boolean} - `true` if the column can be represented by plain text, `false` otherwise
+	 */
+	static isPlainTextField(props){
+		if (!props.field && !props.representedAs){
+			return false;
+		}
+
+		if (props.component && !(props.representedAs || props.field)){
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check if the column can be filtered.
 	 * 
 	 * @param {object} props - The column definition object
 	 * @returns {boolean} - `true` if the column can be filtered, `false` otherwise
 	 */
-	isFilterable(props){
+	static isFilterable(props){
+		// If the option is explicitly disabled, use it
 		if (props.filterable === false){
 			return false;
 		}
 
-		if (!props.field && !props.representedAs){
-			return false;
-		}
-
-		if (this.component && !(this.representedAs || this.field)){
-			return false;
-		}
-
-		return true;
+		return this.isPlainTextField(props);
 	}
 
 	/**
@@ -100,20 +112,13 @@ class Column {
 	 * @param {object} props - The column definition object
 	 * @returns {boolean} - `true` if the column can be sorted, `false` otherwise
 	 */
-	isSortable(props){
+	static isSortable(props){
+		// If the option is explicitly disabled, use it
 		if (props.sortable === false){
 			return false;
 		}
 
-		if (!props.field && !props.representedAs){
-			return false;
-		}
-
-		if (this.component && !(this.representedAs || this.field)){
-			return false;
-		}
-
-		return true;
+		return this.isPlainTextField(props);
 	}
 
 	/**
@@ -133,6 +138,7 @@ class Column {
 	/**
 	 * Alias for {@link getRepresentation}.
 	 * 
+	 * @deprecated It will be removed in v2.0.0. Please use `getRepresentation` instead.
 	 * @param {object} row - The row to convert
 	 * @returns {string} - The string representation of this row in the current column.
 	 */
