@@ -4,3 +4,5 @@ node_modules/
 tutorials/builds/
 
 tutorials/assets/assets/vuejs-datatable\.js
+
+coverage/
