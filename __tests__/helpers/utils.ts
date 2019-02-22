@@ -12,7 +12,7 @@ import Vue from 'vue';
 //   // more assertions...
 // })
 // .then(done)
-export const waitForUpdate = initialCb => {
+export const waitForUpdate = (initialCb?: Function) => {
 	let end;
 	const queue = initialCb ? [ initialCb ] : [];
 
