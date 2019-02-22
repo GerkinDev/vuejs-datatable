@@ -30,10 +30,13 @@ class DatatableFactory {
 	/**
 	 * Controls the definition of default table type.
 	 * 
-	 * @param {boolean} use - `true` to use the default type, false otherwise.
-	 * @returns {this} - For chaining.
+	 * @param {boolean} [use] - `true` to use the default type, false otherwise. If not provided, this method is a getter function
+	 * @returns {this | boolean} - `this` for chaining, or the value if `use` is undefined
 	 */
 	useDefaultType(use){
+		if (typeof use !== 'boolean' && !use){
+			return this._useDefaultType;
+		}
 		this._useDefaultType = !!use;
 
 		if (this.vueConstructor){
@@ -52,7 +55,7 @@ class DatatableFactory {
 	 * Creates a new table type with a specified prefix, that you can customize using a callback.
 	 * 
 	 * @param {string} componentName - The name of the component to register.
-	 * @param {function} callback - An optional function to execute, that configures the newly created {@link TableType}. It takes a single parameter: the newly created {@link TableType}
+	 * @param {function} [callback] - An optional function to execute, that configures the newly created {@link TableType}. It takes a single parameter: the newly created {@link TableType}
 	 * @returns {this} - For chaining.
 	 */
 	registerTableType(componentName, callback){
@@ -81,9 +84,9 @@ class DatatableFactory {
 	install(Vue){
 		Vue.prototype.$datatables = {};
 
-		Vue.component(`${ DEFAULT_DATATABLE  }-cell`, VueDatatableCell);
-		Vue.component(`${ DEFAULT_DATATABLE  }-header`, VueDatatableHeader);
-		Vue.component(`${ DEFAULT_DATATABLE  }-button`, VueDatatablePagerButton);
+		Vue.component(`${ DEFAULT_DATATABLE }-cell`, VueDatatableCell);
+		Vue.component(`${ DEFAULT_DATATABLE }-header`, VueDatatableHeader);
+		Vue.component(`${ DEFAULT_DATATABLE }-button`, VueDatatablePagerButton);
 
 		if (this.tableTypes.hasOwnProperty(DEFAULT_DATATABLE)){
 			this._useDefaultType = true;

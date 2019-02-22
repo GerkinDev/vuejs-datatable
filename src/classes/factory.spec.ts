@@ -1,65 +1,101 @@
 import Factory from './factory.js';
+import { createLocalVue } from '@vue/test-utils';
 
+beforeEach(() => {
+	jest.clearAllMocks();
+});
 it('is initialized with empty types', () => {
-	const handler = new Factory();
-	
-	expect(handler.tableTypes instanceof Object).toBe(true);
-	expect(Object.keys(handler.tableTypes)).toHaveLength(0);
+	const factory = new Factory();
+
+	expect(factory.tableTypes instanceof Object).toBe(true);
+	expect(Object.keys(factory.tableTypes)).toHaveLength(0);
 });
 
 it('is initialized using default datatable type', () => {
-	const handler = new Factory();
-	
-	expect(handler.useDefaultType()).toBe(true);
+	const factory = new Factory();
+
+	expect(factory.useDefaultType()).toBe(true);
 });
 
 it('can disable default datatable type', () => {
-	const handler = new Factory();
-	
-	expect(handler.useDefaultType()).toBe(true);
-	
-	handler.useDefaultType(false);
-	
-	expect(handler.useDefaultType()).toBe(false);
+	const factory = new Factory();
+
+	expect(factory.useDefaultType()).toBe(true);
+
+	factory.useDefaultType(false);
+
+	expect(factory.useDefaultType()).toBe(false);
 });
 
-it('can register a new datatable type', () => {
-	const handler = new Factory();
-	
-	expect(Object.keys(handler.tableTypes)).toHaveLength(0);
-	
-	handler.registerTableType('testtable');
-	
-	expect(Object.keys(handler.tableTypes)).toHaveLength(1);
-	expect(handler.tableTypes).toHaveProperty('testtable');
-});
+describe('Registration', () => {
+	it('can register a new datatable type', () => {
+		const factory = new Factory();
 
-it('registration passes callback that can customize settings', () => {
-	const handler = new Factory();
-	
-	handler.registerTableType('testtable', tableType => {
-		expect(typeof tableType).toBe('object');
-		expect(typeof tableType.mergeSettings).toBe('function');
-		expect(typeof tableType.setting).toBe('function');
+		expect(Object.keys(factory.tableTypes)).toHaveLength(0);
+
+		factory.registerTableType('testtable');
+
+		expect(Object.keys(factory.tableTypes)).toHaveLength(1);
+		expect(factory.tableTypes).toHaveProperty('testtable');
+	});
+
+	it('registration passes callback that can customize settings', () => {
+		const factory = new Factory();
+		const registerCb = jest.fn();
+
+		factory.registerTableType('testtable', registerCb);
+		expect(registerCb).toHaveBeenCalledTimes(1);
+		expect(registerCb).toHaveBeenCalledWith(factory.tableTypes.testtable);
 	});
 });
 
-it('registration passes callback that can customize handler', () => {
-	const handler = new Factory();
-	
-	handler.registerTableType('testtable', tableType => {
-		expect(typeof tableType).toBe('object');
-		expect(typeof tableType.setFilterHandler).toBe('function');
-		expect(typeof tableType.setSortHandler).toBe('function');
-		expect(typeof tableType.setPaginateHandler).toBe('function');
-		expect(typeof tableType.setDisplayHandler).toBe('function');
+describe('Installation', () => {
+	it('Can be installed into Vue', () => {
+		const factory = new Factory();
+
+		expect(typeof factory.install).toBe('function');
+		jest.spyOn(factory, 'installTableType').mockImplementation();
+		const localVue = createLocalVue();
+		factory.install(localVue as any);
+		expect(factory.installTableType).toHaveBeenCalledTimes(1);
+		expect(factory.installTableType).toHaveBeenCalledWith('datatable', factory.tableTypes.datatable, localVue);
+	});
+
+	it('Queue registration while not installed', () => {
+		const factory = new Factory();
+
+		jest.spyOn(factory, 'installTableType').mockImplementation();
+
+		factory.registerTableType('foo');
+		factory.registerTableType('bar');
+		expect(factory.installTableType).toHaveBeenCalledTimes(0);
+
+		const localVue = createLocalVue();
+		factory.install(localVue as any);
+
+		expect(factory.installTableType).toHaveBeenCalledTimes(3);
+		expect(factory.installTableType).toHaveBeenCalledWith('datatable', factory.tableTypes.datatable, localVue);
+		expect(factory.installTableType).toHaveBeenCalledWith('foo', factory.tableTypes.foo, localVue);
+		expect(factory.installTableType).toHaveBeenCalledWith('bar', factory.tableTypes.bar, localVue);
+	});
+
+	it('Registrer immediately once installed', () => {
+		const factory = new Factory();
+
+		jest.spyOn(factory, 'installTableType').mockImplementation();
+
+		const localVue = createLocalVue();
+		factory.install(localVue as any);
+
+		expect(factory.installTableType).toHaveBeenCalledTimes(1);
+		expect(factory.installTableType).toHaveBeenLastCalledWith('datatable', factory.tableTypes.datatable, localVue);
+
+		factory.registerTableType('foo');
+		expect(factory.installTableType).toHaveBeenCalledTimes(2);
+		expect(factory.installTableType).toHaveBeenLastCalledWith('foo', factory.tableTypes.foo, localVue);
+
+		factory.registerTableType('bar');
+		expect(factory.installTableType).toHaveBeenCalledTimes(3);
+		expect(factory.installTableType).toHaveBeenLastCalledWith('bar', factory.tableTypes.bar, localVue);
 	});
 });
-
-it('can be installed into Vue', () => {
-	const handler = new Factory();
-	
-	expect(typeof handler.install).toBe('function');
-});
-
-it.todo('Test IIFE register/deregister');
