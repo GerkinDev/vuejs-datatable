@@ -112,5 +112,5 @@ Browse the full documentation at [https://vuejs-datatable.patrickstephan.me](htt
 
 ## Attributions
 
-* [Patrick Stephan](https://github.com/pstephan1187/): Original author
+* [Patrick Stephan](https://www.patrickstephan.me): Original author
 * [Alexandre Germain](https://github.com/GerkinDev/): Current maintainer
