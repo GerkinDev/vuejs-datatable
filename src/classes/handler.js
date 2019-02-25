@@ -1,3 +1,12 @@
+// From https://stackoverflow.com/a/48660568/4839162
+const stableSort = (arr, compare) => arr
+	.map((item, index) => ({
+		item,
+		index,
+	}))
+	.sort((a, b) => compare(a.item, b.item) || a.index - b.index)
+	.map(({item}) => item);
+
 /** 
  * This class exposes the main method used to manipulate table data, like filtering, sorting, or paginating. You can override instance's members to customize the behavior of your datatable.
  */
@@ -7,54 +16,36 @@ class Handler {
 	 */
 	constructor(){
 		/**
-		 * @member {Function} - Handler responsible of filtering data rows. Defaults to {@link Handler#handleFilter}.
+		 * @member {Function} - Handler responsible of filtering data rows. Defaults to {@link Handler#defaultFilterHandler}.
 		 */
-		this.filterHandler = this.handleFilter;
+		this.filterHandler = this.defaultFilterHandler;
 		/**
-		 * @member {Function} - Handler responsible of sorting data rows. Defaults to {@link Handler#handleSort}.
+		 * @member {Function} - Handler responsible of sorting data rows. Defaults to {@link Handler#defaultSortHandler}.
 		 */
-		this.sortHandler = this.handleSort;
+		this.sortHandler = this.defaultSortHandler;
 		/**
-		 * @member {Function} - Handler responsible of selecting the correct page in the data rows. Defaults to {@link Handler#handlePaginate}.
+		 * @member {Function} - Handler responsible of selecting the correct page in the data rows. Defaults to {@link Handler#defaultPaginateHandler}.
 		 */
-		this.paginateHandler = this.handlePaginate;
-		/**
-		 * @member {Function} - Handler with unknown usage.... Defaults to {@link Handler#handleDisplay}.
-		 */
-		this.displayHandler = this.handleDisplay;
+		this.paginateHandler = this.defaultPaginateHandler;
 	}
 	/**
 	 * Filter the provided rows, checking if at least a cell contains one of the specified filters.
 	 * 
 	 * @param {Row[]} data - The data rows to filter
-	 * @param {string[]} filter - The strings to search in cells.
+	 * @param {string[] | string | undefined} filters - The strings to search in cells.
 	 * @param {Column[]} columns - The columns of the table.
 	 * @returns {Row[]} The filtered data rows.
 	 */
-	handleFilter(data, filter, columns){
-		if (!filter){
+	defaultFilterHandler(data, filters, columns){
+		if (!Array.isArray(filters)) {
+			filters = (filters || '').split(/\s/).filter(v => !!v);
+		}
+		
+		if (filters.length === 0){
 			return data;
 		}
 
-		if (!Array.isArray(filter)) {
-			filter = [ filter ];
-		}
-
-		return data.filter(row => {
-			for (const j in filter) {
-				const filterStrings = filter[j].split(/\s/);
-				let matched = true;
-				for (const i in filterStrings){
-					if (!this.rowMatches(row, filterStrings[i], columns)){
-						matched = false;
-					}
-				}
-				if (matched) {
-					return true;
-				}
-			}
-			return false;
-		});
+		return data.filter(row => filters.some(filter => this.rowMatches(row, filter, columns)));
 	}
 	/**
 	 * Check if the provided row contains the filter string in *any* column.
@@ -65,13 +56,7 @@ class Handler {
 	 * @returns {boolean} `true` if any column contains the searched string.
 	 */
 	rowMatches(row, filterString, columns){
-		for (const i in columns){
-			if (columns[i].matches(row, filterString)){
-				return true;
-			}
-		}
-
-		return false;
+		return columns.some(column => column.matches(row, filterString));
 	}
 	/**
 	 * Sort the given rows depending on a specific column & sort order.
@@ -81,12 +66,12 @@ class Handler {
 	 * @param {'asc' | 'desc' | null} sortDir - The direction of the sort.
 	 * @returns {Row[]} The sorted rows.
 	 */
-	handleSort(filteredData, sortColumn, sortDir){
+	defaultSortHandler(filteredData, sortColumn, sortDir){
 		if (!sortColumn || sortDir === null){
 			return filteredData;
 		}
 
-		return filteredData.sort((a, b) => {
+		return stableSort(filteredData, (a, b) => {
 			const valA = sortColumn.getRepresentation(a);
 			const valB = sortColumn.getRepresentation(b);
 
@@ -111,32 +96,19 @@ class Handler {
 	 * @param {number} pageNumber - The index of the page to display.
 	 * @returns {Row[]} The requested page's rows.
 	 */
-	handlePaginate(sortedData, perPage, pageNumber){
-		if (!perPage){
-			return sortedData;
+	defaultPaginateHandler(sortedData, perPage, pageNumber){
+		if (perPage < 1){
+			throw new RangeError(`Pagination requires at least 1 item per page, have ${ perPage }`);
 		}
 
 		if (pageNumber < 1){
-			pageNumber = 1;
+			throw new RangeError(`Pagination requires being applied to page 1 or more, have ${ pageNumber }`);
 		}
 
 		const startIndex = (pageNumber - 1) * perPage;
 		const endIndex = (pageNumber * perPage);
 
 		return sortedData.slice(startIndex, endIndex);
-	}
-	/**
-	 * Really I don't know...
-	 * 
-	 * @param {*} processedData -
-	 * @param {*} processSteps -
-	 * @param {*} setRows -
-	 * @param {*} setTotalRowCount -
-	 * @returns {void} Nothing.
-	 */
-	handleDisplay(processedData, processSteps, setRows, setTotalRowCount){
-		setRows(processedData);
-		setTotalRowCount(processSteps.filteredData.length);
 	}
 }
 
