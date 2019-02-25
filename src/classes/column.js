@@ -80,15 +80,7 @@ class Column {
 	 * @returns {boolean} - `true` if the column can be represented by plain text, `false` otherwise
 	 */
 	static isPlainTextField(props){
-		if (!props.field && !props.representedAs){
-			return false;
-		}
-
-		if (props.component && !(props.representedAs || props.field)){
-			return false;
-		}
-
-		return true;
+		return !!(props.field || props.representedAs);
 	}
 
 	/**
@@ -133,17 +125,6 @@ class Column {
 		}
 
 		return get(row, this.field);
-	}
-
-	/**
-	 * Alias for {@link getRepresentation}.
-	 * 
-	 * @deprecated It will be removed in v2.0.0. Please use `getRepresentation` instead.
-	 * @param {object} row - The row to convert
-	 * @returns {string} - The string representation of this row in the current column.
-	 */
-	getValue(row){
-		return this.getRepresentation(row);
 	}
 
 	/**

@@ -69,8 +69,6 @@ it('sets callback', () => {
 
 	expect(typeof column.representedAs).toBe('function');
 	expect(column.getRepresentation(testObj)).toBe('test');
-// tslint:disable-next-line: deprecation
-	expect(column.getValue(testObj)).toBe('test');
 	expect(repFn).toHaveBeenCalledTimes(2);
 	expect(repFn).toHaveBeenNthCalledWith(1, testObj);
 	expect(repFn).toHaveBeenNthCalledWith(2, testObj);
@@ -123,15 +121,15 @@ it('sets sortability', () => {
 });
 describe('Is plain text field', () => {
 	it.each`
-	field        | representedAs  | component     | expected
-	${undefined} | ${undefined}   | ${undefined}  | ${false}
-	${'foo'}     | ${undefined}   | ${undefined}  | ${true}
-	${'foo'}     | ${() => 'foo'} | ${undefined}  | ${true}
-	${'foo'}     | ${undefined}   | ${'foo'}      | ${true}
-	${'foo'}     | ${() => 'foo'} | ${'foo'}      | ${true}
-	${undefined} | ${() => 'foo'} | ${undefined}  | ${true}
-	${undefined} | ${() => 'foo'} | ${'foo'}      | ${true}
-	${undefined} | ${undefined}   | ${'foo'}      | ${false}`(
+field        | representedAs  | component     | expected
+${undefined} | ${undefined}   | ${undefined}  | ${false}
+${'foo'}     | ${undefined}   | ${undefined}  | ${true}
+${'foo'}     | ${() => 'foo'} | ${undefined}  | ${true}
+${'foo'}     | ${undefined}   | ${'foo'}      | ${true}
+${'foo'}     | ${() => 'foo'} | ${'foo'}      | ${true}
+${undefined} | ${() => 'foo'} | ${undefined}  | ${true}
+${undefined} | ${() => 'foo'} | ${'foo'}      | ${true}
+${undefined} | ${undefined}   | ${'foo'}      | ${false}`(
 		'Field "$field", represented as "$representedAs", and component "$component" should be $expected',
 		({ expected, ...colProps }) => {
 			expect(Column.isPlainTextField(colProps)).toBe(expected);
