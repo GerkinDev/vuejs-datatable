@@ -14,17 +14,15 @@ class TableType {
 	 */
 	constructor(id){
 		/**
+		 * @private
 		 * @member {string} - Identifier of the table type
 		 */
-		this.id = id;
+		this._id = id;
 
-		/**
-		 * @member {Handler} - Handler associated with the table type
-		 */
+		/** @member {Handler} - Handler associated with the table type */
 		this.handler = new Handler();
-		/**
-		 * @member {Settings} - Settings object used to get various values for the datatable & other components
-		 */
+		
+		/** @member {Settings} - Settings object used to get various values for the datatable & other components */
 		this.settings = new Settings();
 	}
 
@@ -33,8 +31,8 @@ class TableType {
 	 * 
 	 * @returns {string} The ID if the table type
 	 */
-	getId(){
-		return this.id;
+	get id(){
+		return this._id;
 	}
 
 	/**
@@ -72,19 +70,6 @@ class TableType {
 	 */
 	setPaginateHandler(closure){
 		this.handler.paginateHandler = closure;
-
-		return this;
-	}
-
-	/**
-	 * Defines the function used to display data
-	 * 
-	 * @see Handler.handleDisplay
-	 * @param {Function} closure - The function to use for display.
-	 * @returns {this} For chaining.
-	 */
-	setDisplayHandler(closure){
-		this.handler.displayHandler = closure;
 
 		return this;
 	}
@@ -140,7 +125,7 @@ class TableType {
 	getPagerDefinition(){
 		const definition = this.clone(VueDatatablePager);
 		definition.settings = this.settings;
-        definition.name = this.id + '-pager';
+		definition.name = `${ this.id }-pager`;
 
 		return definition;
 	}
@@ -154,19 +139,9 @@ class TableType {
 	clone(obj) {
 		let copy;
 
-		if (obj === null || typeof obj !== 'object') {
-			return obj;
-		}
-
 		// Handle Array
 		if (obj instanceof Array) {
-			copy = [];
-
-			for (let i = 0; i < obj.length; i++) {
-				copy[i] = this.clone(obj[i]);
-			}
-
-			return copy;
+			return obj.map(v => this.clone(v));
 		}
 
 		// Handle Object
@@ -181,8 +156,8 @@ class TableType {
 
 			return copy;
 		}
-
-		throw new Error('Unable to copy obj! Its type isn\'t supported.');
+		
+		return obj;
 	}
 }
 
