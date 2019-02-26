@@ -27,7 +27,7 @@ it('can override properties', () => {
     });
 
     expect(settings.get('table.class')).toBe('table class');
-    expect(settings.get('table.sorting.classes.canSort')[0]).toBe('sort');
+	expect(settings.get('table.sorting.sortAsc')).toBe('↓');
     expect(settings.get('pager.classes.selected')).toBe('active');
     expect(settings.get('pager.classes.disabled')).toBe('disabled');
     expect(settings.get('pager.icons.previous')).toBe('&lt;');

@@ -32,24 +32,11 @@ it('sets label', () => {
 	expect(column.label).toBe('test');
 });
 
-it('sets alignment', () => {
-	const columnR = new Column({
-		align: 'right'
-	});
-	const columnC = new Column({
-		align: 'center'
-	});
-	const columnL = new Column({
-		align: 'bogus'
-	});
-	const column = new Column({
-		align: 'CeNTeR'
-	});
-
-	expect(columnR.align).toBe('right');
-	expect(columnC.align).toBe('center');
-	expect(columnL.align).toBe('left');
-	expect(column.align).toBe('center');
+it('Should normalize alignment', () => {
+	expect(Column.normalizeAlignment('right')).toBe('right');
+	expect(Column.normalizeAlignment('LEFT')).toBe('left');
+	expect(Column.normalizeAlignment('foo')).toBe('left');
+	expect(Column.normalizeAlignment('foo', 'center')).toBe('center');
 });
 
 it('sets field', () => {
@@ -162,4 +149,22 @@ describe('Check sortability', () => {
 		expect(plainTextFieldMock).toHaveBeenCalledTimes(1);
 		expect(plainTextFieldMock).toHaveBeenCalledWith(obj);
 	});
+});
+it('Should accept any kind of data for `match`', () => {
+	const col = new Column({});
+	const mockGetRepresentation = jest.spyOn(col, 'getRepresentation');
+
+	mockGetRepresentation.mockReturnValue('1');
+	expect(col.matches({ foo: 1 }, '1')).toBe(true);
+	mockGetRepresentation.mockReturnValue('2');
+	expect(col.matches({ foo: 2 }, '1')).toBe(true);
+	mockGetRepresentation.mockReturnValue('azErty');
+	expect(col.matches({ foo: 'azErty' }, 'Aze')).toBe(true);
+
+	mockGetRepresentation.mockReturnValue('1');
+	expect(col.matches({ foo: 1 }, '3')).toBe(false);
+	mockGetRepresentation.mockReturnValue('2');
+	expect(col.matches({ foo: 2 }, '1')).toBe(false);
+	mockGetRepresentation.mockReturnValue('azerty');
+	expect(col.matches({ foo: 'azerty' }, 'qwe')).toBe(false);
 });

@@ -23,14 +23,11 @@ class Settings {
 					classes: [ '' ],
 				},
 				sorting: {
-					classes: {
-						canSort:  [ 'sort' ],
-						sortNone: [ 'glyphicon', 'glyphicon-sort' ],
-						sortAsc:  [ 'glyphicon', 'glyphicon-sort-by-alphabet' ],
-						sortDesc: [ 'glyphicon', 'glyphicon-sort-by-alphabet-alt' ],
+					sortNone: '↕',
+					sortAsc:  '↓',
+					sortDesc: '↑',
 					},
 				},
-			},
 			pager: {
 				classes: {
 					pager:    'pagination',

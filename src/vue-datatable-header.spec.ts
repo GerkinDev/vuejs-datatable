@@ -1,137 +1,138 @@
+jest.mock('./classes/column');
+jest.mock('./classes/settings');
 import { createLocalVue, mount } from '@vue/test-utils';
 import Column from './classes/column.js';
-import Settings from './classes/settings.js';
+import Settings, { get } from './classes/settings.js';
 import DatatableHeader from './vue-datatable-header.vue';
 
 const localVue = createLocalVue();
-const Ctor = localVue.extend(DatatableHeader);
 
 const settings = new Settings();
 
 it('builds expected base html', () => {
-	const wrapper = mount(Ctor, {
+	const wrapper = mount(DatatableHeader, {
 		propsData: {
 			column: new Column({
-				label: 'Column Label',
+				label: 'Column Label'
 			}),
-			settings: settings,
-		},
+			settings: settings
+		}
 	});
 
-	expect(wrapper.element.style.textAlign).toBe('left');
 	expect(wrapper.element.children.length).toBe(1);
 	expect(wrapper.element.children[0]).toBeInstanceOf(HTMLSpanElement);
 	expect(wrapper.element.children[0].innerHTML.trim()).toBe('Column Label');
 });
 
 it('can change text alignment', () => {
-	const wrapperC = mount(Ctor, {
+	const wrapperL = mount(DatatableHeader, {
 		propsData: {
-			column: new Column({
-				label: 'Column Label',
-				align: 'center',
-			}),
-			settings: settings,
-		},
+			column: new Column({ headerAlign: 'left' }),
+			settings: settings
+		}
 	});
+	expect(wrapperL.element.style.textAlign).toBe('left');
 
+	const wrapperC = mount(DatatableHeader, {
+		propsData: {
+			column: new Column({ headerAlign: 'center' }),
+			settings: settings
+		}
+	});
 	expect(wrapperC.element.style.textAlign).toBe('center');
 
-	const wrapperR = mount(Ctor, {
+	const wrapperR = mount(DatatableHeader, {
 		propsData: {
-			column: new Column({
-				label: 'Column Label',
-				align: 'right',
-			}),
-			settings: settings,
-		},
+			column: new Column({ headerAlign: 'right' }),
+			settings: settings
+		}
 	});
-
 	expect(wrapperR.element.style.textAlign).toBe('right');
 });
 
-it('will hide non-sortability', () => {
-	const wrapper1 = mount(Ctor, {
-		propsData: {
-			column: new Column({
-				label: 'Column Label',
-			}),
-			settings: settings,
-		},
+it('Should show/hide the sort HTML', () => {
+	get.mockReturnValue({
+		sortAsc: '<button>ASC</button>',
+		sortDesc: '<button>DESC</button>',
+		sortNone: '<button>NONE</button>'
 	});
-
-	expect(wrapper1.element.children.length).toBe(1);
-	expect(wrapper1.element.children[0]).toBeInstanceOf(HTMLSpanElement);
-	expect(wrapper1.element.children[0].innerHTML.trim()).toBe('Column Label');
-
-	const wrapper2 = mount(Ctor, {
+	const col = new Column({});
+	col.sortable = true;
+	const wrapper1 = mount(DatatableHeader, {
 		propsData: {
-			column: new Column({
-				label: 'Column Label',
-				representedAs: () =>'',
-				sortable:      false,
-			}),
-			settings: settings,
-		},
+			column: col,
+			settings: settings
+		}
+	});
+	expect(wrapper1.element.children.length).toBe(2);
+	expect(wrapper1.element.children[0]).toBeInstanceOf(HTMLSpanElement);
+	expect(get).toHaveBeenCalledWith('table.sorting');
+	expect(wrapper1.element.children[1]).toBeInstanceOf(HTMLSpanElement);
+	expect(wrapper1.element.children[1].innerHTML).toBe('<button>NONE</button>');
+
+	col.sortable = false;
+	const wrapper2 = mount(DatatableHeader, {
+		propsData: {
+			column: col,
+			settings: settings
+		}
 	});
 	expect(wrapper2.element.children.length).toBe(1);
 	expect(wrapper2.element.children[0]).toBeInstanceOf(HTMLSpanElement);
-	expect(wrapper2.element.children[0].innerHTML.trim()).toBe('Column Label');
 });
 
-it('will display sortability', () => {
-	const wrapper = mount(Ctor, {
-		propsData: {
-			column: new Column({
-				label: 'Column Label',
-				representedAs: () => '',
-			}),
-			settings: settings,
-		},
+it('Should get the correct sort HTML', () => {
+	get.mockReturnValue({
+		sortAsc: '<button>ASC</button>',
+		sortDesc: '<button>DESC</button>',
+		sortNone: '<button>NONE</button>'
 	});
-
-	expect(wrapper.element.children.length).toBe(2);
-	expect(wrapper.element.children[0]).toBeInstanceOf(HTMLSpanElement);
-	expect(wrapper.element.children[0].innerHTML.trim()).toBe('Column Label');
-	expect(wrapper.element.children[1]).toBeInstanceOf(HTMLSpanElement);
-	expect(wrapper.element.children[1].className).toBe('sort glyphicon glyphicon-sort');
-});
-
-it('will use correct classes for sort display', () => {
-	const wrapper = mount<any>(Ctor, {
+	const col = new Column({});
+	const wrapper = mount<any>(DatatableHeader, {
 		propsData: {
-			column: new Column({
-				label: 'Column Label',
-				representedAs: () => '',
-			}),
-			settings: settings,
-		},
+			column: col,
+			settings: settings
+		}
 	});
-
-	expect(wrapper.vm.canSort).toBe(true);
-	expect(wrapper.vm.isSorted).toBe(false);
-	expect(wrapper.vm.isSortedAscending).toBe(false);
-	expect(wrapper.vm.isSortedDescending).toBe(false);
-	expect(wrapper.vm.classes).toBe('sort glyphicon glyphicon-sort');
 
 	wrapper.setProps({ direction: 'asc' });
-	expect(wrapper.vm.canSort).toBe(true);
-	expect(wrapper.vm.isSorted).toBe(true);
-	expect(wrapper.vm.isSortedAscending).toBe(true);
-	expect(wrapper.vm.isSortedDescending).toBe(false);
-	expect(wrapper.vm.classes).toBe('sort glyphicon glyphicon-sort-by-alphabet');
-
+	expect(wrapper.vm.sortButtonHtml).toBe('<button>ASC</button>');
 	wrapper.setProps({ direction: 'desc' });
-	expect(wrapper.vm.canSort).toBe(true);
-	expect(wrapper.vm.isSorted).toBe(true);
-	expect(wrapper.vm.isSortedAscending).toBe(false);
-	expect(wrapper.vm.isSortedDescending).toBe(true);
-	expect(wrapper.vm.classes).toBe('sort glyphicon glyphicon-sort-by-alphabet-alt');
-
+	expect(wrapper.vm.sortButtonHtml).toBe('<button>DESC</button>');
 	wrapper.setProps({ direction: null });
-	expect(wrapper.vm.canSort).toBe(true);
-	expect(wrapper.vm.isSorted).toBe(false);
-	expect(wrapper.vm.isSortedAscending).toBe(false);
-	expect(wrapper.vm.isSortedDescending).toBe(false);
-	expect(wrapper.vm.classes).toBe('sort glyphicon glyphicon-sort');
+	expect(wrapper.vm.sortButtonHtml).toBe('<button>NONE</button>');
+});
+
+it('Should cycle correctly between sort states', () => {
+	const col = new Column({});
+	col.sortable = false;
+	const wrapper = mount<any>(DatatableHeader, {
+		propsData: {
+			column: col,
+			settings: settings
+		}
+	});
+
+	wrapper.vm.toggleSort();
+	expect(wrapper.emitted().change).toBeFalsy();
+	Object.defineProperty(wrapper.vm, 'canSort', { value: true });
+	wrapper.vm.toggleSort();
+	expect(wrapper.emitted().change).toHaveLength(1);
+	expect(wrapper.emitted().change[0][0]).toBe('asc');
+	expect(wrapper.emitted().change[0][1]).toBe(col);
+	wrapper.setProps({ direction: 'asc' });
+	wrapper.vm.toggleSort();
+	expect(wrapper.emitted().change).toHaveLength(2);
+	expect(wrapper.emitted().change[1][0]).toBe('desc');
+	expect(wrapper.emitted().change[1][1]).toBe(col);
+	wrapper.setProps({ direction: 'desc' });
+	wrapper.vm.toggleSort();
+	expect(wrapper.emitted().change).toHaveLength(3);
+	expect(wrapper.emitted().change[2][0]).toBe(null);
+	expect(wrapper.emitted().change[2][1]).toBe(col);
+	wrapper.setProps({ direction: null });
+	wrapper.vm.toggleSort();
+	expect(wrapper.emitted().change).toHaveLength(4);
+	expect(wrapper.emitted().change[3][0]).toBe('asc');
+	expect(wrapper.emitted().change[3][1]).toBe(col);
 });

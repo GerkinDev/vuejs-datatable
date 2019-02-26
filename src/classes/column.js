@@ -8,7 +8,8 @@ class Column {
 	 * Defines a new column.
 	 * 
 	 * @param {object} props - A configuration object for the column.
-	 * @param {string} [props.align = ''] - The alignment direction of the cells in this column.
+	 * @param {'left'|'center'|'right'} [props.align = 'left'] - The alignment direction of the cells in this column.
+	 * @param {'left'|'center'|'right'} [props.headerAlign = 'center'] - The alignment direction of the cells in this column.
 	 * @param {string} [props.label = ''] - The label displayed in the header.
 	 * @param {string} [props.field = ''] - The name of the field in the row object.
 	 * @param {function} [props.representedAs] - A transformation function that returns the string to display
@@ -21,55 +22,45 @@ class Column {
 	 */
 	constructor(props){
 		/** @member {string} - The alignment direction of the cells in this column. */
-		this.setAlignment(props.align);
-		/** @member {string} - The label displayed in the header. */
-		this.label = props.label || '';
+		this.align = Column.normalizeAlignment(props.align, 'left');
+		/** @member {* | null} - .... Yeah I don't know what it is. */
+		this.component = props.component || null;
 		/** @member {string} - The name of the field in the row object. */
 		this.field = props.field || null;
 		/** @member {function | null} - A transformation function that returns the string to display */
 		this.representedAs = props.representedAs || null;
-		/** @member {* | null} - .... Yeah I don't know what it is. */
-		this.component = props.component || null;
 		/** @member {boolean} - Set to true to convert the return value of `props.representedAs` to HTML. */
 		this.interpolate = props.interpolate || false;
+
+		/** @member {string} - The alignment direction of the header of this column. */
+		this.headerAlign = Column.normalizeAlignment(props.headerAlign, 'center');
 		/** @member {VueDatatableHeader | null} - The header cell component of the column. */
 		this.headerComponent = props.headerComponent || null;
+		/** @member {string} - The base CSS class to apply to the header component. */
+		this.headerClass = props.headerClass || '';
+		/** @member {string} - The label displayed in the header. */
+		this.label = props.label || '';
+
 		/** @member {boolean} - Controls whetever this column can be sorted. */
 		this.sortable = Column.isSortable(props);
 		/** @member {boolean} - Controls whetever this column can be filtered. */
 		this.filterable = Column.isFilterable(props);
-		/** @member {string} - The base CSS class to apply to the header component. */
-		this.headerClass = props.headerClass || '';
 	}
 
 	/**
-	 * Set the display alignment of cells of this column. If the provided parameter is not recognized, it will default to `left`.
+	 * Normalize the alignment, using the requested default value.
 	 * 
-	 * @param {string} value - The alignment of the column. Must be one of `left`, `center` or `right`.
-	 * @returns {this} - For chaining.
+	 * @param {*} align - The raw desired alignment
+	 * @param {'left'|'center'|'right'} defaultAlign - The default alignment to use, if the 1st parameter isn't recognized
+	 * @returns {'left'|'center'|'right'} The normalized alignment
 	 */
-	setAlignment(value){
-		if (!value || typeof value !== 'string'){
-			this.align = 'left';
-
-			return this;
+	static normalizeAlignment(align, defaultAlign = 'left'){
+		const lowerAlign = align.toLowerCase();
+		if (align && typeof align === 'string' && [ 'left', 'center', 'right' ].includes(lowerAlign)){
+			return lowerAlign;
+		} else {
+			return defaultAlign;
 		}
-
-		if (value.toLowerCase() === 'center'){
-			this.align = 'center';
-
-			return this;
-		}
-
-		if (value.toLowerCase() === 'right'){
-			this.align = 'right';
-
-			return this;
-		}
-
-		this.align = 'left';
-
-		return this;
 	}
 
 	/**
@@ -137,7 +128,7 @@ class Column {
 	matches(row, filterString) {
 		const colRepresentation = (`${  this.getRepresentation(row)  }`).toLowerCase();
 
-		return colRepresentation.indexOf(filterString.toLowerCase()) !== -1;
+		return colRepresentation.indexOf(filterString.toLowerCase()) > -1;
 	}
 }
 

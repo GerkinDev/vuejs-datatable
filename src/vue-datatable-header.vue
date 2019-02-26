@@ -1,9 +1,8 @@
-<style></style>
-
 <template>
 	<th
-		:style="{'text-align': column.align}"
-		:class="column.headerClass">
+		:style="{'text-align': column.headerAlign, cursor: canSort ? 'pointer' : 'auto'}"
+		:class="column.headerClass"
+		@click="toggleSort">
 		<component
 			:is="column.headerComponent"
 			v-if="column.headerComponent"
@@ -12,9 +11,8 @@
 			{{ column.label }}
 		</span>
 		<span
-			v-if="column.sortable"
-			:class="classes"
-			@click="toggleSort" />
+			v-if="canSort"
+			v-html="sortButtonHtml" />
 	</th>
 </template>
 
@@ -66,41 +64,19 @@ export default {
 		isSorted(){
 			return this.isSortedAscending || this.isSortedDescending;
 		},
-		classes(){
-			const availableClasses = this.settings.get('table.sorting.classes');
-			let classes = availableClasses.canSort;
-
-			if (!this.canSort){
-				return '';
-			}
-
-			if (!this.isSorted){
-				classes = classes.concat(availableClasses.sortNone);
-
-				return this.joinClasses(classes);
-			}
+		sortButtonHtml(){
+			const htmlContents = this.settings.get('table.sorting');
 
 			if (this.isSortedAscending){
-				classes = classes.concat(availableClasses.sortAsc);
+				return htmlContents.sortAsc;
+			} else if (this.isSortedDescending){
+				return htmlContents.sortDesc;
+			} else {
+				return htmlContents.sortNone;
 			}
-
-			if (this.isSortedDescending){
-				classes = classes.concat(availableClasses.sortDesc);
-			}
-
-			return this.joinClasses(classes);
 		},
 	},
 	methods: {
-		/**
-		 * Join an array of HTML classes to a single string.
-		 * 
-		 * @param {string[]} classes - The classes to concatenate.
-		 * @returns {string} The concatenated HTML classes.
-		 */
-		joinClasses(classes){
-			return classes.filter((v, i, a) => a.indexOf(v) === i).join(' ');
-		},
 		/**
 		 * Toggles the sort order, looping between states `null => 'asc' => 'desc'`.
 		 * 
@@ -108,6 +84,9 @@ export default {
 		 * @returns {void} Nothing.
 		 */
 		toggleSort(){
+			if (!this.canSort){
+				return;
+			}
 			if (!this.direction || this.direction === null){
 				this.$emit('change', 'asc', this.column);
 			} else if (this.direction === 'asc'){

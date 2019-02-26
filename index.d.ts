@@ -107,6 +107,11 @@ declare module 'vuejs-datatable'{
 		 */
 		align?: 'left' | 'right' | 'center';
 		/**
+		 * The alignment direction of the header of this column.
+		 * Defaults to `'center'`
+		 */
+		headerAlign?: 'left' | 'right' | 'center';
+		/**
 		 * The label displayed in the header.
 		 */
 		label: string;
