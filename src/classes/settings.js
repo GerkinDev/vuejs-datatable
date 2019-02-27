@@ -26,13 +26,12 @@ class Settings {
 					sortNone: '↕',
 					sortAsc:  '↓',
 					sortDesc: '↑',
-					},
 				},
+			},
 			pager: {
 				classes: {
 					pager:    'pagination',
 					li:       '',
-					a:        '',
 					selected: 'active',
 					disabled: 'disabled',
 				},
@@ -79,20 +78,21 @@ class Settings {
 		return this;
 	}
 
+	/**
+	 * Merges two objects deeply, and return the 1st parameter once transformed.
+	 * 
+	 * @private
+	 * @param {*} obj1 - The base item to merge, which will be returned.
+	 * @param {*} obj2 - The object to inject into `obj1`.
+	 * @returns {*} The first object once merged.
+	 */
 	_mergeObjects(obj1, obj2){
 		for (const key in obj2){
-
-			if (obj2[key] === null){
-				obj1[key] = obj2[key];
-
-				continue;
-			} else if (typeof obj2[key] === 'object'){
+			if (typeof obj2[key] === 'object'){
 				obj1[key] = this._mergeObjects(obj1[key], obj2[key]);
-
-				continue;
+			} else {
+				obj1[key] = obj2[key];
 			}
-
-			obj1[key] = obj2[key];
 		}
 
 		return obj1;

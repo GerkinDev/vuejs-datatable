@@ -1,13 +1,11 @@
 <style></style>
 
 <template>
-	<li :class="liClasses">
-		<a
-			href="javascript: void(0);"
-			:class="aClasses"
-			@click="sendClick">
-			<slot>{{ value }}</slot>
-		</a>
+	<li 
+		:style="{cursor: disabled ? 'not-allowed' : 'pointer'}"
+		:class="liClasses"
+		@click="sendClick">
+		<slot>{{ value }}</slot>
 	</li>
 </template>
 
@@ -37,16 +35,13 @@ export default {
 		},
 		value: {
 			type:     Number,
-			required: true,
+			required: false,
+			default:  null,
 		},
 	},
 	computed: {
 		liClasses(){
-			const classes = [];
-
-			if (this.settings.get('pager.classes.li')){
-				classes.push(this.settings.get('pager.classes.li'));
-			}
+			const classes = [ this.settings.get('pager.classes.li') ];
 
 			if (this.disabled){
 				classes.push(this.settings.get('pager.classes.disabled'));
@@ -56,16 +51,7 @@ export default {
 				classes.push(this.settings.get('pager.classes.selected'));
 			}
 
-			return classes.join(' ');
-		},
-		aClasses(){
-			const classes = [];
-
-			if (this.settings.get('pager.classes.a')){
-				classes.push(this.settings.get('pager.classes.a'));
-			}
-
-			return classes.join(' ');
+			return classes.filter(v => !!v).join(' ');
 		},
 		settings(){
 			return this.$parent.settings;
