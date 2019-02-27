@@ -1,254 +1,143 @@
-import { createLocalVue } from '@vue/test-utils';
-import DatatableFactory from './classes/factory.js';
-import { waitForUpdate } from '../__tests__/helpers/utils';
+jest.mock('./classes/settings');
+import { createLocalVue, mount } from '@vue/test-utils';
+import DatatablePagerComponent from './vue-datatable-pager.vue';
+import Settings, { get } from './classes/settings';
+import * as flushPromises from 'flush-promises';
 
 const localVue = createLocalVue();
-localVue.use(new DatatableFactory());
-
-// Vue.component('datatable-button', DatatablePagerButton);
-//
-// DatatablePager.settings = new Settings;
-// const Ctor = Vue.extend(DatatablePager);
-const DtCtor = localVue.options.components['datatable'];
-const Ctor = localVue.options.components['datatable-pager'];
-
-function setupVue(propsData?: object, callback?: Function){
-	if (!propsData){
-		propsData = {};
-	}
-
-	window.vim = new DtCtor({propsData: propsData});
-
-	if (typeof callback === 'function'){
-		callback(window.vim);
-	}
-
-	window.vim.$mount();
-
-	return window.vim;
-}
-
-afterEach(() => {
-	if (window.vm){
-		window.vm.$destroy(true);
-	}
-
-	if (localVue.$datatables.default){
-		localVue.$datatables.default = null;
-	}
+localVue.component('datatable-button', {
+	render (createElement) {
+		return createElement('li', this.$slots.default || this.value);
+	},
+	props: { value: { type: Number } }
 });
 
-it('builds base HTML for long type', done => {
-	const dt = setupVue({
-		data:    [{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}],
-		columns: [{
-			'label': 'ID',
-			field:   'id',
-		}],
+beforeEach(() => {
+	jest.clearAllMocks();
+	localVue.prototype.$datatables = {};
+});
+
+describe('HTML content', () => {
+	it('builds base HTML for long type', async () => {
+		get.mockImplementation(p => ({ 'pager.icons.previous': 'PREV', 'pager.icons.next': 'NEXT' })[p]);
+		localVue.prototype.$datatables = { default: { totalRows: 15 } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { type: 'long' } } as any);
+		await flushPromises();
+
+		expect(wrapper.element.nodeName).toBe('NAV');
+		expect(wrapper.element.textContent.trim().replace(/[\s\n]+/g, ' ')).toBe('12');
+		expect(wrapper.element.children.length).toBe(1);
+		expect(wrapper.element.children[0].nodeName).toBe('UL');
+		expect(wrapper.element.children[0].children.length).toBe(2);
 	});
+	it('builds base HTML for short type', async () => {
+		get.mockImplementation(p => ({ 'pager.icons.previous': 'PREV', 'pager.icons.next': 'NEXT' })[p]);
+		localVue.prototype.$datatables = { default: { totalRows: 15 } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { type: 'short' } } as any);
+		await flushPromises();
 
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
+		expect(wrapper.element.nodeName).toBe('NAV');
+		expect(wrapper.element.textContent.trim().replace(/[\s\n]+/g, ' ')).toBe('PREV 1 NEXT');
+		expect(get).toHaveBeenCalledWith('pager.icons.previous');
+		expect(get).toHaveBeenCalledWith('pager.icons.next');
+		expect(wrapper.element.children.length).toBe(1);
+		expect(wrapper.element.children[0].nodeName).toBe('UL');
+		expect(wrapper.element.children[0].children.length).toBe(3);
+	});
+	it('builds base HTML for abbreviated type', async () => {
+		get.mockImplementation(p => ({ 'pager.icons.previous': 'PREV', 'pager.icons.next': 'NEXT' })[p]);
+		localVue.prototype.$datatables = { default: { totalRows: 100 } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { type: 'abbreviated' } } as any);
+		await flushPromises();
 
-	expect(vm.$el.nodeName).toBe('NAV');
-	expect(vm.$el.textContent).toBe('12');
-	expect(vm.$el.children.length).toBe(1);
-	expect(vm.$el.children[0].nodeName).toBe('UL');
-	expect(vm.$el.children[0].children.length).toBe(2);
+		expect(wrapper.element.nodeName).toBe('NAV');
+		expect(wrapper.element.textContent.trim().replace(/[\s\n]+/g, ' ')).toBe('1 2 3 ... 10');
+		expect(wrapper.element.children.length).toBe(1);
+		expect(wrapper.element.children[0].nodeName).toBe('UL');
+		expect(wrapper.element.children[0].children.length).toBe(5);
+	});
+	it('builds base HTML for abbreviated type on center page', async () => {
+		get.mockImplementation(p => ({ 'pager.icons.previous': 'PREV', 'pager.icons.next': 'NEXT' })[p]);
+		localVue.prototype.$datatables = { default: { totalRows: 100 } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { type: 'abbreviated', page: 5 } } as any);
+		await flushPromises();
 
-	vm.type = 'short';
-
-	waitForUpdate(() => {
-		expect(vm.$el.nodeName).toBe('NAV');
-		expect(vm.$el.textContent).toBe('< 1 >');
-		expect(vm.$el.children.length).toBe(1);
-		expect(vm.$el.children[0].nodeName).toBe('UL');
-		expect(vm.$el.children[0].children.length).toBe(3);
-
-		vm.type = 'abbreviated';
-		dt.data = [
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-			{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1},
-		];
-	}).then(() => {
-		expect(vm.$el.nodeName).toBe('NAV');
-		expect(vm.$el.textContent.trim()).toBe('1 2 3 ... 10');
-		expect(vm.$el.children.length).toBe(1);
-		expect(vm.$el.children[0].nodeName).toBe('UL');
-		expect(vm.$el.children[0].children.length).toBe(5);
-
-		vm.page = 5;
-	}).then(() => {
-		expect(vm.$el.textContent.trim()).toBe('1 ... 3 4 5 6 7 ... 10');
-	}).then(done);
+		expect(wrapper.element.nodeName).toBe('NAV');
+		expect(wrapper.element.textContent.trim().replace(/[\s\n]+/g, ' ')).toBe('1 ... 3 4 5 6 7 ... 10');
+		expect(wrapper.element.children.length).toBe(1);
+		expect(wrapper.element.children[0].nodeName).toBe('UL');
+		expect(wrapper.element.children[0].children.length).toBe(9);
+	});
 });
 
 it('returns the correct pagination class', () => {
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
+	get.mockReturnValue('PAGINATION');
+	const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings() } as any);
 
-	expect(vm.paginationClass).toBe('pagination');
+	expect(wrapper.vm.paginationClass).toBe('PAGINATION');
+	expect(get).toHaveBeenCalledTimes(1);
+	expect(get).toHaveBeenCalledWith('pager.classes.pager');
 });
 
-it('returns the correct disabled class', () => {
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
-
-	expect(vm.disabledClass).toBe('disabled');
-});
-
-it('returns the correct next link classes', () => {
-	setupVue({
-		data:    [{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}],
-		columns: [{
-			'label': 'ID',
-			field:   'id',
-		}],
+describe('Pages count calculation', () => {
+	it.each([
+		[15, 5, 3],
+		[20, 2, 10],
+		[16, 5, 4],
+		[0, 15, null],
+		[15, 0, null]
+	])('returns the correct total number of pages (%d items, %d items per page, %p expected pages)', (items: number, perPage: number, pages: number) => {
+		localVue.prototype.$datatables = { default: { totalRows: items } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { perPage } } as any);
+		expect(wrapper.vm.totalPages).toBe(pages);
 	});
-
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
-
-	expect(vm.nextLinkClasses).toBe('');
-
-	const vm2 = (new Ctor({
-		propsData: {
-			perPage: 15,
-		},
-	})).$mount();
-
-	expect(vm2.nextLinkClasses).toBe('disabled');
 });
 
-it('returns the correct previous link classes', () => {
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
+describe('properly adjusts the selected page', () => {
+	it('properly adjusts the selected page when total pages changes', async () => {
+		localVue.prototype.$datatables = { default: { totalRows: 15 } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { perPage: 2, page: 5 } } as any);
 
-	expect(vm.previousLinkClasses).toBe('disabled');
+		expect(wrapper.vm.page).toBe(5);
 
-	const vm2 = (new Ctor({
-		propsData: {
-			perPage: 2,
-		},
-	})).$mount();
+		localVue.prototype.$datatables.default.totalRows = 50;
+		await flushPromises();
 
-	expect(vm2.previousLinkClasses).toBe('disabled');
+		expect(wrapper.emitted().change).toBeFalsy();
 
-	const vm3 = (new Ctor({
-		propsData: {
-			perPage: 2,
-			page:    2,
-		},
-	})).$mount();
+		localVue.prototype.$datatables.default.totalRows = 8;
+		await flushPromises();
 
-	expect(vm3.previousLinkClasses).toBe('');
-});
+		expect(wrapper.emitted().change).toHaveLength(1);
+		expect(wrapper.emitted().change[0]).toHaveLength(1);
+		expect(wrapper.emitted().change[0][0]).toBe(4);
 
-it('returns the correct total number of pages', () => {
-	setupVue({
-		data:    [{id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}],
-		columns: [{
-			'label': 'ID',
-			field:   'id',
-		}],
+		localVue.prototype.$datatables.default.totalRows = 20;
+		await flushPromises();
+
+		expect(wrapper.emitted().change).toHaveLength(1);
 	});
+	it('properly adjusts the selected page when items per page changes', async () => {
+		localVue.prototype.$datatables = { default: { totalRows: 15 } };
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { perPage: 2, page: 5 } } as any);
 
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
+		expect(wrapper.vm.page).toBe(5);
 
-	expect(vm.totalPages).toBe(2);
+		wrapper.setProps({ perPage: 3 });
+		await flushPromises();
 
-	const vm2 = (new Ctor({
-		propsData: {
-			perPage: 2,
-		},
-	})).$mount();
+		expect(wrapper.emitted().change).toBeFalsy();
 
-	expect(vm2.totalPages).toBe(8);
+		wrapper.setProps({ perPage: 4 });
+		await flushPromises();
 
-	const vm3 = (new Ctor({
-		propsData: {
-			perPage: 5,
-		},
-	})).$mount();
+		expect(wrapper.emitted().change).toHaveLength(1);
+		expect(wrapper.emitted().change[0]).toHaveLength(1);
+		expect(wrapper.emitted().change[0][0]).toBe(4);
 
-	expect(vm3.totalPages).toBe(3);
-});
+		wrapper.setProps({ perPage: 2 });
+		await flushPromises();
 
-it('returns the correct next icon', () => {
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
-
-	expect(vm.nextIcon).toBe('&gt;');
-});
-
-it('returns the correct previous icon', () => {
-	const vm = (new Ctor({
-		propsData: {},
-	})).$mount();
-
-	expect(vm.previousIcon).toBe('&lt;');
-});
-
-it('returns the correct page class', () => {
-	const vm = (new Ctor({
-		propsData: {
-			perPage: 2,
-		},
-	})).$mount();
-
-	expect(vm.getClassForPage(1)).toBe('active');
-
-	const vm2 = (new Ctor({
-		propsData: {
-			perPage: 2,
-			page:    2,
-		},
-	})).$mount();
-
-	expect(vm2.getClassForPage(1)).toBe('');
-});
-
-it('properly adjusts the selected page when total pages changes', done => {
-	setupVue({
-		data:    [{id: 4}, {id: 4}, {id: 4}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}, {id: 1}],
-		columns: [{
-			'label': 'ID',
-			field:   'id',
-		}],
+		expect(wrapper.emitted().change).toHaveLength(1);
 	});
-
-	const vm = (new Ctor({
-		propsData: {
-			page:    5,
-			perPage: 2,
-		},
-	})).$mount();
-
-	expect(vm.page).toBe(5);
-	const spy = jasmine.createSpy('changeCallback');
-
-	vm.$on('change', spy);
-
-	vm.tableInstance.filterBy = '4';
-
-	waitForUpdate(() => {
-		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith(2);
-	}).then(done);
 });

@@ -143,26 +143,9 @@ export default {
 		paginationClass(){
 			return this.settings.get('pager.classes.pager');
 		},
-		disabledClass(){
-			return this.settings.get('pager.classes.disabled');
-		},
-		previousLinkClasses(){
-			if (this.page - 1 < 1){
-				return this.settings.get('pager.classes.disabled');
-			}
-
-			return '';
-		},
-		nextLinkClasses(){
-			if (this.page + 1 > this.totalPages){
-				return this.settings.get('pager.classes.disabled');
-			}
-
-			return '';
-		},
 		totalPages(){
-			if (!(this.totalRows > 0)){
-				return 0;
+			if (this.totalRows <= 0 || this.perPage <= 0){
+				return null;
 			}
 
 			return Math.ceil(this.totalRows / this.perPage);
@@ -184,17 +167,16 @@ export default {
 			}
 		},
 		perPage(){
-			let page = this.page;
-
-			if (page > this.totalPages){
-				page = this.totalPages;
+			// Skip change if no need to change page
+			if (this.page <= this.totalPages){
+				return;
 			}
 
-			this.setPageNum(page);
+			this.setPageNum(this.totalPages);
 		},
 	},
 	created(){
-		if (this.$datatables[this.table]){
+		if (this.$datatables && this.$datatables[this.table]){
 			this.tableInstance = this.$datatables[this.table];
 			this.tableInstance.perPage = this.perPage;
 			return;
@@ -220,19 +202,6 @@ export default {
 			this.tableInstance.perPage = this.perPage;
 
 			this.$emit('change', pageIndex);
-		},
-		/**
-		 * Get the page classes for the specified page index.
-		 *
-		 * @param {number} pageIndex - The page index to get class for.
-		 * @returns {string} HTML classes to apply on the specified page button.
-		 */
-		getClassForPage(pageIndex){
-			if (this.page === pageIndex){
-				return this.settings.get('pager.classes.selected');
-			}
-
-			return '';
 		},
 	},
 	settings: null,
