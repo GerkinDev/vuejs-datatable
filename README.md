@@ -109,3 +109,8 @@ new Vue({
 ## Documentation
 
 Browse the full documentation at [https://vuejs-datatable.patrickstephan.me](https://vuejs-datatable.patrickstephan.me).
+
+## Attributions
+
+* [Patrick Stephan](https://www.patrickstephan.me): Original author
+* [Alexandre Germain](https://github.com/GerkinDev/): Current maintainer
