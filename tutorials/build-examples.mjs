@@ -13,7 +13,7 @@ import utils from './build-utils.js';
 const {
 	__dirname, writeInBlock, rollupize,
 } = utils;
-process.env.BUILD = 'production';
+process.env.BUILD = 'demo';
 
 const tutorialSourcesDir = join(__dirname, 'sources');
 const tutorialOutDir = join(__dirname, 'builds');

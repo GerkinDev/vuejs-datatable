@@ -4,6 +4,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import { string } from 'rollup-plugin-string';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
+import license from 'rollup-plugin-license';
 
 import { env } from 'process';
 // The module name
@@ -25,7 +26,19 @@ const plugins = [
 		},
 	}),
 	resolve(),
-	env.BUILD === 'production' ? terser() : undefined,
+	[ 'production', 'demo' ].includes(env.BUILD) ? terser() : undefined,
+	env.BUILD === 'production' ? 
+		license({
+			banner: `<%= pkg.name %> v<%= pkg.version %>
+License: <%= pkg.license %>
+Repository: <%= pkg.repository.url %>
+Generated on <%= moment().format('YYYY-MM-DD [at] HH:mm:ss') %>.
+By <%= [pkg.author].concat(pkg.contributors).map(p => {
+	if(_.isString(p)) return p;
+	return p.name + (p.email ? '<' + p.email + '>' : '') + (p.url ? ' (' + p.url + ')' : '')
+}).join(', ') %>`,
+		}) :
+		undefined,
 	// Filter out `undefined` plugins
 ].filter(v => !!v);
 
