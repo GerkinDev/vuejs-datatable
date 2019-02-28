@@ -8,5 +8,6 @@
     "automerge": false
   },
   "branchPrefix": "greenkeeper/",
-  "groupName": "all"
+  "groupName": "all",
+  "rangeStrategy": "replace"
 }
