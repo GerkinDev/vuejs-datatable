@@ -1,5 +1,3 @@
-<style></style>
-
 <template>
 	<td :style="{'text-align': column.align}">
 		<component
@@ -7,12 +5,12 @@
 			v-if="column.component"
 			:row="row"
 			:column="column" />
-		<span
+		<template
 			v-else-if="column.interpolate"
-			v-html="content" />
-		<span v-else>
+			v-html="content"></template>
+		<template v-else>
 			{{ content }}
-		</span>
+		</template>
 	</td>
 </template>
 

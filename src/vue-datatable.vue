@@ -1,5 +1,3 @@
-<style></style>
-
 <template>
 	<table :class="tableClass">
 		<thead>

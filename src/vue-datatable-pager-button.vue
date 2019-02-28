@@ -1,5 +1,3 @@
-<style></style>
-
 <template>
 	<li 
 		:style="{cursor: disabled ? 'not-allowed' : 'pointer'}"

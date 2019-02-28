@@ -1,5 +1,3 @@
-<style></style>
-
 <template>
 	<nav v-if="show">
 		<ul
