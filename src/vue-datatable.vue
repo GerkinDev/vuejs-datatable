@@ -15,7 +15,7 @@
 		</thead>
 		<tbody>
 			<slot
-				v-for="(row, i) in processedRows"
+				v-for="(row, i) in displayedRows"
 				:row="row"
 				:columns="normalizedColumns">
 				<tr
@@ -28,7 +28,7 @@
 						:row="row" />
 				</tr>
 			</slot>
-			<tr v-if="processedRows.length == 0">
+			<tr v-if="displayedRows.length == 0">
 				<td :colspan="normalizedColumns.length">
 					<slot name="no-results" />
 				</td>
@@ -37,7 +37,7 @@
 		<tfoot v-if="$slots.footer || $scopedSlots.footer">
 			<slot
 				name="footer"
-				:rows="processedRows" />
+				:rows="displayedRows" />
 		</tfoot>
 	</table>
 </template>
@@ -53,7 +53,7 @@ import Column from './classes/column.js';
  * @vue-prop {string} [name] - The name of the datatable. It should be unique per page.
  * @vue-prop {ColumnDef[]} columns - List of columns definitions displayed by this datatable.
  * @vue-prop {Array.<*>|Function} data - The list of items to display, or a getter function.
- * @vue-prop {string} [filterBy] - Value to match in rows for display filtering.
+ * @vue-prop {string} [filter] - Value to match in rows for display filtering.
  * @vue-prop {(string | Array.<string> | Function)} [rowClasses] - Class(es) or getter function to get row classes.
  *
  * @vue-data {Column | null} sortBy - Column used for data sorting.
@@ -61,7 +61,7 @@ import Column from './classes/column.js';
  * @vue-data {number} totalRows - Total number of rows contained by this data table.
  * @vue-data {number} page - Current page index.
  * @vue-data {number | null} perPage - Maximum number of rows displayed per page.
- * @vue-data {Row[]} processedRows - Array of rows displayed by the table.
+ * @vue-data {Row[]} displayedRows - Array of rows displayed by the table.
  * 
  * @vue-computed {Array.<*>} rows - Array of rows currently managed by the datatable.
  * @vue-computed {Settings} settings - Reference to the {@link Settings} object linked to this datatable instance.
@@ -83,8 +83,8 @@ export default {
 			type:     [ Array, Function ],
 			required: true,
 		},
-		filterBy: {
-			type:    String,
+		filter: {
+			type:    [ String, Array ],
 			default: null,
 		},
 		rowClasses: {
@@ -98,12 +98,9 @@ export default {
 		totalRows:     0,
 		page:          1,
 		perPage:       null,
-		processedRows: [],
+		displayedRows: [],
 	}),
 	computed: {
-		rows(){
-			return this.data.slice(0);
-		},
 		settings(){
 			return this.$options.settings;
 		},
@@ -125,7 +122,7 @@ export default {
 
 		this.$watch('columns', this.processRows);
 
-		this.$watch(() => this.filterBy + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows);
+		this.$watch(() => this.filter + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows);
 
 		this.processRows();
 	},
@@ -159,52 +156,46 @@ export default {
 		 * 
 		 * @returns {void} Nothing.
 		 */
-		processRows(){
+		async processRows(){
 			if (typeof this.data === 'function'){
 				const params = {
-					filter:     this.filterBy,
-					sortBy:     this.sortBy ? this.sortBy.field : null,
-					sortDir:    this.sortDir,
-					pageLength: this.perPage,
-					pageNumber: this.page,
+					filter:  this.filter,
+					sortBy:  this.sortBy ? this.sortBy.field : null,
+					sortDir: this.sortDir,
+					perPage: this.perPage,
+					page:    this.page,
 				};
 
-				this.data(params, (rows, rowCount) => {
-					this.setRows(rows);
-					this.setTotalRowCount(rowCount);
-				});
+				const tableContent = await this.data(params);
+			
+				this.setTableContent(tableContent);
 
 				return;
 			}
 
-			const filteredData = this.handler.filterHandler(
-				this.rows,
-				this.filterBy,
-				this.normalizedColumns
-			);
+			const filteredData = await this.handler.filterHandler(this.data, this.filter, this.normalizedColumns);
 
-			const sortedData = this.handler.sortHandler(
-				filteredData,
-				this.sortBy,
-				this.sortDir
-			);
+			const sortedData = await this.handler.sortHandler(filteredData, this.sortBy, this.sortDir);
 
-			const pagedData = this.handler.paginateHandler(
-				sortedData,
-				this.perPage,
-				this.page
-			);
+			const pagedData = await this.handler.paginateHandler(sortedData, this.perPage, this.page);
 
-			this.handler.displayHandler(
-				pagedData,
-				{
-					filteredData: filteredData,
-					sortedData:   sortedData,
-					pagedData:    pagedData,
-				},
-				this.setRows,
-				this.setTotalRowCount
-			);
+			const tableContent = await this.handler.displayHandler({
+				source:   this.data,
+				filtered: filteredData,
+				sorted:   sortedData,
+				paged:    pagedData,
+			});
+
+			this.setTableContent(tableContent);
+		},
+		setTableContent({
+			rows, totalRowCount, 
+		} = {
+			rows:          undefined,
+			totalRowCount: undefined,
+		}){
+			this.setRows(rows);
+			this.setTotalRowCount(totalRowCount);
 		},
 		/**
 		 * Set the displayed rows.
@@ -213,7 +204,9 @@ export default {
 		 * @returns {void} Nothing.
 		 */
 		setRows(rows){
-			this.processedRows = rows;
+			if (typeof rows !== 'undefined' && rows !== null){
+				this.displayedRows = rows;
+			}
 		},
 		/**
 		 * Set the displayed rows count.
@@ -222,7 +215,9 @@ export default {
 		 * @returns {void} Nothing.
 		 */
 		setTotalRowCount(value){
-			this.totalRows = value;
+			if (typeof value !== 'undefined' && value !== null){
+				this.totalRows = value;
+			}
 		},
 		/**
 		 * Get the classes to add on the row

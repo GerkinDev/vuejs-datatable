@@ -1,212 +1,92 @@
-import { createLocalVue, mount } from '@vue/test-utils';
-import DatatableFactory from './classes/factory.js';
+jest.mock('./vue-datatable-header.vue');
+jest.mock('./classes/column');
+jest.mock('./classes/settings');
+jest.mock('./classes/handler');
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+
+import DatatableComponent from './vue-datatable.vue';
+import DatatableHeaderComponent from './vue-datatable-header.vue';
+import Settings from './classes/settings';
+import Column from './classes/column';
+import Handler, { filterHandler, sortHandler, paginateHandler, displayHandler } from './classes/handler';
+import flushPromises = require('flush-promises');
 
 const localVue = createLocalVue();
-localVue.use(new DatatableFactory());
+localVue.component('datatable-header', DatatableHeaderComponent);
 
-const Ctor = localVue.options.components.datatable;
-
-localVue.component('test-component', {
-	props:    [ 'row' ],
-	template: `
-		<span>Test Component</span>
-	`,
+beforeEach(() => {
+	jest.clearAllMocks();
+	localVue.prototype.$datatables = {};
 });
-
-it('imports default settings', () => {
-    const settings = (new Ctor({
-        propsData: {
-            columns: [],
-            data:    [],
-        },
-    })).settings;
-
-    expect(settings.get('table.class')).toBe('table table-hover table-striped');
+it('Should normalize columns by constructing Column class instances', () => {
+	const columns = [
+		{ field: 'id' },
+		{ field: 'name' }
+	];
+	const wrapper = shallowMount<any>(DatatableComponent, { localVue, propsData: { columns, data: [] }, settings: new Settings(), handler: new Handler() } as any);
+	const normalized = wrapper.vm.normalizedColumns;
+	expect(Column).toHaveBeenCalledTimes(2);
+	expect(Column).toHaveBeenNthCalledWith(1, columns[0]);
+	expect(Column).toHaveNthReturnedWith(1, normalized[0]);
+	expect(Column).toHaveBeenNthCalledWith(2, columns[1]);
+	expect(Column).toHaveNthReturnedWith(2, normalized[1]);
 });
-
-it('returns the data via the rows method', () => {
-    const vm = getTableElement();
-    console.log(vm);
-
-    expect(vm.rows[0].id).toBe(1);
-    expect(vm.rows[0].user.firstName).toBe('John');
-    expect(vm.rows[0].user.lastName).toBe('Doe');
-
-    expect(vm.rows[1].id).toBe(2);
-    expect(vm.rows[1].user.firstName).toBe('Jane');
-    expect(vm.rows[1].user.lastName).toBe('Doe');
-});
-
-it('normalizes the columns', () => {
-    const vm = getTableElement();
-
-    expect(vm.normalizedColumns[0].align).toBe('left');
-    expect(vm.normalizedColumns[0].label).toBe('Field');
-    expect(vm.normalizedColumns[0].field).toBe('id');
-    expect(vm.normalizedColumns[0].representedAs).toBe(null);
-    expect(vm.normalizedColumns[0].component).toBe(null);
-    expect(vm.normalizedColumns[0].interpolate).toBe(false);
-    expect(vm.normalizedColumns[0].sortable).toBe(true);
-    expect(vm.normalizedColumns[0].filterable).toBe(true);
-
-    expect(vm.normalizedColumns[1].align).toBe('left');
-    expect(vm.normalizedColumns[1].label).toBe('Representation');
-    expect(vm.normalizedColumns[1].field).toBe(null);
-    expect(typeof vm.normalizedColumns[1].representedAs).toBe('function');
-    expect(vm.normalizedColumns[1].component).toBe(null);
-    expect(vm.normalizedColumns[1].interpolate).toBe(false);
-    expect(vm.normalizedColumns[1].sortable).toBe(true);
-    expect(vm.normalizedColumns[1].filterable).toBe(true);
-
-    expect(vm.normalizedColumns[2].align).toBe('left');
-    expect(vm.normalizedColumns[2].label).toBe('Component');
-    expect(vm.normalizedColumns[2].field).toBe(null);
-    expect(vm.normalizedColumns[2].representedAs).toBe(null);
-    expect(vm.normalizedColumns[2].component).toBe('test-component');
-    expect(vm.normalizedColumns[2].interpolate).toBe(false);
-    expect(vm.normalizedColumns[2].sortable).toBe(false);
-    expect(vm.normalizedColumns[2].filterable).toBe(false);
-});
-
-it('normalizes the columns', () => {
-    const vm = getTableElement();
-
-    expect(vm.tableClass).toBe('table table-hover table-striped');
-});
-
-it('determines if a column is being sorted by', () => {
-    const vm = getTableElement(vm => {
-        vm.sortDir = 'asc';
-        vm.sortBy = vm.normalizedColumns[1];
-    });
-
-    expect(vm.getSortDirectionForColumn(vm.normalizedColumns[0])).toBe(null);
-    expect(vm.getSortDirectionForColumn(vm.normalizedColumns[1])).toBe('asc');
-    expect(vm.getSortDirectionForColumn(vm.normalizedColumns[2])).toBe(null);
-});
-
-it('can set column to b sorted by', () => {
-    const vm = getTableElement(vm => {
-        vm.setSortDirectionForColumn('desc', vm.normalizedColumns[2]);
-    });
-
-    expect(vm.sortBy).toBe(vm.normalizedColumns[2]);
-    expect(vm.sortDir).toBe('desc');
-});
-
-it('builds expected base html', () => {
-    const vm = getTableElement();
-
-    expect(vm.$el.className).toBe('table table-hover table-striped');
-
-    expect(vm.$el.querySelectorAll('thead th')[0].textContent.trim()).toBe('Field');
-    expect(vm.$el.querySelectorAll('thead th')[1].textContent.trim()).toBe('Representation');
-    expect(vm.$el.querySelectorAll('thead th')[2].textContent.trim()).toBe('Component');
-
-    expect(vm.$el.querySelectorAll('tbody tr td')[0].textContent.trim()).toBe('1');
-    expect(vm.$el.querySelectorAll('tbody tr td')[1].textContent.trim()).toBe('John Doe');
-    expect(vm.$el.querySelectorAll('tbody tr td')[2].textContent.trim()).toBe('Test Component');
-
-    expect(vm.$el.querySelectorAll('tbody tr td')[3].textContent.trim()).toBe('2');
-    expect(vm.$el.querySelectorAll('tbody tr td')[4].textContent.trim()).toBe('Jane Doe');
-    expect(vm.$el.querySelectorAll('tbody tr td')[5].textContent.trim()).toBe('Test Component');
-});
-
-it('can filter rows', () => {
-    const vm = getTableElement(vm => {
-        vm.filterBy = 'Jo do';
-        vm.processRows();
-    });
-
-    expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
-
-    expect(vm.$el.querySelectorAll('tbody tr td')[0].textContent.trim()).toBe('1');
-    expect(vm.$el.querySelectorAll('tbody tr td')[1].textContent.trim()).toBe('John Doe');
-    expect(vm.$el.querySelectorAll('tbody tr td')[2].textContent.trim()).toBe('Test Component');
-});
-
-it('can override filter logic', () => {
-    const vm = getTableElement(vm => {
-        vm.filterBy = 'Jo do';
-        vm.handler.filterHandler = (rows, filterText) => rows.filter(row => {
-            expect(filterText).toBe('Jo do');
-
-            return row.id === 2;
-        });
-        vm.processRows();
-    });
-
-    expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
-
-    expect(vm.$el.querySelectorAll('tbody tr td')[0].textContent.trim()).toBe('2');
-    expect(vm.$el.querySelectorAll('tbody tr td')[1].textContent.trim()).toBe('Jane Doe');
-    expect(vm.$el.querySelectorAll('tbody tr td')[2].textContent.trim()).toBe('Test Component');
-
-    vm.handler.filterHandler = vm.handler.handleFilter;
-});
-
-it('will not filter component cells by default', () => {
-    const vm = getTableElement(vm => {
-        vm.filterBy = 'Test';
-        vm.processRows();
-    });
-
-    expect(vm.$el.querySelectorAll('tbody tr').length).toBe(0);
-});
-
-it('will filter component cells when representedAs is defined', () => {
-    const vm = getTableElement(vm =>{
-        vm.filterBy = 'Test';
-        vm.columns[2].representedAs = () =>'Test Component';
-    });
-
-    expect(vm.$el.querySelectorAll('tbody tr').length).toBe(2);
-});
-
-it('can limit the number of rows displayed', () => {
-    const vm = getTableElement(vm =>{
-        vm.perPage = 1;
-        vm.processRows();
-    });
-
-    expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
-
-    expect(vm.$el.querySelectorAll('tbody tr td')[0].textContent.trim()).toBe('1');
-    expect(vm.$el.querySelectorAll('tbody tr td')[1].textContent.trim()).toBe('John Doe');
-    expect(vm.$el.querySelectorAll('tbody tr td')[2].textContent.trim()).toBe('Test Component');
-});
-
-it('can determine which page of rows to display', () => {
-    const vm = getTableElement(vm =>{
-        vm.perPage = 1;
-        vm.page = 2;
-        vm.processRows();
-    });
-
-    expect(vm.$el.querySelectorAll('tbody tr').length).toBe(1);
-
-    expect(vm.$el.querySelectorAll('tbody tr td')[0].textContent.trim()).toBe('2');
-    expect(vm.$el.querySelectorAll('tbody tr td')[1].textContent.trim()).toBe('Jane Doe');
-    expect(vm.$el.querySelectorAll('tbody tr td')[2].textContent.trim()).toBe('Test Component');
-});
-
-function getTableElement(callback?: Function){
-    const wrapper = mount<any>(Ctor, {
-		propsData: {
-			columns: [
-				{ label: 'Field', field: 'id' },
-				{ label: 'Representation', representedAs: row => `${ row.user.firstName  } ${  row.user.lastName }` },
-				{ label: 'Component', component: 'test-component' },
-			],
-			data: [
-				{ id: 1, user: { firstName: 'John', lastName:  'Doe' } },
-				{ id: 2, user: { firstName: 'Jane', lastName:  'Doe' } },
-			],
-		},
+describe('Row processing', () => {
+	it('Should process provided data with handlers if it is not a function', async () => {
+		const columns = [];
+		const data = [];
+		const filtered = [];
+		filterHandler.mockReturnValue(filtered);
+		const sorted = [];
+		sortHandler.mockReturnValue(sorted);
+		const paged = [];
+		paginateHandler.mockReturnValue(paged);
+		const displayed = { rows: [], totalRowCount: 42 };
+		displayHandler.mockReturnValue(displayed);
+		const setTableContent = jest.spyOn(DatatableComponent.methods, 'setTableContent');
+		const wrapper = shallowMount<any>(DatatableComponent, Object.assign({ localVue, propsData: { columns, data, filter: 'foo' } },
+		{ settings: new Settings(), handler: new Handler() }));
+		const pseudoSortCol = new Column({ field: 'bar' });
+		wrapper.setData({ sortBy: pseudoSortCol, sortDir: 'desc', page: 20, perPage: 18 });
+		await flushPromises();
+		jest.clearAllMocks();
+		await wrapper.vm.processRows();
+		expect(filterHandler).toHaveBeenCalledTimes(1);
+		expect(filterHandler).toHaveBeenCalledWith(data, 'foo', wrapper.vm.normalizedColumns);
+		expect(sortHandler).toHaveBeenCalledTimes(1);
+		expect(sortHandler).toHaveBeenCalledWith(filtered, pseudoSortCol, 'desc');
+		expect(paginateHandler).toHaveBeenCalledTimes(1);
+		expect(paginateHandler).toHaveBeenCalledWith(sorted, 18, 20);
+		expect(displayHandler).toHaveBeenCalledTimes(1);
+		expect(displayHandler.mock.calls[0]).toHaveLength(1);
+		expect(displayHandler.mock.calls[0][0]).toHaveProperty('source', data);
+		expect(displayHandler.mock.calls[0][0]).toHaveProperty('filtered', filtered);
+		expect(displayHandler.mock.calls[0][0]).toHaveProperty('paged', paged);
+		expect(displayHandler.mock.calls[0][0]).toHaveProperty('sorted', sorted);
+		expect(setTableContent).toHaveBeenCalledTimes(1);
+		expect(setTableContent).toHaveBeenCalledWith(displayed);
 	});
-	if (callback && typeof callback === 'function'){
-		callback(wrapper);
-	}
-
-	return wrapper;
-}
+	it('Should process rows using the data function', async () => {
+		const columns = [];
+		const displayed = { rows: [], totalRowCount: 42 };
+		const data = jest.fn().mockReturnValue(displayed);
+		const setTableContent = jest.spyOn(DatatableComponent.methods, 'setTableContent');
+		const wrapper = shallowMount<any>(DatatableComponent, Object.assign({ localVue, propsData: { columns, data, filter: 'foo' } },
+        { settings: new Settings(), handler: new Handler() }));
+		const pseudoSortCol = new Column({ field: 'bar' });
+		wrapper.setData({ sortBy: pseudoSortCol, sortDir: 'desc', page: 20, perPage: 18 });
+		await flushPromises();
+		jest.clearAllMocks();
+		await wrapper.vm.processRows();
+		expect(data).toHaveBeenCalledTimes(1);
+		expect(data.mock.calls[0]).toHaveLength(1);
+		expect(data.mock.calls[0][0]).toBeInstanceOf(Object);
+		expect(data.mock.calls[0][0]).toHaveProperty('filter', 'foo');
+		expect(data.mock.calls[0][0]).toHaveProperty('sortBy', 'bar');
+		expect(data.mock.calls[0][0]).toHaveProperty('sortDir', 'desc');
+		expect(data.mock.calls[0][0]).toHaveProperty('page', 20);
+		expect(data.mock.calls[0][0]).toHaveProperty('perPage', 18);
+		expect(setTableContent).toHaveBeenCalledTimes(1);
+		expect(setTableContent).toHaveBeenCalledWith(displayed);
+	});
+});
