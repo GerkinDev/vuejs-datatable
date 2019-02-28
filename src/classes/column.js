@@ -55,12 +55,13 @@ class Column {
 	 * @returns {'left'|'center'|'right'} The normalized alignment
 	 */
 	static normalizeAlignment(align, defaultAlign = 'left'){
-		const lowerAlign = align.toLowerCase();
-		if (align && typeof align === 'string' && [ 'left', 'center', 'right' ].includes(lowerAlign)){
-			return lowerAlign;
-		} else {
-			return defaultAlign;
+		if (typeof align === 'string'){
+			const lowerAlign = (align || defaultAlign).toLowerCase();
+			if ([ 'left', 'center', 'right' ].includes(lowerAlign)){
+				return lowerAlign;
+			}
 		}
+		return defaultAlign.toLowerCase();
 	}
 
 	/**

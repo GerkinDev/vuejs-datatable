@@ -7,9 +7,7 @@ const Ctor = localVue.extend(DatatableCell);
 
 localVue.component('test-component', {
 	props:    [ 'row' ],
-	template: `
-		<span>Test Component</span>
-	`,
+	render: c => c('span', 'Test Component')
 });
 
 it('displays field', () => {
@@ -17,15 +15,15 @@ it('displays field', () => {
 		propsData: {
 			column: new Column({
 				label: 'ID',
-				field: 'user.id',
+				field: 'user.id'
 			}),
 			row: {
 				user: {
-					id: 7,
-				},
-			},
+					id: 7
+				}
+			}
 		},
-		localVue,
+		localVue
 	});
 
 	expect(wrapper.element.textContent.trim()).toBe('7');
@@ -36,16 +34,16 @@ it('displays representation', () => {
 		propsData: {
 			column: new Column({
 				label:         'ID',
-				representedAs: row => `${ row.user.firstName  } ${  row.user.lastName }`,
+				representedAs: row => `${ row.user.firstName } ${ row.user.lastName }`
 			}),
 			row: {
 				user: {
 					firstName: 'John',
-					lastName:  'Doe',
-				},
-			},
+					lastName:  'Doe'
+				}
+			}
 		},
-		localVue,
+		localVue
 	});
 
 	expect(wrapper.element.textContent.trim()).toBe('John Doe');
@@ -57,17 +55,17 @@ it('gives representation presidence over field', () => {
 			column: new Column({
 				label:         'ID',
 				field:         'id',
-				representedAs: row => `${ row.user.firstName  } ${  row.user.lastName }`,
+				representedAs: row => `${ row.user.firstName } ${ row.user.lastName }`
 			}),
 			row: {
 				id:   5,
 				user: {
 					firstName: 'Jack',
-					lastName:  'Doe',
-				},
-			},
+					lastName:  'Doe'
+				}
+			}
 		},
-		localVue,
+		localVue
 	});
 
 	expect(wrapper.element.textContent.trim()).toBe('Jack Doe');
@@ -78,11 +76,11 @@ it('displays component', () => {
 		propsData: {
 			column: new Column({
 				label:     'ID',
-				component: 'test-component',
+				component: 'test-component'
 			}),
-			row: {},
+			row: {}
 		},
-		localVue,
+		localVue
 	});
 
 	expect(wrapper.element.textContent.trim()).toBe('Test Component');
@@ -95,15 +93,15 @@ it('gives component presidence', () => {
 				label:         'ID',
 				field:         'id',
 				representedAs: row => row.user.firstName,
-				component:     'test-component',
+				component:     'test-component'
 			}),
 			row: {
 				id:   6,
 				user: {
-					firstName: 'Jimmy',
-				},
-			},
-		},
+					firstName: 'Jimmy'
+				}
+			}
+		}
 	});
 
 	expect(wrapper.element.textContent.trim()).toBe('Test Component');
@@ -114,12 +112,12 @@ it('will show correct alignment', () => {
 		propsData: {
 			column: new Column({
 				label: 'id',
-				field: 'id',
+				field: 'id'
 			}),
 			row: {
-				id: 7,
-			},
-		},
+				id: 7
+			}
+		}
 	});
 
 	expect(wrapper1.element.style.textAlign).toBe('left');
@@ -129,12 +127,12 @@ it('will show correct alignment', () => {
 			column: new Column({
 				label: 'id',
 				field: 'id',
-				align: 'center',
+				align: 'center'
 			}),
 			row: {
-				id: 7,
-			},
-		},
+				id: 7
+			}
+		}
 	});
 
 	expect(wrapperC.element.style.textAlign).toBe('center');
@@ -144,12 +142,12 @@ it('will show correct alignment', () => {
 			column: new Column({
 				label: 'id',
 				field: 'id',
-				align: 'right',
+				align: 'right'
 			}),
 			row: {
-				id: 7,
-			},
-		},
+				id: 7
+			}
+		}
 	});
 
 	expect(wrapperR.element.style.textAlign).toBe('right');

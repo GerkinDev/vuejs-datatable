@@ -37,6 +37,7 @@ it('Should normalize alignment', () => {
 	expect(Column.normalizeAlignment('LEFT')).toBe('left');
 	expect(Column.normalizeAlignment('foo')).toBe('left');
 	expect(Column.normalizeAlignment('foo', 'center')).toBe('center');
+	expect(Column.normalizeAlignment(undefined, 'left')).toBe('left');
 });
 
 it('sets field', () => {
@@ -56,9 +57,8 @@ it('sets callback', () => {
 
 	expect(typeof column.representedAs).toBe('function');
 	expect(column.getRepresentation(testObj)).toBe('test');
-	expect(repFn).toHaveBeenCalledTimes(2);
-	expect(repFn).toHaveBeenNthCalledWith(1, testObj);
-	expect(repFn).toHaveBeenNthCalledWith(2, testObj);
+	expect(repFn).toHaveBeenCalledTimes(1);
+	expect(repFn).toHaveBeenCalledWith(testObj);
 });
 
 it('sets component', () => {
@@ -157,7 +157,7 @@ it('Should accept any kind of data for `match`', () => {
 	mockGetRepresentation.mockReturnValue('1');
 	expect(col.matches({ foo: 1 }, '1')).toBe(true);
 	mockGetRepresentation.mockReturnValue('2');
-	expect(col.matches({ foo: 2 }, '1')).toBe(true);
+	expect(col.matches({ foo: 2 }, '1')).toBe(false);
 	mockGetRepresentation.mockReturnValue('azErty');
 	expect(col.matches({ foo: 'azErty' }, 'Aze')).toBe(true);
 
