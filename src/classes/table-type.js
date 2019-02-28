@@ -157,6 +157,9 @@ class TableType {
 		if (obj instanceof Array) {
 			return obj.map(v => this.clone(v));
 		}
+		if (obj instanceof Function) {
+			return obj;
+		}
 
 		// Handle Object
 		if (obj instanceof Object) {
