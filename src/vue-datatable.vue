@@ -78,7 +78,7 @@ export default {
 			required: true,
 		},
 		data: {
-			type:     [ Array, Function ],
+			type:     null,
 			required: true,
 		},
 		filter: {
