@@ -16,6 +16,10 @@ Allows for quick and easy setup of filterable, sortable, and paginated tables. C
 [![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable.svg)](https://github.com/GerkinDev/vuejs-datatable)
 [![license](https://img.shields.io/github/license/GerkinDev/vuejs-datatable.svg)](https://github.com/GerkinDev/vuejs-datatable/blob/master/LICENSE)
 
+E2E testing over Travis realized using
+
+[<img src="https://cdn.rawgit.com/diaspora-orm/diaspora/master/media/Browserstack.svg" height="105.6" width="490.1"/>](https://www.browserstack.com/)
+
 [:point_right: Browse the documentation :books:](https://vuejs-datatable.patrickstephan.me)
 
 ---
