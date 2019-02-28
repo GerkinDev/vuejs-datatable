@@ -27,6 +27,24 @@ class Handler {
 		 * @member {Function} - Handler responsible of selecting the correct page in the data rows. Defaults to {@link Handler#defaultPaginateHandler}.
 		 */
 		this.paginateHandler = this.defaultPaginateHandler;
+		/**
+		 * Handler to post-process the paginated data, and determine which data to actually display. It supports promises. Defaults to {@link Handler#defaultDisplayHandler}.
+		 * 
+		 * @method displayHandler
+		 * @memberof Handler
+		 * @instance
+		 * @readonly
+		 * @see TableType#setDisplayHandler
+		 * @tutorial ajax-handler
+		 * @param {object} processSteps            - The result of each processing steps, stored in an object. Each step is the result of one of the processing function
+		 * ({@link Handler#filterHandler}, {@link Handler#sortHandler}, {@link Handler#paginateHandler}), applied on the previous step.
+		 * @param {TRow[]|*} processSteps.source   - The original {@link Datatable#data} property of the datatable.
+		 * @param {TRow[]|*} processSteps.filtered - The return value of {@link Handler#filterHandler}.
+		 * @param {TRow[]|*} processSteps.sorted   - The return value of {@link Handler#sortHandler}.
+		 * @param {TRow[]|*} processSteps.paged    - The return value of {@link Handler#paginateHandler}.
+		 * @returns {Promise<DisplayHandlerResult>} Processed values to set on the datatable.
+		 */
+		this.displayHandler = this.defaultDisplayHandler;
 	}
 	/**
 	 * Filter the provided rows, checking if at least a cell contains one of the specified filters.
@@ -46,17 +64,6 @@ class Handler {
 		}
 
 		return data.filter(row => filters.some(filter => this.rowMatches(row, filter, columns)));
-	}
-	/**
-	 * Check if the provided row contains the filter string in *any* column.
-	 * 
-	 * @param {Row} row - The data row to search in.
-	 * @param {string} filterString - The string to match in a column.
-	 * @param {Column[]} columns - The list of columns in the table.
-	 * @returns {boolean} `true` if any column contains the searched string.
-	 */
-	rowMatches(row, filterString, columns){
-		return columns.some(column => column.matches(row, filterString));
 	}
 	/**
 	 * Sort the given rows depending on a specific column & sort order.
@@ -109,6 +116,36 @@ class Handler {
 		const endIndex = (pageNumber * perPage);
 
 		return sortedData.slice(startIndex, endIndex);
+	}
+	/**
+	 * Handler to post-process the paginated data, and determine which data to actually display.
+	 * 
+	 * @param {object} processSteps            - The result of each processing steps, stored in an object. Each step is the result of one of the processing function
+	 * ({@link Handler#filterHandler}, {@link Handler#sortHandler}, {@link Handler#paginateHandler}), applied on the previous step.
+	 * @param {TRow[]|*} processSteps.source   - The original {@link Datatable#data} property of the datatable.
+	 * @param {TRow[]|*} processSteps.filtered - The return value of {@link Handler#filterHandler}.
+	 * @param {TRow[]|*} processSteps.sorted   - The return value of {@link Handler#sortHandler}.
+	 * @param {TRow[]|*} processSteps.paged    - The return value of {@link Handler#paginateHandler}.
+	 * @returns {Promise<DisplayHandlerResult>} Processed values to set on the datatable.
+	 */
+	defaultDisplayHandler({
+		filtered, paged, 
+	}){
+		return {
+			rows:          paged,
+			totalRowCount: filtered.length,
+		};
+	}
+	/**
+	 * Check if the provided row contains the filter string in *any* column.
+	 * 
+	 * @param {TRow} row - The data row to search in.
+	 * @param {string} filterString - The string to match in a column.
+	 * @param {Column[]} columns - The list of columns in the table.
+	 * @returns {boolean} `true` if any column contains the searched string.
+	 */
+	rowMatches(row, filterString, columns){
+		return columns.some(column => column.matches(row, filterString));
 	}
 }
 

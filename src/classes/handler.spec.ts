@@ -13,7 +13,7 @@ const columns = [
 	new Column({ field: 'user.lastName' }),
 	new Column({ representedAs: row => row.user.firstName + row.user.lastName }),
 	new Column({ field: 'order' }),
-	new Column({ field: 'eq' }),
+	new Column({ field: 'eq' })
 ];
 
 it('has the correct methods', () => {
@@ -202,17 +202,26 @@ describe('can paginate data', () => {
 		expect(paged).toHaveLength(2);
 		expect(paged[0].id).toBe(1);
 		expect(paged[1].id).toBe(2);
-	})
+	});
 	it('Paginate with 0 or less items per page should throw', () => {
 		const handler = new Handler();
 
 		expect(() => handler.paginateHandler(rows, 0, 1)).toThrow(RangeError);
 		expect(() => handler.paginateHandler(rows, -5, 1)).toThrow(RangeError);
-	})
+	});
 	it('Paginate for page 0 or less should throw', () => {
 		const handler = new Handler();
 
 		expect(() => handler.paginateHandler(rows, 1, 0)).toThrow(RangeError);
 		expect(() => handler.paginateHandler(rows, 1, -5)).toThrow(RangeError);
-	})
+	});
+});
+it('Display handler extracts correct data', async () => {
+	const handler = new Handler();
+	expect(await handler.displayHandler({
+		source: [{ id: 1 }, { id: 2 }, { id: 3 }],
+		filtered: [{ id: 1 }, { id: 2 }],
+		sorted: [{ id: 1 }, { id: 2 }],
+		paged: [{ id: 1 }]
+	})).toEqual({ rows: [{ id: 1 }], totalRowCount: 2 });
 });

@@ -75,6 +75,20 @@ class TableType {
 	}
 
 	/**
+	 * Defines the function used to paginate data
+	 * 
+	 * @see Handler#displayHandler
+	 * @tutorial ajax-handler
+	 * @param {Function} closure - The function to use to post-process processed steps & extract rows & total count.
+	 * @returns {this} For chaining.
+	 */
+	setDisplayHandler(closure){
+		this.handler.displayHandler = closure;
+
+		return this;
+	}
+
+	/**
 	 * Get or set a {@link Settings} value at a specific path
 	 * 
 	 * @param {(string | number | Array.<string | number>)} path - Path to the setting value to get/set
