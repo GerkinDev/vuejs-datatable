@@ -4,15 +4,13 @@ import {
 
 /* globals VuejsDatatable, axios, Vue */
 
-
 VuejsDatatable.registerTableType('ajaxtable', tableType => {
-	tableType.setFilterHandler((endpoint, filterBy, columns) => {
+	tableType.setFilterHandler((source, filter, columns) => {
 		// See https://documenter.getpostman.com/view/2025350/RWaEzAiG#json-field-masking
 		const columnsNames = columns.map(col => col.field.replace(/\./g, '/')).join(',');
 
 		return {
-			baseEndpoint: endpoint,
-			filter:       columnsNames,
+			filter: columnsNames,
 		};
 	});
 	tableType.setSortHandler((endpointDesc, sortColumn, sortDir) => 
@@ -25,7 +23,7 @@ VuejsDatatable.registerTableType('ajaxtable', tableType => {
 			} : {}
 		));
 		
-	tableType.setPaginateHandler((endpointDesc, perPage, pageIndex) =>
+	tableType.setPaginateHandler((endpointDesc, perPage, pageIndex) => 
 		Object.assign(
 			{},
 			endpointDesc,
@@ -35,24 +33,23 @@ VuejsDatatable.registerTableType('ajaxtable', tableType => {
 			}
 		));
 
-	tableType.setDisplayHandler(async(endpointDesc, processSteps, setRows, setTotalRowCount) => {
-		// Retrieve the endpoint & delete it, to get only the params object
-		const baseEndpoint = endpointDesc.baseEndpoint;
-		delete endpointDesc.baseEndpoint;
+	tableType.setDisplayHandler(async({
+		source: baseEndPoint,
+		paged: endpointDesc,
+	}) => {
+		const url = `${ baseEndPoint }?${ makeQueryStringFromObj(endpointDesc) }`;
 
-		const dataUrl = `${ baseEndpoint }?${ makeQueryStringFromObj(endpointDesc) }`;
-		const dataCountUrl = `${ baseEndpoint }?${ makeQueryStringFromObj({
-			filter: 'nope',
-			limit:  100,
-		}) }`;
-
-		const [ data, dataCount ] = await Promise.all([
-			axios.get(dataUrl).then(response => response.data),
-			axios.get(dataCountUrl).then(response => response.data.length),
-		]);
-
-		setTotalRowCount(dataCount);
-		setRows(data);
+		const {
+			// Data to display
+			data,
+			// Get the total number of matched items
+			headers: {'spacex-api-count': totalCount}, 
+		} = await axios.get(url);
+		
+		return {
+			rows:          data,
+			totalRowCount: totalCount,
+		};
 	});
 });
 
@@ -100,7 +97,7 @@ new Vue({
 				sortable:      false,
 			},
 		],
-		url:  'https://api.spacexdata.com/v3/launches/upcoming',
-		page: 1,
+		page:   1,
+		apiUrl: 'https://api.spacexdata.com/v3/launches/upcoming',
 	},
 });

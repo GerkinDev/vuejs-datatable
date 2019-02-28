@@ -43,8 +43,10 @@ module.exports = {
 		search:               "{boolean}",
 		favicon:              "{string}",
 		*/
-		stylesheets:    [],
-		scripts:        [
+		stylesheets:    [
+			'./assets/additional-styles.css',
+		],
+		scripts: [
 			'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js',
 			'./assets/vuejs-datatable.js',
 		],

@@ -38,7 +38,8 @@ class TableType {
 	/**
 	 * Defines the function used to filter data
 	 * 
-	 * @see Handler.handleFilter
+	 * @see Handler#filterHandler
+	 * @tutorial ajax-handler
 	 * @param {Function} closure - The function to use for sorting.
 	 * @returns {this} For chaining.
 	 */
@@ -51,7 +52,8 @@ class TableType {
 	/**
 	 * Defines the function used to sort data
 	 * 
-	 * @see Handler.handleSort
+	 * @see Handler#sortHandler
+	 * @tutorial ajax-handler
 	 * @param {Function} closure - The function to use for sorting.
 	 * @returns {this} For chaining.
 	 */
@@ -64,7 +66,8 @@ class TableType {
 	/**
 	 * Defines the function used to paginate data
 	 * 
-	 * @see Handler.handlePaginate
+	 * @see Handler#paginateHandler
+	 * @tutorial ajax-handler
 	 * @param {Function} closure - The function to use for pagination.
 	 * @returns {this} For chaining.
 	 */

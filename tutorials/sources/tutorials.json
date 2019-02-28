@@ -2,8 +2,11 @@
     "basic": {
         "title": "Basic table"
     },
-    "ajax": {
-        "title": "Ajax table"
+    "ajax-handler": {
+        "title": "Ajax table (with handler customization)"
+    },
+    "ajax-data": {
+        "title": "Ajax table (via `data` function)"
     },
     "custom-template": {
         "title": "Custom template"

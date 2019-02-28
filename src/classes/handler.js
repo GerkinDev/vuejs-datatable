@@ -7,8 +7,20 @@ const stableSort = (arr, compare) => arr
 	.sort((a, b) => compare(a.item, b.item) || a.index - b.index)
 	.map(({item}) => item);
 
+/**
+ * @typedef {Object} DisplayHandlerResult
+ * @property {TRow[]} rows          - The actual rows to display
+ * @property {number} totalRowCount - The total number of rows in the table. It counts also items on other pages.
+ * The pages in the pagination component are calculated using this value.
+ */
+
 /** 
  * This class exposes the main method used to manipulate table data, like filtering, sorting, or paginating. You can override instance's members to customize the behavior of your datatable.
+ * Handlers are called in this order: filter, sort, paginate, display.
+ * 
+ * In case you are overriding *one* of those handlers, make sure that its return value is compatible with subsequent handlers. Otherwise, you'll require to override all of them.
+ * 
+ * @tutorial ajax-handler
  */
 class Handler {
 	/**
@@ -16,15 +28,48 @@ class Handler {
 	 */
 	constructor(){
 		/**
-		 * @member {Function} - Handler responsible of filtering data rows. Defaults to {@link Handler#defaultFilterHandler}.
+		 * Filter the provided rows, checking if at least a cell contains one of the specified filters. It supports promises. Defaults to {@link Handler#defaultFilterHandler}.
+		 * 
+		 * @method filterHandler
+		 * @memberof Handler
+		 * @instance
+		 * @readonly
+		 * @see TableType#setFilterHandler
+		 * @tutorial ajax-handler
+		 * @param {TRow[]|*} data                         - The data to apply filter on. It is usually an array of rows, but it can be whatever you set in the {@link Datatable#data} property.
+		 * @param {string[] | string | undefined} filters - The strings to search in cells.
+		 * @param {Column[]} columns                      - The columns of the table.
+		 * @returns {Promise<TRow[]|*>} The filtered data. It is usually an array of rows, but it can be whatever you like.
 		 */
 		this.filterHandler = this.defaultFilterHandler;
 		/**
-		 * @member {Function} - Handler responsible of sorting data rows. Defaults to {@link Handler#defaultSortHandler}.
+		 * Sort the given rows depending on a specific column & sort order. It suports promises. Defaults to {@link Handler#defaultSortHandler}.
+		 * 
+		 * @method sortHandler
+		 * @memberof Handler
+		 * @instance
+		 * @readonly
+		 * @see TableType#setSortHandler
+		 * @tutorial ajax-handler
+		 * @param {TRow[]|*} filteredData         - Data outputed from {@link Handler#filterHandler}. It is usually an array of rows, but it can be whatever you like.
+		 * @param {Column} sortColumn             - The column used for sorting.
+		 * @param {'asc' | 'desc' | null} sortDir - The direction of the sort.
+		 * @returns {Promise<TRow[]|*>} The sorted rows. It is usually an array of rows, but it can be whatever you like.
 		 */
 		this.sortHandler = this.defaultSortHandler;
 		/**
-		 * @member {Function} - Handler responsible of selecting the correct page in the data rows. Defaults to {@link Handler#defaultPaginateHandler}.
+		 * Split the rows list to display the requested page index. It supports promises. Defaults to {@link Handler#defaultPaginateHandler}.
+		 * 
+		 * @method paginateHandler
+		 * @memberof Handler
+		 * @instance
+		 * @readonly
+		 * @see TableType#setPaginateHandler
+		 * @tutorial ajax-handler
+		 * @param {TRow[]|*} sortedData - Data outputed from {@link Handler#sortHandler}. It is usually an array of rows, but it can be whatever you like.
+		 * @param {number} perPage      - The total number of items per page.
+		 * @param {number} pageNumber   - The index of the page to display.
+		 * @returns {Promise<TRow[]|*>} The requested page's rows. It is usually an array of rows, but it can be whatever you like.
 		 */
 		this.paginateHandler = this.defaultPaginateHandler;
 		/**
@@ -49,10 +94,10 @@ class Handler {
 	/**
 	 * Filter the provided rows, checking if at least a cell contains one of the specified filters.
 	 * 
-	 * @param {Row[]} data - The data rows to filter
+	 * @param {TRow[]} data                           - The data to apply filter on.
 	 * @param {string[] | string | undefined} filters - The strings to search in cells.
-	 * @param {Column[]} columns - The columns of the table.
-	 * @returns {Row[]} The filtered data rows.
+	 * @param {Column[]} columns                      - The columns of the table.
+	 * @returns {Promise<TRow[]>} The filtered data rows.
 	 */
 	defaultFilterHandler(data, filters, columns){
 		if (!Array.isArray(filters)) {
@@ -68,10 +113,10 @@ class Handler {
 	/**
 	 * Sort the given rows depending on a specific column & sort order.
 	 * 
-	 * @param {Row[]} filteredData - The rows to sort.
-	 * @param {Column} sortColumn - The column used for sorting.
+	 * @param {TRow[]} filteredData           - Data outputed from {@link Handler#filterHandler}.
+	 * @param {Column} sortColumn             - The column used for sorting.
 	 * @param {'asc' | 'desc' | null} sortDir - The direction of the sort.
-	 * @returns {Row[]} The sorted rows.
+	 * @returns {Promise<TRow[]>} The sorted rows.
 	 */
 	defaultSortHandler(filteredData, sortColumn, sortDir){
 		if (!sortColumn || sortDir === null){
@@ -98,10 +143,10 @@ class Handler {
 	/**
 	 * Split the rows list to display the requested page index.
 	 * 
-	 * @param {Row[]} sortedData - All data rows.
-	 * @param {number} perPage - The total number of items per page.
+	 * @param {TRow[]} sortedData - Data outputed from {@link Handler#sortHandler}.
+	 * @param {number} perPage    - The total number of items per page.
 	 * @param {number} pageNumber - The index of the page to display.
-	 * @returns {Row[]} The requested page's rows.
+	 * @returns {Promise<TRow[]>} The requested page's rows.
 	 */
 	defaultPaginateHandler(sortedData, perPage, pageNumber){
 		if (perPage < 1){
