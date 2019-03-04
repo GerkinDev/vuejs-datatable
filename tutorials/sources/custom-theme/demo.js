@@ -4,27 +4,28 @@ VuejsDatatable.useDefaultType(false)
 	.registerTableType('datatable', tableType => {
 		tableType.mergeSettings({
 			table: {
-				class:   'hover table-scroll',
+				class:   'table table-hover table-striped',
 				sorting: {
-					classes: {
-						canSort:  [ 'sort' ],
-						sortNone: [ 'fa', 'fa-sort' ],
-						sortAsc:  [ 'fa', 'fa-sort-asc' ],
-						sortDesc: [ 'fa', 'fa-sort-desc' ],
-					},
+					sortNone: '<i class="glyphicon glyphicon-sort"></i>',
+					sortAsc:  '<i class="glyphicon glyphicon-sort-by-attributes"></i>',
+					sortDesc: '<i class="glyphicon glyphicon-sort-by-attributes-alt"></i>',
 				},
 			},
 			pager: {
 				classes: {
 					pager:    'pagination text-center',
-					selected: 'current',
+					selected: 'active',
+				},
+				icons: {
+					previous: '<i class="glyphicon glyphicon-chevron-left"></i>',
+					next:     '<i class="glyphicon glyphicon-chevron-right"></i>',
 				},
 			},
 		});
 	});
 
 new Vue({
-	el:   '.grid-container',
+	el:   '#demo-app',
 	data: {
 		filter:  '',
 		columns: [

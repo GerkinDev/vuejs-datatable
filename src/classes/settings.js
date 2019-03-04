@@ -1,12 +1,32 @@
 import {
 	get, set, 
 } from 'object-path';
+
+/**
+ * @typedef {Object} SettingsProps
+ * @description An object representing customizable classes & HTML used for a certain table type.
+ * @property {string} table.class              - The classes to apply on the `table` tag itself.
+ * @property {string|Function} table.row.class - The classes to apply on each row (`tr` tag).
+ * @property {string} table.sorting.sortNone   - The HTML representing the sort icon when the column isn't sorted.
+ * @property {string} table.sorting.sortAsc    - The HTML representing the sort icon when sorting the column ascending.
+ * @property {string} table.sorting.sortDesc   - The HTML representing the sort icon when sorting the column descending.
+ * @property {string} pager.classes.pager      - The class to apply on the pager's `ul` tag.
+ * @property {string} pager.classes.li         - The class to apply on the page's `li` tag.
+ * @property {string} pager.classes.selected   - The class to apply on the current page's `li` tag.
+ * @property {string} pager.classes.disabled   - The class to apply on a disabled page's `li` tag.
+ * @property {string} pager.icons.previous     - The HTML representing the *Previous page* icon.
+ * @property {string} pager.icons.next         - The HTML representing the *Next page* icon.
+ * @tutorial custom-theme
+ */
+
 /** 
  * @summary Settings class used by Datatable's components to get various values, such as class names, labels, icons, etc etc.
  * @description Settings class used by Datatable's components to get various values, such as class names, labels, icons, etc etc.
  * Create a new instance of this class & customize it to use different CSS frameworks.
  * The default Settings is for *Bootstrap 3/4* with *glyphicon*.
  * To edit settings contained by an instance of this class, either edit the {@link Settings#properties} object, or use the {@link Settings#merge} method.
+ * 
+ * @tutorial custom-theme
  */
 class Settings {
 	/**

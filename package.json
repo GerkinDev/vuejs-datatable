@@ -90,13 +90,13 @@
     "contributors": [
         {
             "name": "GerkinDev",
-            "email": "nihilivin@gmail.com",
-            "url": "https://www.gerkindevelopment.net/"
+            "email": "agermain@ithoughts.io",
+            "url": "https://ithoughts.io/"
         }
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/pstephan1187/vue-datatable"
+        "url": "https://github.com/GerkinDev/vue-datatable"
     },
     "license": "MIT",
     "jest": {

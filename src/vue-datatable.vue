@@ -44,6 +44,17 @@
 import Column from './classes/column.js';
 
 /**
+ * @typedef {Object} DataFnParams
+ * @description Parameters passed to the `data` function, to handle by custom logic.
+ * @property {string | stringp[]}    filter:  The string(s) used to filter entries.
+ * @property {string | null}         sortBy:  The name of the field we are sorting on.
+ * @property {'asc' | 'desc' | null} sortDir: The direction of the sort.
+ * @property {number}                perPage: The number of items per page.
+ * @property {number}                page:    The current page index.
+ * @tutorial ajax-data
+ */
+
+/**
  * The main component of the module, used to display a datatable.
  * 
  * @module datatable
@@ -153,6 +164,8 @@ export default {
 		 * Using data (or its return value if it is a function), filter, sort, paginate & display rows in the table.
 		 * 
 		 * @returns {void} Nothing.
+		 * @see DataFnParams Parameters provided to the `data` function.
+		 * @tutorial ajax-data
 		 */
 		async processRows(){
 			if (typeof this.data === 'function'){

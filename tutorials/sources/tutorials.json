@@ -6,7 +6,7 @@
         "title": "Ajax table (with handler customization)"
     },
     "ajax-data": {
-        "title": "Ajax table (via `data` function)"
+        "title": "Ajax table (via <code>data</code> function)"
     },
     "custom-template": {
         "title": "Custom template"
@@ -17,10 +17,10 @@
     "multiple-tables": {
         "title": "Multiple tables"
     },
-    "no-paginator": {
-        "title": "No paginator"
+    "no-pager": {
+        "title": "No pager"
     },
-    "pager-styles": {
-        "title": "Styling the paginator"
+    "pager-types": {
+        "title": "Pager types"
     }
 }

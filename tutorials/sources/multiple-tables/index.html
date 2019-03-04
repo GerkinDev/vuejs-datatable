@@ -1,43 +1,64 @@
-<div id="demo-app">
-    <div class="row">
-        <div class="col-xs-12 form-inline">
-            <div class="form-group">
-                <label for="filter" class="sr-only">Filter</label>
-                <input type="text" class="form-control" v-model="filter" placeholder="Filter">
-            </div>
-        </div>
-        
-        <div class="col-xs-12 table-responsive">
-            <datatable :columns="columns" :data="rows" :filter-by="filter"></datatable>
-            <datatable-pager v-model="page"></datatable-pager>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-xs-12 form-inline">
-            <div class="form-group">
-                <label for="filter" class="sr-only">Filter</label>
-                <input type="text" class="form-control" v-model="filter2" placeholder="Filter">
-            </div>
-        </div>
-        
-        <div class="col-xs-12 table-responsive">
-            <datatable name="second" :columns="columns" :data="rows" :filter-by="filter2"></datatable>
-            <datatable-pager table="second" v-model="page2"></datatable-pager>
-        </div>
-    </div>
-</div>
+<section>
+	<h2>Introduction</h2>
+	<article>
+		<p>Datatable and pager can be associated with each other using the <a href="./module-datatable.html#props" target="_blank">Datatable.name</a> &amp; <a href="./module-datatable-pager.html#props" target="_blank">DatatablePager.table</a> property. Simply set the same value for both properties, and the pager will control the associated table.</p>
 
-<div id="code-samples">
-    <section>
-        <h2>Javascript</h2>
-        <pre><code class="js language-js" id="code-area"></code></pre>
-    </section>
-    <section>
-        <h2>HTML</h2>
-        <pre><code class="html language-html" id="template-area"></code></pre>
-    </section>
-</div>
+		<div class="alert alert-info">
+			<p><i class="glyphicon glyphicon-info-sign"></i> Check out the <a href="./tutorial-pager-styles.html">Pager styles tutorial</a> to see the different aspects available for the pager.</p>
+		</div>
+		
+		<div class="alert alert-warning">
+			<p><i class="glyphicon glyphicon-warning-sign"></i> If the relation between the table and the pager is broken, the table will be displayed in <em><a href="./tutorial-no-pager.html" target="_blank">no pager</a></em> mode.</p>
+		</div>
+	</article>
+</section>
+
+<section>
+	<h2>Demo</h2>
+	<div id="demo-app">
+		<div class="row">
+			<div class="col-xs-12 form-inline">
+				<div class="form-group">
+					<label for="filter" class="sr-only">Filter</label>
+					<input type="text" class="form-control" v-model="filter" placeholder="Filter">
+				</div>
+			</div>
+			
+			<div class="col-xs-12 table-responsive">
+				<datatable :columns="columns" :data="rows" :filter="filter"></datatable>
+				<datatable-pager v-model="page"></datatable-pager>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 form-inline">
+				<div class="form-group">
+					<label for="filter" class="sr-only">Filter</label>
+					<input type="text" class="form-control" v-model="filter2" placeholder="Filter">
+				</div>
+			</div>
+			
+			<div class="col-xs-12 table-responsive">
+				<datatable name="second" :columns="columns" :data="rows" :filter="filter2"></datatable>
+				<datatable-pager table="second" v-model="page2"></datatable-pager>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Code</h2>
+	<div id="code-samples">
+		<article>
+			<h3>Javascript</h3>
+			<pre><code class="js language-js" id="code-area"></code></pre>
+		</article>
+		<article>
+			<h3>HTML</h3>
+			<pre><code class="html language-html" id="template-area"></code></pre>
+		</article>
+	</div>
+</section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
 <script id="deps"></script>

@@ -1,20 +1,23 @@
-table + nav > .pagination{
+#demo-app nav > .pagination{
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
 }
-table + nav > .pagination > li:first-child:not(:last-child) {
+#demo-app nav > .pagination > li:first-child:not(:last-child) {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
-table + nav > .pagination > li:last-child:not(:first-child) {
+#demo-app nav > .pagination > li:last-child:not(:first-child) {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
-table + nav > .pagination > li:first-child {
+#demo-app nav > .pagination > li:not(:first-child):not(:last-child) {
+	border-radius: 0;
+}
+#demo-app nav > .pagination > li:first-child {
 	margin-left: 0;
 }
-table + nav > .pagination > li {
+#demo-app nav > .pagination > li {
 	position: relative;
 	color: #fff;
 	background-color: #337ab7;
@@ -39,7 +42,22 @@ table + nav > .pagination > li {
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
-table + nav > .pagination > li.active{
+#demo-app nav > .pagination > li.active{
 	background-color: #286090;
 	border-color: #204d74;
+}
+#demo-app .pagination-no-margin .pagination{
+	margin: 0;
+}
+#demo-app .pagination > li > span {
+	border: none;
+	background: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+}
+#demo-app .pagination > li > span:focus,
+#demo-app .pagination > li > span:hover {
+	color: inherit;
+	background: none;
 }

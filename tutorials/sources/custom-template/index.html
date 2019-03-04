@@ -1,46 +1,63 @@
-<div id="demo-app">
-    <div class="row">
-        <div class="col-xs-12 form-inline">
-            <div class="form-group">
-                <label for="filter" class="sr-only">Filter</label>
-                <input type="text" class="form-control" v-model="filter" placeholder="Filter">
-            </div>
-        </div>
-        
-        <div class="col-xs-12 table-responsive">
-            <datatable :columns="columns" :data="rows" :filter-by="filter">
-                
-                <template scope="{ row }">
-                    <tr>
-                        <td>{{ row.id }}</td>
-                        <td>{{ row.user.username }}</td>
-                        <td>{{ row.user.first_name }}</td>
-                        <td>{{ row.user.last_name }}</td>
-                        <td>{{ row.user.email }}</td>
-                        <td>{{ row.address + ', ' + row.city + ', ' + row.state }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
-                            <p>Some cool content here!</p>
-                        </td>
-                    </tr>
-                </template>
-            </datatable>
-            <datatable-pager v-model="page"></datatable-pager>
-        </div>
-    </div>
-</div>
+<section>
+	<h2>Introduction</h2>
+	<article>
+		<p>You can customize the tempplate of the row by using the <code>default</code> <a href="https://vuejs.org/v2/guide/components-slots.html" target="_blank">slot</a> in the Datatable component.</p>
+		<p>This slot uses 2 variables: <ol>
+			<li><code>row</code>: The data object representing the current row.</li>
+			<li><code>columns</code>: The array of <a href="./Column.html" target="_blank">columns</a> of this datatable.</li>
+		</ol></p>
+	</article>
+</section>
 
-<div id="code-samples">
-    <section>
-        <h2>Javascript</h2>
-        <pre><code class="js language-js" id="code-area"></code></pre>
-    </section>
-    <section>
-        <h2>HTML</h2>
-        <pre><code class="html language-html" id="template-area"></code></pre>
-    </section>
-</div>
+<section>
+	<h2>Demo</h2>
+	<div id="demo-app">
+		<div class="row">
+			<div class="col-xs-12 form-inline">
+				<div class="form-group">
+					<label for="filter" class="sr-only">Filter</label>
+					<input type="text" class="form-control" v-model="filter" placeholder="Filter">
+				</div>
+			</div>
+			
+			<div class="col-xs-12 table-responsive">
+				<datatable :columns="columns" :data="rows" :filter="filter">
+					
+					<template scope="{ row }">
+						<tr>
+							<td>{{ row.id }}</td>
+							<td>{{ row.user.username }}</td>
+							<td>{{ row.user.first_name }}</td>
+							<td>{{ row.user.last_name }}</td>
+							<td>{{ row.user.email }}</td>
+							<td>{{ row.address + ', ' + row.city + ', ' + row.state }}</td>
+						</tr>
+						<tr>
+							<td colspan="7">
+								<p>Some cool content here!</p>
+							</td>
+						</tr>
+					</template>
+				</datatable>
+				<datatable-pager v-model="page"></datatable-pager>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Code</h2>
+	<div id="code-samples">
+		<article>
+			<h3>Javascript</h3>
+			<pre><code class="js language-js" id="code-area"></code></pre>
+		</article>
+		<article>
+			<h3>HTML</h3>
+			<pre><code class="html language-html" id="template-area"></code></pre>
+		</article>
+	</div>
+</section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
 <script id="deps"></script>

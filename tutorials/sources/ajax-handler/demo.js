@@ -1,6 +1,6 @@
 import {
 	makeQueryStringFromObj, formatUtcDate, 
-} from './utils.js';
+} from '../utils.js';
 
 /* globals VuejsDatatable, axios, Vue */
 
@@ -97,7 +97,8 @@ new Vue({
 				sortable:      false,
 			},
 		],
-		page:   1,
-		apiUrl: 'https://api.spacexdata.com/v3/launches/upcoming',
+		page:           1,
+		apiUrlUpcoming: 'https://api.spacexdata.com/v3/launches/upcoming',
+		apiUrlPast:     'https://api.spacexdata.com/v3/launches/past',
 	},
 });

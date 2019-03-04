@@ -20,7 +20,7 @@ E2E testing over Travis realized using
 
 [<img src="https://cdn.rawgit.com/diaspora-orm/diaspora/master/media/Browserstack.svg" height="105.6" width="490.1"/>](https://www.browserstack.com/)
 
-[:point_right: Browse the documentation :books:](https://vuejs-datatable.patrickstephan.me)
+[:point_right: Browse the documentation :books:](https://gerkindev.github.io/vuejs-datatable/)
 
 ---
 
@@ -112,7 +112,7 @@ new Vue({
 
 ## Documentation
 
-Browse the full documentation at [https://vuejs-datatable.patrickstephan.me](https://vuejs-datatable.patrickstephan.me).
+Browse the full documentation at [https://gerkindev.github.io/vuejs-datatable/](https://gerkindev.github.io/vuejs-datatable/).
 
 ## Attributions
 

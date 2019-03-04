@@ -1,7 +1,12 @@
 <section>
 	<h2>Introduction</h2>
 	<article>
-		<p>TODO</p>
+		<p>You can create a custom <a href="" target="_blank">Table Type</a> dedicated to AJAX-sourced data. This approach has the advantage of being totally reuasble, while the <a href="" target="_blank">AJAX via data function</a> may be less reuasble across multiple table instances.</p>
+		<p>The example bellow reuses 2 times the same logic, changing only the <code>data</code> parameter to a different endpoint.</p>
+		
+		<div class="alert alert-info">
+			<p><i class="glyphicon glyphicon-info-sign"></i> If you want to customize the behavior of <b>multiple tables</b>, you may want to check how to <a href="./tutorial-ajax-handler.html" target="_blank">use custom handlers</a>.</p>
+		</div>
 	</article>
 </section>
 
@@ -9,15 +14,8 @@
 	<h2>Demo</h2>
 	<div id="demo-app">
 		<div class="row">
-			<div class="col-xs-12 form-inline">
-				<div class="form-group">
-					<label for="filter" class="sr-only">Filter</label>
-					<input type="text" class="form-control" v-model="filter" placeholder="Filter">
-				</div>
-			</div>
-			
 			<div class="col-xs-12 table-responsive">
-				<datatable :columns="columns" :data="rows" :filter="filter"></datatable>
+				<datatable :columns="columns" :data="getData"></datatable>
 				<datatable-pager v-model="page"></datatable-pager>
 			</div>
 		</div>
@@ -40,5 +38,4 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
 <script id="deps"></script>
-<script src="./assets/rows.js" async></script>
 <script id="demo-script"></script>
