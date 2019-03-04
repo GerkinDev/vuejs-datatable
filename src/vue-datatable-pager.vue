@@ -59,7 +59,7 @@
 			v-else-if="type === 'short'"
 			:class="paginationClass">
 			<datatable-button
-				:disabled="page - 1 < 1"
+				v-if="page > 1"
 				:value="page - 1"
 				@click="setPageNum">
 				<span v-html="previousIcon" />
@@ -68,7 +68,7 @@
 				:value="page"
 				selected />
 			<datatable-button
-				:disabled="page + 1 > totalPages"
+				v-if="page < totalPages"
 				:value="page + 1"
 				@click="setPageNum">
 				<span v-html="nextIcon" />

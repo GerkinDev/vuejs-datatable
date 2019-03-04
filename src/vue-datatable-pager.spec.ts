@@ -33,11 +33,11 @@ describe('HTML content', () => {
 	it('builds base HTML for short type', async () => {
 		get.mockImplementation(p => ({ 'pager.icons.previous': 'PREV', 'pager.icons.next': 'NEXT' })[p]);
 		localVue.prototype.$datatables = { default: { totalRows: 15 } };
-		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { type: 'short' } } as any);
+		const wrapper = mount(DatatablePagerComponent, { localVue, settings: new Settings(), propsData: { type: 'short', perPage: 5, page: 2 } } as any);
 		await flushPromises();
 
 		expect(wrapper.element.nodeName).toBe('NAV');
-		expect(wrapper.element.textContent.trim().replace(/[\s\n]+/g, ' ')).toBe('PREV 1 NEXT');
+		expect(wrapper.element.textContent.trim().replace(/[\s\n]+/g, ' ')).toBe('PREV 2 NEXT');
 		expect(get).toHaveBeenCalledWith('pager.icons.previous');
 		expect(get).toHaveBeenCalledWith('pager.icons.next');
 		expect(wrapper.element.children.length).toBe(1);
