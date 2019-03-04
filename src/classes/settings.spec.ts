@@ -13,22 +13,35 @@ it('can set properties', () => {
 	expect(settings.get('table.class')).toBe('test-table');
 });
 
-it('can retrieve properties', () => {
-	const settings = new Settings();
-	settings.merge({
-		table: {
-			class: 'table class'
-		},
-		pager: {
-			classes: {
-				selected: 'active'
+describe('Settings merging', () => {
+	it('Should override existing props', () => {
+		const settings = new Settings();
+		settings.merge({
+			table: {
+				class: 'table class'
+			},
+			pager: {
+				classes: {
+					selected: 'active'
+				}
 			}
-		}
-	});
+		});
 
-	expect(settings.get('table.class')).toBe('table class');
-	expect(settings.get('table.sorting.sortAsc')).toBe('↓');
-	expect(settings.get('pager.classes.selected')).toBe('active');
-	expect(settings.get('pager.classes.disabled')).toBe('disabled');
-	expect(settings.get('pager.icons.previous')).toBe('&lt;');
+		expect(settings.get('table.class')).toBe('table class');
+		expect(settings.get('table.sorting.sortAsc')).toBe('↓');
+		expect(settings.get('pager.classes.selected')).toBe('active');
+		expect(settings.get('pager.classes.disabled')).toBe('disabled');
+		expect(settings.get('pager.icons.previous')).toBe('&lt;');
+	});
+	it('Should merge new props', () => {
+		const settings = new Settings();
+		settings.merge({
+			foo: {
+				bar: 'baz'
+			}
+		});
+
+		expect(settings.get('foo.bar')).toBe('baz');
+		expect(settings.get('table.sorting.sortAsc')).toBe('↓');
+	});
 });

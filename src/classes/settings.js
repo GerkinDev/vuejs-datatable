@@ -107,6 +107,10 @@ class Settings {
 	 * @returns {*} The first object once merged.
 	 */
 	_mergeObjects(obj1, obj2){
+		if (!obj1){
+			obj1 = {};
+		}
+		
 		for (const key in obj2){
 			if (typeof obj2[key] === 'object'){
 				obj1[key] = this._mergeObjects(obj1[key], obj2[key]);
