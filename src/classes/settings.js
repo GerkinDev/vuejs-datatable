@@ -40,7 +40,7 @@ class Settings {
 			table: {
 				class: 'table table-hover table-striped',
 				row:   {
-					classes: [ '' ],
+					class: '',
 				},
 				sorting: {
 					sortNone: '↕',

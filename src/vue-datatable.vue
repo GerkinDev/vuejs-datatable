@@ -240,7 +240,7 @@ export default {
 			let rowClasses = this.rowClasses;
 
 			if (rowClasses === null){
-				rowClasses = this.settings.get('table.row.classes');
+				rowClasses = this.settings.get('table.row.class');
 			}
 
 			if (typeof rowClasses === 'function'){
