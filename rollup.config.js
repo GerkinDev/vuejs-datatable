@@ -12,7 +12,10 @@ const name = 'vuejs-datatable';
 
 // Plugins used for build
 const plugins = [
-	vue({compileTemplate: true}),
+	vue({
+		compileTemplate: true,
+		template:        { compilerOptions: { preserveWhitespace: false }},
+	}),
 	babel({
 		exclude: 'node_modules/**',
 	}),
