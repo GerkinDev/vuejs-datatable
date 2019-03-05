@@ -22,14 +22,15 @@ it('has the correct methods', () => {
 	expect(typeof handler.filterHandler).toBe('function');
 	expect(typeof handler.sortHandler).toBe('function');
 	expect(typeof handler.paginateHandler).toBe('function');
+	expect(typeof handler.displayHandler).toBe('function');
 });
 
 describe('can filter data', () => {
-	it('Filter data with nil value or empty array should directly return input', () => {
+	it('Filter data with nil value or empty array should directly return input', async () => {
 		const handler = new Handler();
 		const rowMatchSpied = jest.spyOn(handler, 'rowMatches');
 
-		let filtered = handler.filterHandler(rows, undefined, columns);
+		let filtered = await handler.filterHandler(rows, undefined, columns);
 		expect(rowMatchSpied).not.toHaveBeenCalled();
 		expect(filtered).toHaveLength(3);
 		expect(filtered[0].id).toBe(1);
@@ -38,18 +39,18 @@ describe('can filter data', () => {
 
 		rowMatchSpied.mockClear();
 
-		filtered = handler.filterHandler(rows, [], columns);
+		filtered = await handler.filterHandler(rows, [], columns);
 		expect(rowMatchSpied).not.toHaveBeenCalled();
 		expect(filtered).toHaveLength(3);
 		expect(filtered[0].id).toBe(1);
 		expect(filtered[1].id).toBe(2);
 		expect(filtered[2].id).toBe(3);
 	});
-	it('can filter data by a single string', () => {
+	it('can filter data by a single string', async () => {
 		const handler = new Handler();
 		const rowMatchSpied = jest.spyOn(handler, 'rowMatches');
 
-		let filtered = handler.filterHandler(rows, 'jo do', columns);
+		let filtered = await handler.filterHandler(rows, 'jo do', columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(5);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'jo', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'jo', columns);
@@ -62,7 +63,7 @@ describe('can filter data', () => {
 
 		rowMatchSpied.mockClear();
 
-		filtered = handler.filterHandler(rows, 'nedo', columns);
+		filtered = await handler.filterHandler(rows, 'nedo', columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(3);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'nedo', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'nedo', columns);
@@ -72,7 +73,7 @@ describe('can filter data', () => {
 
 		rowMatchSpied.mockClear();
 
-		filtered = handler.filterHandler(rows, 'bogus', columns);
+		filtered = await handler.filterHandler(rows, 'bogus', columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(3);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'bogus', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'bogus', columns);
@@ -81,7 +82,7 @@ describe('can filter data', () => {
 
 		rowMatchSpied.mockClear();
 
-		filtered = handler.filterHandler(rows, 'j doe', columns);
+		filtered = await handler.filterHandler(rows, 'j doe', columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(4);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'j', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'j', columns);
@@ -91,11 +92,11 @@ describe('can filter data', () => {
 		expect(filtered[0].id).toBe(1);
 		expect(filtered[1].id).toBe(2);
 	});
-	it('can filter data by multiple strings', () => {
+	it('can filter data by multiple strings', async () => {
 		const handler = new Handler();
 		const rowMatchSpied = jest.spyOn(handler, 'rowMatches');
 
-		let filtered = handler.filterHandler(rows, ['jo', 'do'], columns);
+		let filtered = await handler.filterHandler(rows, ['jo', 'do'], columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(5);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'jo', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'jo', columns);
@@ -108,7 +109,7 @@ describe('can filter data', () => {
 
 		rowMatchSpied.mockClear();
 
-		filtered = handler.filterHandler(rows, ['bogus'], columns);
+		filtered = await handler.filterHandler(rows, ['bogus'], columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(3);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'bogus', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'bogus', columns);
@@ -117,7 +118,7 @@ describe('can filter data', () => {
 
 		rowMatchSpied.mockClear();
 
-		filtered = handler.filterHandler(rows, ['j doe', 'do'], columns);
+		filtered = await handler.filterHandler(rows, ['j doe', 'do'], columns);
 		expect(rowMatchSpied).toHaveBeenCalledTimes(6);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[0], 'j doe', columns);
 		expect(rowMatchSpied).toHaveBeenCalledWith(rows[1], 'j doe', columns);
@@ -132,49 +133,49 @@ describe('can filter data', () => {
 });
 
 describe('can sort data', () => {
-	it('Sort with no column or order should be stable', () => {
+	it('Sort with no column or order should be stable', async () => {
 		const handler = new Handler();
 
-		const sorted = handler.sortHandler(rows, undefined, null);
+		const sorted = await handler.sortHandler(rows, undefined, null);
 		expect(sorted).toHaveLength(3);
 		expect(sorted[0].id).toBe(1);
 		expect(sorted[1].id).toBe(2);
 		expect(sorted[2].id).toBe(3);
 	});
-	it('Sort ascending should sort correctly', () => {
+	it('Sort ascending should sort correctly', async () => {
 		const handler = new Handler();
 
-		const sorted = handler.sortHandler(rows, columns[3], 'asc');
+		const sorted = await handler.sortHandler(rows, columns[3], 'asc');
 
 		expect(sorted).toHaveLength(3);
 		expect(sorted[0].id).toBe(2);
 		expect(sorted[1].id).toBe(1);
 		expect(sorted[2].id).toBe(3);
 	});
-	it('Sort descending should sort correctly', () => {
+	it('Sort descending should sort correctly', async () => {
 		const handler = new Handler();
 
-		const sorted = handler.sortHandler(rows, columns[3], 'desc');
+		const sorted = await handler.sortHandler(rows, columns[3], 'desc');
 
 		expect(sorted).toHaveLength(3);
 		expect(sorted[0].id).toBe(3);
 		expect(sorted[1].id).toBe(1);
 		expect(sorted[2].id).toBe(2);
 	});
-	it('Sort on string should sort alphabetically', () => {
+	it('Sort on string should sort alphabetically', async () => {
 		const handler = new Handler();
 
-		const sorted = handler.sortHandler(rows, columns[2], 'asc');
+		const sorted = await handler.sortHandler(rows, columns[2], 'asc');
 
 		expect(sorted).toHaveLength(3);
 		expect(sorted[0].id).toBe(3);
 		expect(sorted[1].id).toBe(2);
 		expect(sorted[2].id).toBe(1);
 	});
-	it('Sort equal cols value should be stable', () => {
+	it('Sort equal cols value should be stable', async () => {
 		const handler = new Handler();
 
-		const sorted = handler.sortHandler(rows, columns[4], 'desc');
+		const sorted = await handler.sortHandler(rows, columns[4], 'desc');
 
 		expect(sorted).toHaveLength(3);
 		expect(sorted[0].id).toBe(1);
@@ -184,36 +185,36 @@ describe('can sort data', () => {
 });
 
 describe('can paginate data', () => {
-	it('Normal pagination should return a correct number of items', () => {
+	it('Normal pagination should return a correct number of items', async () => {
 		const handler = new Handler();
 
-		let paged = handler.paginateHandler(rows, 1, 1);
+		let paged = await handler.paginateHandler(rows, 1, 1);
 
 		expect(paged).toHaveLength(1);
 		expect(paged[0].id).toBe(1);
 
-		paged = handler.paginateHandler(rows, 1, 2);
+		paged = await handler.paginateHandler(rows, 1, 2);
 
 		expect(paged).toHaveLength(1);
 		expect(paged[0].id).toBe(2);
 
-		paged = handler.paginateHandler(rows, 2, 1);
+		paged = await handler.paginateHandler(rows, 2, 1);
 
 		expect(paged).toHaveLength(2);
 		expect(paged[0].id).toBe(1);
 		expect(paged[1].id).toBe(2);
 	});
-	it('Paginate with 0 or less items per page should throw', () => {
+	it('Paginate with 0 or less items per page should skip pagination', async () => {
 		const handler = new Handler();
 
-		expect(() => handler.paginateHandler(rows, 0, 1)).toThrow(RangeError);
-		expect(() => handler.paginateHandler(rows, -5, 1)).toThrow(RangeError);
+		expect(await handler.paginateHandler(rows, 0, 1)).toBe(rows);
+		expect(await handler.paginateHandler(rows, -5, 1)).toBe(rows);
 	});
-	it('Paginate for page 0 or less should throw', () => {
+	it('Paginate for page 0 or less should skip pagination', async () => {
 		const handler = new Handler();
 
-		expect(() => handler.paginateHandler(rows, 1, 0)).toThrow(RangeError);
-		expect(() => handler.paginateHandler(rows, 1, -5)).toThrow(RangeError);
+		expect(await handler.paginateHandler(rows, 1, 0)).toBe(rows);
+		expect(await handler.paginateHandler(rows, 1, -5)).toBe(rows);
 	});
 });
 it('Display handler extracts correct data', async () => {

@@ -149,12 +149,8 @@ class Handler {
 	 * @returns {Promise<TRow[]>} The requested page's rows.
 	 */
 	defaultPaginateHandler(sortedData, perPage, pageNumber){
-		if (perPage < 1){
-			throw new RangeError(`Pagination requires at least 1 item per page, have ${ perPage }`);
-		}
-
-		if (pageNumber < 1){
-			throw new RangeError(`Pagination requires being applied to page 1 or more, have ${ pageNumber }`);
+		if (perPage < 1 || pageNumber < 1){
+			return sortedData;
 		}
 
 		const startIndex = (pageNumber - 1) * perPage;
