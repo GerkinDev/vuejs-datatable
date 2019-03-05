@@ -1,11 +1,11 @@
 // From https://stackoverflow.com/a/48660568/4839162
-const stableSort = (arr, compare) => arr
-	.map((item, index) => ({
+const stableSort = ( arr, compare ) => arr
+	.map( ( item, index ) => ( {
 		item,
 		index,
-	}))
-	.sort((a, b) => compare(a.item, b.item) || a.index - b.index)
-	.map(({item}) => item);
+	} ) )
+	.sort( ( a, b ) => compare( a.item, b.item ) || a.index - b.index )
+	.map( ( {item} ) => item );
 
 /**
  * @typedef {Object} DisplayHandlerResult
@@ -99,16 +99,16 @@ class Handler {
 	 * @param {Column[]} columns                      - The columns of the table.
 	 * @returns {Promise<TRow[]>} The filtered data rows.
 	 */
-	defaultFilterHandler(data, filters, columns){
-		if (!Array.isArray(filters)) {
-			filters = (filters || '').split(/\s/).filter(v => !!v);
+	defaultFilterHandler( data, filters, columns ){
+		if ( !Array.isArray( filters ) ) {
+			filters = ( filters || '' ).split( /\s/ ).filter( v => !!v );
 		}
 		
-		if (filters.length === 0){
+		if ( filters.length === 0 ){
 			return data;
 		}
 
-		return data.filter(row => filters.some(filter => this.rowMatches(row, filter, columns)));
+		return data.filter( row => filters.some( filter => this.rowMatches( row, filter, columns ) ) );
 	}
 	/**
 	 * Sort the given rows depending on a specific column & sort order.
@@ -118,27 +118,27 @@ class Handler {
 	 * @param {'asc' | 'desc' | null} sortDir - The direction of the sort.
 	 * @returns {Promise<TRow[]>} The sorted rows.
 	 */
-	defaultSortHandler(filteredData, sortColumn, sortDir){
-		if (!sortColumn || sortDir === null){
+	defaultSortHandler( filteredData, sortColumn, sortDir ){
+		if ( !sortColumn || sortDir === null ){
 			return filteredData;
 		}
 
-		return stableSort(filteredData, (a, b) => {
-			const valA = sortColumn.getRepresentation(a);
-			const valB = sortColumn.getRepresentation(b);
+		return stableSort( filteredData, ( a, b ) => {
+			const valA = sortColumn.getRepresentation( a );
+			const valB = sortColumn.getRepresentation( b );
 
-			if (valA === valB){
+			if ( valA === valB ){
 				return 0;
 			}
 
 			let sortVal = valA > valB ? 1 : -1;
 
-			if (sortDir === 'desc'){
+			if ( sortDir === 'desc' ){
 				sortVal *= -1;
 			}
 
 			return sortVal;
-		});
+		} );
 	}
 	/**
 	 * Split the rows list to display the requested page index.
@@ -148,15 +148,15 @@ class Handler {
 	 * @param {number} pageNumber - The index of the page to display.
 	 * @returns {Promise<TRow[]>} The requested page's rows.
 	 */
-	defaultPaginateHandler(sortedData, perPage, pageNumber){
-		if (perPage < 1 || pageNumber < 1){
+	defaultPaginateHandler( sortedData, perPage, pageNumber ){
+		if ( perPage < 1 || pageNumber < 1 ){
 			return sortedData;
 		}
 
-		const startIndex = (pageNumber - 1) * perPage;
-		const endIndex = (pageNumber * perPage);
+		const startIndex = ( pageNumber - 1 ) * perPage;
+		const endIndex = ( pageNumber * perPage );
 
-		return sortedData.slice(startIndex, endIndex);
+		return sortedData.slice( startIndex, endIndex );
 	}
 	/**
 	 * Handler to post-process the paginated data, and determine which data to actually display.
@@ -169,9 +169,9 @@ class Handler {
 	 * @param {TRow[]|*} processSteps.paged    - The return value of {@link Handler#paginateHandler}.
 	 * @returns {Promise<DisplayHandlerResult>} Processed values to set on the datatable.
 	 */
-	defaultDisplayHandler({
+	defaultDisplayHandler( {
 		filtered, paged, 
-	}){
+	} ){
 		return {
 			rows:          paged,
 			totalRowCount: filtered.length,
@@ -185,8 +185,8 @@ class Handler {
 	 * @param {Column[]} columns - The list of columns in the table.
 	 * @returns {boolean} `true` if any column contains the searched string.
 	 */
-	rowMatches(row, filterString, columns){
-		return columns.some(column => column.matches(row, filterString));
+	rowMatches( row, filterString, columns ){
+		return columns.some( column => column.matches( row, filterString ) );
 	}
 }
 

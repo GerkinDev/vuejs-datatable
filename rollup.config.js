@@ -12,26 +12,26 @@ const name = 'vuejs-datatable';
 
 // Plugins used for build
 const plugins = [
-	vue({
+	vue( {
 		compileTemplate: true,
 		template:        { compilerOptions: { preserveWhitespace: false }},
-	}),
-	babel({
+	} ),
+	babel( {
 		exclude: 'node_modules/**',
-	}),
-	string({include: [ '**/*.svg', '**/*.html' ]}),
-	commonjs({
+	} ),
+	string( {include: [ '**/*.svg', '**/*.html' ]} ),
+	commonjs( {
 		namedExports: {
 			// left-hand side can be an absolute path, a path
 			// relative to the current directory, or the name
 			// of a module in node_modules
 			'object-path': [ 'get', 'set' ],
 		},
-	}),
+	} ),
 	resolve(),
-	[ 'production', 'demo' ].includes(env.BUILD) ? terser() : undefined,
+	[ 'production', 'demo' ].includes( env.BUILD ) ? terser() : undefined,
 	env.BUILD === 'production' ? 
-		license({
+		license( {
 			banner: `<%= pkg.name %> v<%= pkg.version %>
 License: <%= pkg.license %>
 Repository: <%= pkg.repository.url %>
@@ -40,10 +40,10 @@ By <%= [pkg.author].concat(pkg.contributors).map(p => {
 	if(_.isString(p)) return p;
 	return p.name + (p.email ? '<' + p.email + '>' : '') + (p.url ? ' (' + p.url + ')' : '')
 }).join(', ') %>`,
-		}) :
+		} ) :
 		undefined,
 	// Filter out `undefined` plugins
-].filter(v => !!v);
+].filter( v => !!v );
 
 // Destination dir
 const outDir = 'dist';

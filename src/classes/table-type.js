@@ -12,7 +12,7 @@ class TableType {
 	 * 
 	 * @param {string} id - The identifier of this datatable type
 	 */
-	constructor(id){
+	constructor( id ){
 		/**
 		 * @private
 		 * @member {string} - Identifier of the table type
@@ -43,7 +43,7 @@ class TableType {
 	 * @param {Function} closure - The function to use for sorting.
 	 * @returns {this} For chaining.
 	 */
-	setFilterHandler(closure){
+	setFilterHandler( closure ){
 		this.handler.filterHandler = closure;
 
 		return this;
@@ -57,7 +57,7 @@ class TableType {
 	 * @param {Function} closure - The function to use for sorting.
 	 * @returns {this} For chaining.
 	 */
-	setSortHandler(closure){
+	setSortHandler( closure ){
 		this.handler.sortHandler = closure;
 
 		return this;
@@ -71,7 +71,7 @@ class TableType {
 	 * @param {Function} closure - The function to use for pagination.
 	 * @returns {this} For chaining.
 	 */
-	setPaginateHandler(closure){
+	setPaginateHandler( closure ){
 		this.handler.paginateHandler = closure;
 
 		return this;
@@ -85,7 +85,7 @@ class TableType {
 	 * @param {Function} closure - The function to use to post-process processed steps & extract rows & total count.
 	 * @returns {this} For chaining.
 	 */
-	setDisplayHandler(closure){
+	setDisplayHandler( closure ){
 		this.handler.displayHandler = closure;
 
 		return this;
@@ -98,12 +98,12 @@ class TableType {
 	 * @param {*} [value] - If omitted, this method will *get* the value at the specified `path`. Otherwise, it will *set* the value.
 	 * @returns {this | *} In *get* mode, the value. In *set* mode, `this`, for chaining.
 	 */
-	setting(path, value){
-		if (value === undefined){
-			return this.settings.get(path);
+	setting( path, value ){
+		if ( value === undefined ){
+			return this.settings.get( path );
 		}
 
-		this.settings.set(path, value);
+		this.settings.set( path, value );
 
 		return this;
 	}
@@ -114,8 +114,8 @@ class TableType {
 	 * @param {SettingsProps} settings - Values to merge
 	 * @returns {this} For chaining.
 	 */
-	mergeSettings(settings){
-		this.settings.merge(settings);
+	mergeSettings( settings ){
+		this.settings.merge( settings );
 
 		return this;
 	}
@@ -126,7 +126,7 @@ class TableType {
 	 * @returns {VueDatatable} A new factored {@link VueDatatable} constructor.
 	 */
 	getTableDefinition(){
-		const definition = this.clone(VueDatatable);
+		const definition = this.clone( VueDatatable );
 		definition.handler = this.handler;
 		definition.settings = this.settings;
 		definition.name = this.id;
@@ -140,7 +140,7 @@ class TableType {
 	 * @returns {VueDatatablePager} A new factored {@link VueDatatablePager} constructor.
 	 */
 	getPagerDefinition(){
-		const definition = this.clone(VueDatatablePager);
+		const definition = this.clone( VueDatatablePager );
 		definition.settings = this.settings;
 		definition.name = `${ this.id }-pager`;
 
@@ -153,24 +153,24 @@ class TableType {
 	 * @param {*} obj - The value to clone
 	 * @returns {*} The clone of the original parameter.
 	 */
-	clone(obj) {
+	clone( obj ) {
 		let copy;
 
 		// Handle Array
-		if (obj instanceof Array) {
-			return obj.map(v => this.clone(v));
+		if ( obj instanceof Array ) {
+			return obj.map( v => this.clone( v ) );
 		}
-		if (obj instanceof Function) {
+		if ( obj instanceof Function ) {
 			return obj;
 		}
 
 		// Handle Object
-		if (obj instanceof Object) {
+		if ( obj instanceof Object ) {
 			copy = {};
 
-			for (const attr in obj) {
-				if (obj.hasOwnProperty(attr)) {
-					copy[attr] = this.clone(obj[attr]);
+			for ( const attr in obj ) {
+				if ( obj.hasOwnProperty( attr ) ) {
+					copy[attr] = this.clone( obj[attr] );
 				}
 			}
 

@@ -39,17 +39,17 @@ export default {
 	},
 	computed: {
 		liClasses(){
-			const classes = [ this.settings.get('pager.classes.li') ];
+			const classes = [ this.settings.get( 'pager.classes.li' ) ];
 
-			if (this.disabled){
-				classes.push(this.settings.get('pager.classes.disabled'));
+			if ( this.disabled ){
+				classes.push( this.settings.get( 'pager.classes.disabled' ) );
 			}
 
-			if (this.selected){
-				classes.push(this.settings.get('pager.classes.selected'));
+			if ( this.selected ){
+				classes.push( this.settings.get( 'pager.classes.selected' ) );
 			}
 
-			return classes.filter(v => !!v).join(' ');
+			return classes.filter( v => !!v ).join( ' ' );
 		},
 		settings(){
 			return this.$parent.settings;
@@ -63,8 +63,8 @@ export default {
 		 * @returns {void} Nothing.
 		 */
 		sendClick(){
-			if (!this.disabled){
-				this.$emit('click', this.value);
+			if ( !this.disabled ){
+				this.$emit( 'click', this.value );
 			}
 		},
 	},

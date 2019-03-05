@@ -101,14 +101,14 @@ export default {
 			default: null,
 		},
 	},
-	data: () => ({
+	data: () => ( {
 		sortBy:        null,
 		sortDir:       null,
 		totalRows:     0,
 		page:          1,
 		perPage:       null,
 		displayedRows: [],
-	}),
+	} ),
 	computed: {
 		settings(){
 			return this.$options.settings;
@@ -117,21 +117,21 @@ export default {
 			return this.$options.handler;
 		},
 		normalizedColumns(){
-			return this.columns.map(column => new Column(column));
+			return this.columns.map( column => new Column( column ) );
 		},
 		tableClass(){
-			return this.settings.get('table.class');
+			return this.settings.get( 'table.class' );
 		},
 	},
 	created(){
 		this.$datatables[this.name] = this;
-		this.$root.$emit('table.ready', this.name);
+		this.$root.$emit( 'table.ready', this.name );
 
-		this.$watch(() => this.data, this.processRows, {deep: true});
+		this.$watch( () => this.data, this.processRows, {deep: true} );
 
-		this.$watch('columns', this.processRows);
+		this.$watch( 'columns', this.processRows );
 
-		this.$watch(() => this.filter + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows);
+		this.$watch( () => this.filter + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows );
 
 		this.processRows();
 	},
@@ -142,8 +142,8 @@ export default {
 		 * @param {Column} columnDefinition - The column to check sorting direction for.
 		 * @returns {'asc' | 'desc' | null} The sort direction for the specified column.
 		 */
-		getSortDirectionForColumn(columnDefinition){
-			if (this.sortBy !== columnDefinition){
+		getSortDirectionForColumn( columnDefinition ){
+			if ( this.sortBy !== columnDefinition ){
 				return null;
 			}
 
@@ -156,7 +156,7 @@ export default {
 		 * @param {Column} column - The column to check sorting direction for.
 		 * @returns {void} Nothing.
 		 */
-		setSortDirectionForColumn(direction, column){
+		setSortDirectionForColumn( direction, column ){
 			this.sortBy = column;
 			this.sortDir = direction;
 		},
@@ -168,7 +168,7 @@ export default {
 		 * @tutorial ajax-data
 		 */
 		async processRows(){
-			if (typeof this.data === 'function'){
+			if ( typeof this.data === 'function' ){
 				const params = {
 					filter:  this.filter,
 					sortBy:  this.sortBy ? this.sortBy.field : null,
@@ -177,36 +177,36 @@ export default {
 					page:    this.page,
 				};
 
-				const tableContent = await this.data(params);
+				const tableContent = await this.data( params );
 			
-				this.setTableContent(tableContent);
+				this.setTableContent( tableContent );
 
 				return;
 			}
 
-			const filteredData = await this.handler.filterHandler(this.data, this.filter, this.normalizedColumns);
+			const filteredData = await this.handler.filterHandler( this.data, this.filter, this.normalizedColumns );
 
-			const sortedData = await this.handler.sortHandler(filteredData, this.sortBy, this.sortDir);
+			const sortedData = await this.handler.sortHandler( filteredData, this.sortBy, this.sortDir );
 
-			const pagedData = await this.handler.paginateHandler(sortedData, this.perPage, this.page);
+			const pagedData = await this.handler.paginateHandler( sortedData, this.perPage, this.page );
 
-			const tableContent = await this.handler.displayHandler({
+			const tableContent = await this.handler.displayHandler( {
 				source:   this.data,
 				filtered: filteredData,
 				sorted:   sortedData,
 				paged:    pagedData,
-			});
+			} );
 
-			this.setTableContent(tableContent);
+			this.setTableContent( tableContent );
 		},
-		setTableContent({
+		setTableContent( {
 			rows, totalRowCount, 
 		} = {
 			rows:          undefined,
 			totalRowCount: undefined,
-		}){
-			this.setRows(rows);
-			this.setTotalRowCount(totalRowCount);
+		} ){
+			this.setRows( rows );
+			this.setTotalRowCount( totalRowCount );
 		},
 		/**
 		 * Set the displayed rows.
@@ -214,8 +214,8 @@ export default {
 		 * @param {Row[]} rows - The rows to display.
 		 * @returns {void} Nothing.
 		 */
-		setRows(rows){
-			if (typeof rows !== 'undefined' && rows !== null){
+		setRows( rows ){
+			if ( typeof rows !== 'undefined' && rows !== null ){
 				this.displayedRows = rows;
 			}
 		},
@@ -225,8 +225,8 @@ export default {
 		 * @param {number} value - The number of displayed rows.
 		 * @returns {void} Nothing.
 		 */
-		setTotalRowCount(value){
-			if (typeof value !== 'undefined' && value !== null){
+		setTotalRowCount( value ){
+			if ( typeof value !== 'undefined' && value !== null ){
 				this.totalRows = value;
 			}
 		},
@@ -236,15 +236,15 @@ export default {
 		 * @param {Row} row - The row to get classes for.
 		 * @returns {string} The classes string to set on the row.
 		 */
-		getRowClasses(row){
+		getRowClasses( row ){
 			let rowClasses = this.rowClasses;
 
-			if (rowClasses === null){
-				rowClasses = this.settings.get('table.row.class');
+			if ( rowClasses === null ){
+				rowClasses = this.settings.get( 'table.row.class' );
 			}
 
-			if (typeof rowClasses === 'function'){
-				return rowClasses(row);
+			if ( typeof rowClasses === 'function' ){
+				return rowClasses( row );
 			}
 
 			return rowClasses;

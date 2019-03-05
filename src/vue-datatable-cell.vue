@@ -11,7 +11,7 @@
 	<td
 		v-else-if="column.interpolate"
 		:style="cellStyles"
-		v-html="content"/>
+		v-html="content" />
 	<td
 		v-else
 		:style="cellStyles">
@@ -41,7 +41,7 @@ export default {
 	},
 	computed: {
 		content(){
-			return this.column.getRepresentation(this.row);
+			return this.column.getRepresentation( this.row );
 		},
 		cellStyles(){
 			return { 'text-align': this.column.align };

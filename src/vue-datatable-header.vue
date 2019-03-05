@@ -65,11 +65,11 @@ export default {
 			return this.isSortedAscending || this.isSortedDescending;
 		},
 		sortButtonHtml(){
-			const htmlContents = this.settings.get('table.sorting');
+			const htmlContents = this.settings.get( 'table.sorting' );
 
-			if (this.isSortedAscending){
+			if ( this.isSortedAscending ){
 				return htmlContents.sortAsc;
-			} else if (this.isSortedDescending){
+			} else if ( this.isSortedDescending ){
 				return htmlContents.sortDesc;
 			} else {
 				return htmlContents.sortNone;
@@ -84,15 +84,15 @@ export default {
 		 * @returns {void} Nothing.
 		 */
 		toggleSort(){
-			if (!this.canSort){
+			if ( !this.canSort ){
 				return;
 			}
-			if (!this.direction || this.direction === null){
-				this.$emit('change', 'asc', this.column);
-			} else if (this.direction === 'asc'){
-				this.$emit('change', 'desc', this.column);
+			if ( !this.direction || this.direction === null ){
+				this.$emit( 'change', 'asc', this.column );
+			} else if ( this.direction === 'asc' ){
+				this.$emit( 'change', 'desc', this.column );
 			} else {
-				this.$emit('change', null, this.column);
+				this.$emit( 'change', null, this.column );
 			}
 		},
 	},

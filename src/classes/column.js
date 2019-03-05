@@ -20,9 +20,9 @@ class Column {
 	 * @param {boolean} [props.filterable = true] - Controls whetever this column can be filtered.
 	 * @param {string} [props.headerClass = ''] - The base CSS class to apply to the header component.
 	 */
-	constructor(props){
+	constructor( props ){
 		/** @member {string} - The alignment direction of the cells in this column. */
-		this.align = Column.normalizeAlignment(props.align, 'left');
+		this.align = Column.normalizeAlignment( props.align, 'left' );
 		/** @member {* | null} - .... Yeah I don't know what it is. */
 		this.component = props.component || null;
 		/** @member {string} - The name of the field in the row object. */
@@ -33,7 +33,7 @@ class Column {
 		this.interpolate = props.interpolate || false;
 
 		/** @member {string} - The alignment direction of the header of this column. */
-		this.headerAlign = Column.normalizeAlignment(props.headerAlign, 'center');
+		this.headerAlign = Column.normalizeAlignment( props.headerAlign, 'center' );
 		/** @member {VueDatatableHeader | null} - The header cell component of the column. */
 		this.headerComponent = props.headerComponent || null;
 		/** @member {string} - The base CSS class to apply to the header component. */
@@ -42,9 +42,9 @@ class Column {
 		this.label = props.label || '';
 
 		/** @member {boolean} - Controls whetever this column can be sorted. */
-		this.sortable = Column.isSortable(props);
+		this.sortable = Column.isSortable( props );
 		/** @member {boolean} - Controls whetever this column can be filtered. */
-		this.filterable = Column.isFilterable(props);
+		this.filterable = Column.isFilterable( props );
 	}
 
 	/**
@@ -54,10 +54,10 @@ class Column {
 	 * @param {'left'|'center'|'right'} defaultAlign - The default alignment to use, if the 1st parameter isn't recognized
 	 * @returns {'left'|'center'|'right'} The normalized alignment
 	 */
-	static normalizeAlignment(align, defaultAlign = 'left'){
-		if (typeof align === 'string'){
-			const lowerAlign = (align || defaultAlign).toLowerCase();
-			if ([ 'left', 'center', 'right' ].includes(lowerAlign)){
+	static normalizeAlignment( align, defaultAlign = 'left' ){
+		if ( typeof align === 'string' ){
+			const lowerAlign = ( align || defaultAlign ).toLowerCase();
+			if ( [ 'left', 'center', 'right' ].includes( lowerAlign ) ){
 				return lowerAlign;
 			}
 		}
@@ -71,8 +71,8 @@ class Column {
 	 * @param {object} props - The column definition object
 	 * @returns {boolean} - `true` if the column can be represented by plain text, `false` otherwise
 	 */
-	static isPlainTextField(props){
-		return !!(props.field || props.representedAs);
+	static isPlainTextField( props ){
+		return !!( props.field || props.representedAs );
 	}
 
 	/**
@@ -81,13 +81,13 @@ class Column {
 	 * @param {object} props - The column definition object
 	 * @returns {boolean} - `true` if the column can be filtered, `false` otherwise
 	 */
-	static isFilterable(props){
+	static isFilterable( props ){
 		// If the option is explicitly disabled, use it
-		if (props.filterable === false){
+		if ( props.filterable === false ){
 			return false;
 		}
 
-		return this.isPlainTextField(props);
+		return this.isPlainTextField( props );
 	}
 
 	/**
@@ -96,13 +96,13 @@ class Column {
 	 * @param {object} props - The column definition object
 	 * @returns {boolean} - `true` if the column can be sorted, `false` otherwise
 	 */
-	static isSortable(props){
+	static isSortable( props ){
 		// If the option is explicitly disabled, use it
-		if (props.sortable === false){
+		if ( props.sortable === false ){
 			return false;
 		}
 
-		return this.isPlainTextField(props);
+		return this.isPlainTextField( props );
 	}
 
 	/**
@@ -111,12 +111,12 @@ class Column {
 	 * @param {object} row - The row to convert
 	 * @returns {string} - The string representation of this row in the current column.
 	 */
-	getRepresentation(row) {
-		if (this.representedAs && typeof this.representedAs === 'function'){
-			return this.representedAs(row);
+	getRepresentation( row ) {
+		if ( this.representedAs && typeof this.representedAs === 'function' ){
+			return this.representedAs( row );
 		}
 
-		return get(row, this.field);
+		return get( row, this.field );
 	}
 
 	/**
@@ -126,10 +126,10 @@ class Column {
 	 * @param {string} filterString - The filter string to test.
 	 * @returns {boolean} - `true` if the row matches the filter, `false` otherwise.
 	 */
-	matches(row, filterString) {
-		const colRepresentation = (`${  this.getRepresentation(row)  }`).toLowerCase();
+	matches( row, filterString ) {
+		const colRepresentation = ( `${  this.getRepresentation( row )  }` ).toLowerCase();
 
-		return colRepresentation.indexOf(filterString.toLowerCase()) > -1;
+		return colRepresentation.indexOf( filterString.toLowerCase() ) > -1;
 	}
 }
 

@@ -4,4 +4,4 @@
  */
 import DatatableFactory from './classes/factory.js';
 
-export default (new DatatableFactory());
+export default ( new DatatableFactory() );

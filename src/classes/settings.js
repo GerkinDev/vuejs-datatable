@@ -69,8 +69,8 @@ class Settings {
 	 * @param {(string | number | Array.<string | number>)} path - Path to the value to get.
 	 * @returns {*} The value at the specified path
 	 */
-	get(path){
-		return get(this.properties, path);
+	get( path ){
+		return get( this.properties, path );
 	}
 
 	/**
@@ -80,8 +80,8 @@ class Settings {
 	 * @param {*} value - New value to set.
 	 * @returns {this} For chaining.
 	 */
-	set(path, value){
-		set(this.properties, path, value);
+	set( path, value ){
+		set( this.properties, path, value );
 
 		return this;
 	}
@@ -92,8 +92,8 @@ class Settings {
 	 * @param {SettingsProps} settings - New settings object to merge with the current object of the Settings instance.
 	 * @returns {this} For chaining.
 	 */
-	merge(settings){
-		this.properties = this._mergeObjects(this.properties, settings);
+	merge( settings ){
+		this.properties = this._mergeObjects( this.properties, settings );
 
 		return this;
 	}
@@ -106,14 +106,14 @@ class Settings {
 	 * @param {*} obj2 - The object to inject into `obj1`.
 	 * @returns {*} The first object once merged.
 	 */
-	_mergeObjects(obj1, obj2){
-		if (!obj1){
+	_mergeObjects( obj1, obj2 ){
+		if ( !obj1 ){
 			obj1 = {};
 		}
 		
-		for (const key in obj2){
-			if (typeof obj2[key] === 'object'){
-				obj1[key] = this._mergeObjects(obj1[key], obj2[key]);
+		for ( const key in obj2 ){
+			if ( typeof obj2[key] === 'object' ){
+				obj1[key] = this._mergeObjects( obj1[key], obj2[key] );
 			} else {
 				obj1[key] = obj2[key];
 			}

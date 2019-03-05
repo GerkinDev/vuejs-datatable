@@ -124,35 +124,35 @@ export default {
 			default: 1,
 		},
 	},
-	data: () => ({
+	data: () => ( {
 		tableInstance: null,
-	}),
+	} ),
 	computed: {
 		show(){
 			return this.tableInstance && this.totalRows > 0;
 		},
 		totalRows(){
-			if (this.tableInstance){
+			if ( this.tableInstance ){
 				return this.tableInstance.totalRows;
 			}
 
 			return 0;
 		},
 		paginationClass(){
-			return this.settings.get('pager.classes.pager');
+			return this.settings.get( 'pager.classes.pager' );
 		},
 		totalPages(){
-			if (this.totalRows <= 0 || this.perPage <= 0){
+			if ( this.totalRows <= 0 || this.perPage <= 0 ){
 				return null;
 			}
 
-			return Math.ceil(this.totalRows / this.perPage);
+			return Math.ceil( this.totalRows / this.perPage );
 		},
 		previousIcon(){
-			return this.settings.get('pager.icons.previous');
+			return this.settings.get( 'pager.icons.previous' );
 		},
 		nextIcon(){
-			return this.settings.get('pager.icons.next');
+			return this.settings.get( 'pager.icons.next' );
 		},
 		settings(){
 			return this.$options.settings;
@@ -160,32 +160,32 @@ export default {
 	},
 	watch: {
 		totalRows(){
-			if (this.page > this.totalPages){
-				this.setPageNum(this.totalPages);
+			if ( this.page > this.totalPages ){
+				this.setPageNum( this.totalPages );
 			}
 		},
 		perPage(){
 			// Skip change if no need to change page
-			if (this.page <= this.totalPages){
+			if ( this.page <= this.totalPages ){
 				return;
 			}
 
-			this.setPageNum(this.totalPages);
+			this.setPageNum( this.totalPages );
 		},
 	},
 	created(){
-		if (this.$datatables && this.$datatables[this.table]){
+		if ( this.$datatables && this.$datatables[this.table] ){
 			this.tableInstance = this.$datatables[this.table];
 			this.tableInstance.perPage = this.perPage;
 			return;
 		}
 
-		this.$root.$on('table.ready', tableName => {
-			if (tableName === this.table){
+		this.$root.$on( 'table.ready', tableName => {
+			if ( tableName === this.table ){
 				this.tableInstance = this.$datatables[this.table];
 				this.tableInstance.perPage = this.perPage;
 			}
-		});
+		} );
 	},
 	methods: {
 		/**
@@ -195,11 +195,11 @@ export default {
 		 * @param {number} pageIndex - The new page index.
 		 * @returns {void} Nothing.
 		 */
-		setPageNum(pageIndex){
+		setPageNum( pageIndex ){
 			this.tableInstance.page = pageIndex;
 			this.tableInstance.perPage = this.perPage;
 
-			this.$emit('change', pageIndex);
+			this.$emit( 'change', pageIndex );
 		},
 	},
 	settings: null,

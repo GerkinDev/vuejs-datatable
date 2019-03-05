@@ -1,10 +1,10 @@
 <script>
 // eslint-disable-next-line no-undef
-jest.mock('../classes/settings');
+jest.mock( '../classes/settings' );
 import Settings from '../classes/settings';
 
 export default {
-	data:     () => ({}),
+	data:     () => ( {} ),
 	computed: {
 		settings: () => new Settings(),
 		show(){

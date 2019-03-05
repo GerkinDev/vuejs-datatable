@@ -1,8 +1,8 @@
 /* globals VuejsDatatable, Vue */
 
-VuejsDatatable.useDefaultType(false)
-	.registerTableType('datatable', tableType => {
-		tableType.mergeSettings({
+VuejsDatatable.useDefaultType( false )
+	.registerTableType( 'datatable', tableType => {
+		tableType.mergeSettings( {
 			table: {
 				class:   'table table-hover table-striped',
 				sorting: {
@@ -21,43 +21,28 @@ VuejsDatatable.useDefaultType(false)
 					next:     '<i class="glyphicon glyphicon-chevron-right"></i>',
 				},
 			},
-		});
-	});
+		} );
+	} );
 
-new Vue({
+new Vue( {
 	el:   '#demo-app',
 	data: {
 		filter:  '',
 		columns: [
+			{ label: 'id', field: 'id' },
+			{ label: 'Username', field: 'user.username' },
+			{ label: 'First Name', field: 'user.first_name' },
+			{ label: 'Last Name', field: 'user.last_name' },
+			{ label: 'Email', field: 'user.email' },
 			{
-				label: 'id',
-				field: 'id',
-			},
-			{
-				label: 'Username',
-				field: 'user.username',
-			},
-			{
-				label: 'First Name',
-				field: 'user.first_name',
-			},
-			{
-				label: 'Last Name',
-				field: 'user.last_name',
-			},
-			{
-				label: 'Email',
-				field: 'user.email',
-			},
-			{
-				label:         'address',
+				label:         'Address',
 				representedAs: row =>`${ row.address  }<br />${  row.city  }, ${  row.state }`,
 				interpolate:   true,
 				sortable:      false,
-				filterable:    false,
+				filterable:    false, 
 			},
 		],
 		rows: window.rows,
 		page: 1,
 	},
-});
+} );
