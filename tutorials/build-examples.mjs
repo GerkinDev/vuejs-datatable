@@ -50,7 +50,7 @@ const allOperations = dirs.map(async dir => {
 	} catch (e){
 		console.warn(`For demo "${ dir }":`, e);
 	}
-
+	
 	const scriptDeps = htmlDom.window.document.getElementById('deps');
 	if (scriptDeps){
 		scriptDeps.parentNode.removeChild(scriptDeps);
@@ -62,6 +62,9 @@ const allOperations = dirs.map(async dir => {
 }).concat([ copyFile(join(tutorialSourcesDir, 'tutorials.json'), join(tutorialOutDir, 'tutorials.json')) ]);
 
 Promise.all(allOperations).then(() => {
-	console.log('Tutorials transformed !');
+	console.info('Tutorials transformed !');
+	process.exit(0);
+}).catch(e => {
+	console.error('An error occured while building the docs:', e);
+	process.exit(1);
 });
-

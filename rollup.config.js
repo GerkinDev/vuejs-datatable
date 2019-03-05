@@ -1,7 +1,7 @@
 import vue from 'rollup-plugin-vue';
 import { terser } from 'rollup-plugin-terser';
 import resolve from 'rollup-plugin-node-resolve';
-import string from 'rollup-plugin-string';
+import { string } from 'rollup-plugin-string';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 
