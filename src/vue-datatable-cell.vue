@@ -1,16 +1,21 @@
 <template>
-	<td :style="{'text-align': column.align}">
+	<td
+		v-if="column.component"
+		:style="cellStyles">
 		<component
 			:is="column.component"
 			v-if="column.component"
 			:row="row"
 			:column="column" />
-		<template
-			v-else-if="column.interpolate"
-			v-html="content"></template>
-		<template v-else>
-			{{ content }}
-		</template>
+	</td>
+	<td
+		v-else-if="column.interpolate"
+		:style="cellStyles"
+		v-html="content"/>
+	<td
+		v-else
+		:style="cellStyles">
+		{{ content }}
 	</td>
 </template>
 
@@ -37,6 +42,9 @@ export default {
 	computed: {
 		content(){
 			return this.column.getRepresentation(this.row);
+		},
+		cellStyles(){
+			return { 'text-align': this.column.align };
 		},
 	},
 };
