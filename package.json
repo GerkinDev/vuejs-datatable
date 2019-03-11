@@ -19,8 +19,8 @@
         "build:watch": "rollup -c rollup.config.js --watch",
         "version": "npm run build && npm run doc && git add docs --force",
         "prepublishOnly": "npm run build",
-        "release": "standard-version",
-        "prerelease": "standard-version --prerelease"
+        "release": "standard-version -a",
+        "prerelease": "standard-version -a --prerelease"
     },
     "keywords": [
         "Vue.js",
@@ -83,6 +83,11 @@
     },
     "peerDependencies": {
         "vue": ">2.5.18"
+    },
+    "standard-version": {
+        "scripts": {
+            "postbump": "npm run version"
+        }
     },
     "author": {
         "name": "Patrick Stephan",
