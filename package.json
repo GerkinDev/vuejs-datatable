@@ -58,7 +58,7 @@
         "jest": "^24.1.0",
         "jsdoc": "^3.5.5",
         "jsdoc-vuejs": "^2.4.0",
-        "jsdom": "^13.2.0",
+        "jsdom": "^14.0.0",
         "karma": "^4.0.0",
         "karma-chrome-launcher": "^2.2.0",
         "karma-jasmine": "^2.0.0",
