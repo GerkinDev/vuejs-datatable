@@ -174,20 +174,39 @@ export default {
 		},
 	},
 	created(){
-		if ( this.$datatables && this.$datatables[this.table] ){
-			this.tableInstance = this.$datatables[this.table];
-			this.tableInstance.perPage = this.perPage;
-			return;
+		// Try to link with table
+		if ( !this.linkWithTable( this.table ) ){
+			// If it fail, bind next tables initialization
+			const tableReadyHandler = tableName => {
+				// If it is the correct table and linking is OK...
+				if ( tableName === this.table && this.linkWithTable( tableName ) ){
+					// Unbind table initializations
+					this.$root.$off( 'table.ready', tableReadyHandler );
+				}
+			};
+			this.$root.$on( 'table.ready', tableReadyHandler );
 		}
-
-		this.$root.$on( 'table.ready', tableName => {
-			if ( tableName === this.table ){
-				this.tableInstance = this.$datatables[this.table];
-				this.tableInstance.perPage = this.perPage;
-			}
-		} );
 	},
 	methods: {
+		/**
+		 * Link the pager with the table, assign to the table some properties, and trigger an event on the table.
+		 * 
+		 * @emits Datatable#table.pager-bound
+		 * @param {string} tableName - The name of the table to bind the pager with.
+		 * @returns {boolean} `true` if the link is succesfull, or `false` if it could not find a table to associate with.
+		 */
+		linkWithTable( tableName ){
+			if ( this.$datatables && this.$datatables[tableName] ){
+				const targetTable = this.$datatables[tableName];
+				this.tableInstance = targetTable;
+				targetTable.perPage = this.perPage;
+				targetTable.pagers.push( this );
+				targetTable.$emit( 'table.pager-bound', this );
+				return true;
+			} else {
+				return false;
+			}
+		},
 		/**
 		 * Defines the page index to display.
 		 *

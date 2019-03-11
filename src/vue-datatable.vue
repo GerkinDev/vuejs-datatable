@@ -84,6 +84,10 @@ export default {
 			type:    String,
 			default: 'default',
 		},
+		waitForPager: {
+			type:    Boolean,
+			default: false,
+		},
 		columns: {
 			type:     Array,
 			required: true,
@@ -108,6 +112,7 @@ export default {
 		page:          1,
 		perPage:       null,
 		displayedRows: [],
+		pagers:        [],
 	} ),
 	computed: {
 		settings(){
@@ -126,14 +131,17 @@ export default {
 	created(){
 		this.$datatables[this.name] = this;
 		this.$root.$emit( 'table.ready', this.name );
-
 		this.$watch( () => this.data, this.processRows, {deep: true} );
-
 		this.$watch( 'columns', this.processRows );
 
-		this.$watch( () => this.filter + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows );
-
-		this.processRows();
+		// Defer to next tick, so a pager component created just after have the time to link itself with this table before start watching.
+		this.$nextTick( () => {
+			if ( this.waitForPager && this.pagers.length === 0 ){
+				this.$on( 'table.pager-bound', () => this.initWatchCriterions() );
+			} else {
+				this.initWatchCriterions();
+			}
+		} );
 	},
 	methods: {
 		/**
@@ -248,6 +256,18 @@ export default {
 			}
 
 			return rowClasses;
+		},
+		/**
+		 * Starts the watching of following properties: `filter`, `perPage`, `page`, `sortBy`, `sortDir`.
+		 * When a change is detected, the component runs {@link datatable#processRows}.
+		 * Because the watch is immediate, {@link datatable#processRows} is run immediately when this method is called.
+		 * 
+		 * @see datatable#processRows
+		 * @see https://vuejs.org/v2/api/#vm-watch
+		 * @returns {void} Nothing.
+		 */
+		initWatchCriterions(){
+			this.$watch( () => this.filter + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows, {immediate: true} );
 		},
 	},
 	handler:  null,
