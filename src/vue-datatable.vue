@@ -171,11 +171,11 @@ export default {
 		/**
 		 * Using data (or its return value if it is a function), filter, sort, paginate & display rows in the table.
 		 * 
-		 * @returns {void} Nothing.
+		 * @returns {Promise<void>} Nothing.
 		 * @see DataFnParams Parameters provided to the `data` function.
 		 * @tutorial ajax-data
 		 */
-		async processRows(){
+		processRows(){
 			if ( typeof this.data === 'function' ){
 				const params = {
 					filter:  this.filter,
@@ -185,34 +185,21 @@ export default {
 					page:    this.page,
 				};
 
-				const tableContent = await this.data( params );
-			
-				this.setTableContent( tableContent );
-
-				return;
+				return this.data( params ).then(tableContent => {
+					this.setTableContent( tableContent );
+				});
 			}
 
-			const filteredData = await this.handler.filterHandler( this.data, this.filter, this.normalizedColumns );
-
-			const sortedData = await this.handler.sortHandler( filteredData, this.sortBy, this.sortDir );
-
-			const pagedData = await this.handler.paginateHandler( sortedData, this.perPage, this.page );
-
-			const tableContent = await this.handler.displayHandler( {
-				source:   this.data,
-				filtered: filteredData,
-				sorted:   sortedData,
-				paged:    pagedData,
-			} );
-
-			this.setTableContent( tableContent );
+			const outObj =  {
+				source: this.data,
+			};
+			return this.handler.filterHandler( this.data, this.filter, this.normalizedColumns )
+				.then( filteredData => this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) )
+				.then( sortedData => this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) )
+				.then( pagedData => this.handler.displayHandler( Object.assign({paged: pagedData}, outObj) ) )
+				.then( tableContent => this.setTableContent( tableContent ));
 		},
-		setTableContent( {
-			rows, totalRowCount, 
-		} = {
-			rows:          undefined,
-			totalRowCount: undefined,
-		} ){
+		setTableContent( { rows, totalRowCount } = { rows: undefined, totalRowCount: undefined } ){
 			this.setRows( rows );
 			this.setTotalRowCount( totalRowCount );
 		},
