@@ -1,8 +1,9 @@
 /* globals require, module, __dirname*/
 const rollup = require( 'rollup' );
 const fsWithCallbacks = require( 'fs' );
-const { readFile, writeFile, unlink } = fsWithCallbacks.promises;
-const { resolve, isAbsolute, dirname } = require( 'path' );
+const { readFile, writeFile, unlink, mkdir } = fsWithCallbacks.promises;
+const existsSync = fsWithCallbacks.existsSync;
+const { resolve, isAbsolute, dirname, basename, relative, join } = require( 'path' );
 
 module.exports.__dirname = __dirname;
 
@@ -54,8 +55,17 @@ module.exports.rollupize = async filePath => {
 	
 	const fileContent = await readFile( filePath, 'UTF-8' );
 	// Wrap scripts for single execution
-	const tempFile = resolve( dirname( filePath ), '.tmp.js' );
-	await writeFile( tempFile, wrapScript( fileContent ) );
+	const tempDir = resolve( __dirname, '..', '.tmp' );
+	if ( !existsSync( tempDir ) ){
+		await mkdir( tempDir );
+	}
+	const tempFile = resolve( tempDir, `${ basename( dirname( filePath ) ) }.js` );
+	const fileContentRelative = fileContent.replace( /import\s+(?:.*?from\s+)?(['"])([\w.\\/]+)\1/g, ( fullMatch, quoteType, targetModulePath ) => {
+		const resolvedFilePath = relative( tempDir, filePath );
+		const relativeModule = join( dirname( resolvedFilePath ), targetModulePath ).replace( /\\/g, '/' );
+		return fullMatch.replace( quoteType + targetModulePath + quoteType, quoteType + relativeModule + quoteType );
+	} );
+	await writeFile( tempFile, wrapScript( fileContentRelative ) );
 	const plugins = rollupOpts[0].plugins;
 	
 	try {
