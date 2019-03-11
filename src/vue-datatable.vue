@@ -59,24 +59,25 @@ import Column from './classes/column.js';
  * 
  * @module datatable
  * 
- * @vue-prop {string} [name] - The name of the datatable. It should be unique per page.
- * @vue-prop {ColumnDef[]} columns - List of columns definitions displayed by this datatable.
- * @vue-prop {Array.<*>|Function} data - The list of items to display, or a getter function.
- * @vue-prop {string} [filter] - Value to match in rows for display filtering.
+ * @vue-prop {string} [name]                                     - The name of the datatable. It should be unique per page.
+ * @vue-prop {ColumnDef[]} columns                               - List of columns definitions displayed by this datatable.
+ * @vue-prop {Array.<*>|Function} data                           - The list of items to display, or a getter function.
+ * @vue-prop {string} [filter]                                   - Value to match in rows for display filtering.
  * @vue-prop {(string | Array.<string> | Function)} [rowClasses] - Class(es) or getter function to get row classes.
  *
- * @vue-data {Column | null} sortBy - Column used for data sorting.
+ * @vue-data {Column | null} sortBy          - Column used for data sorting.
  * @vue-data {'asc' | 'desc' | null} sortDir - Direction of the sort. A null value is equivalent to 'asc'.
- * @vue-data {number} totalRows - Total number of rows contained by this data table.
- * @vue-data {number} page - Current page index.
- * @vue-data {number | null} perPage - Maximum number of rows displayed per page.
- * @vue-data {Row[]} displayedRows - Array of rows displayed by the table.
+ * @vue-data {number} totalRows              - Total number of rows contained by this data table.
+ * @vue-data {number} page                   - Current page index.
+ * @vue-data {number | null} perPage         - Maximum number of rows displayed per page.
+ * @vue-data {Row[]} displayedRows           - Array of rows displayed by the table.
+ * @vue-data {datatable-pager[]} pagers      - Array of pagers that are linked to this table.
  * 
- * @vue-computed {Array.<*>} rows - Array of rows currently managed by the datatable.
- * @vue-computed {Settings} settings - Reference to the {@link Settings} object linked to this datatable instance.
- * @vue-computed {Handler} handler - Reference to the {@link Handler} object linked to this datatable instance.
+ * @vue-computed {Array.<*>} rows             - Array of rows currently managed by the datatable.
+ * @vue-computed {Settings} settings          - Reference to the {@link Settings} object linked to this datatable instance.
+ * @vue-computed {Handler} handler            - Reference to the {@link Handler} object linked to this datatable instance.
  * @vue-computed {Column[]} normalizedColumns - Array of columns definitions casted as {@link Column} objects.
- * @vue-computed {string} tableClass - Base CSS class to apply to the `&lt;table&gt;` element.
+ * @vue-computed {string} tableClass          - Base CSS class to apply to the `&lt;table&gt;` element.
  */
 export default {
 	props: {
@@ -161,7 +162,7 @@ export default {
 		 * Defines the sort direction for a specific column.
 		 * 
 		 * @param {'asc' | 'desc' | null} direction - The direction of the sort.
-		 * @param {Column} column - The column to check sorting direction for.
+		 * @param {Column} column                   - The column to check sorting direction for.
 		 * @returns {void} Nothing.
 		 */
 		setSortDirectionForColumn( direction, column ){
@@ -185,19 +186,15 @@ export default {
 					page:    this.page,
 				};
 
-				return this.data( params ).then(tableContent => {
-					this.setTableContent( tableContent );
-				});
+				return this.data( params ).then( tableContent => this.setTableContent( tableContent ) );
 			}
 
-			const outObj =  {
-				source: this.data,
-			};
+			const outObj =  { source: this.data };
 			return this.handler.filterHandler( this.data, this.filter, this.normalizedColumns )
 				.then( filteredData => this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) )
 				.then( sortedData => this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) )
-				.then( pagedData => this.handler.displayHandler( Object.assign({paged: pagedData}, outObj) ) )
-				.then( tableContent => this.setTableContent( tableContent ));
+				.then( pagedData => this.handler.displayHandler( Object.assign( {paged: pagedData}, outObj ) ) )
+				.then( tableContent => this.setTableContent( tableContent ) );
 		},
 		setTableContent( { rows, totalRowCount } = { rows: undefined, totalRowCount: undefined } ){
 			this.setRows( rows );

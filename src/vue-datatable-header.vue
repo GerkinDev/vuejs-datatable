@@ -22,15 +22,15 @@
  * 
  * @module datatable-pager-button
  * 
- * @vue-prop {Column} column - The {@link Column} instance this header is for.
- * @vue-prop {Settings} settings - The {@link Settings} instance associated with this {@link datatable}'s header.
+ * @vue-prop {Column} column                            - The {@link Column} instance this header is for.
+ * @vue-prop {Settings} settings                        - The {@link Settings} instance associated with this {@link datatable}'s header.
  * @vue-prop {'asc' | 'desc' | null} [direction = null] - The current sort direction for the current column.
  * 
- * @vue-computed {boolean} canSort - `true` if this column is sortable.
- * @vue-computed {boolean} isSortedAscending - `true` if this column is sorted in *ascending* mode.
+ * @vue-computed {boolean} canSort            - `true` if this column is sortable.
+ * @vue-computed {boolean} isSortedAscending  - `true` if this column is sorted in *ascending* mode.
  * @vue-computed {boolean} isSortedDescending -`true` if this column is sorted in *descending* mode.
- * @vue-computed {boolean} isSorted - `true` if this column is sorted, in any mode.
- * @vue-computed {string} classes - HTML classes to apply on this header.
+ * @vue-computed {boolean} isSorted           - `true` if this column is sorted, in any mode.
+ * @vue-computed {string} classes             - HTML classes to apply on this header.
  */
 export default {
 	model: {

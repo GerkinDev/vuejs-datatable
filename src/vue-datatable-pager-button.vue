@@ -15,10 +15,10 @@
  * 
  * @vue-prop {boolean} [disabled = false] - Defines if the button is triggerable or not.
  * @vue-prop {boolean} [selected = false] - Represents if the pager button is the currently selected one.
- * @vue-prop {number} value - The page index of the button.
+ * @vue-prop {number} value               - The page index of the button.
  * 
- * @vue-computed {string} aClasses - HTML classes to set on link tags.
- * @vue-computed {string} liClasses - HTML classes to set on list items tags.
+ * @vue-computed {string} aClasses   - HTML classes to set on link tags.
+ * @vue-computed {string} liClasses  - HTML classes to set on list items tags.
  * @vue-computed {Settings} settings - Reference to the {@link Settings} object linked to the parent pager.
  */
 export default {

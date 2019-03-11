@@ -11,18 +11,18 @@ import { env } from 'process';
 import { isString } from 'util';
 import moment from 'moment';
 
-const pkg = require('./package.json');
+const pkg = require( './package.json' );
 
 // The module name
 const name = pkg.name;
-const allContributors = [pkg.author].concat(pkg.contributors);
+const allContributors = [ pkg.author ].concat( pkg.contributors );
 const userToString = p => {
-	if(isString(p)){
+	if ( isString( p ) ){
 		return p;
 	}
-	return p.name + (p.email ? '<' + p.email + '>' : '') + (p.url ? ' (' + p.url + ')' : '')
+	return p.name + ( p.email ? `<${  p.email  }>` : '' ) + ( p.url ? ` (${  p.url  })` : '' );
 };
-const allContributorsString = allContributors.map(userToString).join(', ');
+const allContributorsString = allContributors.map( userToString ).join( ', ' );
 // Plugins used for build
 const getPlugins = iife => {
 	const babelPlugin = iife ? babel( { exclude: 'node_modules/**' } ) : undefined;
@@ -32,14 +32,14 @@ const getPlugins = iife => {
 			banner: `${ pkg.name } v${ pkg.version }
 License: ${ pkg.license }
 Repository: ${ pkg.repository.url }
-Generated on ${ moment().format('YYYY-MM-DD [at] HH:mm:ss') }.
+Generated on ${ moment().format( 'YYYY-MM-DD [at] HH:mm:ss' ) }.
 By ${ allContributorsString }`,
 		} ) :
 		undefined;
 		
 	const terserPlugin = [ 'production', 'demo' ].includes( env.BUILD ) ? terser() : undefined;
 
-	const visualizerPlugin = env.BUILD === 'production' ? visualizer( { filename: `./stats/${iife ? 'iife' : 'esm'}.html` } ) : undefined;
+	const visualizerPlugin = env.BUILD === 'production' ? visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } ) : undefined;
 
 	return [
 		vue( {
@@ -62,7 +62,7 @@ By ${ allContributorsString }`,
 		visualizerPlugin,
 		// Filter out `undefined` plugins
 	].filter( v => !!v );
-}
+};
 
 // Destination dir
 const outDir = 'dist';
@@ -82,7 +82,7 @@ export default [
 			sourcemap,
 			globals: { vue: 'Vue' },
 		},
-		plugins: getPlugins(true),
+		plugins:  getPlugins( true ),
 		external: [ 'vue' ],
 	},
 	{
@@ -93,7 +93,7 @@ export default [
 			name,
 			sourcemap,
 		},
-		plugins: getPlugins(false),
+		plugins:  getPlugins( false ),
 		external: ( Object.keys( pkg.peerDependencies ) || [] )
 			.concat( Object.keys( pkg.dependencies ) || [] ),
 	},

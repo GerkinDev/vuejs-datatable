@@ -1,6 +1,4 @@
-import {
-	get, set, 
-} from 'object-path';
+import { get, set } from 'object-path';
 
 /**
  * @typedef {Object} SettingsProps

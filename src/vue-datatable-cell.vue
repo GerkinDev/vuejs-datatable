@@ -24,7 +24,7 @@
  * @module datatable-cell
  * 
  * @vue-prop {Column} column - The column of the cell
- * @vue-prop {Row} row - The row object of the cell
+ * @vue-prop {Row} row       - The row object of the cell
  * 
  * @vue-computed {string} content - The string content of the cell. It may be interpolated to HTML if {@link Column#interpolate} is `true`.
  */
