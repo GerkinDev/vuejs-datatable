@@ -34,8 +34,7 @@
         "pagination"
     ],
     "dependencies": {
-        "object-path": "^0.11.4",
-        "vue": ">2.5.18"
+        "object-path": "^0.11.4"
     },
     "devDependencies": {
         "@babel/core": "^7.3.3",
@@ -78,12 +77,12 @@
         "standard-version": "^5.0.0",
         "ts-jest": "^24.0.0",
         "typescript": "^3.3.3",
+        "vue": ">2.5.18",
         "vue-jest": "^3.0.3",
         "vue-template-compiler": ">2.5.18"
     },
     "peerDependencies": {
-        "vue": ">2.5.18",
-        "datatables.net": "1.10.19"
+        "vue": ">2.5.18"
     },
     "author": {
         "name": "Patrick Stephan",
