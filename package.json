@@ -73,6 +73,7 @@
         "rollup-plugin-node-resolve": "^4.0.0",
         "rollup-plugin-string": "^3.0.0",
         "rollup-plugin-terser": "^4.0.0",
+        "rollup-plugin-visualizer": "^1.0.2",
         "rollup-plugin-vue": "^4.3.2",
         "standard-version": "^5.0.0",
         "ts-jest": "^24.0.0",

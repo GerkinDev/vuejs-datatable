@@ -5,45 +5,64 @@ import { string } from 'rollup-plugin-string';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import license from 'rollup-plugin-license';
+import visualizer from 'rollup-plugin-visualizer';
 
 import { env } from 'process';
-// The module name
-const name = 'vuejs-datatable';
+import { isString } from 'util';
+import moment from 'moment';
 
-// Plugins used for build
-const plugins = [
-	vue( {
-		compileTemplate: true,
-		template:        { compilerOptions: { preserveWhitespace: false }},
-	} ),
-	babel( {
-		exclude: 'node_modules/**',
-	} ),
-	string( {include: [ '**/*.svg', '**/*.html' ]} ),
-	commonjs( {
-		namedExports: {
-			// left-hand side can be an absolute path, a path
-			// relative to the current directory, or the name
-			// of a module in node_modules
-			'object-path': [ 'get', 'set' ],
-		},
-	} ),
-	resolve(),
-	[ 'production', 'demo' ].includes( env.BUILD ) ? terser() : undefined,
-	env.BUILD === 'production' ? 
-		license( {
-			banner: `<%= pkg.name %> v<%= pkg.version %>
-License: <%= pkg.license %>
-Repository: <%= pkg.repository.url %>
-Generated on <%= moment().format('YYYY-MM-DD [at] HH:mm:ss') %>.
-By <%= [pkg.author].concat(pkg.contributors).map(p => {
-	if(_.isString(p)) return p;
+const pkg = require('./package.json');
+
+// The module name
+const name = pkg.name;
+const allContributors = [pkg.author].concat(pkg.contributors);
+const userToString = p => {
+	if(isString(p)){
+		return p;
+	}
 	return p.name + (p.email ? '<' + p.email + '>' : '') + (p.url ? ' (' + p.url + ')' : '')
-}).join(', ') %>`,
+};
+const allContributorsString = allContributors.map(userToString).join(', ');
+// Plugins used for build
+const getPlugins = iife => {
+	const babelPlugin = iife ? babel( { exclude: 'node_modules/**' } ) : undefined;
+
+	const licensePlugin = env.BUILD === 'production' ? 
+		license( {
+			banner: `${ pkg.name } v${ pkg.version }
+License: ${ pkg.license }
+Repository: ${ pkg.repository.url }
+Generated on ${ moment().format('YYYY-MM-DD [at] HH:mm:ss') }.
+By ${ allContributorsString }`,
 		} ) :
-		undefined,
-	// Filter out `undefined` plugins
-].filter( v => !!v );
+		undefined;
+		
+	const terserPlugin = [ 'production', 'demo' ].includes( env.BUILD ) ? terser() : undefined;
+
+	const visualizerPlugin = env.BUILD === 'production' ? visualizer( { filename: `./stats/${iife ? 'iife' : 'esm'}.html` } ) : undefined;
+
+	return [
+		vue( {
+			compileTemplate: true,
+			template:        { compilerOptions: { preserveWhitespace: false }},
+		} ),
+		babelPlugin,
+		string( {include: [ '**/*.svg', '**/*.html' ]} ),
+		commonjs( {
+			namedExports: {
+				// left-hand side can be an absolute path, a path
+				// relative to the current directory, or the name
+				// of a module in node_modules
+				'object-path': [ 'get', 'set' ],
+			},
+		} ),
+		resolve(),
+		terserPlugin,
+		licensePlugin,
+		visualizerPlugin,
+		// Filter out `undefined` plugins
+	].filter( v => !!v );
+}
 
 // Destination dir
 const outDir = 'dist';
@@ -63,7 +82,7 @@ export default [
 			sourcemap,
 			globals: { vue: 'Vue' },
 		},
-		plugins,
+		plugins: getPlugins(true),
 		external: [ 'vue' ],
 	},
 	{
@@ -74,7 +93,8 @@ export default [
 			name,
 			sourcemap,
 		},
-		plugins,
-		external: [ 'object-path', 'vue' ],
+		plugins: getPlugins(false),
+		external: ( Object.keys( pkg.peerDependencies ) || [] )
+			.concat( Object.keys( pkg.dependencies ) || [] ),
 	},
 ];
