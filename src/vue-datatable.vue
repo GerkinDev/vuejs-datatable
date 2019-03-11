@@ -253,7 +253,10 @@ export default {
 		 * @returns {void} Nothing.
 		 */
 		initWatchCriterions(){
-			this.$watch( () => this.filter + this.perPage + this.page + this.sortBy + this.sortDir, this.processRows, {immediate: true} );
+			for ( const prop of [ 'filter', 'perPage', 'page', 'sortBy', 'sortDir' ] ){
+				this.$watch( prop, this.processRows, { immediate: false, deep: true } );
+			}
+			this.processRows();
 		},
 	},
 	handler:  null,
