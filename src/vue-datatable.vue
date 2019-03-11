@@ -42,6 +42,7 @@
 
 <script>
 import Column from './classes/column.js';
+import { ensurePromise } from './utils';
 
 /**
  * @typedef {Object} DataFnParams
@@ -132,8 +133,8 @@ export default {
 	created(){
 		this.$datatables[this.name] = this;
 		this.$root.$emit( 'table.ready', this.name );
-		this.$watch( () => this.data, this.processRows, {deep: true} );
-		this.$watch( 'columns', this.processRows );
+		this.$watch( 'data', this.processRows, {deep: true, immediate: false} );
+		this.$watch( 'columns', this.processRows, {deep: true, immediate: false} );
 
 		// Defer to next tick, so a pager component created just after have the time to link itself with this table before start watching.
 		this.$nextTick( () => {
@@ -186,15 +187,16 @@ export default {
 					page:    this.page,
 				};
 
-				return this.data( params ).then( tableContent => this.setTableContent( tableContent ) );
+				return ensurePromise( this.data( params ) )
+					.then( tableContent => ensurePromise( this.setTableContent( tableContent ) ) );
 			}
 
 			const outObj =  { source: this.data };
-			return this.handler.filterHandler( this.data, this.filter, this.normalizedColumns )
-				.then( filteredData => this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) )
-				.then( sortedData => this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) )
-				.then( pagedData => this.handler.displayHandler( Object.assign( {paged: pagedData}, outObj ) ) )
-				.then( tableContent => this.setTableContent( tableContent ) );
+			return ensurePromise( this.handler.filterHandler( this.data, this.filter, this.normalizedColumns ) )
+				.then( filteredData => ensurePromise( this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) ) )
+				.then( sortedData => ensurePromise( this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) ) )
+				.then( pagedData => ensurePromise( this.handler.displayHandler( Object.assign( {paged: pagedData}, outObj ) ) ) )
+				.then( tableContent => ensurePromise( this.setTableContent( tableContent ) ) );
 		},
 		setTableContent( { rows, totalRowCount } = { rows: undefined, totalRowCount: undefined } ){
 			this.setRows( rows );
