@@ -17,7 +17,7 @@
         "build:dev": "rollup -c rollup.config.js",
         "build:production": "rollup -c rollup.config.js --environment BUILD:production",
         "build:watch": "rollup -c rollup.config.js --watch",
-        "version": "npm run build && npm run doc && git add docs",
+        "version": "npm run build && npm run doc && git add docs --force",
         "prepublishOnly": "npm run build",
         "release": "standard-version",
         "prerelease": "standard-version --prerelease"
