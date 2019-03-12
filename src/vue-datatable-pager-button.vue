@@ -1,68 +1,72 @@
-<style></style>
-
 <template>
-	<li :class="li_classes">
-		<a href="javascript: void(0);" :class="a_classes" @click="sendClick">
-			<slot>{{ value }}</slot>
-		</a>
+	<li 
+		:style="{cursor: disabled ? 'not-allowed' : 'pointer'}"
+		:class="liClasses"
+		@click="sendClick">
+		<slot>{{ value }}</slot>
 	</li>
 </template>
 
 <script>
-import Settings from './classes/settings.js';
-
+/**
+ * A control button used by the pager.
+ * 
+ * @module datatable-pager-button
+ * 
+ * @vue-prop {boolean} [disabled = false] - Defines if the button is triggerable or not.
+ * @vue-prop {boolean} [selected = false] - Represents if the pager button is the currently selected one.
+ * @vue-prop {number} value               - The page index of the button.
+ * 
+ * @vue-computed {string} aClasses   - HTML classes to set on link tags.
+ * @vue-computed {string} liClasses  - HTML classes to set on list items tags.
+ * @vue-computed {Settings} settings - Reference to the {@link Settings} object linked to the parent pager.
+ */
 export default {
 	props: {
 		disabled: {
-			type: Boolean,
-			default: false
+			type:    Boolean,
+			default: false,
 		},
 		selected: {
-			type: Boolean,
-			default: false
+			type:    Boolean,
+			default: false,
 		},
 		value: {
-			type: Number,
-			default: null
+			type:     Number,
+			required: false,
+			default:  null,
 		},
 	},
 	computed: {
-		li_classes(){
-			var classes = [];
+		liClasses(){
+			const classes = [ this.settings.get( 'pager.classes.li' ) ];
 
-			if(this.settings.get('pager.classes.li')){
-				classes.push(this.settings.get('pager.classes.li'));
+			if ( this.disabled ){
+				classes.push( this.settings.get( 'pager.classes.disabled' ) );
 			}
 
-			if(this.disabled){
-				classes.push(this.settings.get('pager.classes.disabled'));
+			if ( this.selected ){
+				classes.push( this.settings.get( 'pager.classes.selected' ) );
 			}
 
-			if(this.selected){
-				classes.push(this.settings.get('pager.classes.selected'));
-			}
-
-			return classes.join(' ');
-		},
-		a_classes(){
-			var classes = [];
-
-			if(this.settings.get('pager.classes.a')){
-				classes.push(this.settings.get('pager.classes.a'));
-			}
-
-			return classes.join(' ');
+			return classes.filter( v => !!v ).join( ' ' );
 		},
 		settings(){
 			return this.$parent.settings;
 		},
 	},
 	methods: {
+		/**
+		 * Emits an event if the button is not {@link datatable-pager-button#disabled}.
+		 * 
+		 * @emits click.
+		 * @returns {void} Nothing.
+		 */
 		sendClick(){
-			if(!this.disabled){
-				this.$emit('click', this.value);
+			if ( !this.disabled ){
+				this.$emit( 'click', this.value );
 			}
-		}
-	}
-}
+		},
+	},
+};
 </script>

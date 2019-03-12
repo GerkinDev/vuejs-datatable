@@ -1,0 +1,44 @@
+<section>
+	<h2>Introduction</h2>
+	<article>
+		<p>Here is the bare minimum example to use <em>vuejs-datatable</em>. You can check out other tutorials for more advanced usages.</p>
+	</article>
+</section>
+
+<section>
+	<h2>Demo</h2>
+	<div id="demo-app">
+		<div class="row">
+			<div class="col-xs-12 form-inline">
+				<div class="form-group">
+					<label for="filter" class="sr-only">Filter</label>
+					<input type="text" class="form-control" v-model="filter" placeholder="Filter">
+				</div>
+			</div>
+			
+			<div class="col-xs-12 table-responsive">
+				<datatable :columns="columns" :data="rows" :filter="filter"></datatable>
+				<datatable-pager v-model="page"></datatable-pager>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Code</h2>
+	<div id="code-samples">
+		<article>
+			<h3>Javascript</h3>
+			<pre><code class="js language-js" id="code-area"></code></pre>
+		</article>
+		<article>
+			<h3>HTML</h3>
+			<pre><code class="html language-html" id="template-area"></code></pre>
+		</article>
+	</div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
+<script id="deps"></script>
+<script src="./assets/rows.js" async></script>
+<script id="demo-script"></script>

@@ -1,0 +1,48 @@
+<section>
+	<h2>Introduction</h2>
+	<article>
+		<p>The <a href="./module-datatable-pager.html" target="_blank">DatatablePager</a> is the component in charge of the pagination logic. It provides to your <a href="./module-datatable.html" taget="_blank">Datatable</a> the current page index and the number of items to display in your table.</p>
+		<p>If you do not link a <a href="./module-datatable-pager.html" target="_blank">DatatablePager</a> to your <a href="./module-datatable.html" taget="_blank">Datatable</a>, then the table will show all rows provided at the same time.</p>
+		
+		<div class="alert alert-info">
+			<p><i class="glyphicon glyphicon-info-sign"></i> Check out the <a href="./tutorial-pager-styles.html">Pager styles tutorial</a> to see the different aspects available for the pager. You can also learn more on how to manage <a href="./tutorial-multiple-tables.html">multiple tables</a> with pagers on the same page.</p>
+		</div>
+	</article>
+</section>
+
+<section>
+	<h2>Demo</h2>
+	<div id="demo-app" style="max-height: 500px;overflow-y: auto;overflow-x: hidden;">
+		<div class="row">
+			<div class="col-xs-12 form-inline">
+				<div class="form-group">
+					<label for="filter" class="sr-only">Filter</label>
+					<input type="text" class="form-control" v-model="filter" placeholder="Filter">
+				</div>
+			</div>
+			
+			<div class="col-xs-12 table-responsive">
+				<datatable :columns="columns" :data="rows" :filter="filter"></datatable>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Code</h2>
+	<div id="code-samples">
+		<article>
+			<h3>Javascript</h3>
+			<pre><code class="js language-js" id="code-area"></code></pre>
+		</article>
+		<article>
+			<h3>HTML</h3>
+			<pre><code class="html language-html" id="template-area"></code></pre>
+		</article>
+	</div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
+<script id="deps"></script>
+<script src="./assets/rows.js" async></script>
+<script id="demo-script"></script>

@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "schedule": "before 10pm on Monday",
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "branchPrefix": "greenkeeper/",
+  "groupName": "all",
+  "rangeStrategy": "replace"
+}

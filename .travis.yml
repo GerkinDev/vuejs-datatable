@@ -1,0 +1,29 @@
+language: node_js
+branches:
+  only:
+    - master
+    - staging
+    - /^greenkeeper/.*$/
+notifications:
+  email: false
+node_js:
+  - "10"
+matrix:
+  include:
+  - node_js: "lts/*"
+    env: CC_SAMPLE=true
+cache:
+  directories:
+    - "node_modules"
+
+install: npm install
+before_script:
+  - |
+    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    chmod +x ./cc-test-reporter
+    if [ "$CC_SAMPLE" = "true" ]; then echo "This run will be used for codeclimate";./cc-test-reporter before-build; fi
+script:
+  - npm run test:ci
+after_script:
+  - |
+    if [ "$CC_SAMPLE" = "true" ]; then echo "This run is used for codeclimate"; ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi

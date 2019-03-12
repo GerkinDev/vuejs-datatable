@@ -1,153 +1,226 @@
-<style></style>
-
 <template>
 	<nav v-if="show">
-		<ul v-if="type === 'abbreviated'" :class="pagination_class">
-			<datatable-button v-if="page - 3 >= 1" :value="1" @click="setPageNum"></datatable-button>
-			<datatable-button v-if="page - 4 >= 1" disabled>...</datatable-button>
+		<ul
+			v-if="type === 'abbreviated'"
+			:class="paginationClass">
+			<datatable-button
+				v-if="page - 3 >= 1"
+				:value="1"
+				@click="setPageNum" />
+			<datatable-button
+				v-if="page - 4 >= 1"
+				disabled>
+				...
+			</datatable-button>
 
-			<datatable-button v-if="page - 2 >= 1" :value="page - 2" @click="setPageNum"></datatable-button>
-			<datatable-button v-if="page - 1 >= 1" :value="page - 1" @click="setPageNum"></datatable-button>
+			<datatable-button
+				v-if="page - 2 >= 1"
+				:value="page - 2"
+				@click="setPageNum" />
+			<datatable-button
+				v-if="page - 1 >= 1"
+				:value="page - 1"
+				@click="setPageNum" />
 
-			<datatable-button :value="page" selected></datatable-button>
+			<datatable-button
+				:value="page"
+				selected />
 
-			<datatable-button v-if="page + 1 <= total_pages" :value="page + 1" @click="setPageNum"></datatable-button>
-			<datatable-button v-if="page + 2 <= total_pages" :value="page + 2" @click="setPageNum"></datatable-button>
+			<datatable-button
+				v-if="page + 1 <= totalPages"
+				:value="page + 1"
+				@click="setPageNum" />
+			<datatable-button
+				v-if="page + 2 <= totalPages"
+				:value="page + 2"
+				@click="setPageNum" />
 
-			<datatable-button v-if="page + 4 <= total_pages" disabled>...</datatable-button>
-			<datatable-button v-if="page + 3 <= total_pages" :value="total_pages" @click="setPageNum"></datatable-button>
+			<datatable-button
+				v-if="page + 4 <= totalPages"
+				disabled>
+				...
+			</datatable-button>
+			<datatable-button
+				v-if="page + 3 <= totalPages"
+				:value="totalPages"
+				@click="setPageNum" />
 		</ul>
-		<ul v-else-if="type === 'long'" :class="pagination_class">
-			<datatable-button v-for="i in total_pages" :key="i" :value="i" @click="setPageNum" :selected="i === page"></datatable-button>
+		<ul
+			v-else-if="type === 'long'"
+			:class="paginationClass">
+			<datatable-button
+				v-for="i in totalPages"
+				:key="i"
+				:value="i"
+				:selected="i === page"
+				@click="setPageNum" />
 		</ul>
-		<ul v-else-if="type === 'short'" :class="pagination_class">
-			<datatable-button :disabled="page - 1 < 1" :value="page - 1" @click="setPageNum"><span v-html="previous_icon"></span></datatable-button>
-			<datatable-button :value="page" selected></datatable-button>
-			<datatable-button :disabled="page + 1 > total_pages" :value="page + 1" @click="setPageNum"><span v-html="next_icon"></span></datatable-button>
+		<ul
+			v-else-if="type === 'short'"
+			:class="paginationClass">
+			<datatable-button
+				v-if="page > 1"
+				:value="page - 1"
+				@click="setPageNum">
+				<span v-html="previousIcon" />
+			</datatable-button>
+			<datatable-button
+				:value="page"
+				selected />
+			<datatable-button
+				v-if="page < totalPages"
+				:value="page + 1"
+				@click="setPageNum">
+				<span v-html="nextIcon" />
+			</datatable-button>
 		</ul>
 	</nav>
 </template>
 
 <script>
+/**
+ * The component that is used to manage & change pages on a {@link datatable}.
+ * 
+ * @module datatable-pager
+ * 
+ * @vue-prop {string} [table = 'default']                       - The id of the associated {@link datatable}.
+ * @vue-prop {'long' | 'short' | 'abbreviated'} [type = 'long'] - The kind of the pager
+ * @vue-prop {number} [perPage = 10]                            - Max number of items to display.
+ * @vue-prop {number} [page = 1]                                - The page index to display
+ * 
+ * @vue-data {datatable | null} tableInstance - Reference to the associated {@link datatable} through the {@link datatable-pager#table} prop.
+ * 
+ * @vue-computed {boolean} show               - Returns `true` if the pager has an associated {@link datatable} with some rows.
+ * @vue-computed {number} totalRows           - The total number of rows in the associated {@link datatable}.
+ * @vue-computed {string} paginationClass     - HTML class on the wrapping `ul` around the pager buttons.
+ * @vue-computed {string} disabledClass       - HTML class to apply on disabled buttons. (unused).
+ * @vue-computed {string} previousLinkClasses - HTML class to apply on the previous page's button. (unused).
+ * @vue-computed {string} nextLinkClasses     - HTML class to apply on the next page's button. (unused).
+ * @vue-computed {number} totalPages          - The total number of pages in the associated {@link datatable}.
+ * @vue-computed {string} previousIcon        - HTML content of the previous page's button.
+ * @vue-computed {string} nextIcon            - HTML content of the next page's button.
+ * @vue-computed {Settings} settings          - Reference to the {@link Settings} object linked to this pager type.
+ */
 export default {
 	model: {
-		prop: 'page',
-		event: 'change'
+		prop:  'page',
+		event: 'change',
 	},
 	props: {
 		table: {
-			type: String,
-			default: 'default'
+			type:    String,
+			default: 'default',
 		},
 		type: {
-			type: String,
-			default: 'long'
+			type:    String,
+			default: 'long',
 		},
 		perPage: {
-			type: Number,
-			default: 10
+			type:    Number,
+			default: 10,
 		},
 		page: {
-			type: Number,
-			default: 1
-		}
+			type:    Number,
+			default: 1,
+		},
 	},
-	data: () => ({
-		table_instance: null,
-	}),
+	data: () => ( {
+		tableInstance: null,
+	} ),
 	computed: {
 		show(){
-			return this.table_instance && this.total_rows > 0;
+			return this.tableInstance && this.totalRows > 0;
 		},
-		total_rows(){
-			if(this.table_instance){
-				return this.table_instance.total_rows;
+		totalRows(){
+			if ( this.tableInstance ){
+				return this.tableInstance.totalRows;
 			}
 
 			return 0;
 		},
-		pagination_class(){
-			return this.settings.get('pager.classes.pager');
+		paginationClass(){
+			return this.settings.get( 'pager.classes.pager' );
 		},
-		disabled_class(){
-			return this.settings.get('pager.classes.disabled');
-		},
-		previous_link_classes(){
-			if(this.page - 1 < 1){
-				return this.settings.get('pager.classes.disabled');
+		totalPages(){
+			if ( this.totalRows <= 0 || this.perPage <= 0 ){
+				return null;
 			}
 
-			return '';
+			return Math.ceil( this.totalRows / this.perPage );
 		},
-		next_link_classes(){
-			if(this.page + 1 > this.total_pages){
-				return this.settings.get('pager.classes.disabled');
-			}
-
-			return '';
+		previousIcon(){
+			return this.settings.get( 'pager.icons.previous' );
 		},
-		total_pages(){
-			if(!(this.total_rows > 0)){
-				return 0;
-			}
-
-			return Math.ceil(this.total_rows / this.perPage);
-		},
-		previous_icon(){
-			return this.settings.get('pager.icons.previous');
-		},
-		next_icon(){
-			return this.settings.get('pager.icons.next');
+		nextIcon(){
+			return this.settings.get( 'pager.icons.next' );
 		},
 		settings(){
 			return this.$options.settings;
 		},
 	},
-	methods: {
-		setPageNum(number){
-			this.table_instance.page = number;
-			this.table_instance.per_page = this.perPage;
-
-			this.$emit('change', number);
-		},
-		getClassForPage(number){
-			if(this.page == number){
-				return this.settings.get('pager.classes.selected');
-			}
-
-			return '';
-		}
-	},
 	watch: {
-		total_rows(){
-			if(this.page > this.total_pages){
-				this.setPageNum(this.total_pages);
+		totalRows(){
+			if ( this.page > this.totalPages ){
+				this.setPageNum( this.totalPages );
 			}
 		},
 		perPage(){
-			var page = this.page;
-
-			if(page > this.total_pages){
-				page = this.total_pages
+			// Skip change if no need to change page
+			if ( this.page <= this.totalPages ){
+				return;
 			}
 
-			this.setPageNum(page);
-		}
+			this.setPageNum( this.totalPages );
+		},
 	},
 	created(){
-		if(this.$datatables[this.table]){
-			this.table_instance = this.$datatables[this.table];
-			this.table_instance.per_page = this.perPage;
-			return;
+		// Try to link with table
+		if ( !this.linkWithTable( this.table ) ){
+			// If it fail, bind next tables initialization
+			const tableReadyHandler = tableName => {
+				// If it is the correct table and linking is OK...
+				if ( tableName === this.table && this.linkWithTable( tableName ) ){
+					// Unbind table initializations
+					this.$root.$off( 'table.ready', tableReadyHandler );
+				}
+			};
+			this.$root.$on( 'table.ready', tableReadyHandler );
 		}
-
-		this.$root.$on('table.ready', function(table_name){
-			if(table_name === this.table){
-				this.table_instance = this.$datatables[this.table];
-				this.table_instance.per_page = this.perPage;
-			}
-		}.bind(this));
 	},
-	settings: null
-}
+	methods: {
+		/**
+		 * Link the pager with the table, assign to the table some properties, and trigger an event on the table.
+		 * 
+		 * @emits Datatable#table.pager-bound
+		 * @param {string} tableName - The name of the table to bind the pager with.
+		 * @returns {boolean} `true` if the link is succesfull, or `false` if it could not find a table to associate with.
+		 */
+		linkWithTable( tableName ){
+			if ( this.$datatables && this.$datatables[tableName] ){
+				const targetTable = this.$datatables[tableName];
+				this.tableInstance = targetTable;
+				targetTable.perPage = this.perPage;
+				targetTable.pagers.push( this );
+				targetTable.$emit( 'table.pager-bound', this );
+				return true;
+			} else {
+				return false;
+			}
+		},
+		/**
+		 * Defines the page index to display.
+		 *
+		 * @emits change
+		 * @param {number} pageIndex - The new page index.
+		 * @returns {void} Nothing.
+		 */
+		setPageNum( pageIndex ){
+			this.tableInstance.page = pageIndex;
+			this.tableInstance.perPage = this.perPage;
+
+			this.$emit( 'change', pageIndex );
+		},
+	},
+	settings: null,
+};
 </script>

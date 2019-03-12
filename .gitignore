@@ -1,2 +1,14 @@
 node_modules/
 .DS_Store
+
+tutorials/builds/
+
+tutorials/assets/assets/vuejs-datatable\.js
+
+coverage/
+
+stats/
+
+dist/
+
+docs/

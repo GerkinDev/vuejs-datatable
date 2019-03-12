@@ -1,185 +1,265 @@
-<style></style>
-
 <template>
-	<table :class="table_class">
+	<table :class="tableClass">
 		<thead>
 			<tr>
 				<datatable-header
-					v-for="(head_column, i) in normalized_columns"
+					v-for="(head_column, i) in normalizedColumns"
 					:key="i"
 					:column="head_column"
 					:settings="settings"
 					:direction="getSortDirectionForColumn(head_column)"
-					@change="setSortDirectionForColumn"
-				></datatable-header>
+					@change="setSortDirectionForColumn" />
 			</tr>
 		</thead>
 		<tbody>
-			<slot v-for="(row, i) in processed_rows" :row="row" :columns="normalized_columns">
-			    <tr :class="getRowClasses(row)" :key="i">
+			<slot
+				v-for="(row, i) in displayedRows"
+				:row="row"
+				:columns="normalizedColumns">
+				<tr
+					:key="i"
+					:class="getRowClasses(row)">
 					<datatable-cell
-						v-for="(column, j) in normalized_columns"
+						v-for="(column, j) in normalizedColumns"
 						:key="j"
 						:column="column"
-						:row="row"
-					></datatable-cell>
-			    </tr>
+						:row="row" />
+				</tr>
 			</slot>
-			<tr v-if="processed_rows.length == 0">
-				<td :colspan="normalized_columns.length">
-					<slot name="no-results"></slot>
+			<tr v-if="displayedRows.length == 0">
+				<td :colspan="normalizedColumns.length">
+					<slot name="no-results" />
 				</td>
 			</tr>
 		</tbody>
 		<tfoot v-if="$slots.footer || $scopedSlots.footer">
-			<slot name="footer" :rows="processed_rows"></slot>
+			<slot
+				name="footer"
+				:rows="displayedRows" />
 		</tfoot>
 	</table>
 </template>
 
 <script>
 import Column from './classes/column.js';
+import { ensurePromise } from './utils';
 
+/**
+ * @typedef {Object} DataFnParams
+ * @description Parameters passed to the `data` function, to handle by custom logic.
+ * @property {string | stringp[]}    filter:  The string(s) used to filter entries.
+ * @property {string | null}         sortBy:  The name of the field we are sorting on.
+ * @property {'asc' | 'desc' | null} sortDir: The direction of the sort.
+ * @property {number}                perPage: The number of items per page.
+ * @property {number}                page:    The current page index.
+ * @tutorial ajax-data
+ */
+
+/**
+ * The main component of the module, used to display a datatable.
+ * 
+ * @module datatable
+ * 
+ * @vue-prop {string} [name]                                     - The name of the datatable. It should be unique per page.
+ * @vue-prop {ColumnDef[]} columns                               - List of columns definitions displayed by this datatable.
+ * @vue-prop {Array.<*>|Function} data                           - The list of items to display, or a getter function.
+ * @vue-prop {string} [filter]                                   - Value to match in rows for display filtering.
+ * @vue-prop {(string | Array.<string> | Function)} [rowClasses] - Class(es) or getter function to get row classes.
+ *
+ * @vue-data {Column | null} sortBy          - Column used for data sorting.
+ * @vue-data {'asc' | 'desc' | null} sortDir - Direction of the sort. A null value is equivalent to 'asc'.
+ * @vue-data {number} totalRows              - Total number of rows contained by this data table.
+ * @vue-data {number} page                   - Current page index.
+ * @vue-data {number | null} perPage         - Maximum number of rows displayed per page.
+ * @vue-data {Row[]} displayedRows           - Array of rows displayed by the table.
+ * @vue-data {datatable-pager[]} pagers      - Array of pagers that are linked to this table.
+ * 
+ * @vue-computed {Array.<*>} rows             - Array of rows currently managed by the datatable.
+ * @vue-computed {Settings} settings          - Reference to the {@link Settings} object linked to this datatable instance.
+ * @vue-computed {Handler} handler            - Reference to the {@link Handler} object linked to this datatable instance.
+ * @vue-computed {Column[]} normalizedColumns - Array of columns definitions casted as {@link Column} objects.
+ * @vue-computed {string} tableClass          - Base CSS class to apply to the `&lt;table&gt;` element.
+ */
 export default {
 	props: {
 		name: {
-			type: String,
-			default: 'default'
+			type:    String,
+			default: 'default',
 		},
-		columns: [Object, Array],
-		data: [Object, Array, String, Function],
-		filterBy: {
-			type: [String, Array],
-			default: null
+		waitForPager: {
+			type:    Boolean,
+			default: false,
+		},
+		columns: {
+			type:     Array,
+			required: true,
+		},
+		data: {
+			type:     null,
+			required: true,
+		},
+		filter: {
+			type:    [ String, Array ],
+			default: null,
 		},
 		rowClasses: {
-			type: [String, Array, Object, Function],
-			default: null
-		}
-	},
-	data: () => ({
-		sort_by: null,
-		sort_dir: null,
-		total_rows: 0,
-		page: 1,
-		per_page: null,
-		processed_rows: [],
-	}),
-	computed: {
-		rows(){
-			return this.data.slice(0);
+			type:    [ String, Array, Function ],
+			default: null,
 		},
+	},
+	data: () => ( {
+		sortBy:        null,
+		sortDir:       null,
+		totalRows:     0,
+		page:          1,
+		perPage:       null,
+		displayedRows: [],
+		pagers:        [],
+	} ),
+	computed: {
 		settings(){
 			return this.$options.settings;
 		},
 		handler(){
 			return this.$options.handler;
 		},
-		normalized_columns(){
-			return this.columns.map(function(column){
-				return new Column(column);
-			});
+		normalizedColumns(){
+			return this.columns.map( column => new Column( column ) );
 		},
-		table_class(){
-			return this.settings.get('table.class');
+		tableClass(){
+			return this.settings.get( 'table.class' );
 		},
-	},
-	methods: {
-		getSortDirectionForColumn(column_definition){
-			if(this.sort_by !== column_definition){
-				return null;
-			}
-
-			return this.sort_dir;
-		},
-		setSortDirectionForColumn(direction, column){
-			this.sort_by = column;
-			this.sort_dir = direction;
-		},
-		processRows(){
-			if(typeof this.data === 'function'){
-				let params = {
-					filter: this.filterBy,
-					sort_by: this.sort_by ? this.sort_by.field : null,
-					sort_dir: this.sort_dir,
-					page_length: this.per_page,
-					page_number: this.page,
-				};
-
-				let processed_data = this.data(params, function(rows, row_count){
-					this.setRows(rows);
-					this.setTotalRowCount(row_count);
-				}.bind(this));
-
-				return;
-			}
-
-			let filtered_data = this.handler.filterHandler(
-				this.rows,
-				this.filterBy,
-				this.normalized_columns
-			);
-
-			let sorted_data = this.handler.sortHandler(
-				filtered_data,
-				this.sort_by,
-				this.sort_dir
-			);
-
-			let paged_data = this.handler.paginateHandler(
-				sorted_data,
-				this.per_page,
-				this.page
-			);
-
-			this.handler.displayHandler(
-				paged_data,
-				{
-					filtered_data: filtered_data,
-					sorted_data: sorted_data,
-					paged_data: paged_data,
-				},
-				this.setRows,
-				this.setTotalRowCount
-			);
-		},
-		setRows(rows){
-			this.processed_rows = rows;
-		},
-		setTotalRowCount(value){
-			this.total_rows = value;
-		},
-		getRowClasses(row){
-			var row_classes = this.rowClasses;
-
-			if(row_classes === null){
-				row_classes = this.settings.get('table.row.classes');
-			}
-
-			if(typeof row_classes === 'function'){
-				return row_classes(row);
-			}
-
-			return row_classes;
-		}
 	},
 	created(){
 		this.$datatables[this.name] = this;
-		this.$root.$emit('table.ready', this.name);
+		this.$root.$emit( 'table.ready', this.name );
+		this.$watch( 'data', this.processRows, {deep: true, immediate: false} );
+		this.$watch( 'columns', this.processRows, {deep: true, immediate: false} );
 
-		this.$watch(function(){
-			return this.data;
-		}.bind(this), this.processRows, {deep: true});
-
-		this.$watch('columns', this.processRows);
-
-		this.$watch(function(){
-			return this.filterBy + this.per_page + this.page + this.sort_by + this.sort_dir;
-		}.bind(this), this.processRows);
-
-		this.processRows();
+		// Defer to next tick, so a pager component created just after have the time to link itself with this table before start watching.
+		this.$nextTick( () => {
+			if ( this.waitForPager && this.pagers.length === 0 ){
+				this.$on( 'table.pager-bound', () => this.initWatchCriterions() );
+			} else {
+				this.initWatchCriterions();
+			}
+		} );
 	},
-	handler: null,
-	settings: null
-}
+	methods: {
+		/**
+		 * Get the sort direction for a specific column.
+		 * 
+		 * @param {Column} columnDefinition - The column to check sorting direction for.
+		 * @returns {'asc' | 'desc' | null} The sort direction for the specified column.
+		 */
+		getSortDirectionForColumn( columnDefinition ){
+			if ( this.sortBy !== columnDefinition ){
+				return null;
+			}
+
+			return this.sortDir;
+		},
+		/**
+		 * Defines the sort direction for a specific column.
+		 * 
+		 * @param {'asc' | 'desc' | null} direction - The direction of the sort.
+		 * @param {Column} column                   - The column to check sorting direction for.
+		 * @returns {void} Nothing.
+		 */
+		setSortDirectionForColumn( direction, column ){
+			this.sortBy = column;
+			this.sortDir = direction;
+		},
+		/**
+		 * Using data (or its return value if it is a function), filter, sort, paginate & display rows in the table.
+		 * 
+		 * @returns {Promise<void>} Nothing.
+		 * @see DataFnParams Parameters provided to the `data` function.
+		 * @tutorial ajax-data
+		 */
+		processRows(){
+			if ( typeof this.data === 'function' ){
+				const params = {
+					filter:  this.filter,
+					sortBy:  this.sortBy ? this.sortBy.field : null,
+					sortDir: this.sortDir,
+					perPage: this.perPage,
+					page:    this.page,
+				};
+
+				return ensurePromise( this.data( params ) )
+					.then( tableContent => ensurePromise( this.setTableContent( tableContent ) ) );
+			}
+
+			const outObj =  { source: this.data };
+			return ensurePromise( this.handler.filterHandler( this.data, this.filter, this.normalizedColumns ) )
+				.then( filteredData => ensurePromise( this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) ) )
+				.then( sortedData => ensurePromise( this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) ) )
+				.then( pagedData => ensurePromise( this.handler.displayHandler( Object.assign( {paged: pagedData}, outObj ) ) ) )
+				.then( tableContent => ensurePromise( this.setTableContent( tableContent ) ) );
+		},
+		setTableContent( { rows, totalRowCount } = { rows: undefined, totalRowCount: undefined } ){
+			this.setRows( rows );
+			this.setTotalRowCount( totalRowCount );
+		},
+		/**
+		 * Set the displayed rows.
+		 * 
+		 * @param {Row[]} rows - The rows to display.
+		 * @returns {void} Nothing.
+		 */
+		setRows( rows ){
+			if ( typeof rows !== 'undefined' && rows !== null ){
+				this.displayedRows = rows;
+			}
+		},
+		/**
+		 * Set the displayed rows count.
+		 * 
+		 * @param {number} value - The number of displayed rows.
+		 * @returns {void} Nothing.
+		 */
+		setTotalRowCount( value ){
+			if ( typeof value !== 'undefined' && value !== null ){
+				this.totalRows = value;
+			}
+		},
+		/**
+		 * Get the classes to add on the row
+		 * 
+		 * @param {Row} row - The row to get classes for.
+		 * @returns {string} The classes string to set on the row.
+		 */
+		getRowClasses( row ){
+			let rowClasses = this.rowClasses;
+
+			if ( rowClasses === null ){
+				rowClasses = this.settings.get( 'table.row.class' );
+			}
+
+			if ( typeof rowClasses === 'function' ){
+				return rowClasses( row );
+			}
+
+			return rowClasses;
+		},
+		/**
+		 * Starts the watching of following properties: `filter`, `perPage`, `page`, `sortBy`, `sortDir`.
+		 * When a change is detected, the component runs {@link datatable#processRows}.
+		 * Because the watch is immediate, {@link datatable#processRows} is run immediately when this method is called.
+		 * 
+		 * @see datatable#processRows
+		 * @see https://vuejs.org/v2/api/#vm-watch
+		 * @returns {void} Nothing.
+		 */
+		initWatchCriterions(){
+			for ( const prop of [ 'filter', 'perPage', 'page', 'sortBy', 'sortDir' ] ){
+				this.$watch( prop, this.processRows, { immediate: false, deep: true } );
+			}
+			this.processRows();
+		},
+	},
+	handler:  null,
+	settings: null,
+};
 </script>

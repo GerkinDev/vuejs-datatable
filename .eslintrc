@@ -1,0 +1,98 @@
+{
+	"env": {
+		"es6": true,
+		"browser": true
+	},
+	"plugins": [
+		"vue",
+		"html"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:vue/recommended"
+	],
+	"parserOptions": {
+		"sourceType": "module",
+		"ecmaVersion": 8
+	},
+	"globals": {
+		"global": false
+	},
+	"rules": {
+		"array-bracket-spacing": ["error", "always", { "objectsInArrays": false, "arraysInArrays": false }],
+		"arrow-body-style": ["error", "as-needed"],
+		"arrow-parens": ["error", "as-needed"],
+		"block-spacing": "error",
+		"brace-style": ["error", "1tbs"],
+		"camelcase": ["error", { "properties": "always" }],
+		"comma-dangle": ["error","always-multiline"],
+		"comma-spacing": ["error", { "before": false, "after": true }],
+		"comma-style": ["error","last"],
+		"curly": "error",
+		"eol-last": ["error", "always"],
+		"eqeqeq": ["error", "smart"],
+		"func-name-matching": ["error", "always"],
+		"func-names": ["error", "always"],
+		"indent": ["error","tab",{"SwitchCase": 1}],
+		"key-spacing": ["error", { "align": "value" }],
+		"keyword-spacing": ["error", { "before": true, "after": true }],
+		"new-parens": "error",
+		"no-lonely-if": "error",
+		"no-useless-concat": "error",
+		"object-curly-newline": ["error", { "multiline": true, "consistent": true }],
+		"object-property-newline": ["error", {"allowAllPropertiesOnSameLine": true}],
+		"one-var": ["error", "never"],
+		"prefer-template": "error",
+		"quotes": ["error","single"],
+		"require-jsdoc": ["error", {"require": {"FunctionDeclaration": true, "MethodDefinition": true, "ClassDeclaration": true, "ArrowFunctionExpression": false}}],
+		"semi": ["error","always"],
+		"space-before-blocks": "off",
+		"space-before-function-paren": ["error", {
+			"anonymous": "never",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
+		"space-in-parens": ["error", "always"],
+		"space-infix-ops": "error",
+		"space-unary-ops": [ 2, { "words": true, "nonwords": false } ],
+		"strict": ["error", "global"],
+		"template-curly-spacing": ["error", "always"],
+		"valid-jsdoc": ["error"],
+		"yoda": ["error", "never"],
+		"no-console": 0,
+		"no-var":"error",
+		"prefer-const": ["error", { "destructuring": "any", "ignoreReadBeforeAssign": false }],
+
+		
+		"vue/html-closing-bracket-newline": ["error", {
+			"singleline": "never",
+			"multiline": "never"
+		  }],
+		  "vue/html-indent": ["error", "tab", {
+			"attribute": 1,
+			"baseIndent": 1,
+			"closeBracket": 0,
+			"alignAttributesVertically": true,
+			"ignores": []
+		  }]
+	},
+	"settings": {
+		"jsdoc": {
+			"tagNamePreference": {
+				"augments": "extends",
+				"function": "method"
+			},
+			"additionalTagNames": {
+				"closureTags": true,
+				"customTags": ["async"]
+			}
+		}
+	},
+	"overrides": [
+		{
+			"files": [ "bin/*.js", "lib/*.js" ],
+			"excludedFiles": "*.test.js"
+		}
+	],
+	"root": true
+}
