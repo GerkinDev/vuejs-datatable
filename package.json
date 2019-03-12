@@ -17,8 +17,8 @@
         "build:dev": "rollup -c rollup.config.js",
         "build:production": "rollup -c rollup.config.js --environment BUILD:production",
         "build:watch": "rollup -c rollup.config.js --watch",
-        "version": "npm run build && npm run doc && git add docs --force",
-        "prepublishOnly": "npm run build",
+        "version": "npm run prepublishOnly && git add docs --force",
+        "prepublishOnly": "npm run test && npm run build && npm run doc",
         "release": "standard-version -a",
         "prerelease": "standard-version -a --prerelease"
     },
@@ -36,6 +36,10 @@
     "dependencies": {
         "object-path": "^0.11.4"
     },
+    "files": [
+        "dist",
+        "docs"
+    ],
     "devDependencies": {
         "@babel/core": "^7.3.3",
         "@babel/preset-env": "^7.3.1",
