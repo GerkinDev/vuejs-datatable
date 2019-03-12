@@ -18,7 +18,7 @@ Allows for quick and easy setup of filterable, sortable, and paginated tables. C
 
 E2E testing over Travis realized using
 
-[<img src="https://i1.wp.com/www.diogonunes.com/blog/wp-content/uploads/2016/07/browserstack-logo.png?resize=490%2C105" height="105.6" width="490.1"/>](https://www.browserstack.com/)
+[<img src="https://i1.wp.com/www.diogonunes.com/blog/wp-content/uploads/2016/07/browserstack-logo.png?resize=490%2C105" height="105.6" width="490.1" class="img-responsive"/>](https://www.browserstack.com/)
 
 [:point_right: Browse the documentation :books:](https://gerkindev.github.io/vuejs-datatable/)
 

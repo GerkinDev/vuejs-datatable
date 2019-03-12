@@ -5,6 +5,7 @@
     "main": "dist/vuejs-datatable.esm.js",
     "module": "dist/vuejs-datatable.esm.js",
     "browser": "dist/vuejs-datatable.esm.js",
+    "types": "types/index.d.ts",
     "scripts": {
         "doc": "npm run doc:examples && npm run doc:copy-assets && npm run doc:jsdoc",
         "doc:copy-assets": "cp-cli dist/vuejs-datatable.js tutorials/assets/assets/vuejs-datatable.js",
@@ -37,6 +38,7 @@
         "object-path": "^0.11.4"
     },
     "files": [
+        "types",
         "dist",
         "docs"
     ],
