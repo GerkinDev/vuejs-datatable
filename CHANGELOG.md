@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.0.0-alpha.1](https://github.com/GerkinDev/vue-datatable/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2019-03-12)
+
+
+
 # [2.0.0-alpha.0](https://github.com/GerkinDev/vue-datatable/compare/v1.7.0...v2.0.0-alpha.0) (2019-03-12)
 
 

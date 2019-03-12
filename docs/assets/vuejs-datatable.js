@@ -1,8 +1,8 @@
 /**
- * vuejs-datatable v2.0.0-alpha.0
+ * vuejs-datatable v2.0.0-alpha.1
  * License: MIT
  * Repository: https://github.com/GerkinDev/vue-datatable
- * Generated on 2019-03-12 at 01:07:34.
+ * Generated on 2019-03-12 at 10:22:44.
  * By Patrick Stephan<pstephan1187@gmail.com>, GerkinDev<agermain@ithoughts.io> (https://ithoughts.io/)
  */
 

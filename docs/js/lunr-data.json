@@ -59,12 +59,6 @@
           "tutori",
           "type"
         ],
-        "list_tutorial.html": [
-          "avail",
-          "list",
-          "list:tutori",
-          "tutori"
-        ],
         "list_class.html": [
           "class",
           "document",
@@ -77,6 +71,12 @@
           "list:modul",
           "modul"
         ],
+        "list_tutorial.html": [
+          "avail",
+          "list",
+          "list:tutori",
+          "tutori"
+        ],
         "Column.html": [
           "class",
           "column",
@@ -84,6 +84,15 @@
           "handl",
           "header",
           "respons"
+        ],
+        "Column.html#align": [
+          "align",
+          "cell",
+          "column",
+          "column#align",
+          "direct",
+          "member",
+          "string"
         ],
         "Column.html#component": [
           "column#compon",
@@ -186,15 +195,6 @@
           "member",
           "whetev"
         ],
-        "Column.html#align": [
-          "align",
-          "cell",
-          "column",
-          "column#align",
-          "direct",
-          "member",
-          "string"
-        ],
         "Column.html#.normalizeAlignment": [
           "align",
           "column.normalizealign",
@@ -279,6 +279,131 @@
           "row",
           "row'",
           "string"
+        ],
+        "TableType.html": [
+          "class",
+          "datat",
+          "defin",
+          "object",
+          "set",
+          "tabletyp",
+          "type"
+        ],
+        "TableType.html#handler": [
+          "associ",
+          "handler",
+          "member",
+          "tabl",
+          "tabletype#handl",
+          "type"
+        ],
+        "TableType.html#settings": [
+          "amp",
+          "compon",
+          "datat",
+          "member",
+          "object",
+          "set",
+          "tabletype#set",
+          "us",
+          "valu",
+          "variou"
+        ],
+        "TableType.html#id": [
+          "id",
+          "member",
+          "retriev",
+          "tabl",
+          "tabletype#id",
+          "type"
+        ],
+        "TableType.html#setFilterHandler": [
+          "closur",
+          "data",
+          "defin",
+          "filter",
+          "function",
+          "setfilterhandl",
+          "tabletype#setfilterhandl",
+          "us"
+        ],
+        "TableType.html#setSortHandler": [
+          "closur",
+          "data",
+          "defin",
+          "function",
+          "setsorthandl",
+          "sort",
+          "tabletype#setsorthandl",
+          "us"
+        ],
+        "TableType.html#setPaginateHandler": [
+          "closur",
+          "data",
+          "defin",
+          "function",
+          "pagin",
+          "setpaginatehandl",
+          "tabletype#setpaginatehandl",
+          "us"
+        ],
+        "TableType.html#setDisplayHandler": [
+          "closur",
+          "data",
+          "defin",
+          "function",
+          "pagin",
+          "setdisplayhandl",
+          "tabletype#setdisplayhandl",
+          "us"
+        ],
+        "TableType.html#setting": [
+          "function",
+          "path",
+          "set",
+          "specif",
+          "tabletype#set",
+          "valu"
+        ],
+        "TableType.html#mergeSettings": [
+          "function",
+          "instanc",
+          "merg",
+          "mergeset",
+          "object",
+          "set",
+          "tabletype#mergeset",
+          "tabletype#set"
+        ],
+        "TableType.html#getTableDefinition": [
+          "configur",
+          "copi",
+          "factori",
+          "function",
+          "gettabledefinit",
+          "prototyp",
+          "tabletype#gettabledefinit",
+          "type",
+          "vuedatat"
+        ],
+        "TableType.html#getPagerDefinition": [
+          "configur",
+          "copi",
+          "factori",
+          "function",
+          "getpagerdefinit",
+          "prototyp",
+          "tabletype#getpagerdefinit",
+          "type",
+          "vuedatatablepag"
+        ],
+        "TableType.html#clone": [
+          "clone",
+          "deep",
+          "function",
+          "obj",
+          "tabletype#clon",
+          "valu"
         ],
         "DatatableFactory.html": [
           "class",
@@ -629,131 +754,6 @@
           "settings#merg",
           "within"
         ],
-        "TableType.html": [
-          "class",
-          "datat",
-          "defin",
-          "object",
-          "set",
-          "tabletyp",
-          "type"
-        ],
-        "TableType.html#handler": [
-          "associ",
-          "handler",
-          "member",
-          "tabl",
-          "tabletype#handl",
-          "type"
-        ],
-        "TableType.html#settings": [
-          "amp",
-          "compon",
-          "datat",
-          "member",
-          "object",
-          "set",
-          "tabletype#set",
-          "us",
-          "valu",
-          "variou"
-        ],
-        "TableType.html#id": [
-          "id",
-          "member",
-          "retriev",
-          "tabl",
-          "tabletype#id",
-          "type"
-        ],
-        "TableType.html#setFilterHandler": [
-          "closur",
-          "data",
-          "defin",
-          "filter",
-          "function",
-          "setfilterhandl",
-          "tabletype#setfilterhandl",
-          "us"
-        ],
-        "TableType.html#setSortHandler": [
-          "closur",
-          "data",
-          "defin",
-          "function",
-          "setsorthandl",
-          "sort",
-          "tabletype#setsorthandl",
-          "us"
-        ],
-        "TableType.html#setPaginateHandler": [
-          "closur",
-          "data",
-          "defin",
-          "function",
-          "pagin",
-          "setpaginatehandl",
-          "tabletype#setpaginatehandl",
-          "us"
-        ],
-        "TableType.html#setting": [
-          "function",
-          "path",
-          "set",
-          "specif",
-          "tabletype#set",
-          "valu"
-        ],
-        "TableType.html#mergeSettings": [
-          "function",
-          "instanc",
-          "merg",
-          "mergeset",
-          "object",
-          "set",
-          "tabletype#mergeset",
-          "tabletype#set"
-        ],
-        "TableType.html#getTableDefinition": [
-          "configur",
-          "copi",
-          "factori",
-          "function",
-          "gettabledefinit",
-          "prototyp",
-          "tabletype#gettabledefinit",
-          "type",
-          "vuedatat"
-        ],
-        "TableType.html#getPagerDefinition": [
-          "configur",
-          "copi",
-          "factori",
-          "function",
-          "getpagerdefinit",
-          "prototyp",
-          "tabletype#getpagerdefinit",
-          "type",
-          "vuedatatablepag"
-        ],
-        "TableType.html#clone": [
-          "clone",
-          "deep",
-          "function",
-          "obj",
-          "tabletype#clon",
-          "valu"
-        ],
-        "TableType.html#setDisplayHandler": [
-          "closur",
-          "data",
-          "defin",
-          "function",
-          "pagin",
-          "setdisplayhandl",
-          "tabletype#setdisplayhandl",
-          "us"
-        ],
         "module-datatable-cell.html": [
           "cell",
           "column",
@@ -1040,6 +1040,10 @@
                         "ref": "Column.html#.isPlainTextField",
                         "tf": 5.263157894736842
                       },
+                      "TableType.html#settings": {
+                        "ref": "TableType.html#settings",
+                        "tf": 6.25
+                      },
                       "DatatableFactory.html": {
                         "ref": "DatatableFactory.html",
                         "tf": 8.333333333333332
@@ -1050,10 +1054,6 @@
                       },
                       "Settings.html": {
                         "ref": "Settings.html",
-                        "tf": 6.25
-                      },
-                      "TableType.html#settings": {
-                        "ref": "TableType.html#settings",
                         "tf": 6.25
                       },
                       "module-datatable-pager.html": {
@@ -1115,6 +1115,10 @@
                         "ref": "Column.html",
                         "tf": 1908.3333333333333
                       },
+                      "Column.html#align": {
+                        "ref": "Column.html#align",
+                        "tf": 12.5
+                      },
                       "Column.html#headerAlign": {
                         "ref": "Column.html#headerAlign",
                         "tf": 12.5
@@ -1129,10 +1133,6 @@
                       },
                       "Column.html#filterable": {
                         "ref": "Column.html#filterable",
-                        "tf": 12.5
-                      },
-                      "Column.html#align": {
-                        "ref": "Column.html#align",
                         "tf": 12.5
                       },
                       "Column.html#.isPlainTextField": {
@@ -1186,6 +1186,26 @@
                     },
                     "#": {
                       "docs": {},
+                      "a": {
+                        "docs": {},
+                        "l": {
+                          "docs": {},
+                          "i": {
+                            "docs": {},
+                            "g": {
+                              "docs": {},
+                              "n": {
+                                "docs": {
+                                  "Column.html#align": {
+                                    "ref": "Column.html#align",
+                                    "tf": 1150
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
                       "c": {
                         "docs": {},
                         "o": {
@@ -1429,26 +1449,6 @@
                                 "Column.html#sortable": {
                                   "ref": "Column.html#sortable",
                                   "tf": 1150
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "a": {
-                        "docs": {},
-                        "l": {
-                          "docs": {},
-                          "i": {
-                            "docs": {},
-                            "g": {
-                              "docs": {},
-                              "n": {
-                                "docs": {
-                                  "Column.html#align": {
-                                    "ref": "Column.html#align",
-                                    "tf": 1150
-                                  }
                                 }
                               }
                             }
@@ -1924,6 +1924,10 @@
                       "ref": "Column.html#headerClass",
                       "tf": 8.333333333333332
                     },
+                    "TableType.html": {
+                      "ref": "TableType.html",
+                      "tf": 110
+                    },
                     "DatatableFactory.html": {
                       "ref": "DatatableFactory.html",
                       "tf": 110
@@ -1935,10 +1939,6 @@
                     "Settings.html": {
                       "ref": "Settings.html",
                       "tf": 125
-                    },
-                    "TableType.html": {
-                      "ref": "TableType.html",
-                      "tf": 110
                     },
                     "module-datatable-pager-button.html": {
                       "ref": "module-datatable-pager-button.html",
@@ -2011,12 +2011,12 @@
               "docs": {},
               "l": {
                 "docs": {
-                  "Column.html#headerComponent": {
-                    "ref": "Column.html#headerComponent",
-                    "tf": 12.5
-                  },
                   "Column.html#align": {
                     "ref": "Column.html#align",
+                    "tf": 12.5
+                  },
+                  "Column.html#headerComponent": {
+                    "ref": "Column.html#headerComponent",
                     "tf": 12.5
                   },
                   "Handler.html#filterHandler": {
@@ -2240,6 +2240,22 @@
                   "undefined": {
                     "tf": 920
                   },
+                  "TableType.html#setFilterHandler": {
+                    "ref": "TableType.html#setFilterHandler",
+                    "tf": 10
+                  },
+                  "TableType.html#setSortHandler": {
+                    "ref": "TableType.html#setSortHandler",
+                    "tf": 10
+                  },
+                  "TableType.html#setPaginateHandler": {
+                    "ref": "TableType.html#setPaginateHandler",
+                    "tf": 10
+                  },
+                  "TableType.html#setDisplayHandler": {
+                    "ref": "TableType.html#setDisplayHandler",
+                    "tf": 10
+                  },
                   "Handler.html": {
                     "ref": "Handler.html",
                     "tf": 1.25
@@ -2260,22 +2276,6 @@
                     "ref": "Handler.html#defaultDisplayHandler",
                     "tf": 11.11111111111111
                   },
-                  "TableType.html#setFilterHandler": {
-                    "ref": "TableType.html#setFilterHandler",
-                    "tf": 10
-                  },
-                  "TableType.html#setSortHandler": {
-                    "ref": "TableType.html#setSortHandler",
-                    "tf": 10
-                  },
-                  "TableType.html#setPaginateHandler": {
-                    "ref": "TableType.html#setPaginateHandler",
-                    "tf": 10
-                  },
-                  "TableType.html#setDisplayHandler": {
-                    "ref": "TableType.html#setDisplayHandler",
-                    "tf": 10
-                  },
                   "module-datatable-pager.html": {
                     "ref": "module-datatable-pager.html",
                     "tf": 0.3676470588235294
@@ -2290,6 +2290,14 @@
                     "index.html": {
                       "ref": "index.html",
                       "tf": 300
+                    },
+                    "TableType.html": {
+                      "ref": "TableType.html",
+                      "tf": 10
+                    },
+                    "TableType.html#settings": {
+                      "ref": "TableType.html#settings",
+                      "tf": 6.25
                     },
                     "DatatableFactory.html": {
                       "ref": "DatatableFactory.html",
@@ -2306,14 +2314,6 @@
                     "Handler.html": {
                       "ref": "Handler.html",
                       "tf": 1.25
-                    },
-                    "TableType.html": {
-                      "ref": "TableType.html",
-                      "tf": 10
-                    },
-                    "TableType.html#settings": {
-                      "ref": "TableType.html#settings",
-                      "tf": 6.25
                     },
                     "module-datatable-cell.html": {
                       "ref": "module-datatable-cell.html",
@@ -2723,6 +2723,35 @@
           },
           "i": {
             "docs": {},
+            "r": {
+              "docs": {},
+              "e": {
+                "docs": {},
+                "c": {
+                  "docs": {},
+                  "t": {
+                    "docs": {
+                      "Column.html#align": {
+                        "ref": "Column.html#align",
+                        "tf": 12.5
+                      },
+                      "Column.html#headerAlign": {
+                        "ref": "Column.html#headerAlign",
+                        "tf": 12.5
+                      },
+                      "module-datatable-pager-button.html": {
+                        "ref": "module-datatable-pager-button.html",
+                        "tf": 1.4705882352941175
+                      },
+                      "module-datatable.html": {
+                        "ref": "module-datatable.html",
+                        "tf": 0.3401360544217687
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "s": {
               "docs": {},
               "p": {
@@ -2853,35 +2882,6 @@
                             }
                           }
                         }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "r": {
-              "docs": {},
-              "e": {
-                "docs": {},
-                "c": {
-                  "docs": {},
-                  "t": {
-                    "docs": {
-                      "Column.html#headerAlign": {
-                        "ref": "Column.html#headerAlign",
-                        "tf": 12.5
-                      },
-                      "Column.html#align": {
-                        "ref": "Column.html#align",
-                        "tf": 12.5
-                      },
-                      "module-datatable-pager-button.html": {
-                        "ref": "module-datatable-pager-button.html",
-                        "tf": 1.4705882352941175
-                      },
-                      "module-datatable.html": {
-                        "ref": "module-datatable.html",
-                        "tf": 0.3401360544217687
                       }
                     }
                   }
@@ -3173,10 +3173,6 @@
                 "docs": {},
                 "n": {
                   "docs": {
-                    "Settings.html#set": {
-                      "ref": "Settings.html#set",
-                      "tf": 12.5
-                    },
                     "TableType.html": {
                       "ref": "TableType.html",
                       "tf": 10
@@ -3197,6 +3193,10 @@
                       "ref": "TableType.html#setDisplayHandler",
                       "tf": 10
                     },
+                    "Settings.html#set": {
+                      "ref": "Settings.html#set",
+                      "tf": 12.5
+                    },
                     "module-datatable-pager-button.html": {
                       "ref": "module-datatable-pager-button.html",
                       "tf": 0.847457627118644
@@ -3216,6 +3216,17 @@
                         }
                       }
                     }
+                  }
+                }
+              }
+            },
+            "e": {
+              "docs": {},
+              "p": {
+                "docs": {
+                  "TableType.html#clone": {
+                    "ref": "TableType.html#clone",
+                    "tf": 16.666666666666664
                   }
                 }
               }
@@ -3338,17 +3349,6 @@
                 }
               }
             },
-            "e": {
-              "docs": {},
-              "p": {
-                "docs": {
-                  "TableType.html#clone": {
-                    "ref": "TableType.html#clone",
-                    "tf": 16.666666666666664
-                  }
-                }
-              }
-            },
             "s": {
               "docs": {},
               "c": {
@@ -3428,6 +3428,10 @@
                         "ref": "Column.html#matches",
                         "tf": 6.25
                       },
+                      "TableType.html#setFilterHandler": {
+                        "ref": "TableType.html#setFilterHandler",
+                        "tf": 10
+                      },
                       "Handler.html": {
                         "ref": "Handler.html",
                         "tf": 2.5
@@ -3443,10 +3447,6 @@
                       "Handler.html#rowMatches": {
                         "ref": "Handler.html#rowMatches",
                         "tf": 7.142857142857142
-                      },
-                      "TableType.html#setFilterHandler": {
-                        "ref": "TableType.html#setFilterHandler",
-                        "tf": 10
                       },
                       "module-datatable.html": {
                         "ref": "module-datatable.html",
@@ -3586,6 +3586,42 @@
                             "ref": "Column.html#matches",
                             "tf": 110
                           },
+                          "TableType.html#setFilterHandler": {
+                            "ref": "TableType.html#setFilterHandler",
+                            "tf": 120
+                          },
+                          "TableType.html#setSortHandler": {
+                            "ref": "TableType.html#setSortHandler",
+                            "tf": 120
+                          },
+                          "TableType.html#setPaginateHandler": {
+                            "ref": "TableType.html#setPaginateHandler",
+                            "tf": 120
+                          },
+                          "TableType.html#setDisplayHandler": {
+                            "ref": "TableType.html#setDisplayHandler",
+                            "tf": 120
+                          },
+                          "TableType.html#setting": {
+                            "ref": "TableType.html#setting",
+                            "tf": 110
+                          },
+                          "TableType.html#mergeSettings": {
+                            "ref": "TableType.html#mergeSettings",
+                            "tf": 110
+                          },
+                          "TableType.html#getTableDefinition": {
+                            "ref": "TableType.html#getTableDefinition",
+                            "tf": 117.14285714285714
+                          },
+                          "TableType.html#getPagerDefinition": {
+                            "ref": "TableType.html#getPagerDefinition",
+                            "tf": 117.14285714285714
+                          },
+                          "TableType.html#clone": {
+                            "ref": "TableType.html#clone",
+                            "tf": 110
+                          },
                           "DatatableFactory.html#getTableType": {
                             "ref": "DatatableFactory.html#getTableType",
                             "tf": 110
@@ -3654,42 +3690,6 @@
                             "ref": "Settings.html#merge",
                             "tf": 110
                           },
-                          "TableType.html#setFilterHandler": {
-                            "ref": "TableType.html#setFilterHandler",
-                            "tf": 120
-                          },
-                          "TableType.html#setSortHandler": {
-                            "ref": "TableType.html#setSortHandler",
-                            "tf": 120
-                          },
-                          "TableType.html#setPaginateHandler": {
-                            "ref": "TableType.html#setPaginateHandler",
-                            "tf": 120
-                          },
-                          "TableType.html#setting": {
-                            "ref": "TableType.html#setting",
-                            "tf": 110
-                          },
-                          "TableType.html#mergeSettings": {
-                            "ref": "TableType.html#mergeSettings",
-                            "tf": 110
-                          },
-                          "TableType.html#getTableDefinition": {
-                            "ref": "TableType.html#getTableDefinition",
-                            "tf": 117.14285714285714
-                          },
-                          "TableType.html#getPagerDefinition": {
-                            "ref": "TableType.html#getPagerDefinition",
-                            "tf": 117.14285714285714
-                          },
-                          "TableType.html#clone": {
-                            "ref": "TableType.html#clone",
-                            "tf": 110
-                          },
-                          "TableType.html#setDisplayHandler": {
-                            "ref": "TableType.html#setDisplayHandler",
-                            "tf": 120
-                          },
                           "module-datatable.html": {
                             "ref": "module-datatable.html",
                             "tf": 0.6802721088435374
@@ -3730,35 +3730,6 @@
               }
             }
           },
-          "r": {
-            "docs": {},
-            "a": {
-              "docs": {},
-              "m": {
-                "docs": {},
-                "e": {
-                  "docs": {},
-                  "w": {
-                    "docs": {},
-                    "o": {
-                      "docs": {},
-                      "r": {
-                        "docs": {},
-                        "k": {
-                          "docs": {
-                            "Settings.html": {
-                              "ref": "Settings.html",
-                              "tf": 1.25
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
           "a": {
             "docs": {},
             "c": {
@@ -3792,6 +3763,35 @@
                   "module-datatable-pager-button.html": {
                     "ref": "module-datatable-pager-button.html",
                     "tf": 1.694915254237288
+                  }
+                }
+              }
+            }
+          },
+          "r": {
+            "docs": {},
+            "a": {
+              "docs": {},
+              "m": {
+                "docs": {},
+                "e": {
+                  "docs": {},
+                  "w": {
+                    "docs": {},
+                    "o": {
+                      "docs": {},
+                      "r": {
+                        "docs": {},
+                        "k": {
+                          "docs": {
+                            "Settings.html": {
+                              "ref": "Settings.html",
+                              "tf": 1.25
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -3869,18 +3869,14 @@
                 "docs": {},
                 "a": {
                   "docs": {},
-                  "l": {
-                    "docs": {
-                      "DatatableFactory.html#install": {
-                        "ref": "DatatableFactory.html#install",
-                        "tf": 683.3333333333334
-                      }
-                    }
-                  },
                   "n": {
                     "docs": {},
                     "c": {
                       "docs": {
+                        "TableType.html#mergeSettings": {
+                          "ref": "TableType.html#mergeSettings",
+                          "tf": 8.333333333333332
+                        },
                         "Settings.html": {
                           "ref": "Settings.html",
                           "tf": 2.5
@@ -3888,10 +3884,6 @@
                         "Settings.html#merge": {
                           "ref": "Settings.html#merge",
                           "tf": 7.142857142857142
-                        },
-                        "TableType.html#mergeSettings": {
-                          "ref": "TableType.html#mergeSettings",
-                          "tf": 8.333333333333332
                         },
                         "module-datatable-pager-button.html": {
                           "ref": "module-datatable-pager-button.html",
@@ -3912,6 +3904,14 @@
                             }
                           }
                         }
+                      }
+                    }
+                  },
+                  "l": {
+                    "docs": {
+                      "DatatableFactory.html#install": {
+                        "ref": "DatatableFactory.html#install",
+                        "tf": 683.3333333333334
                       }
                     }
                   }
@@ -4070,13 +4070,13 @@
           },
           "d": {
             "docs": {
-              "DatatableFactory.html#getTableType": {
-                "ref": "DatatableFactory.html#getTableType",
-                "tf": 33.33333333333333
-              },
               "TableType.html#id": {
                 "ref": "TableType.html#id",
                 "tf": 762.5
+              },
+              "DatatableFactory.html#getTableType": {
+                "ref": "DatatableFactory.html#getTableType",
+                "tf": 33.33333333333333
               },
               "module-datatable-pager.html": {
                 "ref": "module-datatable-pager.html",
@@ -4158,6 +4158,14 @@
                       "ref": "index.html",
                       "tf": 14
                     },
+                    "TableType.html#setPaginateHandler": {
+                      "ref": "TableType.html#setPaginateHandler",
+                      "tf": 10
+                    },
+                    "TableType.html#setDisplayHandler": {
+                      "ref": "TableType.html#setDisplayHandler",
+                      "tf": 10
+                    },
                     "Handler.html": {
                       "ref": "Handler.html",
                       "tf": 2.5
@@ -4169,14 +4177,6 @@
                     "Handler.html#defaultDisplayHandler": {
                       "ref": "Handler.html#defaultDisplayHandler",
                       "tf": 5.555555555555555
-                    },
-                    "TableType.html#setPaginateHandler": {
-                      "ref": "TableType.html#setPaginateHandler",
-                      "tf": 10
-                    },
-                    "TableType.html#setDisplayHandler": {
-                      "ref": "TableType.html#setDisplayHandler",
-                      "tf": 10
                     }
                   },
                   "a": {
@@ -4341,6 +4341,10 @@
               "docs": {},
               "h": {
                 "docs": {
+                  "TableType.html#setting": {
+                    "ref": "TableType.html#setting",
+                    "tf": 43.33333333333333
+                  },
                   "Settings.html#get": {
                     "ref": "Settings.html#get",
                     "tf": 116.66666666666666
@@ -4348,10 +4352,6 @@
                   "Settings.html#set": {
                     "ref": "Settings.html#set",
                     "tf": 45.83333333333333
-                  },
-                  "TableType.html#setting": {
-                    "ref": "TableType.html#setting",
-                    "tf": 43.33333333333333
                   }
                 }
               }
@@ -4499,6 +4499,30 @@
                       "Handler.html#rowMatches": {
                         "ref": "Handler.html#rowMatches",
                         "tf": 7.142857142857142
+                      }
+                    }
+                  }
+                }
+              },
+              "t": {
+                "docs": {},
+                "o": {
+                  "docs": {},
+                  "t": {
+                    "docs": {},
+                    "y": {
+                      "docs": {},
+                      "p": {
+                        "docs": {
+                          "TableType.html#getTableDefinition": {
+                            "ref": "TableType.html#getTableDefinition",
+                            "tf": 7.142857142857142
+                          },
+                          "TableType.html#getPagerDefinition": {
+                            "ref": "TableType.html#getPagerDefinition",
+                            "tf": 7.142857142857142
+                          }
+                        }
                       }
                     }
                   }
@@ -4825,30 +4849,6 @@
                                 }
                               }
                             }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "t": {
-                "docs": {},
-                "o": {
-                  "docs": {},
-                  "t": {
-                    "docs": {},
-                    "y": {
-                      "docs": {},
-                      "p": {
-                        "docs": {
-                          "TableType.html#getTableDefinition": {
-                            "ref": "TableType.html#getTableDefinition",
-                            "tf": 7.142857142857142
-                          },
-                          "TableType.html#getPagerDefinition": {
-                            "ref": "TableType.html#getPagerDefinition",
-                            "tf": 7.142857142857142
                           }
                         }
                       }
@@ -5441,6 +5441,14 @@
                   "undefined": {
                     "tf": 950
                   },
+                  "TableType.html#handler": {
+                    "ref": "TableType.html#handler",
+                    "tf": 12.5
+                  },
+                  "TableType.html#id": {
+                    "ref": "TableType.html#id",
+                    "tf": 12.5
+                  },
                   "DatatableFactory.html#.DEFAULT_DATATABLE": {
                     "ref": "DatatableFactory.html#.DEFAULT_DATATABLE",
                     "tf": 12.5
@@ -5464,14 +5472,6 @@
                   "Handler.html": {
                     "ref": "Handler.html",
                     "tf": 1.25
-                  },
-                  "TableType.html#handler": {
-                    "ref": "TableType.html#handler",
-                    "tf": 12.5
-                  },
-                  "TableType.html#id": {
-                    "ref": "TableType.html#id",
-                    "tf": 12.5
                   },
                   "module-datatable-pager.html": {
                     "ref": "module-datatable-pager.html",
@@ -5497,35 +5497,6 @@
                         },
                         "e": {
                           "docs": {},
-                          "|": {
-                            "docs": {},
-                            "u": {
-                              "docs": {},
-                              "n": {
-                                "docs": {},
-                                "d": {
-                                  "docs": {},
-                                  "e": {
-                                    "docs": {},
-                                    "f": {
-                                      "docs": {},
-                                      "i": {
-                                        "docs": {},
-                                        "n": {
-                                          "docs": {
-                                            "DatatableFactory.html#getTableType": {
-                                              "ref": "DatatableFactory.html#getTableType",
-                                              "tf": 33.33333333333333
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
                           "#": {
                             "docs": {},
                             "h": {
@@ -5873,6 +5844,35 @@
                                 }
                               }
                             }
+                          },
+                          "|": {
+                            "docs": {},
+                            "u": {
+                              "docs": {},
+                              "n": {
+                                "docs": {},
+                                "d": {
+                                  "docs": {},
+                                  "e": {
+                                    "docs": {},
+                                    "f": {
+                                      "docs": {},
+                                      "i": {
+                                        "docs": {},
+                                        "n": {
+                                          "docs": {
+                                            "DatatableFactory.html#getTableType": {
+                                              "ref": "DatatableFactory.html#getTableType",
+                                              "tf": 33.33333333333333
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -6077,26 +6077,6 @@
                   "undefined": {
                     "tf": 950
                   },
-                  "DatatableFactory.html#.DEFAULT_DATATABLE": {
-                    "ref": "DatatableFactory.html#.DEFAULT_DATATABLE",
-                    "tf": 12.5
-                  },
-                  "DatatableFactory.html#getTableType": {
-                    "ref": "DatatableFactory.html#getTableType",
-                    "tf": 16.666666666666664
-                  },
-                  "DatatableFactory.html#useDefaultType": {
-                    "ref": "DatatableFactory.html#useDefaultType",
-                    "tf": 10
-                  },
-                  "DatatableFactory.html#registerTableType": {
-                    "ref": "DatatableFactory.html#registerTableType",
-                    "tf": 5.555555555555555
-                  },
-                  "DatatableFactory.html#deregisterTableType": {
-                    "ref": "DatatableFactory.html#deregisterTableType",
-                    "tf": 5.555555555555555
-                  },
                   "TableType.html": {
                     "ref": "TableType.html",
                     "tf": 10
@@ -6116,6 +6096,26 @@
                   "TableType.html#getPagerDefinition": {
                     "ref": "TableType.html#getPagerDefinition",
                     "tf": 7.142857142857142
+                  },
+                  "DatatableFactory.html#.DEFAULT_DATATABLE": {
+                    "ref": "DatatableFactory.html#.DEFAULT_DATATABLE",
+                    "tf": 12.5
+                  },
+                  "DatatableFactory.html#getTableType": {
+                    "ref": "DatatableFactory.html#getTableType",
+                    "tf": 16.666666666666664
+                  },
+                  "DatatableFactory.html#useDefaultType": {
+                    "ref": "DatatableFactory.html#useDefaultType",
+                    "tf": 10
+                  },
+                  "DatatableFactory.html#registerTableType": {
+                    "ref": "DatatableFactory.html#registerTableType",
+                    "tf": 5.555555555555555
+                  },
+                  "DatatableFactory.html#deregisterTableType": {
+                    "ref": "DatatableFactory.html#deregisterTableType",
+                    "tf": 5.555555555555555
                   },
                   "module-datatable-cell.html": {
                     "ref": "module-datatable-cell.html",
@@ -6423,6 +6423,18 @@
                     "ref": "Column.html#.isPlainTextField",
                     "tf": 2.631578947368421
                   },
+                  "TableType.html#settings": {
+                    "ref": "TableType.html#settings",
+                    "tf": 6.25
+                  },
+                  "TableType.html#setting": {
+                    "ref": "TableType.html#setting",
+                    "tf": 43.33333333333333
+                  },
+                  "TableType.html#clone": {
+                    "ref": "TableType.html#clone",
+                    "tf": 16.666666666666664
+                  },
                   "Handler.html": {
                     "ref": "Handler.html",
                     "tf": 1.25
@@ -6442,18 +6454,6 @@
                   "Settings.html#set": {
                     "ref": "Settings.html#set",
                     "tf": 45.83333333333333
-                  },
-                  "TableType.html#settings": {
-                    "ref": "TableType.html#settings",
-                    "tf": 6.25
-                  },
-                  "TableType.html#setting": {
-                    "ref": "TableType.html#setting",
-                    "tf": 43.33333333333333
-                  },
-                  "TableType.html#clone": {
-                    "ref": "TableType.html#clone",
-                    "tf": 16.666666666666664
                   },
                   "module-datatable-cell.html": {
                     "ref": "module-datatable-cell.html",
@@ -6482,12 +6482,12 @@
                   "docs": {},
                   "u": {
                     "docs": {
-                      "Settings.html": {
-                        "ref": "Settings.html",
-                        "tf": 6.25
-                      },
                       "TableType.html#settings": {
                         "ref": "TableType.html#settings",
+                        "tf": 6.25
+                      },
+                      "Settings.html": {
+                        "ref": "Settings.html",
                         "tf": 6.25
                       }
                     }
@@ -6613,20 +6613,6 @@
                       "docs": {},
                       "e": {
                         "docs": {},
-                        "t": {
-                          "docs": {},
-                          "y": {
-                            "docs": {},
-                            "p": {
-                              "docs": {
-                                "DatatableFactory.html#getTableType": {
-                                  "ref": "DatatableFactory.html#getTableType",
-                                  "tf": 683.3333333333334
-                                }
-                              }
-                            }
-                          }
-                        },
                         "d": {
                           "docs": {},
                           "e": {
@@ -6648,6 +6634,20 @@
                                       }
                                     }
                                   }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "t": {
+                          "docs": {},
+                          "y": {
+                            "docs": {},
+                            "p": {
+                              "docs": {
+                                "DatatableFactory.html#getTableType": {
+                                  "ref": "DatatableFactory.html#getTableType",
+                                  "tf": 683.3333333333334
                                 }
                               }
                             }
@@ -6774,13 +6774,13 @@
                 "docs": {},
                 "n": {
                   "docs": {
-                    "Column.html#headerAlign": {
-                      "ref": "Column.html#headerAlign",
-                      "tf": 12.5
-                    },
                     "Column.html#align": {
                       "ref": "Column.html#align",
                       "tf": 712.5
+                    },
+                    "Column.html#headerAlign": {
+                      "ref": "Column.html#headerAlign",
+                      "tf": 12.5
                     },
                     "Column.html#.normalizeAlignment": {
                       "ref": "Column.html#.normalizeAlignment",
@@ -6831,78 +6831,6 @@
                     "module-datatable.html": {
                       "ref": "module-datatable.html",
                       "tf": 0.3401360544217687
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "m": {
-            "docs": {},
-            "p": {
-              "docs": {
-                "DatatableFactory.html#install": {
-                  "ref": "DatatableFactory.html#install",
-                  "tf": 5.555555555555555
-                },
-                "Handler.html#sortHandler": {
-                  "ref": "Handler.html#sortHandler",
-                  "tf": 3.8461538461538463
-                },
-                "Handler.html#defaultSortHandler": {
-                  "ref": "Handler.html#defaultSortHandler",
-                  "tf": 5.555555555555555
-                },
-                "Settings.html": {
-                  "ref": "Settings.html",
-                  "tf": 1.25
-                },
-                "TableType.html#settings": {
-                  "ref": "TableType.html#settings",
-                  "tf": 6.25
-                },
-                "module-datatable-pager.html": {
-                  "ref": "module-datatable-pager.html",
-                  "tf": 0.3676470588235294
-                }
-              }
-            }
-          },
-          "c": {
-            "docs": {},
-            "t": {
-              "docs": {},
-              "u": {
-                "docs": {},
-                "a": {
-                  "docs": {},
-                  "l": {
-                    "docs": {
-                      "Handler.html#displayHandler": {
-                        "ref": "Handler.html#displayHandler",
-                        "tf": 3.8461538461538463
-                      },
-                      "Handler.html#defaultDisplayHandler": {
-                        "ref": "Handler.html#defaultDisplayHandler",
-                        "tf": 5.555555555555555
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "l": {
-              "docs": {},
-              "a": {
-                "docs": {},
-                "s": {
-                  "docs": {},
-                  "s": {
-                    "docs": {
-                      "module-datatable-pager-button.html": {
-                        "ref": "module-datatable-pager-button.html",
-                        "tf": 0.847457627118644
-                      }
                     }
                   }
                 }
@@ -6997,6 +6925,78 @@
                       "module-datatable-pager-button.html": {
                         "ref": "module-datatable-pager-button.html",
                         "tf": 0.7352941176470588
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "m": {
+            "docs": {},
+            "p": {
+              "docs": {
+                "TableType.html#settings": {
+                  "ref": "TableType.html#settings",
+                  "tf": 6.25
+                },
+                "DatatableFactory.html#install": {
+                  "ref": "DatatableFactory.html#install",
+                  "tf": 5.555555555555555
+                },
+                "Handler.html#sortHandler": {
+                  "ref": "Handler.html#sortHandler",
+                  "tf": 3.8461538461538463
+                },
+                "Handler.html#defaultSortHandler": {
+                  "ref": "Handler.html#defaultSortHandler",
+                  "tf": 5.555555555555555
+                },
+                "Settings.html": {
+                  "ref": "Settings.html",
+                  "tf": 1.25
+                },
+                "module-datatable-pager.html": {
+                  "ref": "module-datatable-pager.html",
+                  "tf": 0.3676470588235294
+                }
+              }
+            }
+          },
+          "c": {
+            "docs": {},
+            "t": {
+              "docs": {},
+              "u": {
+                "docs": {},
+                "a": {
+                  "docs": {},
+                  "l": {
+                    "docs": {
+                      "Handler.html#displayHandler": {
+                        "ref": "Handler.html#displayHandler",
+                        "tf": 3.8461538461538463
+                      },
+                      "Handler.html#defaultDisplayHandler": {
+                        "ref": "Handler.html#defaultDisplayHandler",
+                        "tf": 5.555555555555555
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "l": {
+              "docs": {},
+              "a": {
+                "docs": {},
+                "s": {
+                  "docs": {},
+                  "s": {
+                    "docs": {
+                      "module-datatable-pager-button.html": {
+                        "ref": "module-datatable-pager-button.html",
+                        "tf": 0.847457627118644
                       }
                     }
                   }
@@ -7217,6 +7217,10 @@
                         "undefined": {
                           "tf": 925
                         },
+                        "TableType.html#handler": {
+                          "ref": "TableType.html#handler",
+                          "tf": 762.5
+                        },
                         "Handler.html": {
                           "ref": "Handler.html",
                           "tf": 1903.75
@@ -7228,10 +7232,6 @@
                         "Handler.html#defaultDisplayHandler": {
                           "ref": "Handler.html#defaultDisplayHandler",
                           "tf": 5.555555555555555
-                        },
-                        "TableType.html#handler": {
-                          "ref": "TableType.html#handler",
-                          "tf": 762.5
                         },
                         "module-datatable.html": {
                           "ref": "module-datatable.html",
@@ -8027,6 +8027,10 @@
                   "docs": {},
                   "r": {
                     "docs": {
+                      "Column.html#align": {
+                        "ref": "Column.html#align",
+                        "tf": 110
+                      },
                       "Column.html#component": {
                         "ref": "Column.html#component",
                         "tf": 110
@@ -8067,8 +8071,16 @@
                         "ref": "Column.html#filterable",
                         "tf": 110
                       },
-                      "Column.html#align": {
-                        "ref": "Column.html#align",
+                      "TableType.html#handler": {
+                        "ref": "TableType.html#handler",
+                        "tf": 110
+                      },
+                      "TableType.html#settings": {
+                        "ref": "TableType.html#settings",
+                        "tf": 110
+                      },
+                      "TableType.html#id": {
+                        "ref": "TableType.html#id",
                         "tf": 110
                       },
                       "DatatableFactory.html#.DEFAULT_DATATABLE": {
@@ -8082,18 +8094,38 @@
                       "Settings.html#properties": {
                         "ref": "Settings.html#properties",
                         "tf": 110
-                      },
-                      "TableType.html#handler": {
-                        "ref": "TableType.html#handler",
-                        "tf": 110
-                      },
-                      "TableType.html#settings": {
-                        "ref": "TableType.html#settings",
-                        "tf": 110
-                      },
-                      "TableType.html#id": {
-                        "ref": "TableType.html#id",
-                        "tf": 110
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "r": {
+              "docs": {},
+              "g": {
+                "docs": {
+                  "TableType.html#mergeSettings": {
+                    "ref": "TableType.html#mergeSettings",
+                    "tf": 8.333333333333332
+                  },
+                  "Settings.html#merge": {
+                    "ref": "Settings.html#merge",
+                    "tf": 707.1428571428571
+                  }
+                },
+                "e": {
+                  "docs": {},
+                  "s": {
+                    "docs": {},
+                    "e": {
+                      "docs": {},
+                      "t": {
+                        "docs": {
+                          "TableType.html#mergeSettings": {
+                            "ref": "TableType.html#mergeSettings",
+                            "tf": 700
+                          }
+                        }
                       }
                     }
                   }
@@ -8115,38 +8147,6 @@
                       "Settings.html": {
                         "ref": "Settings.html",
                         "tf": 1.25
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "r": {
-              "docs": {},
-              "g": {
-                "docs": {
-                  "Settings.html#merge": {
-                    "ref": "Settings.html#merge",
-                    "tf": 707.1428571428571
-                  },
-                  "TableType.html#mergeSettings": {
-                    "ref": "TableType.html#mergeSettings",
-                    "tf": 8.333333333333332
-                  }
-                },
-                "e": {
-                  "docs": {},
-                  "s": {
-                    "docs": {},
-                    "e": {
-                      "docs": {},
-                      "t": {
-                        "docs": {
-                          "TableType.html#mergeSettings": {
-                            "ref": "TableType.html#mergeSettings",
-                            "tf": 700
-                          }
-                        }
                       }
                     }
                   }
@@ -8270,16 +8270,16 @@
               "docs": {},
               "t": {
                 "docs": {
-                  "list_tutorial.html": {
-                    "ref": "list_tutorial.html",
-                    "tf": 110
-                  },
                   "list_class.html": {
                     "ref": "list_class.html",
                     "tf": 110
                   },
                   "list_module.html": {
                     "ref": "list_module.html",
+                    "tf": 110
+                  },
+                  "list_tutorial.html": {
+                    "ref": "list_tutorial.html",
                     "tf": 110
                   },
                   "Handler.html#paginateHandler": {
@@ -8301,29 +8301,6 @@
                 },
                 ":": {
                   "docs": {},
-                  "t": {
-                    "docs": {},
-                    "u": {
-                      "docs": {},
-                      "t": {
-                        "docs": {},
-                        "o": {
-                          "docs": {},
-                          "r": {
-                            "docs": {},
-                            "i": {
-                              "docs": {
-                                "list_tutorial.html": {
-                                  "ref": "list_tutorial.html",
-                                  "tf": 1300
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
                   "c": {
                     "docs": {},
                     "l": {
@@ -8357,6 +8334,29 @@
                               "list_module.html": {
                                 "ref": "list_module.html",
                                 "tf": 1300
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "t": {
+                    "docs": {},
+                    "u": {
+                      "docs": {},
+                      "t": {
+                        "docs": {},
+                        "o": {
+                          "docs": {},
+                          "r": {
+                            "docs": {},
+                            "i": {
+                              "docs": {
+                                "list_tutorial.html": {
+                                  "ref": "list_tutorial.html",
+                                  "tf": 1300
+                                }
                               }
                             }
                           }
@@ -8656,6 +8656,849 @@
                         }
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "s": {
+          "docs": {},
+          "t": {
+            "docs": {},
+            "r": {
+              "docs": {},
+              "i": {
+                "docs": {},
+                "n": {
+                  "docs": {},
+                  "g": {
+                    "docs": {
+                      "Column.html#align": {
+                        "ref": "Column.html#align",
+                        "tf": 50
+                      },
+                      "Column.html#field": {
+                        "ref": "Column.html#field",
+                        "tf": 50
+                      },
+                      "Column.html#representedAs": {
+                        "ref": "Column.html#representedAs",
+                        "tf": 10
+                      },
+                      "Column.html#headerAlign": {
+                        "ref": "Column.html#headerAlign",
+                        "tf": 50
+                      },
+                      "Column.html#headerClass": {
+                        "ref": "Column.html#headerClass",
+                        "tf": 50
+                      },
+                      "Column.html#label": {
+                        "ref": "Column.html#label",
+                        "tf": 50
+                      },
+                      "Column.html#getRepresentation": {
+                        "ref": "Column.html#getRepresentation",
+                        "tf": 41.66666666666666
+                      },
+                      "Column.html#matches": {
+                        "ref": "Column.html#matches",
+                        "tf": 6.25
+                      },
+                      "Handler.html#rowMatches": {
+                        "ref": "Handler.html#rowMatches",
+                        "tf": 7.142857142857142
+                      },
+                      "module-datatable-cell.html": {
+                        "ref": "module-datatable-cell.html",
+                        "tf": 3.225806451612903
+                      },
+                      "module-datatable-pager-button.html": {
+                        "ref": "module-datatable-pager-button.html",
+                        "tf": 1.694915254237288
+                      },
+                      "module-datatable-pager.html": {
+                        "ref": "module-datatable-pager.html",
+                        "tf": 2.5735294117647056
+                      },
+                      "module-datatable.html": {
+                        "ref": "module-datatable.html",
+                        "tf": 1.0204081632653061
+                      }
+                    },
+                    "|": {
+                      "docs": {},
+                      "a": {
+                        "docs": {},
+                        "r": {
+                          "docs": {},
+                          "r": {
+                            "docs": {},
+                            "a": {
+                              "docs": {},
+                              "y": {
+                                "docs": {},
+                                ".": {
+                                  "docs": {},
+                                  "&": {
+                                    "docs": {},
+                                    "l": {
+                                      "docs": {},
+                                      "t": {
+                                        "docs": {},
+                                        ";": {
+                                          "docs": {},
+                                          "s": {
+                                            "docs": {},
+                                            "t": {
+                                              "docs": {},
+                                              "r": {
+                                                "docs": {},
+                                                "i": {
+                                                  "docs": {},
+                                                  "n": {
+                                                    "docs": {},
+                                                    "g": {
+                                                      "docs": {},
+                                                      "&": {
+                                                        "docs": {},
+                                                        "g": {
+                                                          "docs": {},
+                                                          "t": {
+                                                            "docs": {},
+                                                            ";": {
+                                                              "docs": {},
+                                                              "|": {
+                                                                "docs": {},
+                                                                "f": {
+                                                                  "docs": {},
+                                                                  "u": {
+                                                                    "docs": {},
+                                                                    "n": {
+                                                                      "docs": {},
+                                                                      "c": {
+                                                                        "docs": {},
+                                                                        "t": {
+                                                                          "docs": {
+                                                                            "module-datatable.html": {
+                                                                              "ref": "module-datatable.html",
+                                                                              "tf": 0.3401360544217687
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "e": {
+            "docs": {},
+            "t": {
+              "docs": {
+                "Column.html#interpolate": {
+                  "ref": "Column.html#interpolate",
+                  "tf": 7.142857142857142
+                },
+                "TableType.html": {
+                  "ref": "TableType.html",
+                  "tf": 10
+                },
+                "TableType.html#settings": {
+                  "ref": "TableType.html#settings",
+                  "tf": 756.25
+                },
+                "TableType.html#setting": {
+                  "ref": "TableType.html#setting",
+                  "tf": 703.3333333333334
+                },
+                "TableType.html#mergeSettings": {
+                  "ref": "TableType.html#mergeSettings",
+                  "tf": 58.33333333333333
+                },
+                "Settings.html": {
+                  "ref": "Settings.html",
+                  "tf": 1908.75
+                },
+                "Settings.html#properties": {
+                  "ref": "Settings.html#properties",
+                  "tf": 16.666666666666664
+                },
+                "Settings.html#set": {
+                  "ref": "Settings.html#set",
+                  "tf": 683.3333333333334
+                },
+                "Settings.html#merge": {
+                  "ref": "Settings.html#merge",
+                  "tf": 64.28571428571428
+                },
+                "module-datatable-pager-button.html": {
+                  "ref": "module-datatable-pager-button.html",
+                  "tf": 4.23728813559322
+                },
+                "module-datatable-pager.html": {
+                  "ref": "module-datatable-pager.html",
+                  "tf": 1.1029411764705883
+                },
+                "module-datatable.html": {
+                  "ref": "module-datatable.html",
+                  "tf": 1.0204081632653061
+                }
+              },
+              "f": {
+                "docs": {},
+                "i": {
+                  "docs": {},
+                  "l": {
+                    "docs": {},
+                    "t": {
+                      "docs": {},
+                      "e": {
+                        "docs": {},
+                        "r": {
+                          "docs": {},
+                          "h": {
+                            "docs": {},
+                            "a": {
+                              "docs": {},
+                              "n": {
+                                "docs": {},
+                                "d": {
+                                  "docs": {},
+                                  "l": {
+                                    "docs": {
+                                      "TableType.html#setFilterHandler": {
+                                        "ref": "TableType.html#setFilterHandler",
+                                        "tf": 700
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "s": {
+                "docs": {},
+                "o": {
+                  "docs": {},
+                  "r": {
+                    "docs": {},
+                    "t": {
+                      "docs": {},
+                      "h": {
+                        "docs": {},
+                        "a": {
+                          "docs": {},
+                          "n": {
+                            "docs": {},
+                            "d": {
+                              "docs": {},
+                              "l": {
+                                "docs": {
+                                  "TableType.html#setSortHandler": {
+                                    "ref": "TableType.html#setSortHandler",
+                                    "tf": 700
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "p": {
+                "docs": {},
+                "a": {
+                  "docs": {},
+                  "g": {
+                    "docs": {},
+                    "i": {
+                      "docs": {},
+                      "n": {
+                        "docs": {},
+                        "a": {
+                          "docs": {},
+                          "t": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "h": {
+                                "docs": {},
+                                "a": {
+                                  "docs": {},
+                                  "n": {
+                                    "docs": {},
+                                    "d": {
+                                      "docs": {},
+                                      "l": {
+                                        "docs": {
+                                          "TableType.html#setPaginateHandler": {
+                                            "ref": "TableType.html#setPaginateHandler",
+                                            "tf": 700
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "d": {
+                "docs": {},
+                "i": {
+                  "docs": {},
+                  "s": {
+                    "docs": {},
+                    "p": {
+                      "docs": {},
+                      "l": {
+                        "docs": {},
+                        "a": {
+                          "docs": {},
+                          "y": {
+                            "docs": {},
+                            "h": {
+                              "docs": {},
+                              "a": {
+                                "docs": {},
+                                "n": {
+                                  "docs": {},
+                                  "d": {
+                                    "docs": {},
+                                    "l": {
+                                      "docs": {
+                                        "TableType.html#setDisplayHandler": {
+                                          "ref": "TableType.html#setDisplayHandler",
+                                          "tf": 700
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "t": {
+                "docs": {},
+                "i": {
+                  "docs": {},
+                  "n": {
+                    "docs": {},
+                    "g": {
+                      "docs": {},
+                      "s": {
+                        "docs": {},
+                        "#": {
+                          "docs": {},
+                          "m": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "r": {
+                                "docs": {},
+                                "g": {
+                                  "docs": {
+                                    "Settings.html": {
+                                      "ref": "Settings.html",
+                                      "tf": 1.25
+                                    },
+                                    "Settings.html#merge": {
+                                      "ref": "Settings.html#merge",
+                                      "tf": 1150
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "p": {
+                            "docs": {},
+                            "r": {
+                              "docs": {},
+                              "o": {
+                                "docs": {},
+                                "p": {
+                                  "docs": {},
+                                  "e": {
+                                    "docs": {},
+                                    "r": {
+                                      "docs": {},
+                                      "t": {
+                                        "docs": {},
+                                        "i": {
+                                          "docs": {
+                                            "Settings.html": {
+                                              "ref": "Settings.html",
+                                              "tf": 1.25
+                                            },
+                                            "Settings.html#properties": {
+                                              "ref": "Settings.html#properties",
+                                              "tf": 1150
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "g": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "t": {
+                                "docs": {
+                                  "Settings.html#get": {
+                                    "ref": "Settings.html#get",
+                                    "tf": 1300
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "s": {
+                            "docs": {},
+                            "e": {
+                              "docs": {},
+                              "t": {
+                                "docs": {
+                                  "Settings.html#set": {
+                                    "ref": "Settings.html#set",
+                                    "tf": 1150
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "p": {
+                          "docs": {},
+                          "r": {
+                            "docs": {},
+                            "o": {
+                              "docs": {},
+                              "p": {
+                                "docs": {
+                                  "Settings.html#properties": {
+                                    "ref": "Settings.html#properties",
+                                    "tf": 50
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "l": {
+              "docs": {},
+              "e": {
+                "docs": {},
+                "c": {
+                  "docs": {},
+                  "t": {
+                    "docs": {
+                      "module-datatable-pager-button.html": {
+                        "ref": "module-datatable-pager-button.html",
+                        "tf": 1.694915254237288
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "o": {
+            "docs": {},
+            "r": {
+              "docs": {},
+              "t": {
+                "docs": {
+                  "Column.html#sortable": {
+                    "ref": "Column.html#sortable",
+                    "tf": 12.5
+                  },
+                  "Column.html#.isSortable": {
+                    "ref": "Column.html#.isSortable",
+                    "tf": 16.666666666666664
+                  },
+                  "TableType.html#setSortHandler": {
+                    "ref": "TableType.html#setSortHandler",
+                    "tf": 10
+                  },
+                  "Handler.html": {
+                    "ref": "Handler.html",
+                    "tf": 2.5
+                  },
+                  "Handler.html#sortHandler": {
+                    "ref": "Handler.html#sortHandler",
+                    "tf": 7.6923076923076925
+                  },
+                  "Handler.html#defaultSortHandler": {
+                    "ref": "Handler.html#defaultSortHandler",
+                    "tf": 11.11111111111111
+                  },
+                  "module-datatable-pager-button.html": {
+                    "ref": "module-datatable-pager-button.html",
+                    "tf": 2.941176470588235
+                  },
+                  "module-datatable.html": {
+                    "ref": "module-datatable.html",
+                    "tf": 0.6802721088435374
+                  }
+                },
+                "a": {
+                  "docs": {},
+                  "b": {
+                    "docs": {},
+                    "l": {
+                      "docs": {
+                        "Column.html#sortable": {
+                          "ref": "Column.html#sortable",
+                          "tf": 700
+                        },
+                        "module-datatable-pager-button.html": {
+                          "ref": "module-datatable-pager-button.html",
+                          "tf": 0.7352941176470588
+                        }
+                      }
+                    }
+                  }
+                },
+                "c": {
+                  "docs": {},
+                  "o": {
+                    "docs": {},
+                    "l": {
+                      "docs": {},
+                      "u": {
+                        "docs": {},
+                        "m": {
+                          "docs": {},
+                          "n": {
+                            "docs": {
+                              "Handler.html#sortHandler": {
+                                "ref": "Handler.html#sortHandler",
+                                "tf": 20
+                              },
+                              "Handler.html#defaultSortHandler": {
+                                "ref": "Handler.html#defaultSortHandler",
+                                "tf": 20
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "d": {
+                  "docs": {},
+                  "i": {
+                    "docs": {},
+                    "r": {
+                      "docs": {
+                        "Handler.html#sortHandler": {
+                          "ref": "Handler.html#sortHandler",
+                          "tf": 20
+                        },
+                        "Handler.html#defaultSortHandler": {
+                          "ref": "Handler.html#defaultSortHandler",
+                          "tf": 20
+                        },
+                        "module-datatable.html": {
+                          "ref": "module-datatable.html",
+                          "tf": 0.3401360544217687
+                        }
+                      }
+                    }
+                  }
+                },
+                "h": {
+                  "docs": {},
+                  "a": {
+                    "docs": {},
+                    "n": {
+                      "docs": {},
+                      "d": {
+                        "docs": {},
+                        "l": {
+                          "docs": {
+                            "Handler.html#sortHandler": {
+                              "ref": "Handler.html#sortHandler",
+                              "tf": 670
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "e": {
+                  "docs": {},
+                  "d": {
+                    "docs": {},
+                    "d": {
+                      "docs": {},
+                      "a": {
+                        "docs": {},
+                        "t": {
+                          "docs": {},
+                          "a": {
+                            "docs": {
+                              "Handler.html#paginateHandler": {
+                                "ref": "Handler.html#paginateHandler",
+                                "tf": 20
+                              },
+                              "Handler.html#defaultPaginateHandler": {
+                                "ref": "Handler.html#defaultPaginateHandler",
+                                "tf": 20
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "b": {
+                  "docs": {},
+                  "i": {
+                    "docs": {
+                      "module-datatable.html": {
+                        "ref": "module-datatable.html",
+                        "tf": 0.3401360544217687
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "p": {
+            "docs": {},
+            "e": {
+              "docs": {},
+              "c": {
+                "docs": {},
+                "i": {
+                  "docs": {},
+                  "f": {
+                    "docs": {
+                      "TableType.html#setting": {
+                        "ref": "TableType.html#setting",
+                        "tf": 10
+                      },
+                      "Handler.html#sortHandler": {
+                        "ref": "Handler.html#sortHandler",
+                        "tf": 3.8461538461538463
+                      },
+                      "Handler.html#defaultSortHandler": {
+                        "ref": "Handler.html#defaultSortHandler",
+                        "tf": 5.555555555555555
+                      },
+                      "Settings.html#get": {
+                        "ref": "Settings.html#get",
+                        "tf": 16.666666666666664
+                      },
+                      "Settings.html#set": {
+                        "ref": "Settings.html#set",
+                        "tf": 12.5
+                      }
+                    },
+                    "i": {
+                      "docs": {
+                        "DatatableFactory.html#registerTableType": {
+                          "ref": "DatatableFactory.html#registerTableType",
+                          "tf": 5.555555555555555
+                        },
+                        "DatatableFactory.html#deregisterTableType": {
+                          "ref": "DatatableFactory.html#deregisterTableType",
+                          "tf": 5.555555555555555
+                        },
+                        "Handler.html#filterHandler": {
+                          "ref": "Handler.html#filterHandler",
+                          "tf": 3.8461538461538463
+                        },
+                        "Handler.html#defaultFilterHandler": {
+                          "ref": "Handler.html#defaultFilterHandler",
+                          "tf": 5.555555555555555
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "l": {
+              "docs": {},
+              "i": {
+                "docs": {},
+                "t": {
+                  "docs": {
+                    "Handler.html#paginateHandler": {
+                      "ref": "Handler.html#paginateHandler",
+                      "tf": 4.545454545454546
+                    },
+                    "Handler.html#defaultPaginateHandler": {
+                      "ref": "Handler.html#defaultPaginateHandler",
+                      "tf": 7.142857142857142
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "u": {
+            "docs": {},
+            "b": {
+              "docs": {},
+              "s": {
+                "docs": {},
+                "e": {
+                  "docs": {},
+                  "q": {
+                    "docs": {},
+                    "u": {
+                      "docs": {
+                        "Handler.html": {
+                          "ref": "Handler.html",
+                          "tf": 1.25
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "r": {
+              "docs": {},
+              "e": {
+                "docs": {
+                  "Handler.html": {
+                    "ref": "Handler.html",
+                    "tf": 1.25
+                  }
+                }
+              }
+            },
+            "p": {
+              "docs": {},
+              "p": {
+                "docs": {},
+                "o": {
+                  "docs": {},
+                  "r": {
+                    "docs": {},
+                    "t": {
+                      "docs": {
+                        "Handler.html#filterHandler": {
+                          "ref": "Handler.html#filterHandler",
+                          "tf": 3.8461538461538463
+                        },
+                        "Handler.html#paginateHandler": {
+                          "ref": "Handler.html#paginateHandler",
+                          "tf": 4.545454545454546
+                        },
+                        "Handler.html#displayHandler": {
+                          "ref": "Handler.html#displayHandler",
+                          "tf": 3.8461538461538463
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "o": {
+                "docs": {},
+                "r": {
+                  "docs": {},
+                  "t": {
+                    "docs": {
+                      "Handler.html#sortHandler": {
+                        "ref": "Handler.html#sortHandler",
+                        "tf": 3.8461538461538463
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "c": {
+              "docs": {},
+              "h": {
+                "docs": {
+                  "Settings.html": {
+                    "ref": "Settings.html",
+                    "tf": 6.25
+                  }
+                }
+              }
+            }
+          },
+          "h": {
+            "docs": {},
+            "o": {
+              "docs": {},
+              "w": {
+                "docs": {
+                  "module-datatable-pager.html": {
+                    "ref": "module-datatable-pager.html",
+                    "tf": 0.3676470588235294
                   }
                 }
               }
@@ -9066,14 +9909,6 @@
                         "ref": "Column.html#field",
                         "tf": 12.5
                       },
-                      "Settings.html": {
-                        "ref": "Settings.html",
-                        "tf": 1.25
-                      },
-                      "Settings.html#merge": {
-                        "ref": "Settings.html#merge",
-                        "tf": 7.142857142857142
-                      },
                       "TableType.html": {
                         "ref": "TableType.html",
                         "tf": 10
@@ -9085,6 +9920,14 @@
                       "TableType.html#mergeSettings": {
                         "ref": "TableType.html#mergeSettings",
                         "tf": 16.666666666666664
+                      },
+                      "Settings.html": {
+                        "ref": "Settings.html",
+                        "tf": 1.25
+                      },
+                      "Settings.html#merge": {
+                        "ref": "Settings.html#merge",
+                        "tf": 7.142857142857142
                       },
                       "module-datatable-cell.html": {
                         "ref": "module-datatable-cell.html",
@@ -9203,849 +10046,6 @@
             }
           }
         },
-        "s": {
-          "docs": {},
-          "t": {
-            "docs": {},
-            "r": {
-              "docs": {},
-              "i": {
-                "docs": {},
-                "n": {
-                  "docs": {},
-                  "g": {
-                    "docs": {
-                      "Column.html#field": {
-                        "ref": "Column.html#field",
-                        "tf": 50
-                      },
-                      "Column.html#representedAs": {
-                        "ref": "Column.html#representedAs",
-                        "tf": 10
-                      },
-                      "Column.html#headerAlign": {
-                        "ref": "Column.html#headerAlign",
-                        "tf": 50
-                      },
-                      "Column.html#headerClass": {
-                        "ref": "Column.html#headerClass",
-                        "tf": 50
-                      },
-                      "Column.html#label": {
-                        "ref": "Column.html#label",
-                        "tf": 50
-                      },
-                      "Column.html#align": {
-                        "ref": "Column.html#align",
-                        "tf": 50
-                      },
-                      "Column.html#getRepresentation": {
-                        "ref": "Column.html#getRepresentation",
-                        "tf": 41.66666666666666
-                      },
-                      "Column.html#matches": {
-                        "ref": "Column.html#matches",
-                        "tf": 6.25
-                      },
-                      "Handler.html#rowMatches": {
-                        "ref": "Handler.html#rowMatches",
-                        "tf": 7.142857142857142
-                      },
-                      "module-datatable-cell.html": {
-                        "ref": "module-datatable-cell.html",
-                        "tf": 3.225806451612903
-                      },
-                      "module-datatable-pager-button.html": {
-                        "ref": "module-datatable-pager-button.html",
-                        "tf": 1.694915254237288
-                      },
-                      "module-datatable-pager.html": {
-                        "ref": "module-datatable-pager.html",
-                        "tf": 2.5735294117647056
-                      },
-                      "module-datatable.html": {
-                        "ref": "module-datatable.html",
-                        "tf": 1.0204081632653061
-                      }
-                    },
-                    "|": {
-                      "docs": {},
-                      "a": {
-                        "docs": {},
-                        "r": {
-                          "docs": {},
-                          "r": {
-                            "docs": {},
-                            "a": {
-                              "docs": {},
-                              "y": {
-                                "docs": {},
-                                ".": {
-                                  "docs": {},
-                                  "&": {
-                                    "docs": {},
-                                    "l": {
-                                      "docs": {},
-                                      "t": {
-                                        "docs": {},
-                                        ";": {
-                                          "docs": {},
-                                          "s": {
-                                            "docs": {},
-                                            "t": {
-                                              "docs": {},
-                                              "r": {
-                                                "docs": {},
-                                                "i": {
-                                                  "docs": {},
-                                                  "n": {
-                                                    "docs": {},
-                                                    "g": {
-                                                      "docs": {},
-                                                      "&": {
-                                                        "docs": {},
-                                                        "g": {
-                                                          "docs": {},
-                                                          "t": {
-                                                            "docs": {},
-                                                            ";": {
-                                                              "docs": {},
-                                                              "|": {
-                                                                "docs": {},
-                                                                "f": {
-                                                                  "docs": {},
-                                                                  "u": {
-                                                                    "docs": {},
-                                                                    "n": {
-                                                                      "docs": {},
-                                                                      "c": {
-                                                                        "docs": {},
-                                                                        "t": {
-                                                                          "docs": {
-                                                                            "module-datatable.html": {
-                                                                              "ref": "module-datatable.html",
-                                                                              "tf": 0.3401360544217687
-                                                                            }
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                    }
-                                                                  }
-                                                                }
-                                                              }
-                                                            }
-                                                          }
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "e": {
-            "docs": {},
-            "t": {
-              "docs": {
-                "Column.html#interpolate": {
-                  "ref": "Column.html#interpolate",
-                  "tf": 7.142857142857142
-                },
-                "Settings.html": {
-                  "ref": "Settings.html",
-                  "tf": 1908.75
-                },
-                "Settings.html#properties": {
-                  "ref": "Settings.html#properties",
-                  "tf": 16.666666666666664
-                },
-                "Settings.html#set": {
-                  "ref": "Settings.html#set",
-                  "tf": 683.3333333333334
-                },
-                "Settings.html#merge": {
-                  "ref": "Settings.html#merge",
-                  "tf": 64.28571428571428
-                },
-                "TableType.html": {
-                  "ref": "TableType.html",
-                  "tf": 10
-                },
-                "TableType.html#settings": {
-                  "ref": "TableType.html#settings",
-                  "tf": 756.25
-                },
-                "TableType.html#setting": {
-                  "ref": "TableType.html#setting",
-                  "tf": 703.3333333333334
-                },
-                "TableType.html#mergeSettings": {
-                  "ref": "TableType.html#mergeSettings",
-                  "tf": 58.33333333333333
-                },
-                "module-datatable-pager-button.html": {
-                  "ref": "module-datatable-pager-button.html",
-                  "tf": 4.23728813559322
-                },
-                "module-datatable-pager.html": {
-                  "ref": "module-datatable-pager.html",
-                  "tf": 1.1029411764705883
-                },
-                "module-datatable.html": {
-                  "ref": "module-datatable.html",
-                  "tf": 1.0204081632653061
-                }
-              },
-              "t": {
-                "docs": {},
-                "i": {
-                  "docs": {},
-                  "n": {
-                    "docs": {},
-                    "g": {
-                      "docs": {},
-                      "s": {
-                        "docs": {},
-                        "#": {
-                          "docs": {},
-                          "m": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "r": {
-                                "docs": {},
-                                "g": {
-                                  "docs": {
-                                    "Settings.html": {
-                                      "ref": "Settings.html",
-                                      "tf": 1.25
-                                    },
-                                    "Settings.html#merge": {
-                                      "ref": "Settings.html#merge",
-                                      "tf": 1150
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "p": {
-                            "docs": {},
-                            "r": {
-                              "docs": {},
-                              "o": {
-                                "docs": {},
-                                "p": {
-                                  "docs": {},
-                                  "e": {
-                                    "docs": {},
-                                    "r": {
-                                      "docs": {},
-                                      "t": {
-                                        "docs": {},
-                                        "i": {
-                                          "docs": {
-                                            "Settings.html": {
-                                              "ref": "Settings.html",
-                                              "tf": 1.25
-                                            },
-                                            "Settings.html#properties": {
-                                              "ref": "Settings.html#properties",
-                                              "tf": 1150
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "g": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "t": {
-                                "docs": {
-                                  "Settings.html#get": {
-                                    "ref": "Settings.html#get",
-                                    "tf": 1300
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "s": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "t": {
-                                "docs": {
-                                  "Settings.html#set": {
-                                    "ref": "Settings.html#set",
-                                    "tf": 1150
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "p": {
-                          "docs": {},
-                          "r": {
-                            "docs": {},
-                            "o": {
-                              "docs": {},
-                              "p": {
-                                "docs": {
-                                  "Settings.html#properties": {
-                                    "ref": "Settings.html#properties",
-                                    "tf": 50
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "f": {
-                "docs": {},
-                "i": {
-                  "docs": {},
-                  "l": {
-                    "docs": {},
-                    "t": {
-                      "docs": {},
-                      "e": {
-                        "docs": {},
-                        "r": {
-                          "docs": {},
-                          "h": {
-                            "docs": {},
-                            "a": {
-                              "docs": {},
-                              "n": {
-                                "docs": {},
-                                "d": {
-                                  "docs": {},
-                                  "l": {
-                                    "docs": {
-                                      "TableType.html#setFilterHandler": {
-                                        "ref": "TableType.html#setFilterHandler",
-                                        "tf": 700
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "s": {
-                "docs": {},
-                "o": {
-                  "docs": {},
-                  "r": {
-                    "docs": {},
-                    "t": {
-                      "docs": {},
-                      "h": {
-                        "docs": {},
-                        "a": {
-                          "docs": {},
-                          "n": {
-                            "docs": {},
-                            "d": {
-                              "docs": {},
-                              "l": {
-                                "docs": {
-                                  "TableType.html#setSortHandler": {
-                                    "ref": "TableType.html#setSortHandler",
-                                    "tf": 700
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "p": {
-                "docs": {},
-                "a": {
-                  "docs": {},
-                  "g": {
-                    "docs": {},
-                    "i": {
-                      "docs": {},
-                      "n": {
-                        "docs": {},
-                        "a": {
-                          "docs": {},
-                          "t": {
-                            "docs": {},
-                            "e": {
-                              "docs": {},
-                              "h": {
-                                "docs": {},
-                                "a": {
-                                  "docs": {},
-                                  "n": {
-                                    "docs": {},
-                                    "d": {
-                                      "docs": {},
-                                      "l": {
-                                        "docs": {
-                                          "TableType.html#setPaginateHandler": {
-                                            "ref": "TableType.html#setPaginateHandler",
-                                            "tf": 700
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "d": {
-                "docs": {},
-                "i": {
-                  "docs": {},
-                  "s": {
-                    "docs": {},
-                    "p": {
-                      "docs": {},
-                      "l": {
-                        "docs": {},
-                        "a": {
-                          "docs": {},
-                          "y": {
-                            "docs": {},
-                            "h": {
-                              "docs": {},
-                              "a": {
-                                "docs": {},
-                                "n": {
-                                  "docs": {},
-                                  "d": {
-                                    "docs": {},
-                                    "l": {
-                                      "docs": {
-                                        "TableType.html#setDisplayHandler": {
-                                          "ref": "TableType.html#setDisplayHandler",
-                                          "tf": 700
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "l": {
-              "docs": {},
-              "e": {
-                "docs": {},
-                "c": {
-                  "docs": {},
-                  "t": {
-                    "docs": {
-                      "module-datatable-pager-button.html": {
-                        "ref": "module-datatable-pager-button.html",
-                        "tf": 1.694915254237288
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "o": {
-            "docs": {},
-            "r": {
-              "docs": {},
-              "t": {
-                "docs": {
-                  "Column.html#sortable": {
-                    "ref": "Column.html#sortable",
-                    "tf": 12.5
-                  },
-                  "Column.html#.isSortable": {
-                    "ref": "Column.html#.isSortable",
-                    "tf": 16.666666666666664
-                  },
-                  "Handler.html": {
-                    "ref": "Handler.html",
-                    "tf": 2.5
-                  },
-                  "Handler.html#sortHandler": {
-                    "ref": "Handler.html#sortHandler",
-                    "tf": 7.6923076923076925
-                  },
-                  "Handler.html#defaultSortHandler": {
-                    "ref": "Handler.html#defaultSortHandler",
-                    "tf": 11.11111111111111
-                  },
-                  "TableType.html#setSortHandler": {
-                    "ref": "TableType.html#setSortHandler",
-                    "tf": 10
-                  },
-                  "module-datatable-pager-button.html": {
-                    "ref": "module-datatable-pager-button.html",
-                    "tf": 2.941176470588235
-                  },
-                  "module-datatable.html": {
-                    "ref": "module-datatable.html",
-                    "tf": 0.6802721088435374
-                  }
-                },
-                "a": {
-                  "docs": {},
-                  "b": {
-                    "docs": {},
-                    "l": {
-                      "docs": {
-                        "Column.html#sortable": {
-                          "ref": "Column.html#sortable",
-                          "tf": 700
-                        },
-                        "module-datatable-pager-button.html": {
-                          "ref": "module-datatable-pager-button.html",
-                          "tf": 0.7352941176470588
-                        }
-                      }
-                    }
-                  }
-                },
-                "c": {
-                  "docs": {},
-                  "o": {
-                    "docs": {},
-                    "l": {
-                      "docs": {},
-                      "u": {
-                        "docs": {},
-                        "m": {
-                          "docs": {},
-                          "n": {
-                            "docs": {
-                              "Handler.html#sortHandler": {
-                                "ref": "Handler.html#sortHandler",
-                                "tf": 20
-                              },
-                              "Handler.html#defaultSortHandler": {
-                                "ref": "Handler.html#defaultSortHandler",
-                                "tf": 20
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "d": {
-                  "docs": {},
-                  "i": {
-                    "docs": {},
-                    "r": {
-                      "docs": {
-                        "Handler.html#sortHandler": {
-                          "ref": "Handler.html#sortHandler",
-                          "tf": 20
-                        },
-                        "Handler.html#defaultSortHandler": {
-                          "ref": "Handler.html#defaultSortHandler",
-                          "tf": 20
-                        },
-                        "module-datatable.html": {
-                          "ref": "module-datatable.html",
-                          "tf": 0.3401360544217687
-                        }
-                      }
-                    }
-                  }
-                },
-                "h": {
-                  "docs": {},
-                  "a": {
-                    "docs": {},
-                    "n": {
-                      "docs": {},
-                      "d": {
-                        "docs": {},
-                        "l": {
-                          "docs": {
-                            "Handler.html#sortHandler": {
-                              "ref": "Handler.html#sortHandler",
-                              "tf": 670
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "e": {
-                  "docs": {},
-                  "d": {
-                    "docs": {},
-                    "d": {
-                      "docs": {},
-                      "a": {
-                        "docs": {},
-                        "t": {
-                          "docs": {},
-                          "a": {
-                            "docs": {
-                              "Handler.html#paginateHandler": {
-                                "ref": "Handler.html#paginateHandler",
-                                "tf": 20
-                              },
-                              "Handler.html#defaultPaginateHandler": {
-                                "ref": "Handler.html#defaultPaginateHandler",
-                                "tf": 20
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "b": {
-                  "docs": {},
-                  "i": {
-                    "docs": {
-                      "module-datatable.html": {
-                        "ref": "module-datatable.html",
-                        "tf": 0.3401360544217687
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "p": {
-            "docs": {},
-            "e": {
-              "docs": {},
-              "c": {
-                "docs": {},
-                "i": {
-                  "docs": {},
-                  "f": {
-                    "docs": {
-                      "Handler.html#sortHandler": {
-                        "ref": "Handler.html#sortHandler",
-                        "tf": 3.8461538461538463
-                      },
-                      "Handler.html#defaultSortHandler": {
-                        "ref": "Handler.html#defaultSortHandler",
-                        "tf": 5.555555555555555
-                      },
-                      "Settings.html#get": {
-                        "ref": "Settings.html#get",
-                        "tf": 16.666666666666664
-                      },
-                      "Settings.html#set": {
-                        "ref": "Settings.html#set",
-                        "tf": 12.5
-                      },
-                      "TableType.html#setting": {
-                        "ref": "TableType.html#setting",
-                        "tf": 10
-                      }
-                    },
-                    "i": {
-                      "docs": {
-                        "DatatableFactory.html#registerTableType": {
-                          "ref": "DatatableFactory.html#registerTableType",
-                          "tf": 5.555555555555555
-                        },
-                        "DatatableFactory.html#deregisterTableType": {
-                          "ref": "DatatableFactory.html#deregisterTableType",
-                          "tf": 5.555555555555555
-                        },
-                        "Handler.html#filterHandler": {
-                          "ref": "Handler.html#filterHandler",
-                          "tf": 3.8461538461538463
-                        },
-                        "Handler.html#defaultFilterHandler": {
-                          "ref": "Handler.html#defaultFilterHandler",
-                          "tf": 5.555555555555555
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "l": {
-              "docs": {},
-              "i": {
-                "docs": {},
-                "t": {
-                  "docs": {
-                    "Handler.html#paginateHandler": {
-                      "ref": "Handler.html#paginateHandler",
-                      "tf": 4.545454545454546
-                    },
-                    "Handler.html#defaultPaginateHandler": {
-                      "ref": "Handler.html#defaultPaginateHandler",
-                      "tf": 7.142857142857142
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "u": {
-            "docs": {},
-            "b": {
-              "docs": {},
-              "s": {
-                "docs": {},
-                "e": {
-                  "docs": {},
-                  "q": {
-                    "docs": {},
-                    "u": {
-                      "docs": {
-                        "Handler.html": {
-                          "ref": "Handler.html",
-                          "tf": 1.25
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "r": {
-              "docs": {},
-              "e": {
-                "docs": {
-                  "Handler.html": {
-                    "ref": "Handler.html",
-                    "tf": 1.25
-                  }
-                }
-              }
-            },
-            "p": {
-              "docs": {},
-              "p": {
-                "docs": {},
-                "o": {
-                  "docs": {},
-                  "r": {
-                    "docs": {},
-                    "t": {
-                      "docs": {
-                        "Handler.html#filterHandler": {
-                          "ref": "Handler.html#filterHandler",
-                          "tf": 3.8461538461538463
-                        },
-                        "Handler.html#paginateHandler": {
-                          "ref": "Handler.html#paginateHandler",
-                          "tf": 4.545454545454546
-                        },
-                        "Handler.html#displayHandler": {
-                          "ref": "Handler.html#displayHandler",
-                          "tf": 3.8461538461538463
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "o": {
-                "docs": {},
-                "r": {
-                  "docs": {},
-                  "t": {
-                    "docs": {
-                      "Handler.html#sortHandler": {
-                        "ref": "Handler.html#sortHandler",
-                        "tf": 3.8461538461538463
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "c": {
-              "docs": {},
-              "h": {
-                "docs": {
-                  "Settings.html": {
-                    "ref": "Settings.html",
-                    "tf": 6.25
-                  }
-                }
-              }
-            }
-          },
-          "h": {
-            "docs": {},
-            "o": {
-              "docs": {},
-              "w": {
-                "docs": {
-                  "module-datatable-pager.html": {
-                    "ref": "module-datatable-pager.html",
-                    "tf": 0.3676470588235294
-                  }
-                }
-              }
-            }
-          }
-        },
         "w": {
           "docs": {},
           "h": {
@@ -10119,26 +10119,6 @@
                 "ref": "Column.html#.isPlainTextField",
                 "tf": 2.631578947368421
               },
-              "DatatableFactory.html#useDefaultType": {
-                "ref": "DatatableFactory.html#useDefaultType",
-                "tf": 33.33333333333333
-              },
-              "DatatableFactory.html#registerTableType": {
-                "ref": "DatatableFactory.html#registerTableType",
-                "tf": 5.555555555555555
-              },
-              "DatatableFactory.html#deregisterTableType": {
-                "ref": "DatatableFactory.html#deregisterTableType",
-                "tf": 5.555555555555555
-              },
-              "Handler.html": {
-                "ref": "Handler.html",
-                "tf": 1.25
-              },
-              "Settings.html": {
-                "ref": "Settings.html",
-                "tf": 8.75
-              },
               "TableType.html#settings": {
                 "ref": "TableType.html#settings",
                 "tf": 6.25
@@ -10158,6 +10138,26 @@
               "TableType.html#setDisplayHandler": {
                 "ref": "TableType.html#setDisplayHandler",
                 "tf": 10
+              },
+              "DatatableFactory.html#useDefaultType": {
+                "ref": "DatatableFactory.html#useDefaultType",
+                "tf": 33.33333333333333
+              },
+              "DatatableFactory.html#registerTableType": {
+                "ref": "DatatableFactory.html#registerTableType",
+                "tf": 5.555555555555555
+              },
+              "DatatableFactory.html#deregisterTableType": {
+                "ref": "DatatableFactory.html#deregisterTableType",
+                "tf": 5.555555555555555
+              },
+              "Handler.html": {
+                "ref": "Handler.html",
+                "tf": 1.25
+              },
+              "Settings.html": {
+                "ref": "Settings.html",
+                "tf": 8.75
               },
               "module-datatable-pager-button.html": {
                 "ref": "module-datatable-pager-button.html",
@@ -10748,17 +10748,6 @@
       "description": "",
       "body": ""
     },
-    "list_tutorial.html": {
-      "id": "list_tutorial.html",
-      "kind": "list",
-      "title": "Tutorials",
-      "longname": "list:tutorial",
-      "name": "Tutorials",
-      "tags": "list:tutorial",
-      "summary": "All available tutorials.",
-      "description": "",
-      "body": ""
-    },
     "list_class.html": {
       "id": "list_class.html",
       "kind": "list",
@@ -10781,6 +10770,17 @@
       "description": "",
       "body": ""
     },
+    "list_tutorial.html": {
+      "id": "list_tutorial.html",
+      "kind": "list",
+      "title": "Tutorials",
+      "longname": "list:tutorial",
+      "name": "Tutorials",
+      "tags": "list:tutorial",
+      "summary": "All available tutorials.",
+      "description": "",
+      "body": ""
+    },
     "Column.html": {
       "id": "Column.html",
       "kind": "class",
@@ -10791,6 +10791,16 @@
       "summary": "",
       "description": "A class responsible for handling a full column with its header.",
       "body": ""
+    },
+    "Column.html#align": {
+      "id": "Column.html#align",
+      "kind": "member",
+      "title": "align :string",
+      "longname": "Column#align",
+      "name": "align",
+      "tags": "Column#align align",
+      "summary": "",
+      "description": "The alignment direction of the cells in this column."
     },
     "Column.html#component": {
       "id": "Column.html#component",
@@ -10892,16 +10902,6 @@
       "summary": "",
       "description": "Controls whetever this column can be filtered."
     },
-    "Column.html#align": {
-      "id": "Column.html#align",
-      "kind": "member",
-      "title": "align :string",
-      "longname": "Column#align",
-      "name": "align",
-      "tags": "Column#align align",
-      "summary": "",
-      "description": "The alignment direction of the cells in this column."
-    },
     "Column.html#.normalizeAlignment": {
       "id": "Column.html#.normalizeAlignment",
       "kind": "function",
@@ -10961,6 +10961,137 @@
       "tags": "Column#matches matches",
       "summary": "",
       "description": "Check if the provided row's representation matches a certain filter string."
+    },
+    "TableType.html": {
+      "id": "TableType.html",
+      "kind": "class",
+      "title": "TableType",
+      "longname": "TableType",
+      "name": "TableType",
+      "tags": "TableType",
+      "summary": "",
+      "description": "Defines a type of Datatable, with its Settings object.",
+      "body": ""
+    },
+    "TableType.html#handler": {
+      "id": "TableType.html#handler",
+      "kind": "member",
+      "title": "handler :Handler",
+      "longname": "TableType#handler",
+      "name": "handler",
+      "tags": "TableType#handler handler",
+      "summary": "",
+      "description": "Handler associated with the table type"
+    },
+    "TableType.html#settings": {
+      "id": "TableType.html#settings",
+      "kind": "member",
+      "title": "settings :Settings",
+      "longname": "TableType#settings",
+      "name": "settings",
+      "tags": "TableType#settings settings",
+      "summary": "",
+      "description": "Settings object used to get various values for the datatable &amp; other components"
+    },
+    "TableType.html#id": {
+      "id": "TableType.html#id",
+      "kind": "member",
+      "title": "id",
+      "longname": "TableType#id",
+      "name": "id",
+      "tags": "TableType#id id",
+      "summary": "",
+      "description": "Retrieves the Id of the table type"
+    },
+    "TableType.html#setFilterHandler": {
+      "id": "TableType.html#setFilterHandler",
+      "kind": "function",
+      "title": "setFilterHandler( closure ) → {this}",
+      "longname": "TableType#setFilterHandler",
+      "name": "setFilterHandler",
+      "tags": "TableType#setFilterHandler setFilterHandler",
+      "summary": "",
+      "description": "Defines the function used to filter data"
+    },
+    "TableType.html#setSortHandler": {
+      "id": "TableType.html#setSortHandler",
+      "kind": "function",
+      "title": "setSortHandler( closure ) → {this}",
+      "longname": "TableType#setSortHandler",
+      "name": "setSortHandler",
+      "tags": "TableType#setSortHandler setSortHandler",
+      "summary": "",
+      "description": "Defines the function used to sort data"
+    },
+    "TableType.html#setPaginateHandler": {
+      "id": "TableType.html#setPaginateHandler",
+      "kind": "function",
+      "title": "setPaginateHandler( closure ) → {this}",
+      "longname": "TableType#setPaginateHandler",
+      "name": "setPaginateHandler",
+      "tags": "TableType#setPaginateHandler setPaginateHandler",
+      "summary": "",
+      "description": "Defines the function used to paginate data"
+    },
+    "TableType.html#setDisplayHandler": {
+      "id": "TableType.html#setDisplayHandler",
+      "kind": "function",
+      "title": "setDisplayHandler( closure ) → {this}",
+      "longname": "TableType#setDisplayHandler",
+      "name": "setDisplayHandler",
+      "tags": "TableType#setDisplayHandler setDisplayHandler",
+      "summary": "",
+      "description": "Defines the function used to paginate data"
+    },
+    "TableType.html#setting": {
+      "id": "TableType.html#setting",
+      "kind": "function",
+      "title": "setting( path [, value ] ) → {this|*}",
+      "longname": "TableType#setting",
+      "name": "setting",
+      "tags": "TableType#setting setting",
+      "summary": "",
+      "description": "Get or set a Settings value at a specific path"
+    },
+    "TableType.html#mergeSettings": {
+      "id": "TableType.html#mergeSettings",
+      "kind": "function",
+      "title": "mergeSettings( settings ) → {this}",
+      "longname": "TableType#mergeSettings",
+      "name": "mergeSettings",
+      "tags": "TableType#mergeSettings mergeSettings",
+      "summary": "",
+      "description": "Merge a settings object with the TableType#settings object of the instance."
+    },
+    "TableType.html#getTableDefinition": {
+      "id": "TableType.html#getTableDefinition",
+      "kind": "function",
+      "title": "getTableDefinition() → {VueDatatable}",
+      "longname": "TableType#getTableDefinition",
+      "name": "getTableDefinition",
+      "tags": "TableType#getTableDefinition getTableDefinition",
+      "summary": "",
+      "description": "Factory function that copy the VueDatatable prototype, and configure as this type."
+    },
+    "TableType.html#getPagerDefinition": {
+      "id": "TableType.html#getPagerDefinition",
+      "kind": "function",
+      "title": "getPagerDefinition() → {VueDatatablePager}",
+      "longname": "TableType#getPagerDefinition",
+      "name": "getPagerDefinition",
+      "tags": "TableType#getPagerDefinition getPagerDefinition",
+      "summary": "",
+      "description": "Factory function that copy the VueDatatablePager prototype, and configure as this type."
+    },
+    "TableType.html#clone": {
+      "id": "TableType.html#clone",
+      "kind": "function",
+      "title": "clone( obj ) → {*}",
+      "longname": "TableType#clone",
+      "name": "clone",
+      "tags": "TableType#clone clone",
+      "summary": "",
+      "description": "Deep clone a value"
     },
     "DatatableFactory.html": {
       "id": "DatatableFactory.html",
@@ -11184,137 +11315,6 @@
       "tags": "Settings#merge merge",
       "summary": "",
       "description": "Merges a new settings object within the Settings instance."
-    },
-    "TableType.html": {
-      "id": "TableType.html",
-      "kind": "class",
-      "title": "TableType",
-      "longname": "TableType",
-      "name": "TableType",
-      "tags": "TableType",
-      "summary": "",
-      "description": "Defines a type of Datatable, with its Settings object.",
-      "body": ""
-    },
-    "TableType.html#handler": {
-      "id": "TableType.html#handler",
-      "kind": "member",
-      "title": "handler :Handler",
-      "longname": "TableType#handler",
-      "name": "handler",
-      "tags": "TableType#handler handler",
-      "summary": "",
-      "description": "Handler associated with the table type"
-    },
-    "TableType.html#settings": {
-      "id": "TableType.html#settings",
-      "kind": "member",
-      "title": "settings :Settings",
-      "longname": "TableType#settings",
-      "name": "settings",
-      "tags": "TableType#settings settings",
-      "summary": "",
-      "description": "Settings object used to get various values for the datatable &amp; other components"
-    },
-    "TableType.html#id": {
-      "id": "TableType.html#id",
-      "kind": "member",
-      "title": "id",
-      "longname": "TableType#id",
-      "name": "id",
-      "tags": "TableType#id id",
-      "summary": "",
-      "description": "Retrieves the Id of the table type"
-    },
-    "TableType.html#setFilterHandler": {
-      "id": "TableType.html#setFilterHandler",
-      "kind": "function",
-      "title": "setFilterHandler( closure ) → {this}",
-      "longname": "TableType#setFilterHandler",
-      "name": "setFilterHandler",
-      "tags": "TableType#setFilterHandler setFilterHandler",
-      "summary": "",
-      "description": "Defines the function used to filter data"
-    },
-    "TableType.html#setSortHandler": {
-      "id": "TableType.html#setSortHandler",
-      "kind": "function",
-      "title": "setSortHandler( closure ) → {this}",
-      "longname": "TableType#setSortHandler",
-      "name": "setSortHandler",
-      "tags": "TableType#setSortHandler setSortHandler",
-      "summary": "",
-      "description": "Defines the function used to sort data"
-    },
-    "TableType.html#setPaginateHandler": {
-      "id": "TableType.html#setPaginateHandler",
-      "kind": "function",
-      "title": "setPaginateHandler( closure ) → {this}",
-      "longname": "TableType#setPaginateHandler",
-      "name": "setPaginateHandler",
-      "tags": "TableType#setPaginateHandler setPaginateHandler",
-      "summary": "",
-      "description": "Defines the function used to paginate data"
-    },
-    "TableType.html#setting": {
-      "id": "TableType.html#setting",
-      "kind": "function",
-      "title": "setting( path [, value ] ) → {this|*}",
-      "longname": "TableType#setting",
-      "name": "setting",
-      "tags": "TableType#setting setting",
-      "summary": "",
-      "description": "Get or set a Settings value at a specific path"
-    },
-    "TableType.html#mergeSettings": {
-      "id": "TableType.html#mergeSettings",
-      "kind": "function",
-      "title": "mergeSettings( settings ) → {this}",
-      "longname": "TableType#mergeSettings",
-      "name": "mergeSettings",
-      "tags": "TableType#mergeSettings mergeSettings",
-      "summary": "",
-      "description": "Merge a settings object with the TableType#settings object of the instance."
-    },
-    "TableType.html#getTableDefinition": {
-      "id": "TableType.html#getTableDefinition",
-      "kind": "function",
-      "title": "getTableDefinition() → {VueDatatable}",
-      "longname": "TableType#getTableDefinition",
-      "name": "getTableDefinition",
-      "tags": "TableType#getTableDefinition getTableDefinition",
-      "summary": "",
-      "description": "Factory function that copy the VueDatatable prototype, and configure as this type."
-    },
-    "TableType.html#getPagerDefinition": {
-      "id": "TableType.html#getPagerDefinition",
-      "kind": "function",
-      "title": "getPagerDefinition() → {VueDatatablePager}",
-      "longname": "TableType#getPagerDefinition",
-      "name": "getPagerDefinition",
-      "tags": "TableType#getPagerDefinition getPagerDefinition",
-      "summary": "",
-      "description": "Factory function that copy the VueDatatablePager prototype, and configure as this type."
-    },
-    "TableType.html#clone": {
-      "id": "TableType.html#clone",
-      "kind": "function",
-      "title": "clone( obj ) → {*}",
-      "longname": "TableType#clone",
-      "name": "clone",
-      "tags": "TableType#clone clone",
-      "summary": "",
-      "description": "Deep clone a value"
-    },
-    "TableType.html#setDisplayHandler": {
-      "id": "TableType.html#setDisplayHandler",
-      "kind": "function",
-      "title": "setDisplayHandler( closure ) → {this}",
-      "longname": "TableType#setDisplayHandler",
-      "name": "setDisplayHandler",
-      "tags": "TableType#setDisplayHandler setDisplayHandler",
-      "summary": "",
-      "description": "Defines the function used to paginate data"
     },
     "module-datatable-cell.html": {
       "id": "module-datatable-cell.html",
