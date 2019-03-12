@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+		<title>datatable-pager</title>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="css/prism.min.css">
+		<link type="text/css" rel="stylesheet" href="css/template.min.css">
+			<link type="text/css" rel="stylesheet" href="./assets/additional-styles.css">
+			<style>
+				.page-header,
+				pre.code-toolbar > .toolbar:hover {
+					background-color: #2779bd;
+				}
+				.callout-primary,
+				.toc .nav > li > a:hover,
+				.toc .nav > li > a:focus,
+				.toc .nav > li.active > a,
+				.toc .nav > li.active > a:hover,
+				.toc .nav > li.active > a:focus,
+				pre.code-toolbar > .toolbar:hover {
+					border-left-color: #2779bd;
+				}
+				pre.code-toolbar > .toolbar:hover {
+					border-bottom-color: #2779bd;
+				}
+				.callout-primary h5,
+				.symbol-title.collapsible-symbol .toggle-icon,
+				.breadcrumb li a,
+				.toc .nav > li > a:hover,
+				.toc .nav > li > a:focus,
+				.toc .nav > li.active > a,
+				.toc .nav > li.active > a:hover,
+				.toc .nav > li.active > a:focus {
+					color: #2779bd;
+				}
+			</style>
+		<script type="text/javascript">
+			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"VueJS-Datatable","systemSummary":"A Vue.js component for filterable and paginated tables.","systemLogo":"","systemColor":"#2779bd","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":["./assets/additional-styles.css"],"scripts":["https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js","./assets/vuejs-datatable.js"],"monospaceLinks":false,"cleverLinks":false,"default":{"staticFiles":{"include":["./tutorials/assets"]}}};
+			window.DOCLET_TOC_ENABLED = true;
+			window.DOCLET_AFILTER_ENABLED = false;
+		</script>
+</head>
+<body>
+	<!-- start:navbar.hbs -->
+	<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="index.html">
+					VueJS-Datatable
+				</a>
+				<!-- displayed on small devices -->
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="topNavigation">
+				<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#DataFnParams">DataFnParams</a></li>
+											<li><a href="global.html#DisplayHandlerResult">DisplayHandlerResult</a></li>
+											<li><a href="global.html#SettingsProps">SettingsProps</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="Column.html">Column</a></li>
+											<li><a href="DatatableFactory.html">DatatableFactory</a></li>
+											<li><a href="Handler.html">Handler</a></li>
+											<li><a href="Settings.html">Settings</a></li>
+											<li><a href="TableType.html">TableType</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_module.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="module-datatable.html">datatable</a></li>
+											<li><a href="module-datatable-cell.html">datatable-cell</a></li>
+											<li><a href="module-datatable-pager.html">datatable-pager</a></li>
+											<li><a href="module-datatable-pager-button.html">datatable-pager-button</a></li>
+											<li><a href="module-datatable-pager-button.html">datatable-pager-button</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_tutorial.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="tutorial-ajax-data.html">Ajax table (via <code>data</code> function)</a></li>
+											<li><a href="tutorial-ajax-handler.html">Ajax table (with handler customization)</a></li>
+											<li><a href="tutorial-basic.html">Basic table</a></li>
+											<li><a href="tutorial-custom-template.html">Custom template</a></li>
+											<li><a href="tutorial-custom-theme.html">Custom theme</a></li>
+											<li><a href="tutorial-multiple-tables.html">Multiple tables</a></li>
+											<li><a href="tutorial-no-pager.html">No pager</a></li>
+											<li><a href="tutorial-pager-types.html">Pager types</a></li>
+									</ul>
+								</li>
+				</ul>
+					<!-- start:lunr-search-navbar.hbs -->
+					<form class="navbar-form navbar-right" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search" id="lunr-search-input">
+							<div class="input-group-btn">
+								<button class="btn btn-default" id="lunr-search-submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- start:lunr-search-navbar.hbs -->		</div>
+		</div>
+	</header>
+	<!-- end:navbar.hbs -->		<div class="page-header">
+			<div class="container">
+				<span class="kind">module</span>
+				<h1><span class="name">datatable-pager</span></h1>
+			</div>
+		</div>
+	<div class="container content">
+		<div class="row">
+			<div class="col-md-9 main-content">
+						<ol class="breadcrumb">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="list_module.html">Modules</a></li>
+							<li class="active">datatable-pager</li>
+						</ol>
+					<section>
+		<dl class="symbol">
+			<dt class="symbol-title "></dt>
+			<dd class="symbol-details ">
+				<div class="symbol-details-inner">
+					<div class="callout callout-primary"><h5>Description</h5>		<div class="description">The component that is used to manage & change pages on a datatable.</p></div></div> 
+					
+					
+					<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3>
+					<table data-jsdoc-vuejs="table-props">
+					    <thead>
+					    <tr>
+					        <th>Name</th>
+					        <th>Type</th>
+					        <th>Default value</th>
+					        <th>Required?</th>
+					        <th>Description</th>
+					    </tr>
+					    </thead>
+					    <tbody>
+					    
+					    <tr>
+					        <td><code>table</code></td>
+					        <td>string</td>
+					        <td><code>'default'</code></td>
+					        <td>No</td>
+					        <td>The id of the associated datatable.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>type</code></td>
+					        <td>'long'|'short'|'abbreviated'</td>
+					        <td><code>'long'</code></td>
+					        <td>No</td>
+					        <td>The kind of the pager</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>perPage</code></td>
+					        <td>number</td>
+					        <td><code>10</code></td>
+					        <td>No</td>
+					        <td>Max number of items to display.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>page</code></td>
+					        <td>number</td>
+					        <td><code>1</code></td>
+					        <td>No</td>
+					        <td>The page index to display</td>
+					    </tr>
+					    
+					    </tbody>
+					</table>
+					
+					
+					
+					<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3>
+					<table data-jsdoc-vuejs="table-data">
+					    <thead>
+					    <tr>
+					        <th>Name</th>
+					        <th>Type</th>
+					        <th>Default value</th>
+					        <th>Description</th>
+					    </tr>
+					    </thead>
+					    <tbody>
+					    
+					    <tr>
+					        <td><code>tableInstance</code></td>
+					        <td>datatable|null</td>
+					        <td>-</td>
+					        <td>Reference to the associated datatable through the datatable-pager#table prop.</td>
+					    </tr>
+					    
+					    </tbody>
+					</table>
+					
+					
+					
+					<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-computed">Computed</h3>
+					<table data-jsdoc-vuejs="table-computed">
+					    <thead>
+					    <tr>
+					        <th>Name</th>
+					        <th>Type</th>
+					        <th>Description</th>
+					    </tr>
+					    </thead>
+					    <tbody>
+					    
+					    <tr>
+					        <td><code>show</code></td>
+					        <td>boolean</td>
+					        <td>Returns `true` if the pager has an associated datatable with some rows.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>totalRows</code></td>
+					        <td>number</td>
+					        <td>The total number of rows in the associated datatable.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>paginationClass</code></td>
+					        <td>string</td>
+					        <td>HTML class on the wrapping `ul` around the pager buttons.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>disabledClass</code></td>
+					        <td>string</td>
+					        <td>HTML class to apply on disabled buttons. (unused).</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>previousLinkClasses</code></td>
+					        <td>string</td>
+					        <td>HTML class to apply on the previous page's button. (unused).</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>nextLinkClasses</code></td>
+					        <td>string</td>
+					        <td>HTML class to apply on the next page's button. (unused).</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>totalPages</code></td>
+					        <td>number</td>
+					        <td>The total number of pages in the associated datatable.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>previousIcon</code></td>
+					        <td>string</td>
+					        <td>HTML content of the previous page's button.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>nextIcon</code></td>
+					        <td>string</td>
+					        <td>HTML content of the next page's button.</td>
+					    </tr>
+					    
+					    <tr>
+					        <td><code>settings</code></td>
+					        <td>Settings</td>
+					        <td>Reference to the <a href="Settings.html">Settings</a> object linked to this pager type.</td>
+					    </tr>
+					    
+					    </tbody>
+					</table>
+					
+					
+					
+					
+					
+					<div class="container-overview"><div><p> 
+					</div>
+					</div>				</div>
+			</dd>
+		</dl>
+							<article class="secondary">
+									<h3>Methods</h3>
+									<dl class="symbol">
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="linkWithTable" class="function public"><span class="name">linkWithTable</span><span class="signature-params">( <span class="signature-param">tableName</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{boolean}</span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Link the pager with the table, assign to the table some properties, and trigger an event on the table.</div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>tableName</code></td>
+							<td><span class="param-type">string</span></td>
+							<td class="last">
+									The name of the table to bind the pager with.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"><span class="param-type">boolean</span></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description">`true` if the link is succesfull, or `false` if it could not find a table to associate with.</div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-warning"><h5>Fires</h5>		<form class="form-horizontal fires">
+							<div class="form-group">
+								<label class="col-sm-3 control-label fires-event">Datatable#table.event:pager-bound</label>
+								<div class="col-sm-9">
+									<div class="form-control-static fires-summary"></div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="vue-datatable-pager.vue.html">vue-datatable-pager.vue</a>, <a href="vue-datatable-pager.vue.html#line-198">line 198</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+											<hr/>
+											<dt class="symbol-title function public collapsible-symbol">
+			<h4 id="setPageNum" class="function public"><span class="name">setPageNum</span><span class="signature-params">( <span class="signature-param">pageIndex</span>&nbsp;)</span><span class="signature-type"> &rarr;&nbsp;{void}</span></h4>
+		</dt>
+<dd class="symbol-details function public  collapsible-symbol">
+	<div class="symbol-details-inner">
+			<div class="callout callout-primary"><h5>Description</h5>		<div class="description">Defines the page index to display.</div>
+			</div>			<div class="callout callout-info">
+				<h5>Parameters</h5>
+				<table class="params table table-striped">
+					<thead>
+					<tr>
+							<th>Name</th>
+						<th>Type</th>
+						<th class="last">Description</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+								<td><code>pageIndex</code></td>
+							<td><span class="param-type">number</span></td>
+							<td class="last">
+									The new page index.
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="callout callout-success"><h5>Returns</h5>		<form class="form-horizontal returns">
+							<div class="form-group">
+								<label class="col-sm-3 control-label returns-type"><span class="param-type">void</span></label>
+								<div class="col-sm-9">
+									<div class="form-control-static returns-description">Nothing.</div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-warning"><h5>Fires</h5>		<form class="form-horizontal fires">
+							<div class="form-group">
+								<label class="col-sm-3 control-label fires-event">event:change</label>
+								<div class="col-sm-9">
+									<div class="form-control-static fires-summary"></div>
+								</div>
+							</div>
+					</form>
+			</div>			<div class="callout callout-default"><h5>Details</h5>		<form class="form-horizontal details">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+							<!-- source -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Source</label>
+								<div class="col-sm-9">
+									<p class="form-control-static"><a href="vue-datatable-pager.vue.html">vue-datatable-pager.vue</a>, <a href="vue-datatable-pager.vue.html#line-217">line 217</a></p>
+								</div>
+							</div>
+			
+			
+			
+			
+					</form>
+			</div>	</div>
+</dd>
+									</dl>
+							</article>
+					</section>
+			</div>
+				<div class="col-md-3 side-content">
+					<nav class="toc hidden-print hidden-sm hidden-xs"></nav>
+				</div>
+		</div>
+	</div>
+	<footer>
+				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on 12th Mar 2019 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+	</footer>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/clipboard.min.js"></script>
+	<script src="js/prism.min.js"></script>
+	<script src="js/template.min.js"></script>
+		<!-- start:lunr-search-modal.hbs -->
+		<div class="modal fade" id="lunr-search-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Search results</h4>
+					</div>
+					<div class="modal-body" id="lunr-search-body">
+					</div>
+					<div class="modal-footer" id="lunr-search-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- end:lunr-search-modal.hbs -->		<script src="js/lunr.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js"></script>
+		<script src="./assets/vuejs-datatable.js"></script>
+	
+</body>
+</html>

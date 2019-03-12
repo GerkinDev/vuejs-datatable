@@ -1,0 +1,311 @@
+<!-- start:readme.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+		<title>Ajax table (with handler customization)</title>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="css/prism.min.css">
+		<link type="text/css" rel="stylesheet" href="css/template.min.css">
+			<link type="text/css" rel="stylesheet" href="./assets/additional-styles.css">
+			<style>
+				.page-header,
+				pre.code-toolbar > .toolbar:hover {
+					background-color: #2779bd;
+				}
+				.callout-primary,
+				.toc .nav > li > a:hover,
+				.toc .nav > li > a:focus,
+				.toc .nav > li.active > a,
+				.toc .nav > li.active > a:hover,
+				.toc .nav > li.active > a:focus,
+				pre.code-toolbar > .toolbar:hover {
+					border-left-color: #2779bd;
+				}
+				pre.code-toolbar > .toolbar:hover {
+					border-bottom-color: #2779bd;
+				}
+				.callout-primary h5,
+				.symbol-title.collapsible-symbol .toggle-icon,
+				.breadcrumb li a,
+				.toc .nav > li > a:hover,
+				.toc .nav > li > a:focus,
+				.toc .nav > li.active > a,
+				.toc .nav > li.active > a:hover,
+				.toc .nav > li.active > a:focus {
+					color: #2779bd;
+				}
+			</style>
+		<script type="text/javascript">
+			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"VueJS-Datatable","systemSummary":"A Vue.js component for filterable and paginated tables.","systemLogo":"","systemColor":"#2779bd","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":["./assets/additional-styles.css"],"scripts":["https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js","./assets/vuejs-datatable.js"],"monospaceLinks":false,"cleverLinks":false,"default":{"staticFiles":{"include":["./tutorials/assets"]}}};
+			window.DOCLET_TOC_ENABLED = true;
+			window.DOCLET_AFILTER_ENABLED = false;
+		</script>
+</head>
+<body>
+	<!-- start:navbar.hbs -->
+	<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="index.html">
+					VueJS-Datatable
+				</a>
+				<!-- displayed on small devices -->
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="topNavigation">
+				<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#DataFnParams">DataFnParams</a></li>
+											<li><a href="global.html#DisplayHandlerResult">DisplayHandlerResult</a></li>
+											<li><a href="global.html#SettingsProps">SettingsProps</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="Column.html">Column</a></li>
+											<li><a href="DatatableFactory.html">DatatableFactory</a></li>
+											<li><a href="Handler.html">Handler</a></li>
+											<li><a href="Settings.html">Settings</a></li>
+											<li><a href="TableType.html">TableType</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_module.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="module-datatable.html">datatable</a></li>
+											<li><a href="module-datatable-cell.html">datatable-cell</a></li>
+											<li><a href="module-datatable-pager.html">datatable-pager</a></li>
+											<li><a href="module-datatable-pager-button.html">datatable-pager-button</a></li>
+											<li><a href="module-datatable-pager-button.html">datatable-pager-button</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_tutorial.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="tutorial-ajax-data.html">Ajax table (via <code>data</code> function)</a></li>
+											<li><a href="tutorial-ajax-handler.html">Ajax table (with handler customization)</a></li>
+											<li><a href="tutorial-basic.html">Basic table</a></li>
+											<li><a href="tutorial-custom-template.html">Custom template</a></li>
+											<li><a href="tutorial-custom-theme.html">Custom theme</a></li>
+											<li><a href="tutorial-multiple-tables.html">Multiple tables</a></li>
+											<li><a href="tutorial-no-pager.html">No pager</a></li>
+											<li><a href="tutorial-pager-types.html">Pager types</a></li>
+									</ul>
+								</li>
+				</ul>
+					<!-- start:lunr-search-navbar.hbs -->
+					<form class="navbar-form navbar-right" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search" id="lunr-search-input">
+							<div class="input-group-btn">
+								<button class="btn btn-default" id="lunr-search-submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- start:lunr-search-navbar.hbs -->		</div>
+		</div>
+	</header>
+	<!-- end:navbar.hbs -->		<div class="page-header">
+			<div class="container">
+				<span class="kind">tutorial</span>
+				<h1><span class="title">Ajax table (with handler customization)</span></h1>
+			</div>
+		</div>
+	<div class="container content">
+		<div class="row">
+			<div class="col-md-9 main-content">
+						<ol class="breadcrumb">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="list_tutorial.html">Tutorials</a></li>
+							<li class="active">Ajax table (with handler customization)</li>
+						</ol>
+		<section class="tutorial-section">
+			<article><section>
+	<h2>Introduction</h2>
+	<article>
+		<p>You can create a custom <a href="./TableType.html" target="_blank">Table Type</a> dedicated to AJAX-sourced data. This approach has the advantage of being totally reuasble, while the <a href="./tutorial-ajax-data.html" target="_blank">AJAX via data function</a> may be less reuasble across multiple table instances.</p>
+		<p>The example bellow reuses 2 times the same logic, changing only the <code>data</code> parameter to a different endpoint.</p>
+		
+		<div class="alert alert-info">
+			<p><i class="glyphicon glyphicon-info-sign"></i> If you want to customize the behavior of your table for a <b>single use</b>, you may want to check the use of <a href="./tutorial-ajax-data.html" target="_blank">the <code>data</code> function</a>.</p>
+		</div>
+	</article>
+</section>
+
+<section>
+	<h2>Demo</h2>
+	<div id="demo-app">
+		<h3>Upcoming launches</h3>
+		<div class="row">
+			<div class="col-xs-12 table-responsive">
+				<ajaxtable name="upcoming" :columns="columns" :data="apiUrlUpcoming"></ajaxtable>
+				<ajaxtable-pager table="upcoming" v-model="page"></ajaxtable-pager>
+			</div>
+		</div>
+		<h3>Past launches</h3>
+		<div class="row">
+			<div class="col-xs-12 table-responsive">
+				<ajaxtable name="past" :columns="columns" :data="apiUrlPast"></ajaxtable>
+				<ajaxtable-pager table="past" v-model="page"></ajaxtable-pager>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2>Code</h2>
+	<div id="code-samples">
+		<article>
+			<h3>Javascript</h3>
+			<pre><code class="js language-js" id="code-area">import { makeQueryStringFromObj, formatUtcDate } from '../utils.js';
+
+/* globals VuejsDatatable, axios, Vue */
+
+VuejsDatatable.registerTableType( 'ajaxtable', tableType =&gt; {
+	tableType
+		.setFilterHandler( ( source, filter, columns ) =&gt; ( {
+			// See https://documenter.getpostman.com/view/2025350/RWaEzAiG#json-field-masking
+			filter: columns.map( col =&gt; col.field.replace( /\./g, '/' ) ).join( ',' ),
+		} ) )
+		.setSortHandler( ( endpointDesc, sortColumn, sortDir ) =&gt; 
+			Object.assign( {}, endpointDesc, sortColumn &amp;&amp; sortDir ? {
+				sort:  sortColumn.field.replace( /\./g, '/' ),
+				order: sortDir, 
+			} : {} ) )
+		.setPaginateHandler( ( endpointDesc, perPage, pageIndex ) =&gt; 
+			Object.assign( {}, endpointDesc, {
+				offset: ( ( pageIndex - 1 ) * perPage ) || 0,
+				limit:  perPage || 10, 
+			} ) )
+		// Alias our process steps, because the source, here, is our API url, and paged is the complete query string
+		.setDisplayHandler( async ( { source: baseEndPoint, paged: endpointDesc } ) =&gt; {
+			const url = `${ baseEndPoint }?${ makeQueryStringFromObj( endpointDesc ) }`;
+
+			const {
+				// Data to display
+				data,
+				// Get the total number of matched items
+				headers: {'spacex-api-count': totalCount}, 
+			} = await axios.get( url );
+			
+			return {
+				rows:          data,
+				totalRowCount: totalCount,
+			};
+		} );
+} );
+
+new Vue( {
+	el:   '#demo-app',
+	data: {
+		columns: [
+			{ label: 'Flight number', field: 'flight_number' },
+			{ label: 'Mission name', field: 'mission_name' },
+			{ label: 'Launch date', field: 'launch_date_utc', representedAs: row =&gt; formatUtcDate( new Date( row.launch_date_utc ) ) },
+			{ label: 'Rocket type', field: 'rocket.rocket_name', sortable: false },
+			{ label: 'Launch site', field: 'launch_site.site_name_long', sortable: false },
+			{
+				label:         'Mission patch',
+				field:         'links.mission_patch_small',
+				representedAs: row =&gt; row.links.mission_patch_small ?
+					`&lt;img src="${ row.links.mission_patch_small }" alt="${ row.mission_name } patch" style="height: 6em;"/&gt;` :
+					`&lt;img src="https://www.gvmc.gov.in/wss/images/noimageavailable.png" alt="No patch for mission &amp;quot;${ row.mission_name }&amp;quot; available" style="height: 6em;"/&gt;`,
+				interpolate: true,
+				sortable:    false,
+			},
+			{
+				label:         'Reddit link',
+				field:         'links.reddit_campaign',
+				representedAs: row =&gt; `&lt;a href="${ row.links.reddit_campaign }"&gt;${ row.mission_name } Reddit thread&lt;/a&gt;`,
+				interpolate:   true,
+				sortable:      false,
+			},
+		],
+		page:           1,
+		apiUrlUpcoming: 'https://api.spacexdata.com/v3/launches/upcoming',
+		apiUrlPast:     'https://api.spacexdata.com/v3/launches/past',
+	},
+} );
+</code></pre>
+		</article>
+		<article>
+			<h3>HTML</h3>
+			<pre><code class="html language-html" id="template-area">&lt;div id="demo-app"&gt;
+		&lt;h3&gt;Upcoming launches&lt;/h3&gt;
+		&lt;div class="row"&gt;
+			&lt;div class="col-xs-12 table-responsive"&gt;
+				&lt;ajaxtable name="upcoming" :columns="columns" :data="apiUrlUpcoming"&gt;&lt;/ajaxtable&gt;
+				&lt;ajaxtable-pager table="upcoming" v-model="page"&gt;&lt;/ajaxtable-pager&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;h3&gt;Past launches&lt;/h3&gt;
+		&lt;div class="row"&gt;
+			&lt;div class="col-xs-12 table-responsive"&gt;
+				&lt;ajaxtable name="past" :columns="columns" :data="apiUrlPast"&gt;&lt;/ajaxtable&gt;
+				&lt;ajaxtable-pager table="past" v-model="page"&gt;&lt;/ajaxtable-pager&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;</code></pre>
+		</article>
+	</div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer=""></script>
+
+<script id="demo-script">!function(){"use strict";function t(t,e){return t(e={exports:{}},e.exports),e.exports}t(function(t){!function(e){var n,r=Object.prototype,o=r.hasOwnProperty,i="function"==typeof Symbol?Symbol:{},a=i.iterator||"@@iterator",c=i.asyncIterator||"@@asyncIterator",u=i.toStringTag||"@@toStringTag",s=e.regeneratorRuntime;if(s)t.exports=s;else{(s=e.regeneratorRuntime=t.exports).wrap=w;var l="suspendedStart",f="suspendedYield",p="executing",h="completed",y={},d={};d[a]=function(){return this};var v=Object.getPrototypeOf,g=v&&v(v(P([])));g&&g!==r&&o.call(g,a)&&(d=g);var m=S.prototype=_.prototype=Object.create(d);L.prototype=m.constructor=S,S.constructor=L,S[u]=L.displayName="GeneratorFunction",s.isGeneratorFunction=function(t){var e="function"==typeof t&&t.constructor;return!!e&&(e===L||"GeneratorFunction"===(e.displayName||e.name))},s.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,S):(t.__proto__=S,u in t||(t[u]="GeneratorFunction")),t.prototype=Object.create(m),t},s.awrap=function(t){return{__await:t}},O(x.prototype),x.prototype[c]=function(){return this},s.AsyncIterator=x,s.async=function(t,e,n,r){var o=new x(w(t,e,n,r));return s.isGeneratorFunction(e)?o:o.next().then(function(t){return t.done?t.value:o.next()})},O(m),m[u]="Generator",m[a]=function(){return this},m.toString=function(){return"[object Generator]"},s.keys=function(t){var e=[];for(var n in t)e.push(n);return e.reverse(),function n(){for(;e.length;){var r=e.pop();if(r in t)return n.value=r,n.done=!1,n}return n.done=!0,n}},s.values=P,k.prototype={constructor:k,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=n,this.done=!1,this.delegate=null,this.method="next",this.arg=n,this.tryEntries.forEach(T),!t)for(var e in this)"t"===e.charAt(0)&&o.call(this,e)&&!isNaN(+e.slice(1))&&(this[e]=n)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(t){if(this.done)throw t;var e=this;function r(r,o){return c.type="throw",c.arg=t,e.next=r,o&&(e.method="next",e.arg=n),!!o}for(var i=this.tryEntries.length-1;i>=0;--i){var a=this.tryEntries[i],c=a.completion;if("root"===a.tryLoc)return r("end");if(a.tryLoc<=this.prev){var u=o.call(a,"catchLoc"),s=o.call(a,"finallyLoc");if(u&&s){if(this.prev<a.catchLoc)return r(a.catchLoc,!0);if(this.prev<a.finallyLoc)return r(a.finallyLoc)}else if(u){if(this.prev<a.catchLoc)return r(a.catchLoc,!0)}else{if(!s)throw new Error("try statement without catch or finally");if(this.prev<a.finallyLoc)return r(a.finallyLoc)}}}},abrupt:function(t,e){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc<=this.prev&&o.call(r,"finallyLoc")&&this.prev<r.finallyLoc){var i=r;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=e&&e<=i.finallyLoc&&(i=null);var a=i?i.completion:{};return a.type=t,a.arg=e,i?(this.method="next",this.next=i.finallyLoc,y):this.complete(a)},complete:function(t,e){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&e&&(this.next=e),y},finish:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.finallyLoc===t)return this.complete(n.completion,n.afterLoc),T(n),y}},catch:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.tryLoc===t){var r=n.completion;if("throw"===r.type){var o=r.arg;T(n)}return o}}throw new Error("illegal catch attempt")},delegateYield:function(t,e,r){return this.delegate={iterator:P(t),resultName:e,nextLoc:r},"next"===this.method&&(this.arg=n),y}}}function w(t,e,n,r){var o=e&&e.prototype instanceof _?e:_,i=Object.create(o.prototype),a=new k(r||[]);return i._invoke=function(t,e,n){var r=l;return function(o,i){if(r===p)throw new Error("Generator is already running");if(r===h){if("throw"===o)throw i;return M()}for(n.method=o,n.arg=i;;){var a=n.delegate;if(a){var c=E(a,n);if(c){if(c===y)continue;return c}}if("next"===n.method)n.sent=n._sent=n.arg;else if("throw"===n.method){if(r===l)throw r=h,n.arg;n.dispatchException(n.arg)}else"return"===n.method&&n.abrupt("return",n.arg);r=p;var u=b(t,e,n);if("normal"===u.type){if(r=n.done?h:f,u.arg===y)continue;return{value:u.arg,done:n.done}}"throw"===u.type&&(r=h,n.method="throw",n.arg=u.arg)}}}(t,n,a),i}function b(t,e,n){try{return{type:"normal",arg:t.call(e,n)}}catch(t){return{type:"throw",arg:t}}}function _(){}function L(){}function S(){}function O(t){["next","throw","return"].forEach(function(e){t[e]=function(t){return this._invoke(e,t)}})}function x(t){var e;this._invoke=function(n,r){function i(){return new Promise(function(e,i){!function e(n,r,i,a){var c=b(t[n],t,r);if("throw"!==c.type){var u=c.arg,s=u.value;return s&&"object"==typeof s&&o.call(s,"__await")?Promise.resolve(s.__await).then(function(t){e("next",t,i,a)},function(t){e("throw",t,i,a)}):Promise.resolve(s).then(function(t){u.value=t,i(u)},a)}a(c.arg)}(n,r,e,i)})}return e=e?e.then(i,i):i()}}function E(t,e){var r=t.iterator[e.method];if(r===n){if(e.delegate=null,"throw"===e.method){if(t.iterator.return&&(e.method="return",e.arg=n,E(t,e),"throw"===e.method))return y;e.method="throw",e.arg=new TypeError("The iterator does not provide a 'throw' method")}return y}var o=b(r,t.iterator,e.arg);if("throw"===o.type)return e.method="throw",e.arg=o.arg,e.delegate=null,y;var i=o.arg;return i?i.done?(e[t.resultName]=i.value,e.next=t.nextLoc,"return"!==e.method&&(e.method="next",e.arg=n),e.delegate=null,y):i:(e.method="throw",e.arg=new TypeError("iterator result is not an object"),e.delegate=null,y)}function j(t){var e={tryLoc:t[0]};1 in t&&(e.catchLoc=t[1]),2 in t&&(e.finallyLoc=t[2],e.afterLoc=t[3]),this.tryEntries.push(e)}function T(t){var e=t.completion||{};e.type="normal",delete e.arg,t.completion=e}function k(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(j,this),this.reset(!0)}function P(t){if(t){var e=t[a];if(e)return e.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,i=function e(){for(;++r<t.length;)if(o.call(t,r))return e.value=t[r],e.done=!1,e;return e.value=n,e.done=!0,e};return i.next=i}}return{next:M}}function M(){return{value:n,done:!0}}}(function(){return this}()||Function("return this")())});function e(t,e,n,r,o,i,a){try{var c=t[i](a),u=c.value}catch(t){return void n(t)}c.done?e(u):Promise.resolve(u).then(r,o)}function n(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){var n=[],r=!0,o=!1,i=void 0;try{for(var a,c=t[Symbol.iterator]();!(r=(a=c.next()).done)&&(n.push(a.value),!e||n.length!==e);r=!0);}catch(t){o=!0,i=t}finally{try{r||null==c.return||c.return()}finally{if(o)throw i}}return n}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}var r=t(function(t){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)}),o=t(function(t){var e=t.exports={version:"2.5.7"};"number"==typeof __e&&(__e=e)}),i=(o.version,function(t){return"object"==typeof t?null!==t:"function"==typeof t}),a=function(t){if(!i(t))throw TypeError(t+" is not an object!");return t},c=function(t){try{return!!t()}catch(t){return!0}},u=!c(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a}),s=r.document,l=i(s)&&i(s.createElement),f=function(t){return l?s.createElement(t):{}},p=!u&&!c(function(){return 7!=Object.defineProperty(f("div"),"a",{get:function(){return 7}}).a}),h=Object.defineProperty,y={f:u?Object.defineProperty:function(t,e,n){if(a(t),e=function(t,e){if(!i(t))return t;var n,r;if(e&&"function"==typeof(n=t.toString)&&!i(r=n.call(t)))return r;if("function"==typeof(n=t.valueOf)&&!i(r=n.call(t)))return r;if(!e&&"function"==typeof(n=t.toString)&&!i(r=n.call(t)))return r;throw TypeError("Can't convert object to primitive value")}(e,!0),a(n),p)try{return h(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return"value"in n&&(t[e]=n.value),t}},d=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}},v=u?function(t,e,n){return y.f(t,e,d(1,n))}:function(t,e,n){return t[e]=n,t},g={}.hasOwnProperty,m=function(t,e){return g.call(t,e)},w=0,b=Math.random(),_=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++w+b).toString(36))},L=t(function(t){var e=_("src"),n=Function.toString,i=(""+n).split("toString");o.inspectSource=function(t){return n.call(t)},(t.exports=function(t,n,o,a){var c="function"==typeof o;c&&(m(o,"name")||v(o,"name",n)),t[n]!==o&&(c&&(m(o,e)||v(o,e,t[n]?""+t[n]:i.join(String(n)))),t===r?t[n]=o:a?t[n]?t[n]=o:v(t,n,o):(delete t[n],v(t,n,o)))})(Function.prototype,"toString",function(){return"function"==typeof this&&this[e]||n.call(this)})}),S=function(t,e,n){if(function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!")}(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,o){return t.call(e,n,r,o)}}return function(){return t.apply(e,arguments)}},O=function(t,e,n){var i,a,c,u,s=t&O.F,l=t&O.G,f=t&O.S,p=t&O.P,h=t&O.B,y=l?r:f?r[e]||(r[e]={}):(r[e]||{}).prototype,d=l?o:o[e]||(o[e]={}),g=d.prototype||(d.prototype={});for(i in l&&(n=e),n)c=((a=!s&&y&&void 0!==y[i])?y:n)[i],u=h&&a?S(c,r):p&&"function"==typeof c?S(Function.call,c):c,y&&L(y,i,c,t&O.U),d[i]!=c&&v(d,i,u),p&&g[i]!=c&&(g[i]=c)};r.core=o,O.F=1,O.G=2,O.S=4,O.P=8,O.B=16,O.W=32,O.U=64,O.R=128;var x,E=O,j={}.toString,T=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==function(t){return j.call(t).slice(8,-1)}(t)?t.split(""):Object(t)},k=function(t){if(null==t)throw TypeError("Can't call method on  "+t);return t},P=function(t){return T(k(t))},M=Math.ceil,C=Math.floor,F=function(t){return isNaN(t=+t)?0:(t>0?C:M)(t)},R=Math.min,A=Math.max,G=Math.min,U=t(function(t){var e=r["__core-js_shared__"]||(r["__core-js_shared__"]={});(t.exports=function(t,n){return e[t]||(e[t]=void 0!==n?n:{})})("versions",[]).push({version:o.version,mode:"global",copyright:"© 2018 Denis Pushkarev (zloirock.ru)"})}),I=U("keys"),N=function(t){return I[t]||(I[t]=_(t))},H=(x=!1,function(t,e,n){var r,o,i=P(t),a=(r=i.length)>0?R(F(r),9007199254740991):0,c=function(t,e){return(t=F(t))<0?A(t+e,0):G(t,e)}(n,a);if(x&&e!=e){for(;a>c;)if((o=i[c++])!=o)return!0}else for(;a>c;c++)if((x||c in i)&&i[c]===e)return x||c||0;return!x&&-1}),D=N("IE_PROTO"),V="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(","),q=Object.keys||function(t){return function(t,e){var n,r=P(t),o=0,i=[];for(n in r)n!=D&&m(r,n)&&i.push(n);for(;e.length>o;)m(r,n=e[o++])&&(~H(i,n)||i.push(n));return i}(t,V)},B={f:Object.getOwnPropertySymbols},Y={f:{}.propertyIsEnumerable},z=function(t){return Object(k(t))},W=Object.assign,J=!W||c(function(){var t={},e={},n=Symbol(),r="abcdefghijklmnopqrst";return t[n]=7,r.split("").forEach(function(t){e[t]=t}),7!=W({},t)[n]||Object.keys(W({},e)).join("")!=r})?function(t,e){for(var n=z(t),r=arguments.length,o=1,i=B.f,a=Y.f;r>o;)for(var c,u=T(arguments[o++]),s=i?q(u).concat(i(u)):q(u),l=s.length,f=0;l>f;)a.call(u,c=s[f++])&&(n[c]=u[c]);return n}:W;E(E.S+E.F,"Object",{assign:J});var K,Q,X,Z,$,tt,et,nt=t(function(t){var e=U("wks"),n=r.Symbol,o="function"==typeof n;(t.exports=function(t){return e[t]||(e[t]=o&&n[t]||(o?n:_)("Symbol."+t))}).store=e});Q=2,X=function(t,e,n){return[function(r,o){var i=t(this),a=null==r?void 0:r[e];return void 0!==a?a.call(r,i,o):n.call(String(i),r,o)},n]},Z=nt(K="replace"),$=X(k,Z,""[K]),tt=$[0],et=$[1],c(function(){var t={};return t[Z]=function(){return 7},7!=""[K](t)})&&(L(String.prototype,K,tt),v(RegExp.prototype,Z,2==Q?function(t,e){return et.call(t,this,e)}:function(t){return et.call(t,this)}));var rt=nt("unscopables"),ot=Array.prototype;null==ot[rt]&&v(ot,rt,{});var it=function(t){ot[rt][t]=!0},at=function(t,e){return{value:e,done:!!t}},ct={},ut=u?Object.defineProperties:function(t,e){a(t);for(var n,r=q(e),o=r.length,i=0;o>i;)y.f(t,n=r[i++],e[n]);return t},st=r.document,lt=st&&st.documentElement,ft=N("IE_PROTO"),pt=function(){},ht=function(){var t,e=f("iframe"),n=V.length;for(e.style.display="none",lt.appendChild(e),e.src="javascript:",(t=e.contentWindow.document).open(),t.write("<script>document.F=Object<\/script>"),t.close(),ht=t.F;n--;)delete ht.prototype[V[n]];return ht()},yt=Object.create||function(t,e){var n;return null!==t?(pt.prototype=a(t),n=new pt,pt.prototype=null,n[ft]=t):n=ht(),void 0===e?n:ut(n,e)},dt=y.f,vt=nt("toStringTag"),gt=function(t,e,n){t&&!m(t=n?t:t.prototype,vt)&&dt(t,vt,{configurable:!0,value:e})},mt={};v(mt,nt("iterator"),function(){return this});var wt=function(t,e,n){t.prototype=yt(mt,{next:d(1,n)}),gt(t,e+" Iterator")},bt=N("IE_PROTO"),_t=Object.prototype,Lt=Object.getPrototypeOf||function(t){return t=z(t),m(t,bt)?t[bt]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?_t:null},St=nt("iterator"),Ot=!([].keys&&"next"in[].keys()),xt=function(){return this},Et=function(t,e,n,r,o,i,a){wt(n,e,r);var c,u,s,l=function(t){if(!Ot&&t in y)return y[t];switch(t){case"keys":case"values":return function(){return new n(this,t)}}return function(){return new n(this,t)}},f=e+" Iterator",p="values"==o,h=!1,y=t.prototype,d=y[St]||y["@@iterator"]||o&&y[o],g=d||l(o),m=o?p?l("entries"):g:void 0,w="Array"==e&&y.entries||d;if(w&&(s=Lt(w.call(new t)))!==Object.prototype&&s.next&&(gt(s,f,!0),"function"!=typeof s[St]&&v(s,St,xt)),p&&d&&"values"!==d.name&&(h=!0,g=function(){return d.call(this)}),(Ot||h||!y[St])&&v(y,St,g),ct[e]=g,ct[f]=xt,o)if(c={values:p?g:l("values"),keys:i?g:l("keys"),entries:m},a)for(u in c)u in y||L(y,u,c[u]);else E(E.P+E.F*(Ot||h),e,c);return c}(Array,"Array",function(t,e){this._t=P(t),this._i=0,this._k=e},function(){var t=this._t,e=this._k,n=this._i++;return!t||n>=t.length?(this._t=void 0,at(1)):at(0,"keys"==e?n:"values"==e?t[n]:[n,t[n]])},"values");ct.Arguments=ct.Array,it("keys"),it("values"),it("entries");for(var jt=nt("iterator"),Tt=nt("toStringTag"),kt=ct.Array,Pt={CSSRuleList:!0,CSSStyleDeclaration:!1,CSSValueList:!1,ClientRectList:!1,DOMRectList:!1,DOMStringList:!1,DOMTokenList:!0,DataTransferItemList:!1,FileList:!1,HTMLAllCollection:!1,HTMLCollection:!1,HTMLFormElement:!1,HTMLSelectElement:!1,MediaList:!0,MimeTypeArray:!1,NamedNodeMap:!1,NodeList:!0,PaintRequestList:!1,Plugin:!1,PluginArray:!1,SVGLengthList:!1,SVGNumberList:!1,SVGPathSegList:!1,SVGPointList:!1,SVGStringList:!1,SVGTransformList:!1,SourceBufferList:!1,StyleSheetList:!0,TextTrackCueList:!1,TextTrackList:!1,TouchList:!1},Mt=q(Pt),Ct=0;Ct<Mt.length;Ct++){var Ft,Rt=Mt[Ct],At=Pt[Rt],Gt=r[Rt],Ut=Gt&&Gt.prototype;if(Ut&&(Ut[jt]||v(Ut,jt,kt),Ut[Tt]||v(Ut,Tt,Rt),ct[Rt]=kt,At))for(Ft in Et)Ut[Ft]||L(Ut,Ft,Et[Ft],!0)}var It,Nt=Y.f,Ht=(It=!0,function(t){for(var e,n=P(t),r=q(n),o=r.length,i=0,a=[];o>i;)Nt.call(n,e=r[i++])&&a.push(It?[e,n[e]]:n[e]);return a});E(E.S,"Object",{entries:function(t){return Ht(t)}});E(E.P,"String",{repeat:function(t){var e=String(k(this)),n="",r=F(t);if(r<0||r==1/0)throw RangeError("Count can't be negative");for(;r>0;(r>>>=1)&&(e+=e))1&r&&(n+=e);return n}});var Dt=function(t,e){return"0".repeat(e-"".concat(t).length)+t},Vt=!1,qt=function(){Vt||(Vt=!0,VuejsDatatable.registerTableType("ajaxtable",function(t){t.setFilterHandler(function(t,e,n){return{filter:n.map(function(t){return t.field.replace(/\./g,"/")}).join(",")}}).setSortHandler(function(t,e,n){return Object.assign({},t,e&&n?{sort:e.field.replace(/\./g,"/"),order:n}:{})}).setPaginateHandler(function(t,e,n){return Object.assign({},t,{offset:(n-1)*e||0,limit:e||10})}).setDisplayHandler(function(){var t,r=(t=regeneratorRuntime.mark(function t(e){var r,o,i,a,c,u;return regeneratorRuntime.wrap(function(t){for(;;)switch(t.prev=t.next){case 0:return r=e.source,o=e.paged,i="".concat(r,"?").concat((s=o,Object.entries(s).map(function(t){var e=n(t,2),r=e[0],o=e[1];return"".concat(encodeURIComponent(r),"=").concat(encodeURIComponent(o))}).join("&"))),t.next=4,axios.get(i);case 4:return a=t.sent,c=a.data,u=a.headers["spacex-api-count"],t.abrupt("return",{rows:c,totalRowCount:u});case 8:case"end":return t.stop()}var s},t,this)}),function(){var n=this,r=arguments;return new Promise(function(o,i){var a=t.apply(n,r);function c(t){e(a,o,i,c,u,"next",t)}function u(t){e(a,o,i,c,u,"throw",t)}c(void 0)})});return function(t){return r.apply(this,arguments)}}())}),new Vue({el:"#demo-app",data:{columns:[{label:"Flight number",field:"flight_number"},{label:"Mission name",field:"mission_name"},{label:"Launch date",field:"launch_date_utc",representedAs:function(t){return e=new Date(t.launch_date_utc),n="".concat(Dt(e.getUTCMonth()+1,2),"/").concat(Dt(e.getUTCDate(),2),"/").concat(Dt(e.getUTCFullYear(),4)),r=0===e.getUTCHours()||e.getUTCHours()<12?"am":"pm",o=e.getUTCHours()%12?e.getUTCHours()%12:12,i="".concat(Dt(o,2),":").concat(Dt(e.getUTCMinutes(),2)).concat(r," UTC"),"".concat(n," ").concat(i);var e,n,r,o,i}},{label:"Rocket type",field:"rocket.rocket_name",sortable:!1},{label:"Launch site",field:"launch_site.site_name_long",sortable:!1},{label:"Mission patch",field:"links.mission_patch_small",representedAs:function(t){return t.links.mission_patch_small?'<img src="'.concat(t.links.mission_patch_small,'" alt="').concat(t.mission_name,' patch" style="height: 6em;"/>'):'<img src="https://www.gvmc.gov.in/wss/images/noimageavailable.png" alt="No patch for mission &quot;'.concat(t.mission_name,'&quot; available" style="height: 6em;"/>')},interpolate:!0,sortable:!1},{label:"Reddit link",field:"links.reddit_campaign",representedAs:function(t){return'<a href="'.concat(t.links.reddit_campaign,'">').concat(t.mission_name," Reddit thread</a>")},interpolate:!0,sortable:!1}],page:1,apiUrlUpcoming:"https://api.spacexdata.com/v3/launches/upcoming",apiUrlPast:"https://api.spacexdata.com/v3/launches/past"}}))};document.addEventListener&&document.addEventListener("DOMContentLoaded",qt,!1),window.addEventListener&&window.addEventListener("load",qt,!1),document.attachEvent&&document.attachEvent("onreadystatechange",qt),window.attachEvent&&window.attachEvent("onload",qt)}();
+</script>
+</article>
+		</section>
+			</div>
+				<div class="col-md-3 side-content">
+					<nav class="toc hidden-print hidden-sm hidden-xs"></nav>
+				</div>
+		</div>
+	</div>
+	<footer>
+				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on 12th Mar 2019 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+	</footer>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/clipboard.min.js"></script>
+	<script src="js/prism.min.js"></script>
+	<script src="js/template.min.js"></script>
+		<!-- start:lunr-search-modal.hbs -->
+		<div class="modal fade" id="lunr-search-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Search results</h4>
+					</div>
+					<div class="modal-body" id="lunr-search-body">
+					</div>
+					<div class="modal-footer" id="lunr-search-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- end:lunr-search-modal.hbs -->		<script src="js/lunr.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js"></script>
+		<script src="./assets/vuejs-datatable.js"></script>
+	
+</body>
+</html>
+<!-- end:readme.hbs -->
