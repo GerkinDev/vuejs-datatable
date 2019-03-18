@@ -61,3 +61,14 @@
 	color: inherit;
 	background: none;
 }
+
+
+
+
+dl.inlined-elements > div > dt,
+dl.inlined-elements > div > dd{
+    display: inline-block;
+}
+dl.inlined-elements > div > dt::after{
+    content: " :\00A0";
+}

@@ -1,8 +1,6 @@
-vuejs-datatable
-===
+# vuejs-datatable
 
-A VueJS plugin to manage data tables
----
+> A VueJS plugin to manage data tables
 
 Allows for quick and easy setup of filterable, sortable, and paginated tables. Currently supports Vue.js ^2.4.
 
@@ -41,7 +39,7 @@ yarn add vuejs-datatable
 
 #### Use the ESM build
 
-> The [*ESM*](https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358) build (**E**cma**S**cript **M**odule) implies that you target browsers that support *ESM* **OR** you use a bundler, like [*webpack*](https://webpack.js.org/), [*rollup.js*](https://rollupjs.org/guide/en) or [*Parcel*](https://parceljs.org/).
+> The [*ESM*](https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358) build (**E**cma**S**cript **M**odule) implies that your target browsers supports *ESM* **OR** you use a bundler, like [*webpack*](https://webpack.js.org/), [*rollup.js*](https://rollupjs.org/guide/en) or [*Parcel*](https://parceljs.org/).
 
 Import & register the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html) in Vue:
 
@@ -56,7 +54,7 @@ Check out [*how to customize table types*](#customize-the-datatable) to see some
 
 #### Use the IIFE build
 
-> The [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) build (**I**mmediately **I**nvoked **F**unction **E**xpression) should be prefered only for small applications without bundlers, or if you privilegiate the use of a *CDN*
+> The [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) build (**I**mmediately **I**nvoked **F**unction **E**xpression) should be prefered only for small applications without bundlers, or if you privilegiate the use of a *CDN*.
 
 In your HTML, load the *IIFE* build directly, if possible right before the closing `</body>` tag. You **must** make sure that the loading order is preserved, like below.
 
@@ -90,24 +88,24 @@ new Vue({
         columns: [
             {label: 'id', field: 'id'},
             {label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
-            {label: 'First Name', field: 'user.first_name'},
-            {label: 'Last Name', field: 'user.last_name'},
+            {label: 'First Name', field: 'user.firstName'},
+            {label: 'Last Name', field: 'user.lastName'},
             {label: 'Email', field: 'user.email'},
             {label: 'address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${row.state}`, interpolate: true}
         ],
         rows: [
             //...
             {
-                "id": 1,
-                "user": {
-                    "username": "dprice0",
-                    "first_name": "Daniel",
-                    "last_name": "Price",
-                    "email": "dprice0@blogs.com"
+                id: 1,
+                user: {
+                    username: "dprice0",
+                    firstName: "Daniel",
+                    lastName: "Price",
+                    email: "dprice0@blogs.com"
                 },
-                "address": "3 Toban Park",
-                "city": "Pocatello",
-                "state": "Idaho"
+                address: "3 Toban Park",
+                city: "Pocatello",
+                state: "Idaho"
             }
             //...
         ]

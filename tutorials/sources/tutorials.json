@@ -22,5 +22,8 @@
     },
     "pager-types": {
         "title": "Pager types"
+    },
+    "limit-rows-processing": {
+        "title": "Limit rows processing"
     }
 }
