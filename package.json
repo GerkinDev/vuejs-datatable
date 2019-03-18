@@ -73,6 +73,7 @@
         "rollup-plugin-babel": "^4.0.3",
         "rollup-plugin-commonjs": "^9.1.8",
         "rollup-plugin-json": "^4.0.0",
+        "rollup-plugin-jscc": "^1.0.0",
         "rollup-plugin-license": "^0.8.1",
         "rollup-plugin-node-globals": "^1.4.0",
         "rollup-plugin-node-resolve": "^4.0.0",

@@ -4,6 +4,7 @@ const fsWithCallbacks = require( 'fs' );
 const { readFile, writeFile, unlink, mkdir } = fsWithCallbacks.promises;
 const existsSync = fsWithCallbacks.existsSync;
 const { resolve, isAbsolute, dirname, basename, relative, join } = require( 'path' );
+const jscc = require( 'rollup-plugin-jscc' );
 
 module.exports.__dirname = __dirname;
 
@@ -68,16 +69,30 @@ module.exports.rollupize = async filePath => {
 	await writeFile( tempFile, wrapScript( fileContentRelative ) );
 	const plugins = rollupOpts[0].plugins;
 	
+	const pluginsWithJsccExec = plugins.slice();
+	pluginsWithJsccExec.push( jscc( {
+		values: { _DISPLAY: 0 },
+	} ) );
+	
 	try {
 		// generate code
-		const {code: outCode} = await buildRollup( {
-			input: tempFile,
-			plugins,
-		}, {format: 'iife'} );
+		const [{code: outCodeExec}, {code: outCodeDisplay}] = await Promise.all( [
+			buildRollup( {
+				input:   tempFile,
+				plugins: pluginsWithJsccExec,
+			}, {format: 'iife'} ),
+			buildRollup( {
+				input:   filePath,
+				plugins: [ jscc( {
+					values: { _DISPLAY: 1 },
+				} ) ],
+				external: [ 'utils' ],
+			}, {format: 'es'} ),
+		] );
 		
 		return {
-			exec:    outCode,
-			display: fileContent.replace( /^\s*\/\*.*?\*\/\s*/, '' ),
+			exec:    outCodeExec,
+			display: outCodeDisplay,
 		};
 	} catch ( e ){
 		console.error( `An error occured in the transformation of ${ filePath }:`, e );
