@@ -1,16 +1,17 @@
-import vue from 'rollup-plugin-vue';
 import { terser } from 'rollup-plugin-terser';
 import resolve from 'rollup-plugin-node-resolve';
-import { string } from 'rollup-plugin-string';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import license from 'rollup-plugin-license';
 import visualizer from 'rollup-plugin-visualizer';
+import typescript from 'rollup-plugin-typescript2';
+import vueTemplateCompiler from 'rollup-plugin-vue-template-compiler';
 
 import { env } from 'process';
 import { isString } from 'util';
 import moment from 'moment';
 
+// eslint-disable-next-line no-undef
 const pkg = require( './package.json' );
 
 // The module name
@@ -42,12 +43,10 @@ By ${ allContributorsString }`,
 	const visualizerPlugin = env.BUILD === 'production' ? visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } ) : undefined;
 
 	return [
-		vue( {
-			compileTemplate: true,
-			template:        { compilerOptions: { preserveWhitespace: false }},
-		} ),
+		vueTemplateCompiler({
+		  include: '**/*.html'
+		}),
 		babelPlugin,
-		string( {include: [ '**/*.svg', '**/*.html' ]} ),
 		commonjs( {
 			namedExports: {
 				// left-hand side can be an absolute path, a path
@@ -56,7 +55,15 @@ By ${ allContributorsString }`,
 				'object-path': [ 'get', 'set' ],
 			},
 		} ),
-		resolve(),
+		resolve({
+			jsnext: true,
+			extensions: [ '.ts', '.js', '.json' ],
+			browser: true,
+		}),
+		typescript({
+			objectHashIgnoreUnknownHack: true,
+			clean: env.BUILD === 'production',
+		}),
 		terserPlugin,
 		licensePlugin,
 		visualizerPlugin,
@@ -72,7 +79,7 @@ const sourcemap = true;
 
 export default [
 	{
-		input:  './src/iife-init.js',
+		input:  './src/index-iife.ts',
 		output: {
 			file:    `${ outDir }/${ name }.js`,
 			format:  'iife',
@@ -86,7 +93,7 @@ export default [
 		external: [ 'vue' ],
 	},
 	{
-		input:  './src/index.js',
+		input:  './src/index-esm.ts',
 		output: {
 			file:   `${ outDir }/${ name }.esm.js`,
 			format: 'esm',
