@@ -1,0 +1,15 @@
+<th
+	:style="{'text-align': column.headerAlign, cursor: canSort ? 'pointer' : 'auto'}"
+	:class="column.headerClass"
+	@click="toggleSort">
+	<component
+		:is="column.headerComponent"
+		v-if="column.headerComponent"
+		:column="column" />
+	<span v-else>
+		{{ column.label }}
+	</span>
+	<span
+		v-if="canSort"
+		v-html="sortButtonHtml" />
+</th>

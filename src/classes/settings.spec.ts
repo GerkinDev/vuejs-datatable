@@ -1,4 +1,4 @@
-import Settings from './settings';
+import { Settings } from './settings';
 
 it( 'can retrieve properties', () => {
 	const settings = new Settings();
@@ -39,7 +39,7 @@ describe( 'Settings merging', () => {
 			foo: {
 				bar: 'baz',
 			},
-		} );
+		} as any );
 
 		expect( settings.get( 'foo.bar' ) ).toBe( 'baz' );
 		expect( settings.get( 'table.sorting.sortAsc' ) ).toBe( '↓' );

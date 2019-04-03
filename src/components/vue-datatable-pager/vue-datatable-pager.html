@@ -1,0 +1,76 @@
+<nav v-if="show">
+	<ul
+		v-if="type === 'abbreviated'"
+		:class="paginationClass">
+		<datatable-button
+			v-if="page - 3 >= 1"
+			:value="1"
+			@click="setPageNum" />
+		<datatable-button
+			v-if="page - 4 >= 1"
+			disabled>
+			...
+		</datatable-button>
+
+		<datatable-button
+			v-if="page - 2 >= 1"
+			:value="page - 2"
+			@click="setPageNum" />
+		<datatable-button
+			v-if="page - 1 >= 1"
+			:value="page - 1"
+			@click="setPageNum" />
+
+		<datatable-button
+			:value="page"
+			selected />
+
+		<datatable-button
+			v-if="page + 1 <= totalPages"
+			:value="page + 1"
+			@click="setPageNum" />
+		<datatable-button
+			v-if="page + 2 <= totalPages"
+			:value="page + 2"
+			@click="setPageNum" />
+
+		<datatable-button
+			v-if="page + 4 <= totalPages"
+			disabled>
+			...
+		</datatable-button>
+		<datatable-button
+			v-if="page + 3 <= totalPages"
+			:value="totalPages"
+			@click="setPageNum" />
+	</ul>
+	<ul
+		v-else-if="type === 'long'"
+		:class="paginationClass">
+		<datatable-button
+			v-for="i in totalPages"
+			:key="i"
+			:value="i"
+			:selected="i === page"
+			@click="setPageNum" />
+	</ul>
+	<ul
+		v-else-if="type === 'short'"
+		:class="paginationClass">
+		<datatable-button
+			v-if="page > 1"
+			:value="page - 1"
+			@click="setPageNum">
+			<span v-html="previousIcon" />
+		</datatable-button>
+		<datatable-button
+			:value="page"
+			selected />
+		<datatable-button
+			v-if="page < totalPages"
+			:value="page + 1"
+			@click="setPageNum">
+			<span v-html="nextIcon" />
+		</datatable-button>
+	</ul>
+</nav>

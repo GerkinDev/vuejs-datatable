@@ -1,0 +1,39 @@
+<table :class="tableClass">
+	<thead>
+		<tr>
+			<datatable-header
+				v-for="(head_column, i) in normalizedColumns"
+				:key="i"
+				:column="head_column"
+				:settings="settings"
+				:direction="getSortDirectionForColumn(head_column)"
+				@change="setSortDirectionForColumn" />
+		</tr>
+	</thead>
+	<tbody>
+		<slot
+			v-for="(row, i) in displayedRows"
+			:row="row"
+			:columns="normalizedColumns">
+			<tr
+				:key="i"
+				:class="getRowClasses(row)">
+				<datatable-cell
+					v-for="(column, j) in normalizedColumns"
+					:key="j"
+					:column="column"
+					:row="row" />
+			</tr>
+		</slot>
+		<tr v-if="displayedRows.length == 0">
+			<td :colspan="normalizedColumns.length">
+				<slot name="no-results" />
+			</td>
+		</tr>
+	</tbody>
+	<tfoot v-if="$slots.footer || $scopedSlots.footer">
+		<slot
+			name="footer"
+			:rows="displayedRows" />
+	</tfoot>
+</table>
