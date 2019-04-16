@@ -1,33 +1,32 @@
-import { Component, Model, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import { Settings } from '../../classes';
+import { EPagerType, namespaceEvent } from '../../utils';
 import { VueDatatable } from '../vue-datatable/vue-datatable';
+import { TableType } from './../../classes';
 
+import { VueDatatablePagerButton } from './vue-datatable-pager-button/vue-datatable-pager-button';
 import template from './vue-datatable-pager.html';
-
-export enum EPagerType {
-	Short = 'short',
-	Abbreviated = 'abbreviated',
-	Long = 'long',
-}
 
 /**
  * The component that is used to manage & change pages on a {@link datatable}.
  */
 @Component( {
 	...template,
+	components: {
+		PagerButton: VueDatatablePagerButton,
+	},
 } )
 export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue {
-	/** The page index to display */
-	@Model( 'change', { type: Number, default: 1 } ) private readonly page!: number;
-
 	/** The id of the associated {@link datatable}. */
 	@Prop( { type: String, default: 'default' } ) private readonly table!: string;
 	/** The kind of the pager */
-	@Prop( { type: String, default: EPagerType.Long } ) private readonly type!: EPagerType;
-	/** Max number of items to display. */
-	@Prop( { type: Number, default: 10 } ) private readonly perPage!: number;
+	@Prop( { type: String, default: EPagerType.Long } ) public readonly type!: EPagerType;
+	/** The number of pages visible on each side (only for {@link EPageType.Abbreviated}) */
+	@Prop( { type: Number, default: 2 } ) private readonly sidesCount!: number;
 
+	public get sidesIndexes() {
+		return [...Array( this.sidesCount ).keys()].map( v => v + 1 );
+	}
 	private ptableInstance: VueDatatable<any, any> | null = null;
 	public get tableInstance(): VueDatatable<any, any> {
 		if ( !this.ptableInstance ) {
@@ -38,7 +37,7 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 
 	/** Returns `true` if the pager has an associated {@link datatable} with some rows. */
 	public get show(): boolean {
-		return this.ptableInstance !== null && this.totalRows > 0;
+		return this.totalRows > 0;
 	}
 	/** The total number of rows in the associated {@link datatable}. */
 	private get totalRows(): number {
@@ -48,48 +47,32 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 			return 0;
 		}
 	}
+	/** The total number of pages in the associated {@link datatable}. */
+	public totalPages = 0;
+	/** The current page index in the associated {@link datatable}. */
+	public page = 1;
+
 	/** HTML class on the wrapping `ul` around the pager buttons. */
 	public get paginationClass(): string {
-		return this.settings.get( 'pager.classes.pager' );
-	}
-	/** The total number of pages in the associated {@link datatable}. */
-	private get totalPages(): number | null {
-		if ( this.totalRows <= 0 || this.perPage <= 0 ) {
-			return null;
-		}
-
-		return Math.ceil( this.totalRows / this.perPage );
+		return this.tableType.setting( 'pager.classes.pager' );
 	}
 	/** HTML content of the previous page's button. */
-	private get previousIcon(): string {
-		return this.settings.get( 'pager.icons.previous' );
+	public get previousIcon(): string {
+		return this.tableType.setting( 'pager.icons.previous' );
 	}
 	/** HTML content of the next page's button. */
-	private get nextIcon(): string {
-		return this.settings.get( 'pager.icons.next' );
+	public get nextIcon(): string {
+		return this.tableType.setting( 'pager.icons.next' );
 	}
 
-	// @Watch( 'totalRows' )
-	// @Watch( 'perPage' )
-	@Watch( 'totalPages' )
-	private onTotalPageChange() {
-		if ( this.totalPages !== null && this.page > this.totalPages ) {
-			this.setPageNum( this.totalPages );
-		}
-	}
-
-	// Virtual properties
-	/** A unique identifier of this table type's pager */
-	public static readonly identifier: string;
+	protected readonly tableType!: TableType<any>;
 	public get identifier() {
-		return ( this.constructor as typeof VueDatatablePager ).identifier;
-	}
-	/** Reference to the {@link Settings} object linked to this datatable's pager instance. */
-	protected static readonly settings: Settings;
-	public get settings() {
-		return ( this.constructor as typeof VueDatatablePager ).settings;
+		return this.tableType.id + '-pager';
 	}
 
+	/**
+	 * Try to link the pager with the table, or bind the `vuejs-datatable::ready` event to watch for new tables addition.
+	 */
 	public created() {
 		// Try to link with table
 		if ( !this.linkWithTable( this.table ) ) {
@@ -98,10 +81,10 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 				// If it is the correct table and linking is OK...
 				if ( tableName === this.table && this.linkWithTable( tableName ) ) {
 					// Unbind table initializations
-					this.$root.$off( 'table.ready', tableReadyHandler );
+					this.$root.$off( namespaceEvent( 'ready' ), tableReadyHandler );
 				}
 			};
-			this.$root.$on( 'table.ready', tableReadyHandler );
+			this.$root.$on( namespaceEvent( 'ready' ), tableReadyHandler );
 		}
 	}
 
@@ -116,9 +99,13 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 		if ( this.$datatables && this.$datatables[tableName] ) {
 			const targetTable = this.$datatables[tableName];
 			this.ptableInstance = targetTable;
-			targetTable.perPage = this.perPage;
 			targetTable.pagers.push( this );
-			targetTable.$emit( 'table.pager-bound', this );
+			// Notify that the pager was bound through the datatable
+			targetTable.$emit( namespaceEvent( 'pager-bound' ), this );
+			// Bind pagination events
+			targetTable.$on( namespaceEvent( 'page-count-changed' ), this.onPageCountChanged );
+			targetTable.$on( namespaceEvent( 'page-changed' ), this.onPageChanged );
+			this.$on( namespaceEvent( 'set-page' ), this.onSetPage );
 			return true;
 		} else {
 			return false;
@@ -126,16 +113,31 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 	}
 
 	/**
-	 * Defines the page index to display.
+	 * Callback of the `vuejs-datatable::page-count-changed` event, setting the total pages count.
 	 *
-	 * @emits change
-	 * @param pageIndex - The new page index.
-	 * @returns nothing.
+	 * @param totalPages - The new total pages count emitted by the datatable.
 	 */
-	private setPageNum( pageIndex: number ) {
-		this.tableInstance.page = pageIndex;
-		this.tableInstance.perPage = this.perPage;
+	private onPageCountChanged( totalPages: number ) {
+		this.totalPages = totalPages;
+	}
 
-		this.$emit( 'change', pageIndex );
+	/**
+	 * Callback of the `vuejs-datatable::page-changed` event, setting the page index.
+	 *
+	 * @param page - The page index emitted by the datatable.
+	 */
+	private onPageChanged( page: number ) {
+		this.page = page;
+	}
+
+	/**
+	 * Propagate new page from the pager to the datatable.
+	 *
+	 * @param page - The page index emitted by sub buttons.
+	 */
+	private onSetPage( page: number ) {
+		if ( this.ptableInstance ) {
+			this.ptableInstance.page = page;
+		}
 	}
 }

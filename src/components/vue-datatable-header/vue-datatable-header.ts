@@ -1,8 +1,6 @@
-import { Component, Model, Prop, Vue } from 'vue-property-decorator';
+import { Component, Inject, Model, Prop, Vue } from 'vue-property-decorator';
 
-import { Column } from '../../classes/column';
-import { ESortDir } from '../../classes/handlers';
-import { Settings } from '../../classes/settings';
+import { Column, ESortDir, TableType } from '../../classes';
 
 import template from './vue-datatable-header.html';
 
@@ -19,7 +17,7 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	/** The {@link Column} instance this header is for. */
 	@Prop( { type: Object, required: true } ) private readonly column!: Column<TRow>;
 	/** The {@link Settings} instance associated with this {@link VueDatatable}'s header. */
-	@Prop( { type: Object, required: true } ) private readonly settings!: Settings;
+	@Inject( 'table-type' ) private readonly tableType!: TableType<any>;
 
 	/** `true` if this column is sortable. */
 	private get canSort(): boolean {
@@ -33,13 +31,9 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	private get isSortedDescending(): boolean {
 		return this.direction === ESortDir.Desc;
 	}
-	/** `true` if this column is sorted, in any mode. */
-	private get isSorted(): boolean {
-		return this.isSortedAscending || this.isSortedDescending;
-	}
 	/** Get the HTML content of the header's sort icon */
-	private get sortButtonHtml(): string {
-		const htmlContents = this.settings.get( 'table.sorting' );
+	public get sortButtonHtml(): string {
+		const htmlContents = this.tableType.setting( 'table.sorting' );
 
 		if ( this.isSortedAscending ) {
 			return htmlContents.sortAsc;
@@ -56,7 +50,7 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	 * @emits change
 	 * @returns nothing.
 	 */
-	private toggleSort(): void {
+	public toggleSort(): void {
 		if ( !this.canSort ) {
 			return;
 		}

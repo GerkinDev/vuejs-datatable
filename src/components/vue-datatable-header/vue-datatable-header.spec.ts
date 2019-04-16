@@ -2,23 +2,19 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 jest.mock( '../../classes/column' );
-jest.mock( '../../classes/settings' );
-import { Column, EColAlign } from '../../classes/column';
-import { Settings, get } from '../../classes/settings';
+jest.mock( '../../classes/table-type' );
+import { Column } from '../../classes/column';
+import { EColAlign } from '../../utils';
 import { VueDatatableHeader } from './vue-datatable-header';
+// @ts-ignore
+import { TableType, setting } from '../../classes/table-type';
 
 const localVue = createLocalVue();
 
-const settings = new Settings();
-
 it( 'builds expected base html', () => {
 	const wrapper = mount( VueDatatableHeader, {
-		propsData: {
-			column: new Column( {
-				label: 'Column Label',
-			} ),
-			settings,
-		},
+		propsData: { column: new Column<any>( { label: 'Column Label' } ) },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) }
 	} );
 
 	expect( wrapper.element.children.length ).toBe( 1 );
@@ -28,73 +24,61 @@ it( 'builds expected base html', () => {
 
 it( 'can change text alignment', () => {
 	const wrapperL = mount( VueDatatableHeader, {
-		propsData: {
-			column: new Column( { headerAlign: EColAlign.Left } ),
-			settings,
-		},
+		propsData: { column: new Column<any>( { label: '', headerAlign: EColAlign.Left } ) },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) }
 	} );
 	expect( wrapperL.element.style.textAlign ).toBe( 'left' );
 
 	const wrapperC = mount( VueDatatableHeader, {
-		propsData: {
-			column: new Column( { headerAlign: EColAlign.Center } ),
-			settings,
-		},
+		propsData: { column: new Column<any>( { label: '', headerAlign: EColAlign.Center } ) },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) }
 	} );
 	expect( wrapperC.element.style.textAlign ).toBe( 'center' );
 
 	const wrapperR = mount( VueDatatableHeader, {
-		propsData: {
-			column: new Column( { headerAlign: EColAlign.Right } ),
-			settings,
-		},
+		propsData: { column: new Column<any>( { label: '', headerAlign: EColAlign.Right } ) },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 	expect( wrapperR.element.style.textAlign ).toBe( 'right' );
 } );
 
 it( 'Should show/hide the sort HTML', () => {
-	get.mockReturnValue( {
+	setting.mockReturnValue( {
 		sortAsc: '<button>ASC</button>',
 		sortDesc: '<button>DESC</button>',
 		sortNone: '<button>NONE</button>',
 	} );
-	const col = new Column( { label: '' } );
+	const col = new Column<any>( { label: '' } );
 	col.sortable = true;
 	const wrapper1 = mount( VueDatatableHeader, {
-		propsData: {
-			column: col,
-			settings,
-		},
+		propsData: { column: col },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) }
 	} );
 	expect( wrapper1.element.children.length ).toBe( 2 );
 	expect( wrapper1.element.children[0] ).toBeInstanceOf( HTMLSpanElement );
-	expect( get ).toHaveBeenCalledWith( 'table.sorting' );
+	expect( setting ).toHaveBeenCalledWith( 'table.sorting' );
 	expect( wrapper1.element.children[1] ).toBeInstanceOf( HTMLSpanElement );
 	expect( wrapper1.element.children[1].innerHTML ).toBe( '<button>NONE</button>' );
 
 	col.sortable = false;
 	const wrapper2 = mount( VueDatatableHeader, {
-		propsData: {
-			column: col,
-			settings,
-		},
+		propsData: { column: col },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 	expect( wrapper2.element.children.length ).toBe( 1 );
 	expect( wrapper2.element.children[0] ).toBeInstanceOf( HTMLSpanElement );
 } );
 
 it( 'Should get the correct sort HTML', () => {
-	get.mockReturnValue( {
+	setting.mockReturnValue( {
 		sortAsc: '<button>ASC</button>',
 		sortDesc: '<button>DESC</button>',
 		sortNone: '<button>NONE</button>',
 	} );
-	const col = new Column( {} );
+	const col = new Column<any>( { label: '' } );
 	const wrapper = mount<any>( VueDatatableHeader, {
-		propsData: {
-			column: col,
-			settings,
-		},
+		propsData: { column: col },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 
 	wrapper.setProps( { direction: 'asc' } );
@@ -106,13 +90,11 @@ it( 'Should get the correct sort HTML', () => {
 } );
 
 it( 'Should cycle correctly between sort states', () => {
-	const col = new Column( {} );
+	const col = new Column<any>( { label: '' } );
 	col.sortable = false;
 	const wrapper = mount<any>( VueDatatableHeader, {
-		propsData: {
-			column: col,
-			settings,
-		},
+		propsData: { column: col },
+		provide: { 'table-type': new TableType<any>( 'tmp' ) }
 	} );
 
 	wrapper.vm.toggleSort();

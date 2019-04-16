@@ -2,11 +2,10 @@
 	<thead>
 		<tr>
 			<datatable-header
-				v-for="(head_column, i) in normalizedColumns"
+				v-for="(headColumn, i) in normalizedColumns"
 				:key="i"
-				:column="head_column"
-				:settings="settings"
-				:direction="getSortDirectionForColumn(head_column)"
+				:column="headColumn"
+				:direction="getSortDirectionForColumn(headColumn)"
 				@change="setSortDirectionForColumn" />
 		</tr>
 	</thead>

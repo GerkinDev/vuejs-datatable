@@ -1,2 +1,2 @@
-export * from './a-handler';
+export * from './i-handler';
 export * from './default-handler';

@@ -1,7 +1,7 @@
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Inject, Prop, Vue } from 'vue-property-decorator';
 
-import { Settings } from '../../../classes';
-import { VueDatatablePager } from '../vue-datatable-pager';
+import { TableType } from '../../../classes';
+import { mergeClassVals, namespaceEvent } from './../../../utils';
 
 import template from './vue-datatable-pager-button.html';
 
@@ -19,38 +19,30 @@ export class VueDatatablePagerButton extends Vue {
 	/** The page index of the button. */
 	@Prop( { type: Number } ) private readonly value!: number | null;
 
+	@Inject( 'table-type' ) private readonly tableType!: TableType<any>;
+
 	/** HTML classes to set on list items tags. */
-	private get liClasses() {
-		const classes = [ this.settings.get( 'pager.classes.li' ) ];
-
-		if ( this.disabled ) {
-			classes.push( this.settings.get( 'pager.classes.disabled' ) );
-		}
-
-		if ( this.selected ) {
-			classes.push( this.settings.get( 'pager.classes.selected' ) );
-		}
-
-		return classes.filter( v => !!v ).join( ' ' );
+	public get liClasses() {
+		return mergeClassVals(
+			this.tableType.setting( 'pager.classes.li' ),
+			this.disabled ? this.tableType.setting( 'pager.classes.disabled' ) : undefined,
+			this.selected ? this.tableType.setting( 'pager.classes.selected' ) : undefined,
+		);
 	}
 	/** CSS styles to apply on the list items tags */
-	private get liStyles() {
+	public get liStyles() {
 		return { cursor: this.disabled ? 'not-allowed' : 'pointer' };
-	}
-	/** Reference to the {@link Settings} object linked to the parent pager. */
-	private get settings(): Settings {
-		return ( this.$parent as VueDatatablePager<any> ).settings;
 	}
 
 	/**
 	 * Emits an event if the button is not {@link datatable-pager-button#disabled}.
 	 *
 	 * @emits click.
-	 * @returns {void} Nothing.
+	 * @returns Nothing.
 	 */
-	private sendClick() {
+	public sendClick() {
 		if ( !this.disabled ) {
-			this.$emit( 'click', this.value );
+			this.$parent.$emit( namespaceEvent( 'set-page' ), this.value );
 		}
 	}
 }

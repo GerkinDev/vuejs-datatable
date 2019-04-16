@@ -1,11 +1,7 @@
 import { get, Path } from 'object-path';
-import { Vue } from 'vue-property-decorator';
+import Vue, { Component } from 'vue';
 
-export enum EColAlign {
-	Left = 'left',
-	Center = 'center',
-	Right = 'right',
-}
+import { EColAlign } from '../utils';
 
 /**
  * Description of a single column of a datatable.
@@ -41,7 +37,7 @@ export interface IColumnDefinition<TRow> {
 	/**
 	 * The component used to represent this cell
 	 */
-	component?: Vue;
+	component?: string | typeof Vue | Component<any, any, any, {row?: TRow; column?: Column<TRow>}>;
 	/**
 	 * Set to true to convert the return value of `props.representedAs` to HTML.
 	 * Defaults to `false`
@@ -74,36 +70,43 @@ export class Column<TRow extends {}> {
 	/** The alignment direction of the cells in this column. */
 	public readonly align!: EColAlign;
 	/** The component used to represent this cell. */
-	private readonly component?: Vue;
+	public readonly component!: Vue | null;
 	/** The name of the field in the row object. */
-	public readonly field?: keyof TRow | Path;
+	public readonly field!: keyof TRow | Path | null;
 	/** A transformation function that returns the string to display */
-	private readonly representedAs?: ( row: TRow ) => string;
+	private readonly representedAs!: ( ( row: TRow ) => string ) | null;
 	/** Set to true to convert the return value of `props.representedAs` to HTML. */
-	private readonly interpolate = false;
+	public readonly interpolate = false;
 	/** The alignment direction of the header of this column. */
 
-	private readonly headerAlign!: EColAlign;
+	public readonly headerAlign!: EColAlign;
 	/** The header cell component of the column. */
-	private readonly headerComponent?: Vue;
+	public readonly headerComponent?: Vue;
 	/** The base CSS class to apply to the header component. */
-	private readonly headerClass = '';
+	public readonly headerClass = '';
 	/** The label displayed in the header. */
-	private readonly label = '';
+	public readonly label = '';
 
 	/** Controls whetever this column can be sorted. */
-	public readonly sortable: boolean;
+	public sortable!: boolean;
 	/** Controls whetever this column can be filtered. */
-	public readonly filterable: boolean;
+	public filterable!: boolean;
 
 	public constructor( props: IColumnDefinition<TRow> ) {
-		Object.assign( this, props, {
+		const defaultedProps = {
+			component: null,
+			field: null,
+			representedAs: null,
+
+			...props,
+
 			align: Column.normalizeAlignment( props.align, EColAlign.Left ),
 			headerAlign: Column.normalizeAlignment( props.headerAlign, EColAlign.Center ),
+		};
+		Object.assign( this, defaultedProps, {
+			filterable: Column.isFilterable( props ),
+			sortable: Column.isSortable( props ),
 		} );
-
-		this.sortable = Column.isSortable( props );
-		this.filterable = Column.isFilterable( props );
 	}
 
 	/**
@@ -142,7 +145,7 @@ export class Column<TRow extends {}> {
 	 */
 	public static isFilterable( props: IColumnDefinition<any> ): boolean {
 		// If the option is explicitly disabled, use it
-		if ( !props.filterable ) {
+		if ( props.filterable === false ) {
 			return false;
 		}
 
@@ -157,7 +160,7 @@ export class Column<TRow extends {}> {
 	 */
 	public static isSortable( props: IColumnDefinition<any> ): boolean {
 		// If the option is explicitly disabled, use it
-		if ( !props.sortable ) {
+		if ( props.sortable === false ) {
 			return false;
 		}
 

@@ -1,26 +1,53 @@
 import { Path } from 'object-path';
+import { Mixins } from 'vue-property-decorator';
 
-import { DefaultHandler, TDisplayHandler, TFilterHandler, TPaginateHandler, TSortHandler } from './handlers';
+import { DefaultHandler, IHandler, TDisplayHandler, TFilterHandler, TPaginateHandler, TSortHandler } from './handlers';
 import { DeepPartial, ISettingsProperties, Settings } from './settings';
 
+import { tableTypeConsumerFactory } from '../components/mixins/table-type-consumer-factory';
 import { VueDatatablePager } from '../components/vue-datatable-pager/vue-datatable-pager';
 import { VueDatatable } from '../components/vue-datatable/vue-datatable';
 
 /**
  * Defines a type of Datatable, with its {@link Settings} object.
  */
-export class TableType {
-	/** Handler associated with the table type */
-	private readonly handler = new DefaultHandler();
+export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TSorted = TRow[], TPaged = TRow[]> {
 	/** Settings object used to get various values for the datatable & other components */
-	private readonly settings = new Settings();
+	public readonly settings = new Settings();
+
+	public get tableTypeConsumer() {
+		return tableTypeConsumerFactory( this as any );
+	}
 
 	/**
 	 * Creates a new datatable type, instanciating a new {@link Settings} object.
 	 *
-	 * @param id - The identifier of this datatable type
+	 * @param id      - The identifier of this datatable type
+	 * @param handler - Transformation functions to use for table operations
 	 */
-	public constructor( public readonly id: string ) {}
+	public constructor(
+		public readonly id: string,
+		public readonly handler: IHandler<TRow, TSource, TFiltered, TSorted, TPaged>  = new DefaultHandler<TRow>() as any,
+	) {}
+
+	/**
+	 * Override the table type's handler method with the provided one. It can be used to override a single handler step, or to change the behavior of a table type at runtime.
+	 *
+	 * @param type    - The type of the handler (`'filter' | 'sort' | 'paginate' | 'display'`)
+	 * @param closure - The new handler to set.
+	 */
+	private setHandler( type: 'filter', closure: TFilterHandler<TRow, TSource, TFiltered> ): this;
+	private setHandler( type: 'sort', closure: TSortHandler<TRow, TFiltered, TSorted> ): this;
+	private setHandler( type: 'paginate', closure: TPaginateHandler<TRow, TSorted, TPaged> ): this;
+	private setHandler( type: 'display', closure: TDisplayHandler<TRow, TSource, TFiltered, TSorted, TPaged> ): this;
+	private setHandler(
+		type: 'filter' | 'sort' | 'paginate' | 'display',
+		// tslint:disable-next-line: ban-types
+		closure: Function,
+	): this {
+		( this.handler as any )[type + 'Handler'] = closure;
+		return this;
+	}
 
 	/**
 	 * Defines the function used to filter data
@@ -30,11 +57,7 @@ export class TableType {
 	 * @param closure - The function to use for sorting.
 	 * @returns `this` for chaining.
 	 */
-	public setFilterHandler( closure: TFilterHandler<any> ): this {
-		this.handler.filterHandler = closure;
-
-		return this;
-	}
+	public setFilterHandler = ( this.setHandler as any ).bind( this, 'filter' ) as ( closure: TFilterHandler<TRow, TSource, TFiltered> ) => this;
 
 	/**
 	 * Defines the function used to sort data
@@ -44,11 +67,7 @@ export class TableType {
 	 * @param closure - The function to use for sorting.
 	 * @returns `this` for chaining.
 	 */
-	public setSortHandler( closure: TSortHandler<any> ): this {
-		this.handler.sortHandler = closure;
-
-		return this;
-	}
+	public setSortHandler = ( this.setHandler as any ).bind( this, 'sort' ) as ( closure: TSortHandler<TRow, TFiltered, TSorted> ) => this;
 
 	/**
 	 * Defines the function used to paginate data
@@ -58,11 +77,7 @@ export class TableType {
 	 * @param closure - The function to use for pagination.
 	 * @returns `this` for chaining.
 	 */
-	public setPaginateHandler( closure: TPaginateHandler<any> ): this {
-		this.handler.paginateHandler = closure;
-
-		return this;
-	}
+	public setPaginateHandler = ( this.setHandler as any ).bind( this, 'paginate' ) as ( closure: TPaginateHandler<TRow, TSorted, TPaged> ) => this;
 
 	/**
 	 * Defines the function used to paginate data
@@ -72,11 +87,7 @@ export class TableType {
 	 * @param closure - The function to use to post-process processed steps & extract rows & total count.
 	 * @returns `this` for chaining.
 	 */
-	public setDisplayHandler( closure: TDisplayHandler<any> ): this {
-		this.handler.displayHandler = closure;
-
-		return this;
-	}
+	public setDisplayHandler = ( this.setHandler as any ).bind( this, 'display' ) as ( closure: TDisplayHandler<TRow, TSource, TFiltered, TSorted, TPaged> ) => this;
 
 	/**
 	 * Set a {@link Settings} value at a specific path.
@@ -121,14 +132,8 @@ export class TableType {
 	 * @returns a new factored {@link VueDatatable} constructor.
 	 */
 	public getTableDefinition(): typeof VueDatatable {
-		const that = this;
-
 		// tslint:disable-next-line: max-classes-per-file
-		return class SubTable<TRow> extends VueDatatable<TRow, SubTable<TRow>> {
-			public static handler = that.handler;
-			public static settings = that.settings;
-			public static identifier = that.id;
-		};
+		return Mixins( VueDatatable, this.tableTypeConsumer );
 	}
 
 	/**
@@ -137,43 +142,8 @@ export class TableType {
 	 * @returns a new factored {@link VueDatatablePager} constructor.
 	 */
 	public getPagerDefinition(): typeof VueDatatablePager {
-		const that = this;
 
 		// tslint:disable-next-line: max-classes-per-file
-		return class SubPager extends VueDatatablePager<SubPager> {
-			public static settings = that.settings;
-			public static identifier = `${ that.id }-pager`;
-		};
-	}
-
-	/**
-	 * Deep clone a value
-	 *
-	 * @param obj - The value to clone
-	 * @returns the clone of the original parameter.
-	 */
-	public static clone<T>( obj: T ): T {
-		// Handle Array
-		if ( obj instanceof Array ) {
-			return obj.map( v => this.clone( v ) ) as any;
-		}
-		if ( obj instanceof Function ) {
-			return obj;
-		}
-
-		// Handle Object
-		if ( obj instanceof Object ) {
-			const copy: any = {};
-
-			for ( const attr in obj ) {
-				if ( obj.hasOwnProperty( attr ) ) {
-					copy[attr] = this.clone( obj[attr] );
-				}
-			}
-
-			return copy;
-		}
-
-		return obj;
+		return Mixins( VueDatatablePager, this.tableTypeConsumer );
 	}
 }

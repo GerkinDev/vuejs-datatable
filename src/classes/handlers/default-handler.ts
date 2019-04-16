@@ -1,33 +1,25 @@
+import { TMaybePromise } from '../../utils';
 import { Column } from '../column';
-import { AHandler, IDisplayHandlerParam, IDisplayHandlerResult, TDisplayHandler, TFilterHandler, TMaybePromise, TPaginateHandler, TSortHandler } from './a-handler';
+import { IDisplayHandlerParam, IDisplayHandlerResult, IHandler } from './i-handler';
 
 // From https://stackoverflow.com/a/48660568/4839162
 const stableSort = <T>( arr: T[], compare: ( a: T, b: T ) => number ) => arr
 	.map( ( item, index ) => ( {
-		item,
 		index,
+		item,
 	} ) )
 	.sort( ( a, b ) => compare( a.item, b.item ) || a.index - b.index )
 	.map( ( { item } ) => item );
 
 /**
- * This class exposes the main method used to manipulate table data, like filtering, sorting, or paginating. You can override instance's members to customize the behavior of your datatable.
+ * This handler is an implementation of {@link IHandler}, configured to manipulate an array of rows as input.
  * Handlers are called in this order: filter, sort, paginate, display.
  *
  * In case you are overriding *one* of those handlers, make sure that its return value is compatible with subsequent handlers. Otherwise, you'll require to override all of them.
  *
  * @tutorial ajax-handler
  */
-export class DefaultHandler<TRow extends {}> extends AHandler<TRow, TRow[], TRow[], TRow[], TRow[]> {
-	/** Filter the provided rows, checking if at least a cell contains one of the specified filters. It supports promises. Defaults to {@link Handler#defaultFilterHandler}. */
-	public filterHandler: TFilterHandler<TRow> = this.defaultFilterHandler;
-	/** Sort the given rows depending on a specific column & sort order. It suports promises. Defaults to {@link Handler#defaultSortHandler}.  */
-	public sortHandler: TSortHandler<TRow> = this.defaultSortHandler;
-	/** Split the rows list to display the requested page index. It supports promises. Defaults to {@link Handler#defaultPaginateHandler}. */
-	public paginateHandler: TPaginateHandler<TRow> = this.defaultPaginateHandler;
-	/** Handler to post-process the paginated data, and determine which data to actually display. It supports promises. Defaults to {@link Handler#defaultDisplayHandler}. */
-	public displayHandler: TDisplayHandler<TRow> = this.defaultDisplayHandler;
-
+export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], TRow[], TRow[], TRow[]> {
 	/**
 	 * Filter the provided rows, checking if at least a cell contains one of the specified filters.
 	 *
@@ -36,7 +28,7 @@ export class DefaultHandler<TRow extends {}> extends AHandler<TRow, TRow[], TRow
 	 * @param columns - The columns of the table.
 	 * @returns the filtered data rows.
 	 */
-	public defaultFilterHandler( data: TRow[], filters: string[] | string | undefined, columns: Array<Column<TRow>> ): TMaybePromise<TRow[]> {
+	public filterHandler( data: TRow[], filters: string[] | string | undefined, columns: Array<Column<TRow>> ): TMaybePromise<TRow[]> {
 		const filtersArr = ( Array.isArray( filters ) ? filters : ( filters || '' ).split( /\s/ ) )
 			.filter( v => !!v );
 
@@ -55,7 +47,7 @@ export class DefaultHandler<TRow extends {}> extends AHandler<TRow, TRow[], TRow
 	 * @param sortDir      - The direction of the sort.
 	 * @returns the sorted rows.
 	 */
-	public defaultSortHandler( filteredData: TRow[], sortColumn: Column<TRow> | null, sortDir: 'asc' | 'desc' | null ): TMaybePromise<TRow[]> {
+	public sortHandler( filteredData: TRow[], sortColumn: Column<TRow> | null, sortDir: 'asc' | 'desc' | null ): TMaybePromise<TRow[]> {
 		if ( !sortColumn || sortDir === null ) {
 			return filteredData;
 		}
@@ -86,7 +78,7 @@ export class DefaultHandler<TRow extends {}> extends AHandler<TRow, TRow[], TRow
 	 * @param pageNumber - The index of the page to display.
 	 * @returns the requested page's rows.
 	 */
-	public defaultPaginateHandler( sortedData: TRow[], perPage: number | null, pageNumber: number ): TMaybePromise<TRow[]> {
+	public paginateHandler( sortedData: TRow[], perPage: number | null, pageNumber: number ): TMaybePromise<TRow[]> {
 		if ( perPage === null || perPage < 1 || pageNumber < 1 ) {
 			return sortedData;
 		}
@@ -103,7 +95,7 @@ export class DefaultHandler<TRow extends {}> extends AHandler<TRow, TRow[], TRow
 	 * @param processSteps - The result of each processing steps, stored in an object. Each step is the result of one of the processing function
 	 * @returns the processed values to set on the datatable.
 	 */
-	public defaultDisplayHandler( { sorted, paged }: IDisplayHandlerParam<TRow, TRow[], TRow[], TRow[], TRow[]> ): TMaybePromise<IDisplayHandlerResult<TRow>> {
+	public displayHandler( { sorted, paged }: IDisplayHandlerParam<TRow, TRow[], TRow[], TRow[], TRow[]> ): TMaybePromise<IDisplayHandlerResult<TRow>> {
 		return {
 			rows:          paged,
 			totalRowCount: sorted.length,

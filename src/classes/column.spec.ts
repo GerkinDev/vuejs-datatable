@@ -1,7 +1,8 @@
 // tslint:disable-next-line: no-implicit-dependencies
 import { createLocalVue } from '@vue/test-utils';
 
-import { Column, EColAlign } from './column';
+import { Column } from './column';
+import { EColAlign } from '../utils';
 
 const localVue = createLocalVue();
 localVue.component( 'test-component', {

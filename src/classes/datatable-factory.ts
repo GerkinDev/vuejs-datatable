@@ -2,30 +2,24 @@ import Vue, { PluginObject } from 'vue';
 
 import { VueDatatableCell } from '../components/vue-datatable-cell/vue-datatable-cell';
 import { VueDatatableHeader } from '../components/vue-datatable-header/vue-datatable-header';
-import { VueDatatablePagerButton } from '../components/vue-datatable-pager/vue-datatable-pager-button/vue-datatable-pager-button';
 import { TableType } from './table-type';
 
-/**
- * @member {'datatable'} DEFAULT_DATATABLE - The default table type name
- * @memberof DatatableFactory
- * @public
- * @readonly
- */
 const DEFAULT_DATATABLE = 'datatable';
 
 /**
  * Registers Vuejs-Datatable components globally in VueJS.
  *
- * @example import DatatableFactory from 'vuejs-datatable';
-	Vue.use(DatatableFactory);
+ * @example
+ * import DatatableFactory from 'vuejs-datatable';
+ * Vue.use(DatatableFactory);
  */
 export class DatatableFactory implements PluginObject<void> {
 	/** A reference to the Vue instance the plugin is installed in. It may be used to check if the factory was already installed */
 	private vueInstance?: typeof Vue;
 	/** Registry of declared table types. */
-	private readonly tableTypes: {[key: string]: TableType} = {};
+	private readonly tableTypes: {[key: string]: TableType<any>} = {};
 	/** The default table type to use if no other configuration was provided. */
-	private readonly defaultTableType = new TableType( DEFAULT_DATATABLE );
+	private readonly defaultTableType = new TableType<any>( DEFAULT_DATATABLE );
 
 	/**
 	 * Initialize the default factory
@@ -42,7 +36,7 @@ export class DatatableFactory implements PluginObject<void> {
 	 * @param id - The identifier of the table type. If not provided, it will default to the default table type.
 	 * @returns the table type registered with that identifier.
 	 */
-	public getTableType( id: string = DEFAULT_DATATABLE ): TableType | undefined {
+	public getTableType( id: string = DEFAULT_DATATABLE ): TableType<any> | undefined {
 		return this.tableTypes[id];
 	}
 
@@ -76,15 +70,19 @@ export class DatatableFactory implements PluginObject<void> {
 	 * Creates a new table type with a specified prefix, that you can customize using a callback.
 	 *
 	 * @param nameOrTableType - The name of the component to register, or a {@link TableType} object.
-	 * @param callback        - An optional function to execute, that configures the newly created {@link TableType}. It takes a single parameter: the newly created {@link TableType}, and should return the transformed table type.
+	 * @param callback        - An optional function to execute, that configures the newly created {@link TableType}. It takes a single parameter: the newly created {@link TableType}, and should
+	 * return the transformed table type.
 	 * @returns `this` for chaining.
 	 */
-	public registerTableType( nameOrTableType: string | TableType, callback?: ( tableType: TableType ) => TableType | undefined ): this {
-		const tableType = nameOrTableType instanceof TableType ? nameOrTableType : new TableType( nameOrTableType );
+	public registerTableType<TRow extends {} = {}, TSource = TRow[], TFiltered = TRow[], TSorted = TRow[], TPaged = TRow[]>(
+		nameOrTableType: string | TableType<TRow, TSource, TFiltered, TSorted, TPaged>,
+		callback?: ( tableType: TableType<TRow, TSource, TFiltered, TSorted, TPaged> ) => TableType<TRow, TSource, TFiltered, TSorted, TPaged> | undefined,
+	): this {
+		const tableType = nameOrTableType instanceof TableType ? nameOrTableType : new TableType<TRow, TSource, TFiltered, TSorted, TPaged>( nameOrTableType );
 		const transformedTableType = ( callback && typeof callback === 'function' ) ? callback( tableType ) || tableType : tableType;
 
 		const name = transformedTableType.id;
-		this.tableTypes[name] = transformedTableType;
+		this.tableTypes[name] = transformedTableType as any;
 		if ( this.vueInstance ) {
 			this.installTableType( name );
 		}
@@ -98,7 +96,7 @@ export class DatatableFactory implements PluginObject<void> {
 	 * @param nameOrTableType - The name of the component to register, or a {@link TableType} object.
 	 * @returns `this` for chaining.
 	 */
-	public deregisterTableType( nameOrTableType: string | TableType ): this {
+	public deregisterTableType( nameOrTableType: string | TableType<any> ): this {
 		const name = nameOrTableType instanceof TableType ? nameOrTableType.id : nameOrTableType;
 
 		if ( this.vueInstance ) {
@@ -122,7 +120,6 @@ export class DatatableFactory implements PluginObject<void> {
 		// TODO: Remove `any` casts
 		vue.component( `${ DEFAULT_DATATABLE }-cell`, VueDatatableCell as any );
 		vue.component( `${ DEFAULT_DATATABLE }-header`, VueDatatableHeader as any );
-		vue.component( `${ DEFAULT_DATATABLE }-button`, VueDatatablePagerButton as any );
 
 		for ( const type of Object.values( this.tableTypes ) ) {
 			this.installTableType( type.id );
@@ -143,9 +140,9 @@ export class DatatableFactory implements PluginObject<void> {
 		const tableType = this.tableTypes[id];
 		// TODO: Remove `any` casts
 		const tableDef = tableType.getTableDefinition();
-		this.vueInstance.component( tableDef.identifier, tableDef as any );
+		this.vueInstance.component( id, tableDef as any );
 		const pagerDef = tableType.getPagerDefinition();
-		this.vueInstance.component( pagerDef.identifier, pagerDef as any );
+		this.vueInstance.component( id + '-pager', pagerDef as any );
 		return this;
 	}
 
@@ -158,11 +155,8 @@ export class DatatableFactory implements PluginObject<void> {
 	 */
 	private uninstallTableType( id: string ): this {
 		const components = ( this.vueInstance as any ).options.components;
-		const tableType = this.tableTypes[id];
-		const tableDef = tableType.getTableDefinition();
-		delete components[tableDef.identifier];
-		const pagerDef = tableType.getPagerDefinition();
-		delete components[pagerDef.identifier];
+		delete components[id];
+		delete components[id + '-pager'];
 
 		return this;
 	}

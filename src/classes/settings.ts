@@ -42,8 +42,8 @@ export interface ISettingsProperties {
 export type DeepPartial<T> = {
 	[P in keyof T]?: T[P] extends Array<infer U>
 	  ? Array<DeepPartial<U>>
-	  : T[P] extends ReadonlyArray<infer U>
-		? ReadonlyArray<DeepPartial<U>>
+	  : T[P] extends ReadonlyArray<infer V>
+		? ReadonlyArray<DeepPartial<V>>
 		: DeepPartial<T[P]>
   };
 
@@ -65,21 +65,22 @@ export class Settings {
 				class: '',
 			},
 			sorting: {
-				sortNone: '↕',
 				sortAsc:  '↓',
 				sortDesc: '↑',
+				sortNone: '↕',
 			},
 		},
+
 		pager: {
 			classes: {
-				pager:    'pagination',
-				li:       '',
-				selected: 'active',
 				disabled: 'disabled',
+				li:       '',
+				pager:    'pagination',
+				selected: 'active',
 			},
 			icons: {
-				previous: '&lt;',
 				next:     '&gt;',
+				previous: '&lt;',
 			},
 		},
 	};
@@ -122,15 +123,14 @@ export class Settings {
 	/**
 	 * Merges two objects deeply, and return the 1st parameter once transformed.
 	 *
-	 * @private
-	 * @param {*} obj1 - The base item to merge, which will be returned.
-	 * @param {*} obj2 - The object to inject into `obj1`.
-	 * @returns {*} The first object once merged.
+	 * @param obj1 - The base item to merge, which will be returned.
+	 * @param obj2 - The object to inject into `obj1`.
+	 * @returns The first object once merged.
 	 */
 	public static mergeObjects<T>( obj1: T, obj2: DeepPartial<T> ): T {
 		for ( const key in obj2 ) {
 			if ( typeof obj2[key] === 'object' ) {
-				obj1[key] = Settings.mergeObjects( obj1[key] as any, obj2[key] as any ) as any;
+				obj1[key] = Settings.mergeObjects( obj1[key] || {} as any, obj2[key] as any ) as any;
 			} else {
 				obj1[key] = obj2[key] as any;
 			}

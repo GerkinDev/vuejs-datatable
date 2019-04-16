@@ -1,10 +1,10 @@
 import { Path } from 'object-path';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator';
 
+import { TableType } from '../../classes';
 import { Column, IColumnDefinition } from '../../classes/column';
-import { AHandler, ESortDir, IDisplayHandlerParam } from '../../classes/handlers';
-import { Settings } from '../../classes/settings';
-import { classValType, IDict, ensurePromise, mergeClassVals, TClassVal } from '../../utils';
+import { ESortDir, IDisplayHandlerParam, IDisplayHandlerResult } from '../../classes/handlers';
+import { classValType, ensurePromise, mergeClassVals, namespaceEvent, TClassVal, TMaybePromise } from '../../utils';
 import { VueDatatablePager } from '../vue-datatable-pager/vue-datatable-pager';
 
 import template from './vue-datatable.html';
@@ -43,6 +43,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	@Prop( { required: true } ) private readonly data!: TRow[] | TDataFn<TRow> | unknown;
 	/** Value to match in rows for display filtering. */
 	@Prop( { type: [ String, Array ], default: null } ) private readonly filter!: string | string[];
+	/** Maximum number of rows displayed per page. */
+	@Prop( { type: Number, default: Infinity } ) private readonly perPage!: number;
 	/** Class(es) or getter function to get row classes. */
 	@Prop( { type: classValType.concat( [ Function ] ), default: null } ) private readonly rowClasses!: TClassVal | ( ( row: TRow ) => TClassVal ) | null;
 
@@ -50,54 +52,63 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	private sortBy: Column<TRow> | null = null;
 	/** Direction of the sort. A null value is equivalent to 'asc'. */
 	private sortDir: ESortDir | null = null;
-	/** Total number of rows contained by this data table. */
-	public totalRows = 0;
+
+	// Pagination-related props & methods
+
 	/** Current page index. */
 	public page = 1;
-	/** Maximum number of rows displayed per page. */
-	public perPage: number | null = null;
+	/** Total number of rows contained by this data table. */
+	public totalRows = 0;
+
+	/** The total number of pages in the associated {@link datatable}. */
+	private get totalPages(): number | null {
+		if ( this.totalRows <= 0 || this.perPage <= 0 ) {
+			return 0;
+		} else if ( !isFinite( this.perPage ) ) {
+			return 1;
+		}
+
+		return Math.ceil( this.totalRows / this.perPage );
+	}
+
 	/** Array of rows displayed by the table. */
-	private displayedRows: TRow[] = [];
+	public displayedRows: TRow[] = [];
 	/** Array of pagers that are linked to this table. */
 	public readonly pagers: Array<VueDatatablePager<any>> = [];
 
 	/** Array of columns definitions casted as {@link Column} objects. */
-	private get normalizedColumns() {
+	public get normalizedColumns() {
 		return this.columns.map( column => new Column( column ) );
 	}
 	/** Base CSS class to apply to the `&lt;table&gt;` element. */
-	private get tableClass() {
-		return this.settings.get( 'table.class' );
+	public get tableClass() {
+		return this.tableType.setting( 'table.class' );
 	}
 
-	// Virtual properties
-	/** Reference to the {@link Settings} object linked to this datatable instance. */
-	protected static readonly settings: Settings;
-	public get settings() {
-		return ( this.constructor as typeof VueDatatable ).settings;
-	}
-	/** Reference to the {@link Handler} object linked to this datatable instance. */
-	protected static readonly handler: AHandler<any, any, any, any, any>;
+	protected readonly tableType!: TableType<any>;
 	public get handler() {
-		return ( this.constructor as typeof VueDatatable ).handler;
+		return this.tableType.handler;
 	}
-	/** A unique identifier of this table type's datatable */
-	public static readonly identifier: string;
 	public get identifier() {
-		return ( this.constructor as typeof VueDatatable ).identifier;
+		return this.tableType.id;
 	}
 
+	/**
+	 * Register the table in the global registry of tables.
+	 * Additionnaly, it may wait for a pager before starting watch data properties.
+	 *
+	 * @emit vuejs-datatable::ready Emitted with the table name
+	 */
 	public created() {
 		this.$datatables[this.name] = this;
-		this.$root.$emit( 'table.ready', this.name );
-		this.$watch( 'data', this.processRows, { deep: true, immediate: false } );
-		this.$watch( 'columns', this.processRows, { deep: true, immediate: false } );
+		this.$root.$emit( namespaceEvent( 'ready' ), this.name );
 
 		// Defer to next tick, so a pager component created just after have the time to link itself with this table before start watching.
 		this.$nextTick( () => {
 			if ( this.waitForPager && this.pagers.length === 0 ) {
-				this.$on( 'table.pager-bound', () => this.initWatchCriterions() );
+				this.$on( namespaceEvent( 'pager-bound' ), () => this.initWatchCriterions() );
 			} else {
+				// tslint:disable-next-line: no-floating-promises
 				this.initWatchCriterions();
 			}
 		} );
@@ -109,13 +120,14 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	 * @param columnDefinition - The column to check sorting direction for.
 	 * @returns the sort direction for the specified column.
 	 */
-	private getSortDirectionForColumn( columnDefinition: Column<TRow> ): ESortDir | null {
+	public getSortDirectionForColumn( columnDefinition: Column<TRow> ): ESortDir | null {
 		if ( this.sortBy !== columnDefinition ) {
 			return null;
 		}
 
 		return this.sortDir;
 	}
+
 	/**
 	 * Defines the sort direction for a specific column.
 	 *
@@ -123,19 +135,17 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	 * @param column    - The column to check sorting direction for.
 	 * @returns nothing.
 	 */
-	private setSortDirectionForColumn( direction: ESortDir | null, column: Column<TRow> ): void {
+	public setSortDirectionForColumn( direction: ESortDir | null, column: Column<TRow> ): void {
 		this.sortBy = column;
 		this.sortDir = direction;
 	}
-	
+
 	/**
-	 * Using data (or its return value if it is a function), filter, sort, paginate & display rows in the table.
+	 * Internal function that retrieve data rows to display.
 	 *
-	 * @returns a promise resolved once the processing is done, with nothing.
-	 * @see DataFnParams Parameters provided to the `data` function.
-	 * @tutorial ajax-data
+	 * @returns Promise resolved with total rows count and/or rows to display
 	 */
-	private processRows(): Promise<void> {
+	private processRowsIn(): TMaybePromise<IDisplayHandlerResult<TRow>> {
 		if ( typeof this.data === 'function' ) {
 			const params = {
 				filter:  this.filter,
@@ -145,65 +155,67 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 				sortDir: this.sortDir,
 			};
 
-			return ensurePromise( this.data( params ) )
-				.then( tableContent => ensurePromise( this.setTableContent( tableContent ) ) );
+			return this.data( params );
+		} else {
+			const outObj: Partial<IDisplayHandlerParam<TRow, any, any, any, any>> = { source: this.data };
+			return ensurePromise( this.handler.filterHandler( this.data as any, this.filter, this.normalizedColumns ) )
+				.then( filteredData => ensurePromise( this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) ) )
+				.then( sortedData => ensurePromise( this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) ) )
+				.then( pagedData => ensurePromise( this.handler.displayHandler( { ...outObj, paged: pagedData } as IDisplayHandlerParam<TRow, any, any, any, any> ) ) );
 		}
-
-		const outObj: Partial<IDisplayHandlerParam<TRow, any, any, any, any>> = { source: this.data };
-		return ensurePromise( this.handler.filterHandler( this.data, this.filter, this.normalizedColumns ) )
-			.then( filteredData => ensurePromise( this.handler.sortHandler( outObj.filtered = filteredData, this.sortBy, this.sortDir ) ) )
-			.then( sortedData => ensurePromise( this.handler.paginateHandler( outObj.sorted = sortedData, this.perPage, this.page ) ) )
-			.then( pagedData => ensurePromise( this.handler.displayHandler( Object.assign( { paged: pagedData }, outObj ) as IDisplayHandlerParam<TRow, any, any, any, any> ) ) )
-			.then( tableContent => ensurePromise( this.setTableContent( tableContent ) ) );
 	}
+
+	/**
+	 * Using data (or its return value if it is a function), filter, sort, paginate & display rows in the table.
+	 *
+	 * @returns a promise resolved once the processing is done, with nothing.
+	 * @see DataFnParams Parameters provided to the `data` function.
+	 * @tutorial ajax-data
+	 */
+	@Watch( 'data', { deep: true, immediate: false } )
+	@Watch( 'columns', { deep: true, immediate: false } )
+	public processRows(): Promise<void> {
+		return ensurePromise( this.processRowsIn() )
+			.then( tableContent => this.setTableContent( tableContent ) );
+	}
+
 	/**
 	 * Defines the table content & total rows number. You can send none, a single, or both properties. Only non undefined prop will be set.
 	 *
 	 * @param content - The content to set.
 	 * @returns nothing.
 	 */
-	private setTableContent( { rows, totalRowCount }: Partial<ITableContentParam<TRow>> = { rows: undefined, totalRowCount: undefined } ): void {
-		this.setRows( rows );
-		this.setTotalRowCount( totalRowCount );
-	}
-	/**
-	 * Set the displayed rows.
-	 *
-	 * @param rows - The rows to display.
-	 * @returns nothing.
-	 */
-	private setRows( rows?: TRow[] ): void {
-		if ( typeof rows !== 'undefined' && rows !== null ) {
+	private setTableContent( { rows, totalRowCount }: Partial<ITableContentParam<TRow>> = {} ): void {
+		if ( typeof rows === 'object' ) {
 			this.displayedRows = rows;
 		}
-	}
-	/**
-	 * Set the displayed rows count.
-	 *
-	 * @param value - The number of displayed rows.
-	 * @returns nothing.
-	 */
-	private setTotalRowCount( value?: number ): void {
-		if ( typeof value !== 'undefined' && value !== null ) {
-			this.totalRows = value;
+		if ( typeof totalRowCount === 'number' ) {
+			this.totalRows = totalRowCount;
 		}
 	}
+
+	/**
+	 * Propagate the `page-changed` event when the page data is changed.
+	 */
+	@Watch( 'page', { immediate: true } )
+	@Emit( namespaceEvent( 'page-changed' ) )
+	public emitNewPage() {
+		return this.page;
+	}
+
 	/**
 	 * Get the classes to add on the row
 	 *
 	 * @param row - The row to get classes for.
 	 * @returns the classes string to set on the row.
 	 */
-	private getRowClasses( row: TRow ): IDict<boolean> {
-		const rowClasses = this.rowClasses || {};
-		const settingsClass = this.settings.get( 'table.row.class' );
+	public getRowClasses( row: TRow ): string[] {
+		const rowClasses = typeof this.rowClasses === 'function' ? this.rowClasses( row ) : this.rowClasses;
+		const settingsClass = this.tableType.setting( 'table.row.class' );
 
-		if ( typeof rowClasses === 'function' ) {
-			return mergeClassVals( settingsClass, rowClasses( row ) );
-		}
-
-		return mergeClassVals( rowClasses );
+		return mergeClassVals( settingsClass, rowClasses );
 	}
+
 	/**
 	 * Starts the watching of following properties: `filter`, `perPage`, `page`, `sortBy`, `sortDir`.
 	 * When a change is detected, the component runs {@link datatable#processRows}.
@@ -213,10 +225,33 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	 * @see https://vuejs.org/v2/api/#vm-watch
 	 * @returns nothing.
 	 */
-	private initWatchCriterions(): void {
+	private initWatchCriterions(): Promise<void> {
 		for ( const prop of [ 'filter', 'perPage', 'page', 'sortBy', 'sortDir' ] ) {
 			this.$watch( prop, this.processRows, { immediate: false, deep: true } );
 		}
-		this.processRows();
+		return this.processRows();
+	}
+
+	/**
+	 * Recalculates the new page count, and emit `page-count-changed` with the new count.
+	 *
+	 * @emits 'page-count-changed'
+	 */
+	@Watch( 'totalRows' )
+	@Watch( 'perPage' )
+	@Emit( namespaceEvent( 'page-count-changed' ) )
+	public refreshPageCount() {
+		return this.totalPages;
+	}
+
+	/**
+	 * Recalculates the new page count, and emit `page-count-changed` with the new count.
+	 *
+	 * @emits 'page-count-changed'
+	 */
+	@Watch( 'page' )
+	@Emit( namespaceEvent( 'page-changed' ) )
+	public refreshPage() {
+		return this.page;
 	}
 }
