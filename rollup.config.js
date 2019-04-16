@@ -6,6 +6,7 @@ import license from 'rollup-plugin-license';
 import visualizer from 'rollup-plugin-visualizer';
 import typescript from 'rollup-plugin-typescript2';
 import vueTemplateCompiler from 'rollup-plugin-vue-template-compiler';
+import replace from 'rollup-plugin-replace';
 
 import { env } from 'process';
 import { isString } from 'util';
@@ -26,7 +27,10 @@ const userToString = p => {
 const allContributorsString = allContributors.map( userToString ).join( ', ' );
 // Plugins used for build
 const getPlugins = iife => {
-	const babelPlugin = iife ? babel( { exclude: 'node_modules/**' } ) : undefined;
+	const babelPlugin = iife ? babel( {
+		exclude: 'node_modules/**',
+		extensions: ['.js', '.ts', '.html'],
+	} ) : undefined;
 
 	const licensePlugin = env.BUILD === 'production' ? 
 		license( {
@@ -38,15 +42,22 @@ By ${ allContributorsString }`,
 		} ) :
 		undefined;
 		
-	const terserPlugin = [ 'production', 'demo' ].includes( env.BUILD ) ? terser() : undefined;
+	const terserPlugin = [ 'production', 'demo' ].includes( env.BUILD ) ? terser({
+		compress: {
+			passes: 2,
+			unsafe: true,
+		}
+	}) : undefined;
 
-	const visualizerPlugin = env.BUILD === 'production' ? visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } ) : undefined;
+	const visualizerPlugin = visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } );
 
 	return [
 		vueTemplateCompiler({
-		  include: '**/*.html'
+			include: '**/*.html',
+			compilerOpts: {
+				whitespace: 'condense'
+			}
 		}),
-		babelPlugin,
 		commonjs( {
 			namedExports: {
 				// left-hand side can be an absolute path, a path
@@ -64,9 +75,13 @@ By ${ allContributorsString }`,
 			objectHashIgnoreUnknownHack: true,
 			clean: env.BUILD === 'production',
 		}),
-		terserPlugin,
+		replace({
+			'process.env.NODE_ENV': `"${env.build}"`
+		}),
 		licensePlugin,
 		visualizerPlugin,
+		terserPlugin,
+		babelPlugin,
 		// Filter out `undefined` plugins
 	].filter( v => !!v );
 };

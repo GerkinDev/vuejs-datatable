@@ -12,3 +12,5 @@ stats/
 dist/
 
 docs/
+
+\.rpt2_cache/

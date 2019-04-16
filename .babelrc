@@ -1,8 +1,9 @@
 {
     "presets": [
         [ "@babel/preset-env", {
-            "targets":     "> 0.25%, not dead, cover 90%",
+            "targets": "> 0.5%, not dead, cover 90%",
             "useBuiltIns": "usage",
+            "corejs": 3
         }],
     ]
 }
