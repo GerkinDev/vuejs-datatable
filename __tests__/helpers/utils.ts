@@ -12,55 +12,55 @@ import Vue from 'vue';
 //   // more assertions...
 // })
 // .then(done)
-export const waitForUpdate = (initialCb?: Function) => {
+export const waitForUpdate = ( initialCb?: Function ) => {
 	let end;
 	const queue = initialCb ? [ initialCb ] : [];
 
 	function shift() {
 		const job = queue.shift();
-		if (queue.length) {
+		if ( queue.length ) {
 			let hasError = false;
 			try {
-				job.wait ? job(shift) : job();
-			} catch (e) {
+				job.wait ? job( shift ) : job();
+			} catch ( e ) {
 				hasError = true;
 				const done = queue[queue.length - 1];
-				if (done && done.fail) {
-					done.fail(e);
+				if ( done && done.fail ) {
+					done.fail( e );
 				}
 			}
-			if (!hasError && !job.wait) {
-				if (queue.length) {
-					Vue.nextTick(shift);
+			if ( !hasError && !job.wait ) {
+				if ( queue.length ) {
+					Vue.nextTick( shift );
 				}
 			}
-		} else if (job && (job.fail || job === end)) {
+		} else if ( job && ( job.fail || job === end ) ) {
 			job(); // done
 		}
 	}
 
-	Vue.nextTick(() => {
-		if (!queue.length || (!end && !queue[queue.length - 1].fail)) {
-			throw new Error('waitForUpdate chain is missing .then(done)');
+	Vue.nextTick( () => {
+		if ( !queue.length || ( !end && !queue[queue.length - 1].fail ) ) {
+			throw new Error( 'waitForUpdate chain is missing .then(done)' );
 		}
 		shift();
-	});
+	} );
 
 	const chainer = {
 		then: nextCb => {
-			queue.push(nextCb);
+			queue.push( nextCb );
 			return chainer;
 		},
 		thenWaitFor: wait => {
-			if (typeof wait === 'number') {
-				wait = timeout(wait);
+			if ( typeof wait === 'number' ) {
+				wait = timeout( wait );
 			}
 			wait.wait = true;
-			queue.push(wait);
+			queue.push( wait );
 			return chainer;
 		},
 		end: endFn => {
-			queue.push(endFn);
+			queue.push( endFn );
 			end = endFn;
 		},
 	};
@@ -68,4 +68,4 @@ export const waitForUpdate = (initialCb?: Function) => {
 	return chainer;
 };
 
-export const timeout = n => next => setTimeout(next, n);
+export const timeout = n => next => setTimeout( next, n );

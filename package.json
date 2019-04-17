@@ -11,9 +11,13 @@
         "doc:copy-assets": "cp-cli dist/vuejs-datatable.js tutorials/assets/assets/vuejs-datatable.js",
         "doc:examples": "rimraf tutorials/builds && node --experimental-modules tutorials/build-examples.mjs",
         "doc:jsdoc": "rimraf docs && jsdoc -c jsdoc.conf.js .",
-        "test": "jest",
-        "test:ci": "jest --coverage --no-cache",
-        "test:watch": "jest --watch",
+        "test": "npm run test:unit && npm run test:integration",
+        "test:ci": "jest --config jest.config.js",
+        "test:ci:watch": "npm run test:ci --watch",
+        "test:unit": "jest --config jest.unit.config.js",
+        "test:unit:watch": "npm run test:unit -- --watch",
+        "test:integration": "jest --config jest.integration.config.js",
+        "test:integration:watch": "npm run test:integration -- --watch",
         "lint": "tslint --project tsconfig.json",
         "lint:fix": "tslint --fix --project tsconfig.json",
         "build": "npm run build:production",
@@ -59,7 +63,7 @@
         "babel-preset-env": "^1.7.0",
         "cp-cli": "^2.0.0",
         "flush-promises": "^1.0.2",
-        "jasmine-core": "^3.3.0",
+        "jasmine-core": "^3.4.0",
         "jest": "^24.7.1",
         "jsdom": "^14.0.0",
         "karma": "^4.0.1",
@@ -81,7 +85,7 @@
         "rollup-plugin-visualizer": "^1.1.1",
         "rollup-plugin-vue-template-compiler": "git+https://github.com/GerkinDev/rollup-plugin-vue-template-compiler.git",
         "standard-version": "^5.0.2",
-        "ts-jest": "^24.0.1",
+        "ts-jest": "^24.0.2",
         "tslint": "^5.15.0",
         "tslint-eslint-rules": "^5.4.0",
         "typescript": "^3.4.1",
@@ -115,25 +119,17 @@
     "license": "MIT",
     "jest": {
         "preset": "ts-jest/presets/js-with-ts",
-        "moduleFileExtensions": [
-            "js",
-            "ts",
-            "vue"
-        ],
+        "moduleFileExtensions": [ "js", "ts", "vue" ],
         "transform": {
-            "^.+\\.js$": "babel-jest",
-            ".*\\.vue$": "vue-jest",
-            ".*\\.ts$": "ts-jest"
+            ".*\\.ts$": "ts-jest",
+            ".*\\.html$": "<rootDir>/__tests__/helpers/transform-vue-template.js"
         },
         "collectCoverageFrom": [
-            "src/**/*.{js,vue}",
+            "src/**/*.{[jt]s,vue}",
+            "!src/index-{esm,iife}.ts",
             "!**/node_modules/**"
         ],
-        "testMatch": [
-            "**/__tests__/**/*.[jt]s?(x)",
-            "!**/__tests__/helpers/**/*.[jt]s?(x)",
-            "**/?(*.)+(spec|test).[jt]s?(x)"
-        ],
+        "collectCoverage": true,
         "globals": {
             "ts-jest": {
                 "diagnostics": false
