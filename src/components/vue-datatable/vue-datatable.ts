@@ -11,6 +11,7 @@ import template from './vue-datatable.html';
 
 /**
  * Parameters passed to the `data` function, to handle by custom logic.
+ *
  * @tutorial ajax-data
  */
 export interface IDataFnParams<TRow extends {}> {
@@ -34,20 +35,54 @@ export type TColumnsDefinition<TRow extends {}> = Array<IColumnDefinition<TRow>>
 	...template,
 } )
 export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>> extends Vue {
-	/** The name of the datatable. It should be unique per page. */
-	@Prop( { type: String, default: 'default' } ) private readonly name!: string;
-	/** Set to `true` to defer the initialization of the table after a pager has been attached. It may resolve issues related to double execution of data function. */
-	@Prop( { type: Boolean, default: false } ) private readonly waitForPager!: boolean;
-	/** List of columns definitions displayed by this datatable. */
-	@Prop( { type: Array, required: true } ) private readonly columns!: Array<IColumnDefinition<TRow>>;
-	/** The list of items to display, or a getter function. */
-	@Prop( { required: true } ) private readonly data!: TRow[] | TDataFn<TRow> | unknown;
-	/** Value to match in rows for display filtering. */
-	@Prop( { type: [ String, Array ], default: null } ) private readonly filter!: string | string[];
-	/** Maximum number of rows displayed per page. */
-	@Prop( { type: Number, default: Infinity } ) private readonly perPage!: number;
-	/** Class(es) or getter function to get row classes. */
-	@Prop( { type: classValType.concat( [ Function ] ), default: null } ) private readonly rowClasses!: TClassVal | ( ( row: TRow ) => TClassVal ) | null;
+	/**
+	 * The name of the datatable. It should be unique per page.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: String, default: 'default' } ) public readonly name!: string;
+
+	/**
+	 * Set to `true` to defer the initialization of the table after a pager has been attached. It may resolve issues related to double execution of data function.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: Boolean, default: false } ) public readonly waitForPager!: boolean;
+
+	/**
+	 * List of columns definitions displayed by this datatable.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: Array, required: true } ) public readonly columns!: TColumnsDefinition<TRow>;
+
+	/**
+	 * The list of items to display, or a getter function.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { required: true } ) public readonly data!: TRow[] | TDataFn<TRow> | unknown;
+
+	/**
+	 * Value to match in rows for display filtering.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: [ String, Array ], default: null } ) public readonly filter!: string | string[];
+
+	/**
+	 * Maximum number of rows displayed per page.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: Number, default: Infinity } ) public readonly perPage!: number;
+
+	/**
+	 * Class(es) or getter function to get row classes.
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: classValType.concat( [ Function ] ), default: null } ) public readonly rowClasses!: TClassVal | ( ( row: TRow ) => TClassVal ) | null;
 
 	/** Column used for data sorting. */
 	private sortBy: Column<TRow> | null = null;
@@ -61,7 +96,7 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/** Total number of rows contained by this data table. */
 	public totalRows = 0;
 
-	/** The total number of pages in the associated {@link datatable}. */
+	/** The total number of pages in the associated [[datatable]]. */
 	private get totalPages(): number | null {
 		if ( this.totalRows <= 0 || this.perPage <= 0 ) {
 			return 0;
@@ -77,7 +112,7 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/** Array of pagers that are linked to this table. */
 	public readonly pagers: Array<VueDatatablePager<any>> = [];
 
-	/** Array of columns definitions casted as {@link Column} objects. */
+	/** Array of columns definitions casted as [[Column]] objects. */
 	public get normalizedColumns() {
 		return this.columns.map( column => new Column( column ) );
 	}
@@ -98,7 +133,7 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	 * Register the table in the global registry of tables.
 	 * Additionnaly, it may wait for a pager before starting watch data properties.
 	 *
-	 * @emit vuejs-datatable::ready Emitted with the table name
+	 * @emits vuejs-datatable::ready Emitted with the table name
 	 */
 	public created() {
 		this.$datatables[this.name] = this;
@@ -197,6 +232,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 
 	/**
 	 * Propagate the `page-changed` event when the page data is changed.
+	 *
+	 * @emits vuejs-datatable::page-changed
 	 */
 	@Watch( 'page', { immediate: true } )
 	@Emit( namespaceEvent( 'page-changed' ) )
@@ -219,8 +256,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 
 	/**
 	 * Starts the watching of following properties: `filter`, `perPage`, `page`, `sortBy`, `sortDir`.
-	 * When a change is detected, the component runs {@link datatable#processRows}.
-	 * Because the watch is immediate, {@link datatable#processRows} is run immediately when this method is called.
+	 * When a change is detected, the component runs [[datatable#processRows]].
+	 * Because the watch is immediate, [[datatable#processRows]] is run immediately when this method is called.
 	 *
 	 * @see datatable#processRows
 	 * @see https://vuejs.org/v2/api/#vm-watch
@@ -236,7 +273,7 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/**
 	 * Recalculates the new page count, and emit `page-count-changed` with the new count.
 	 *
-	 * @emits 'page-count-changed'
+	 * @emits vuejs-datatable::page-count-changed
 	 */
 	@Watch( 'totalRows' )
 	@Watch( 'perPage' )
@@ -248,7 +285,7 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/**
 	 * Recalculates the new page count, and emit `page-count-changed` with the new count.
 	 *
-	 * @emits 'page-count-changed'
+	 * @emits vuejs-datatable::page-count-changed
 	 */
 	@Watch( 'page' )
 	@Emit( namespaceEvent( 'page-changed' ) )

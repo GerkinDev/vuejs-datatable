@@ -12,7 +12,7 @@ const stableSort = <T>( arr: T[], compare: ( a: T, b: T ) => number ) => arr
 	.map( ( { item } ) => item );
 
 /**
- * This handler is an implementation of {@link IHandler}, configured to manipulate an array of rows as input.
+ * This handler is an implementation of [[IHandler]], configured to manipulate an array of rows as input.
  * Handlers are called in this order: filter, sort, paginate, display.
  *
  * In case you are overriding *one* of those handlers, make sure that its return value is compatible with subsequent handlers. Otherwise, you'll require to override all of them.
@@ -42,7 +42,7 @@ export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], T
 	/**
 	 * Sort the given rows depending on a specific column & sort order.
 	 *
-	 * @param filteredData - Data outputed from {@link Handler#filterHandler}.
+	 * @param filteredData - Data outputed from [[Handler.filterHandler]].
 	 * @param sortColumn   - The column used for sorting.
 	 * @param sortDir      - The direction of the sort.
 	 * @returns the sorted rows.
@@ -73,7 +73,7 @@ export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], T
 	/**
 	 * Split the rows list to display the requested page index.
 	 *
-	 * @param sortedData - Data outputed from {@link Handler#sortHandler}.
+	 * @param sortedData - Data outputed from [[Handler.sortHandler]].
 	 * @param perPage    - The total number of items per page.
 	 * @param pageNumber - The index of the page to display.
 	 * @returns the requested page's rows.

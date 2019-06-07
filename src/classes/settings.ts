@@ -52,9 +52,9 @@ export type DeepPartial<T> = {
  * @description Settings class used by Datatable's components to get various values, such as class names, labels, icons, etc etc.
  * Create a new instance of this class & customize it to use different CSS frameworks.
  * The default Settings is for *Bootstrap 3/4* with *glyphicon*.
- * To edit settings contained by an instance of this class, either edit the {@link Settings#properties} object, or use the {@link Settings#merge} method.
+ * To edit settings contained by an instance of this class, either edit the [[Settings.properties]] object, or use the [[Settings.merge]] method.
  *
- * @tutorial custom-theme
+ * @tutorial custom-theme Cutomize your tables for another CSS framework or your own styling.
  */
 export class Settings {
 	/** Tree of settings values. */

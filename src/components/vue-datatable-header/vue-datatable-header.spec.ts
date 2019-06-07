@@ -4,17 +4,17 @@ import { createLocalVue, mount } from '@vue/test-utils';
 jest.mock( '../../classes/column' );
 jest.mock( '../../classes/table-type' );
 import { Column } from '../../classes/column';
+// @ts-ignore
+import { setting, TableType } from '../../classes/table-type';
 import { EColAlign } from '../../utils';
 import { VueDatatableHeader } from './vue-datatable-header';
-// @ts-ignore
-import { TableType, setting } from '../../classes/table-type';
 
 const localVue = createLocalVue();
 
 it( 'builds expected base html', () => {
 	const wrapper = mount( VueDatatableHeader, {
 		propsData: { column: new Column<any>( { label: 'Column Label' } ) },
-		provide: { 'table-type': new TableType<any>( 'tmp' ) }
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 
 	expect( wrapper.element.children.length ).toBe( 1 );
@@ -25,13 +25,13 @@ it( 'builds expected base html', () => {
 it( 'can change text alignment', () => {
 	const wrapperL = mount( VueDatatableHeader, {
 		propsData: { column: new Column<any>( { label: '', headerAlign: EColAlign.Left } ) },
-		provide: { 'table-type': new TableType<any>( 'tmp' ) }
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 	expect( wrapperL.element.style.textAlign ).toBe( 'left' );
 
 	const wrapperC = mount( VueDatatableHeader, {
 		propsData: { column: new Column<any>( { label: '', headerAlign: EColAlign.Center } ) },
-		provide: { 'table-type': new TableType<any>( 'tmp' ) }
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 	expect( wrapperC.element.style.textAlign ).toBe( 'center' );
 
@@ -52,7 +52,7 @@ it( 'Should show/hide the sort HTML', () => {
 	col.sortable = true;
 	const wrapper1 = mount( VueDatatableHeader, {
 		propsData: { column: col },
-		provide: { 'table-type': new TableType<any>( 'tmp' ) }
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 	expect( wrapper1.element.children.length ).toBe( 2 );
 	expect( wrapper1.element.children[0] ).toBeInstanceOf( HTMLSpanElement );
@@ -94,7 +94,7 @@ it( 'Should cycle correctly between sort states', () => {
 	col.sortable = false;
 	const wrapper = mount<any>( VueDatatableHeader, {
 		propsData: { column: col },
-		provide: { 'table-type': new TableType<any>( 'tmp' ) }
+		provide: { 'table-type': new TableType<any>( 'tmp' ) },
 	} );
 
 	wrapper.vm.toggleSort();

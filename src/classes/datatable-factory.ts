@@ -10,8 +10,10 @@ const DEFAULT_DATATABLE = 'datatable';
  * Registers Vuejs-Datatable components globally in VueJS.
  *
  * @example
- * import DatatableFactory from 'vuejs-datatable';
- * Vue.use(DatatableFactory);
+ * import { DatatableFactory } from 'vuejs-datatable';
+ * const myDatatableFactory = new DatatableFactory()
+ *     .registerTableType( new TableType( 'my-table', {}) )
+ * Vue.use( myDatatableFactory );
  */
 export class DatatableFactory implements PluginObject<void> {
 	/** A reference to the Vue instance the plugin is installed in. It may be used to check if the factory was already installed */
@@ -69,8 +71,8 @@ export class DatatableFactory implements PluginObject<void> {
 	/**
 	 * Creates a new table type with a specified prefix, that you can customize using a callback.
 	 *
-	 * @param nameOrTableType - The name of the component to register, or a {@link TableType} object.
-	 * @param callback        - An optional function to execute, that configures the newly created {@link TableType}. It takes a single parameter: the newly created {@link TableType}, and should
+	 * @param nameOrTableType - The name of the component to register, or a [[TableType]] object.
+	 * @param callback        - An optional function to execute, that configures the newly created [[TableType]]. It takes a single parameter: the newly created [[TableType]], and should
 	 * return the transformed table type.
 	 * @returns `this` for chaining.
 	 */
@@ -93,7 +95,7 @@ export class DatatableFactory implements PluginObject<void> {
 	/**
 	 * Creates a new table type with a specified prefix, that you can customize using a callback.
 	 *
-	 * @param nameOrTableType - The name of the component to register, or a {@link TableType} object.
+	 * @param nameOrTableType - The name of the component to register, or a [[TableType]] object.
 	 * @returns `this` for chaining.
 	 */
 	public deregisterTableType( nameOrTableType: string | TableType<any> ): this {

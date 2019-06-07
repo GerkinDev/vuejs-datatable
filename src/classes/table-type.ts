@@ -9,7 +9,7 @@ import { VueDatatablePager } from '../components/vue-datatable-pager/vue-datatab
 import { VueDatatable } from '../components/vue-datatable/vue-datatable';
 
 /**
- * Defines a type of Datatable, with its {@link Settings} object.
+ * Defines a type of Datatable, with its [[Settings]] object.
  */
 export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TSorted = TRow[], TPaged = TRow[]> {
 	/** Settings object used to get various values for the datatable & other components */
@@ -20,7 +20,7 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	}
 
 	/**
-	 * Creates a new datatable type, instanciating a new {@link Settings} object.
+	 * Creates a new datatable type, instanciating a new [[Settings]] object.
 	 *
 	 * @param id      - The identifier of this datatable type
 	 * @param handler - Transformation functions to use for table operations
@@ -90,7 +90,7 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	public setDisplayHandler = ( this.setHandler as any ).bind( this, 'display' ) as ( closure: TDisplayHandler<TRow, TSource, TFiltered, TSorted, TPaged> ) => this;
 
 	/**
-	 * Set a {@link Settings} value at a specific path.
+	 * Set a [[Settings]] value at a specific path.
 	 *
 	 * @param path  - Path to the setting value to set.
 	 * @param value - Value to set at the specified path.
@@ -98,7 +98,7 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	 */
 	public setting( path: Path, value: any ): this;
 	/**
-	 * Get a {@link Settings} value at a specific path.
+	 * Get a [[Settings]] value at a specific path.
 	 *
 	 * @param path - Path to the setting value to get.
 	 * @returns the value at the given path.
@@ -115,7 +115,7 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	}
 
 	/**
-	 * Merge a settings object with the {@link TableType#settings} object of the instance.
+	 * Merge a settings object with the [[TableType.setting]] object of the instance.
 	 *
 	 * @param settings - Values to merge.
 	 * @returns `this` for chaining.
@@ -127,9 +127,9 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	}
 
 	/**
-	 * Factory function that copy the {@link VueDatatable} prototype, and configure as this type.
+	 * Factory function that copy the [[VueDatatable]] prototype, and configure as this type.
 	 *
-	 * @returns a new factored {@link VueDatatable} constructor.
+	 * @returns a new factored [[VueDatatable]] constructor.
 	 */
 	public getTableDefinition(): typeof VueDatatable {
 		// tslint:disable-next-line: max-classes-per-file
@@ -137,9 +137,9 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	}
 
 	/**
-	 * Factory function that copy the {@link VueDatatablePager} prototype, and configure as this type.
+	 * Factory function that copy the [[VueDatatablePager]] prototype, and configure as this type.
 	 *
-	 * @returns a new factored {@link VueDatatablePager} constructor.
+	 * @returns a new factored [[VueDatatablePager]] constructor.
 	 */
 	public getPagerDefinition(): typeof VueDatatablePager {
 		// tslint:disable-next-line: max-classes-per-file

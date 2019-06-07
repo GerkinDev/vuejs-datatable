@@ -8,7 +8,7 @@ import { VueDatatablePagerButton } from './vue-datatable-pager-button/vue-datata
 import template from './vue-datatable-pager.html';
 
 /**
- * The component that is used to manage & change pages on a {@link datatable}.
+ * The component that is used to manage & change pages on a [[VueDatatable]].
  */
 @Component( {
 	...template,
@@ -17,12 +17,26 @@ import template from './vue-datatable-pager.html';
 	},
 } )
 export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue {
-	/** The id of the associated {@link datatable}. */
-	@Prop( { type: String, default: 'default' } ) private readonly table!: string;
-	/** The kind of the pager */
+	/**
+	 * The id of the associated [[VueDatatable]].
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: String, default: 'default' } ) public readonly table!: string;
+
+	/**
+	 * The kind of the pager
+	 *
+	 * @vue Prop
+	 */
 	@Prop( { type: String, default: EPagerType.Long } ) public readonly type!: EPagerType;
-	/** The number of pages visible on each side (only for {@link EPageType.Abbreviated}) */
-	@Prop( { type: Number, default: 2 } ) private readonly sidesCount!: number;
+
+	/**
+	 * The number of pages visible on each side (only for [[EPageType.Abbreviated]])
+	 *
+	 * @vue Prop
+	 */
+	@Prop( { type: Number, default: 2 } ) public readonly sidesCount!: number;
 
 	public get sidesIndexes() {
 		return [...Array( this.sidesCount ).keys()].map( v => v + 1 );
@@ -35,11 +49,11 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 		return this.ptableInstance;
 	}
 
-	/** Returns `true` if the pager has an associated {@link datatable} with some rows. */
+	/** Returns `true` if the pager has an associated [[VueDatatable]] with some rows. */
 	public get show(): boolean {
 		return this.totalRows > 0;
 	}
-	/** The total number of rows in the associated {@link datatable}. */
+	/** The total number of rows in the associated [[VueDatatable]]. */
 	private get totalRows(): number {
 		try {
 			return this.tableInstance.totalRows;
@@ -47,9 +61,9 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 			return 0;
 		}
 	}
-	/** The total number of pages in the associated {@link datatable}. */
+	/** The total number of pages in the associated [[VueDatatable]]. */
 	public totalPages = 0;
-	/** The current page index in the associated {@link datatable}. */
+	/** The current page index in the associated [[VueDatatable]]. */
 	public page = 1;
 
 	/** HTML class on the wrapping `ul` around the pager buttons. */
@@ -91,7 +105,9 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 	/**
 	 * Link the pager with the table, assign to the table some properties, and trigger an event on the table.
 	 *
-	 * @emits Datatable#table.pager-bound
+	 * @emits VueDatatable.vuejs-datatable::pager-bound
+	 * @emits VueDatatable.vuejs-datatable::page-count-changed
+	 * @emits VueDatatable.vuejs-datatable::page-changed
 	 * @param tableName - The name of the table to bind the pager with.
 	 * @returns `true` if the link is succesfull, or `false` if it could not find a table to associate with.
 	 */

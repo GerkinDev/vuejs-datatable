@@ -11,12 +11,25 @@ import template from './vue-datatable-header.html';
 	...template,
 } )
 export class VueDatatableHeader<TRow extends {}> extends Vue {
-	/** The current sort direction for the current column. */
+	/**
+	 * The current sort direction for the current column.
+	 *
+	 * @vue Model
+	 */
 	@Model( 'change', { type: String } ) private readonly direction!: ESortDir | null;
 
-	/** The {@link Column} instance this header is for. */
+	/**
+	 * The [[Column]] instance this header is for.
+	 *
+	 * @vue Prop
+	 */
 	@Prop( { type: Object, required: true } ) private readonly column!: Column<TRow>;
-	/** The {@link Settings} instance associated with this {@link VueDatatable}'s header. */
+
+	/**
+	 * The [[TableType]] instance provided through [[TableTypeConsumer.tableType]].
+	 *
+	 * @vue Inject `table-type`
+	 */
 	@Inject( 'table-type' ) private readonly tableType!: TableType<any>;
 
 	/** `true` if this column is sortable. */

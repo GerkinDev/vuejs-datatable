@@ -49,7 +49,7 @@ export const enum EColAlign {
 /**
  * Enumeration of the different display modes available for the pager.
  *
- * @todo tutorial
+ * @tutorial pager-types
  */
 export const enum EPagerType {
 	Short = 'short',

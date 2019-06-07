@@ -5,7 +5,7 @@ import { Column } from '../../classes/column';
 import template from './vue-datatable-cell.html';
 
 /**
- * @todo Describe it
+ * This component is responsible of the display of a single table cell.
  */
 @Component( {
 	...template,
@@ -16,7 +16,10 @@ export class VueDatatableCell<TRow extends {}> extends Vue {
 	/** The row of this cell */
 	@Prop( { type: Object, required: true } ) private readonly row!: TRow;
 
-	/** The representation of the row in the current column */
+	/**
+	 * The representation of the row in the current column.
+	 * You can customize the cell content by changing [[IColumnDefinition.field]] or [[IColumnDefinition.representedAs]]
+	 */
 	public get content(): string {
 		return this.column.getRepresentation( this.row );
 	}

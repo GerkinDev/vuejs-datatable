@@ -12,13 +12,30 @@ import template from './vue-datatable-pager-button.html';
 	...template,
 } )
 export class VueDatatablePagerButton extends Vue {
-	/** Defines if the button is triggerable or not. */
+	/**
+	 * Defines if the button is triggerable or not.
+	 *
+	 * @vue Prop
+	 */
 	@Prop( { type: Boolean, default: false } ) private readonly disabled!: boolean;
-	/** Represents if the pager button is the currently selected one. */
+	/**
+	 * Represents if the pager button is the currently selected one.
+	 *
+	 * @vue Prop
+	 */
 	@Prop( { type: Boolean, default: false } ) private readonly selected!: boolean;
-	/** The page index of the button. */
+	/**
+	 * The page index of the button.
+	 *
+	 * @vue Prop
+	 */
 	@Prop( { type: Number } ) private readonly value!: number | null;
 
+	/**
+	 * The [[TableType]] instance provided through [[TableTypeConsumer.tableType]].
+	 *
+	 * @vue Inject `table-type`
+	 */
 	@Inject( 'table-type' ) private readonly tableType!: TableType<any>;
 
 	/** HTML classes to set on list items tags. */
@@ -29,15 +46,16 @@ export class VueDatatablePagerButton extends Vue {
 			this.selected ? this.tableType.setting( 'pager.classes.selected' ) : undefined,
 		);
 	}
+
 	/** CSS styles to apply on the list items tags */
 	public get liStyles() {
 		return { cursor: this.disabled ? 'not-allowed' : 'pointer' };
 	}
 
 	/**
-	 * Emits an event if the button is not {@link datatable-pager-button#disabled}.
+	 * Emits an event if the button is not [[VueDatatablePagerButton.disabled]].
 	 *
-	 * @emits click.
+	 * @emits vuejs-datatable::set-page.
 	 * @returns Nothing.
 	 */
 	public sendClick() {
