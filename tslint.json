@@ -1,5 +1,8 @@
 {
 	"extends": [
 		"@diaspora/dev-tslint"
-	]
+    ],
+    "rules": {
+        "no-implicit-dependencies": [true, ["vuejs-datatable"]]
+    }
 }

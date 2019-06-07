@@ -7,13 +7,16 @@ import visualizer from 'rollup-plugin-visualizer';
 import typescript from 'rollup-plugin-typescript2';
 import vueTemplateCompiler from 'rollup-plugin-vue-template-compiler';
 import replace from 'rollup-plugin-replace';
+import json from 'rollup-plugin-json';
 
-import { env } from 'process';
 import { isString } from 'util';
 import moment from 'moment';
+import _ from 'lodash';
+import { readFileSync } from 'tsconfig';
 
 // eslint-disable-next-line no-undef
 const pkg = require( './package.json' );
+const tsconfig = readFileSync( './tsconfig.json' );
 
 // The module name
 const name = pkg.name;
@@ -26,65 +29,75 @@ const userToString = p => {
 };
 const allContributorsString = allContributors.map( userToString ).join( ', ' );
 // Plugins used for build
-const getPlugins = iife => {
-	const babelPlugin = iife ? babel( {
-		exclude: 'node_modules/**',
-		extensions: ['.js', '.ts', '.html'],
-	} ) : undefined;
+export const getPlugins = (iife, environment) => {
+	const tsconfigOverride = {
+		compilerOptions: {
+			declaration: environment === 'production' && iife,
+			sourceMap: environment === 'production' && iife,
+		},
+		exclude: environment !== 'demo' ? ['tutorials/**'] : undefined,
+	};
 
-	const licensePlugin = env.BUILD === 'production' ? 
-		license( {
-			banner: `${ pkg.name } v${ pkg.version }
-License: ${ pkg.license }
-Repository: ${ pkg.repository.url }
-Generated on ${ moment().format( 'YYYY-MM-DD [at] HH:mm:ss' ) }.
-By ${ allContributorsString }`,
-		} ) :
-		undefined;
-		
-	const terserPlugin = [ 'production', 'demo' ].includes( env.BUILD ) ? terser({
-		compress: {
-			passes: 2,
-			unsafe: true,
-		}
-	}) : undefined;
-
-	const visualizerPlugin = visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } );
-
-	return [
-		vueTemplateCompiler({
+	return _.compact( [
+		environment !== 'demo' ? vueTemplateCompiler({
 			include: '**/*.html',
 			compilerOpts: {
 				whitespace: 'condense'
 			}
+		}) : undefined,
+
+		resolve({
+			extensions: [ '.ts', '.js', '.json' ],
+			browser: true,
 		}),
+		json(),
 		commonjs( {
 			namedExports: {
 				// left-hand side can be an absolute path, a path
 				// relative to the current directory, or the name
 				// of a module in node_modules
 				'object-path': [ 'get', 'set' ],
+				'lodash': Object.keys(_)
 			},
 		} ),
-		resolve({
-			jsnext: true,
-			extensions: [ '.ts', '.js', '.json' ],
-			browser: true,
-		}),
 		typescript({
 			objectHashIgnoreUnknownHack: true,
-			clean: env.BUILD === 'production',
+			clean: true,//environment === 'production',
+			include: _.compact( [
+				"src/*.ts",
+				"src/**/*.ts",
+				environment === 'demo' ? "tutorials/.tmp/**/*.ts" : undefined,
+				environment === 'demo' ? "tutorials/**/*.ts" : undefined,
+			] ),
+			tsconfigOverride,
 		}),
 		replace({
-			'process.env.NODE_ENV': `"${env.build}"`
+			'process.env.NODE_ENV': JSON.stringify( environment ),
 		}),
-		licensePlugin,
-		visualizerPlugin,
-		terserPlugin,
-		babelPlugin,
-		// Filter out `undefined` plugins
-	].filter( v => !!v );
-};
+
+		environment === 'production' ?  license( {
+			banner: `${ pkg.name } v${ pkg.version }
+License: ${ pkg.license }
+Repository: ${ pkg.repository.url }
+Generated on ${ moment().format( 'YYYY-MM-DD [at] HH:mm:ss' ) }.
+By ${ allContributorsString }`,
+		} ) : undefined,
+
+		environment !== 'test' ? terser({
+			compress: {
+				passes: 2,
+				unsafe: true,
+			}
+		}) : undefined,
+
+		environment === 'production' ? visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } ) : undefined,
+
+		iife ? babel( {
+			exclude: 'node_modules/**',
+			extensions: ['.js', '.ts', '.html'],
+		} ) : undefined,
+	] );
+}
 
 // Destination dir
 const outDir = 'dist';
@@ -92,30 +105,30 @@ const outDir = 'dist';
 // Should we generate source maps?
 const sourcemap = true;
 
-export default [
+export default () => [
 	{
-		input:  './src/index-iife.ts',
+		input:  './src/vuejs-datatable.ts',
 		output: {
 			file:    `${ outDir }/${ name }.js`,
 			format:  'iife',
 			// Use `name` as window to hack a bit & avoid exports. The name of the exports is exposed globally. See https://github.com/rollup/rollup/issues/494
-			name:    'window',
+			name:    'VuejsDatatable',
 			extend:  true,
 			sourcemap,
 			globals: { vue: 'Vue' },
 		},
-		plugins:  getPlugins( true ),
+		plugins:  getPlugins( true, 'production' ),
 		external: [ 'vue' ],
 	},
 	{
-		input:  './src/index-esm.ts',
+		input:  './src/vuejs-datatable.esm.ts',
 		output: {
 			file:   `${ outDir }/${ name }.esm.js`,
 			format: 'esm',
 			name,
 			sourcemap,
 		},
-		plugins:  getPlugins( false ),
+		plugins:  getPlugins( false, 'production' ),
 		external: ( Object.keys( pkg.peerDependencies ) || [] )
 			.concat( Object.keys( pkg.dependencies ) || [] ),
 	},
