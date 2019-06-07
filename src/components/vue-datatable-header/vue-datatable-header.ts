@@ -23,14 +23,17 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	private get canSort(): boolean {
 		return this.column.sortable;
 	}
+
 	/** `true` if this column is sorted in *ascending* mode. */
 	private get isSortedAscending(): boolean {
 		return this.direction === ESortDir.Asc;
 	}
+
 	/** `true` if this column is sorted in *descending* mode. */
 	private get isSortedDescending(): boolean {
 		return this.direction === ESortDir.Desc;
 	}
+
 	/** Get the HTML content of the header's sort icon */
 	public get sortButtonHtml(): string {
 		const htmlContents = this.tableType.setting( 'table.sorting' );

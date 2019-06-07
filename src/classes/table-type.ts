@@ -142,7 +142,6 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	 * @returns a new factored {@link VueDatatablePager} constructor.
 	 */
 	public getPagerDefinition(): typeof VueDatatablePager {
-
 		// tslint:disable-next-line: max-classes-per-file
 		return Mixins( VueDatatablePager, this.tableTypeConsumer );
 	}

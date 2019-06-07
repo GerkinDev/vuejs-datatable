@@ -1,6 +1,6 @@
 import { TMaybePromise } from '../../utils';
 import { Column } from '../column';
-import { IDisplayHandlerParam, IDisplayHandlerResult, IHandler } from './i-handler';
+import { ESortDir, IDisplayHandlerParam, IDisplayHandlerResult, IHandler } from './i-handler';
 
 // From https://stackoverflow.com/a/48660568/4839162
 const stableSort = <T>( arr: T[], compare: ( a: T, b: T ) => number ) => arr
@@ -47,7 +47,7 @@ export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], T
 	 * @param sortDir      - The direction of the sort.
 	 * @returns the sorted rows.
 	 */
-	public sortHandler( filteredData: TRow[], sortColumn: Column<TRow> | null, sortDir: 'asc' | 'desc' | null ): TMaybePromise<TRow[]> {
+	public sortHandler( filteredData: TRow[], sortColumn: Column<TRow> | null, sortDir: ESortDir | null ): TMaybePromise<TRow[]> {
 		if ( !sortColumn || sortDir === null ) {
 			return filteredData;
 		}

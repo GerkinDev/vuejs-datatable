@@ -6,4 +6,6 @@
 import { DatatableFactory } from './classes';
 export * from './classes/handlers';
 
+export { TColumnsDefinition, TDataFn, IDataFnParams, ITableContentParam, VueDatatable } from './components/vue-datatable/vue-datatable';
+
 export const VuejsDatatableFactory = new DatatableFactory();

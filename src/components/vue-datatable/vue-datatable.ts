@@ -25,6 +25,7 @@ export interface ITableContentParam<TRow extends {}> {
 	totalRowCount: number;
 }
 export type TDataFn<TRow extends {}> = ( ( search: IDataFnParams<TRow> ) => ITableContentParam<TRow> );
+export type TColumnsDefinition<TRow extends {}> = Array<IColumnDefinition<TRow>>;
 
 /**
  * The main component of the module, used to display a datatable.

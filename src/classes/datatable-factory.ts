@@ -117,9 +117,8 @@ export class DatatableFactory implements PluginObject<void> {
 		this.vueInstance = vue;
 		vue.prototype.$datatables = {};
 
-		// TODO: Remove `any` casts
-		vue.component( `${ DEFAULT_DATATABLE }-cell`, VueDatatableCell as any );
-		vue.component( `${ DEFAULT_DATATABLE }-header`, VueDatatableHeader as any );
+		vue.component( `${ DEFAULT_DATATABLE }-cell`, VueDatatableCell );
+		vue.component( `${ DEFAULT_DATATABLE }-header`, VueDatatableHeader );
 
 		for ( const type of Object.values( this.tableTypes ) ) {
 			this.installTableType( type.id );
@@ -138,11 +137,12 @@ export class DatatableFactory implements PluginObject<void> {
 			throw new Error( 'Not installed yet.' );
 		}
 		const tableType = this.tableTypes[id];
-		// TODO: Remove `any` casts
+
 		const tableDef = tableType.getTableDefinition();
-		this.vueInstance.component( id, tableDef as any );
+		this.vueInstance.component( id, tableDef );
 		const pagerDef = tableType.getPagerDefinition();
-		this.vueInstance.component( id + '-pager', pagerDef as any );
+		this.vueInstance.component( id + '-pager', pagerDef );
+
 		return this;
 	}
 
