@@ -91,7 +91,7 @@ new Vue({
             {label: 'First Name', field: 'user.firstName'},
             {label: 'Last Name', field: 'user.lastName'},
             {label: 'Email', field: 'user.email'},
-            {label: 'address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${row.state}`, interpolate: true}
+            {label: 'Address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${row.state}`, interpolate: true}
         ],
         rows: [
             //...
@@ -130,6 +130,40 @@ VuejsDatatable
 ## Documentation
 
 Browse the full documentation at [https://gerkindev.github.io/vuejs-datatable/](https://gerkindev.github.io/vuejs-datatable/).
+
+## Use a development version
+
+Sometimes, you'll need to use a development version of the module. This allow you to modify source code, run tests, and build custom versions of the module.
+
+Always existing branches are:
+
+* [`develop`](https://github.com/GerkinDev/vuejs-datatable/tree/develop): Latest changes, not yet validated.
+* [`staging`](https://github.com/GerkinDev/vuejs-datatable/tree/staging): Changes considered as stable and planned for next release.
+* [`master`](https://github.com/GerkinDev/vuejs-datatable/tree/master): Releases, stable versions.
+
+You may use other branches (for features, hotfixes, etc etc). Check out the [list of branches](https://github.com/GerkinDev/vuejs-datatable/branches).
+
+```sh
+# First, clone the repo
+# replace `my-branch` with the name of the branch you want to use
+git clone https://github.com/GerkinDev/vuejs-datatable.git#my-branch
+# Go to the repo directory
+cd vuejs-datatable
+# Install dependencies
+npm install
+# Run tests
+npm run test
+# Build the package
+npm run build
+```
+
+Optionaly, [link your local modules](https://docs.npmjs.com/cli/link.html) so you can use it in other modules.
+
+> You may need to run the following command as `sudo`
+
+```sh
+npm link
+```
 
 ## Attributions
 
