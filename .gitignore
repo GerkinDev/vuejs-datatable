@@ -14,3 +14,7 @@ dist/
 docs/
 
 \.rpt2_cache/
+
+\.vscode/csak-timelog\.json
+
+tutorials/\.tmp/

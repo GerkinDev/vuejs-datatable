@@ -1,0 +1,119 @@
+#demo-app {
+	nav > .pagination{
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		
+		> li {
+			position: relative;
+			color: #fff;
+			background-color: #337ab7;
+			border-color: #2e6da4;
+			display: inline-block;
+			padding: 6px 12px;
+			margin-bottom: 0;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.42857143;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+			border-radius: 4px;
+			
+			&.active{
+				background-color: #286090;
+				border-color: #204d74;
+			}
+			&:first-child:not(:last-child) {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+			&:last-child:not(:first-child) {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+			&:not(:first-child):not(:last-child) {
+				border-radius: 0;
+			}
+			&:first-child {
+				margin-left: 0;
+			}
+			> span:focus,
+			> span:hover {
+				color: inherit;
+				background: none;
+			}
+			> span {
+				border: none;
+				background: none;
+				color: inherit;
+				padding: 0;
+				margin: 0;
+			}
+		}
+	}
+
+	&.tutorial-pager-types {
+		.pagers-table{
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			margin-top: 15px;
+
+			ul{
+				padding: 0;
+				margin: 0 0 5px;
+			}
+		}
+	}
+	.pagination-no-margin .pagination{
+		margin: 0;
+	}
+}
+
+
+
+
+
+dl.inlined-elements{
+	display: table;
+
+	> div {
+		display: table-row;
+
+		> dt, > dd{
+			display: table-cell;
+		}
+		> dt::after{
+			content: " :\00A0";
+		}
+	}
+}
+
+
+.alert{
+    padding: 10px;
+    margin: 10px 0;
+	border: 1px solid transparent;
+	border-radius: 10px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+
+	$warn-color: #fed138;
+	&.alert-warning{
+		background-color: fade-out($color: $warn-color, $amount: 0.6);
+		border-color: darken($color: $warn-color, $amount: 0.6);
+	}
+	$info-color: #0084ff;
+	&.alert-info{
+		background-color: fade-out($color: $info-color, $amount: 0.6);
+		border-color: darken($color: $info-color, $amount: 0.6);
+	}
+}

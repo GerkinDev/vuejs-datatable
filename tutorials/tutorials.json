@@ -1,0 +1,29 @@
+{
+    "basic": {
+        "title": "Basic table"
+    },
+    "pager-types": {
+        "title": "Pager types"
+    },
+    "ajax-handler": {
+        "title": "Ajax table (with handler customization)"
+    },
+    "ajax-data": {
+        "title": "Ajax table (via <code>data</code> function)"
+    },
+    "custom-template": {
+        "title": "Custom template"
+    },
+    "custom-theme": {
+        "title": "Custom theme"
+    },
+    "multiple-tables": {
+        "title": "Multiple tables"
+    },
+    "no-pager": {
+        "title": "No pager"
+    },
+    "limit-rows-processing": {
+        "title": "Limit rows processing"
+    }
+}
