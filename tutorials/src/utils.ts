@@ -36,6 +36,8 @@ export interface ISpaceXLaunch {
 	};
 }
 export interface IPeople {
+	id: number;
+
 	address: string;
 	city: string;
 	state: string;

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<div id="demo-app">
+		<div class="row">
+			<div class="col-xs-12 form-inline">
+				<div class="form-group">
+					<label for="filter" class="sr-only">Filter</label>
+					<input id="filter" type="text" class="form-control" v-model="filter" placeholder="Filter" @keydown="$event.stopImmediatePropagation()">
+					{{filter}}
+				</div>
+			</div>
+			
+			<div class="col-xs-12 table-responsive">
+				<datatable :columns="columns" :data="rows" :filter="filter" :per-page="25"></datatable>
+				<datatable-pager v-model="page"></datatable-pager>
+			</div>
+		</div>
+	</div>
+
+	<script src="../../../node_modules/vue/dist/vue.js"></script>
+	<script src="../../../dist/vuejs-datatable.js"></script>
+	<script src="../../../tutorials/assets/rows.js"></script>
+	<script>
+const renderPeopleAddress = people => `${ people.address  }, ${  people.city  }, ${  people.state }`;
+new Vue( {
+	el: '#demo-app',
+
+	data: {
+		filter: '',
+
+		columns: [
+			{ label: 'ID', field: 'id', align: 'center', filterable: false, sortable: true },
+			{ label: 'Email', field: 'user.email', align: 'right', filterable: true, sortable: true },
+			{ label: 'Address', representedAs: renderPeopleAddress, align: 'right', filterable: false, sortable: false },
+		],
+		page: 1,
+		rows,
+	},
+
+	//created: () => res( app ),
+} )
+</script>
+</body>
+</html>
