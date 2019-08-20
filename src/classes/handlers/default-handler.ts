@@ -111,6 +111,6 @@ export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], T
 	 * @returns `true` if any column contains the searched string.
 	 */
 	public rowMatches( row: TRow, filterString: string, columns: Array<Column<TRow>> ): boolean {
-		return columns.some( column => column.matches( row, filterString ) );
+		return columns.some( column => !column.filterable || column.matches( row, filterString ) );
 	}
 }

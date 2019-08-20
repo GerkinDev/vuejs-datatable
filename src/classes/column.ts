@@ -193,7 +193,7 @@ export class Column<TRow extends {}> {
 	 * @returns `true` if the row matches the filter, `false` otherwise.
 	 */
 	public matches( row: TRow, filterString: string ): boolean {
-		const colRepresentation = ( `${  this.getRepresentation( row )  }` ).toLowerCase();
+		const colRepresentation = this.getRepresentation( row ).toLowerCase();
 
 		return colRepresentation.indexOf( filterString.toLowerCase() ) > -1;
 	}

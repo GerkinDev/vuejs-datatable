@@ -131,6 +131,13 @@ describe( 'can filter data', () => {
 		expect( filtered[0].id ).toBe( 1 );
 		expect( filtered[1].id ).toBe( 2 );
 	} );
+	it( 'Should not filter columns explicitly marked as non-filterable', async () => {
+		const handler = new DefaultHandler<RowType>();
+		const rowMatchSpied = jest.spyOn( handler, 'rowMatches' );
+
+		const filtered = await handler.filterHandler( [{ foo: 'qux' }], 'bar', [{ field: 'foo', filterable: false }] );
+		expect( filtered ).toHaveLength( 1 );
+	} );
 } );
 
 describe( 'can sort data', () => {
@@ -219,7 +226,7 @@ describe( 'can paginate data', () => {
 	} );
 } );
 it( 'Display handler extracts correct data', async () => {
-	const handler = new DefaultHandler<{id: number;}>();
+	const handler = new DefaultHandler<{id: number}>();
 	expect( await handler.displayHandler( {
 		filtered: [{ id: 1 }, { id: 2 }],
 		paged: [{ id: 1 }],
