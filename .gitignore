@@ -18,3 +18,7 @@ docs/
 \.vscode/csak-timelog\.json
 
 tutorials/\.tmp/
+
+cypress/videos/
+
+cypress/screenshots/
