@@ -135,7 +135,11 @@ describe( 'can filter data', () => {
 		const handler = new DefaultHandler<RowType>();
 		const rowMatchSpied = jest.spyOn( handler, 'rowMatches' );
 
-		const filtered = await handler.filterHandler( [{ foo: 'qux' }], 'bar', [{ field: 'foo', filterable: false }] );
+		const filtered = await handler.filterHandler(
+			[{ foo: 'qux', baz: 'bar' }, { foo: 'qux', baz: 'bat' }],
+			'bar',
+			[new Column( { field: 'foo', filterable: false } ), new Column( { field: 'baz', filterable: true } )],
+		);
 		expect( filtered ).toHaveLength( 1 );
 	} );
 } );
