@@ -56,3 +56,11 @@ export const enum EPagerType {
 	Abbreviated = 'abbreviated',
 	Long = 'long',
 }
+
+export const valueToString = ( val: any ): string => {
+	if ( val === null || typeof val === 'undefined' ) {
+		return '';
+	} else {
+		return val.toString();
+	}
+};

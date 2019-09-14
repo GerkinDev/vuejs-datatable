@@ -44,18 +44,25 @@ it( 'sets field', () => {
 	expect( column['field'] ).toBe( 'user.name' );
 } );
 
-it( 'sets callback', () => {
-	const repFn = jest.fn( () => 'test' );
-	const testObj = {};
-	const column = new Column( {
-		label: '',
-		representedAs: repFn,
+describe( 'Get representation', () => {
+	it( 'Using `representedAs`', () => {
+		const repFn = jest.fn( () => 'test' );
+		const testObj = {};
+		const column = new Column( {
+			label: '',
+			representedAs: repFn,
+		} );
+		expect( typeof column['representedAs'] ).toBe( 'function' );
+		expect( column.getRepresentation( testObj ) ).toBe( 'test' );
+		expect( repFn ).toHaveBeenCalledTimes( 1 );
+		expect( repFn ).toHaveBeenCalledWith( testObj );
 	} );
-
-	expect( typeof column['representedAs'] ).toBe( 'function' );
-	expect( column.getRepresentation( testObj ) ).toBe( 'test' );
-	expect( repFn ).toHaveBeenCalledTimes( 1 );
-	expect( repFn ).toHaveBeenCalledWith( testObj );
+	it.each( [[1, '1'], ['a', 'a'], [null, ''], [undefined, '']] )( 'Using `field` with prop value %p & expected representation "%s"', ( val, rep ) => {
+		expect( new Column( {
+			label: '',
+			field: 'foo'
+		} ).getRepresentation( { foo: val } ) ).toBe( rep );
+	} );
 } );
 
 it( 'sets component', () => {

@@ -1,7 +1,7 @@
 import { get, Path } from 'object-path';
 import Vue, { Component } from 'vue';
 
-import { EColAlign } from '../utils';
+import { EColAlign, valueToString } from '../utils';
 
 /**
  * Description of a single column of a datatable.
@@ -175,14 +175,14 @@ export class Column<TRow extends {}> {
 	 */
 	public getRepresentation( row: TRow ): string {
 		if ( this.representedAs && typeof this.representedAs === 'function' ) {
-			return this.representedAs( row );
+			return valueToString( this.representedAs( row ) );
 		}
 
 		if ( !this.field ) {
 			return '';
 		}
 
-		return get( row, this.field.toString() );
+		return valueToString( get( row, this.field.toString() ) );
 	}
 
 	/**
