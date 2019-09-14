@@ -118,7 +118,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	}
 	/** Base CSS class to apply to the `&lt;table&gt;` element. */
 	public get tableClass() {
-		return this.tableType.setting( 'table.class' );
+		return mergeClassVals( this.tableType.setting( 'table.class' ), this.$attrs.class )
+			.join( ' ' );
 	}
 
 	protected readonly tableType!: TableType<any>;
