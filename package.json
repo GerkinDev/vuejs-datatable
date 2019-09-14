@@ -10,7 +10,7 @@
         "doc": "npm run doc:examples && npm run doc:typedoc && npm run doc:copy-assets",
         "doc:copy-assets": "npm run doc:copy-assets:demos && npm run doc:copy-assets:lib && npm run doc:styles && npm run doc:copy-assets:data",
         "doc:copy-assets:demos": "npx copyfiles -f tutorials/dist/*.js docs/assets/js/tutorials",
-        "doc:copy-assets:lib": "npx copyfiles -f dist/vuejs-datatable.js dist/vuejs-datatable.js.map docs/assets/js",
+        "doc:copy-assets:lib": "npx copyfiles -f dist/vuejs-datatable.js dist/vuejs-datatable.js.map dist/themes/bootstrap-3.js docs/assets/js",
         "doc:styles": "node-sass --output-style compressed ./tutorials/assets/additional-styles.scss --output ./docs/assets/css",
         "doc:copy-assets:data": "npx copyfiles -f tutorials/assets/rows.js docs/assets/js",
         "doc:examples": "rimraf tutorials/{dist,.tmp} && ts-node -P ./tsconfig.json -O {\\\"module\\\":\\\"commonjs\\\"} tutorials/build/build-examples.ts",

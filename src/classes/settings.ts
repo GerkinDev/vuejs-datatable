@@ -60,7 +60,7 @@ export class Settings {
 	/** Tree of settings values. */
 	private properties: ISettingsProperties = {
 		table: {
-			class: 'table table-hover table-striped',
+			class: '',
 			row:   {
 				class: '',
 			},
@@ -75,7 +75,7 @@ export class Settings {
 			classes: {
 				disabled: 'disabled',
 				li:       '',
-				pager:    'pagination',
+				pager:    '',
 				selected: 'active',
 			},
 			icons: {

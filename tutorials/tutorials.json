@@ -25,5 +25,8 @@
     },
     "limit-rows-processing": {
         "title": "Limit rows processing"
+    },
+    "prebuilt-theme": {
+        "title": "Prebuilt theme"
     }
 }

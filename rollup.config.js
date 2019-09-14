@@ -18,8 +18,10 @@ import { readFileSync } from 'tsconfig';
 const pkg = require( './package.json' );
 const tsconfig = readFileSync( './tsconfig.json' );
 
+const env = process.env.BUILD || 'development';
 // The module name
-const name = pkg.name;
+const pkgName = pkg.name;
+const globalName = 'VuejsDatatable';
 const allContributors = [ pkg.author ].concat( pkg.contributors );
 const userToString = p => {
 	if ( isString( p ) ){
@@ -83,7 +85,7 @@ Generated on ${ moment().format( 'YYYY-MM-DD [at] HH:mm:ss' ) }.
 By ${ allContributorsString }`,
 		} ) : undefined,
 
-		environment !== 'test' ? terser({
+		environment === 'production' ? terser({
 			compress: {
 				passes: 2,
 				unsafe: true,
@@ -105,31 +107,70 @@ const outDir = 'dist';
 // Should we generate source maps?
 const sourcemap = true;
 
+
+const externalDeps = ( Object.keys( pkg.peerDependencies ) || [] )
+	.concat( Object.keys( pkg.dependencies ) || [] );
+
+
+const makeThemeConfig = themeName => {
+	const baseConfig = {
+		input:  `./src/themes/${themeName}.ts`,
+		output: {
+			sourcemap,
+			globals: { [pkgName]: globalName },
+		},
+		plugins:  getPlugins( false, env ),
+		external: externalDeps.concat( [ pkgName ] ),
+	};
+	return [
+		{
+			...baseConfig,
+			output: {
+				...baseConfig.output,
+				file:   `${ outDir }/themes/${themeName}.js`,
+				format: 'iife',
+			},
+		},
+		{
+			...baseConfig,
+			output: {
+				...baseConfig.output,
+				file:   `${ outDir }/themes/${themeName}.esm.js`,
+				format: 'esm',
+			},
+		},
+	]
+}
+
+
 export default () => [
 	{
 		input:  './src/vuejs-datatable.ts',
 		output: {
-			file:    `${ outDir }/${ name }.js`,
+			file:    `${ outDir }/${ pkgName }.js`,
 			format:  'iife',
 			// Use `name` as window to hack a bit & avoid exports. The name of the exports is exposed globally. See https://github.com/rollup/rollup/issues/494
-			name:    'VuejsDatatable',
+			name:    globalName,
 			extend:  true,
 			sourcemap,
 			globals: { vue: 'Vue' },
 		},
-		plugins:  getPlugins( true, 'production' ),
+		plugins:  getPlugins( true, env ),
 		external: [ 'vue' ],
 	},
 	{
 		input:  './src/vuejs-datatable.esm.ts',
 		output: {
-			file:   `${ outDir }/${ name }.esm.js`,
+			file:   `${ outDir }/${ pkgName }.esm.js`,
 			format: 'esm',
-			name,
+			name: pkgName,
 			sourcemap,
 		},
-		plugins:  getPlugins( false, 'production' ),
-		external: ( Object.keys( pkg.peerDependencies ) || [] )
-			.concat( Object.keys( pkg.dependencies ) || [] ),
+		plugins:  getPlugins( false, env ),
+		external: externalDeps,
 	},
+	
+	// Themes
+	...makeThemeConfig( 'bootstrap-3' ),
+	...makeThemeConfig( 'bootstrap-4' ),
 ];

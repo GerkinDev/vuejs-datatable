@@ -3,7 +3,7 @@ import { Settings } from './settings';
 it( 'can retrieve properties', () => {
 	const settings = new Settings();
 
-	expect( settings.get( 'table.class' ) ).toBe( 'table table-hover table-striped' );
+	expect( settings.get( 'table.sorting.sortAsc' ) ).toBe( '↓' );
 } );
 
 it( 'can set properties', () => {
