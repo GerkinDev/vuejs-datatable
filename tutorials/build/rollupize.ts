@@ -1,4 +1,7 @@
 // tslint:disable-next-line: no-implicit-dependencies
+import { F_OK } from 'constants';
+import { promises } from 'fs';
+// tslint:disable-next-line: no-implicit-dependencies
 import jscc from 'jscc';
 // tslint:disable-next-line: no-implicit-dependencies
 import { memoize } from 'lodash';
@@ -50,6 +53,13 @@ const getRollupPlugins = async ( iife = true ) => {
 };
 
 export const rollupize = async ( sourceFile: string ) => {
+	// Check if the script file exist. If it does not, return `undefined`
+	try {
+		await promises.access( sourceFile, F_OK );
+	} catch {
+		return undefined;
+	}
+
 	// Wrap scripts for single execution
 	const execFile = await generateWrappedScript( sourceFile );
 

@@ -1,6 +1,6 @@
 ## Introduction
 
-You can create a custom [Table Type](../classes/tabletype.html) dedicated to AJAX-sourced data. This approach has the advantage of being totally reuasble, while the [AJAX via data function](./ajax-data.html) may be less reuasble across multiple table instances.
+You can create a custom [Table Type](../../classes/tabletype.html) dedicated to AJAX-sourced data. This approach has the advantage of being totally reuasble, while the [AJAX via data function](./ajax-data.html) may be less reuasble across multiple table instances.
 
 The example bellow reuses 2 times the same logic, changing only the `data` parameter to a different endpoint.
 

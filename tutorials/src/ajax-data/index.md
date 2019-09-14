@@ -1,6 +1,6 @@
 ## Introduction
 
-You can customize a single [VueDatatable](../classes/vuedatatable.html) by providing a *data function* instead of the normal array of objects. This function should be a valid [TDataFn](../globals.html#tdatafn).
+You can customize a single [VueDatatable](../../classes/vuedatatable.html) by providing a *data function* instead of the normal array of objects. This function should be a valid [TDataFn](../../globals.html#tdatafn).
 
 <div class="alert alert-info">
 	<i class="fas fa-info-circle"></i>

@@ -37,27 +37,32 @@ const allOperations = dirs.map( ( dir, index ) => async () => {
 	] );
 	let mdTuto = mdTutoCst;
 
-	const htmlAppCodeMatch = mdTuto.match( /(<div[^>]+id="demo-app".+?<\/div>)(?=\s+## Code)/gms );
-	if ( !htmlAppCodeMatch || htmlAppCodeMatch.length < 1 ) {
-		throw new Error();
-	}
-	const htmlAppCode = htmlAppCodeMatch[0];
-	mdTuto = rewriteBaseVueApp( mdTuto, htmlAppCode, dir );
-
-	const toMdCodeBlock = ( type: string, code: string ) =>
-		`\`\`\`${ type }\n${ code.replace( /\t/g, '    ' ) }\n\`\`\``;
-	mdTuto = mdTuto.replace( '```HTML```', toMdCodeBlock( 'html', htmlAppCode ) );
-	mdTuto = mdTuto.replace( '```TS```',   toMdCodeBlock( 'ts', scripts.display ) );
-
 	ensureDirSync( tutorialOutDir );
-	try {
-		const demoScriptName = `demo-${dir}.js`;
 
-		mdTuto = mdTuto.replace( '<script id="demo-script"></script>', `<script src="{{relativeURLToRoot /assets/js/tutorials/${demoScriptName}}}" defer></script>` );
-		await writeFile( resolve( tutorialOutDir, demoScriptName ), scripts.exec, 'UTF-8' );
-	} catch ( e ) {
-		// tslint:disable-next-line: no-console
-		console.warn( `For demo "${ dir }":`, e );
+	const htmlAppCodeMatch = mdTuto.match( /(<div[^>]+id="demo-app".+?<\/div>)(?=\s+## Code)/gms );
+	if ( htmlAppCodeMatch && htmlAppCodeMatch.length >= 1 ) {
+		const htmlAppCode = htmlAppCodeMatch[0];
+		mdTuto = rewriteBaseVueApp( mdTuto, htmlAppCode, dir );
+		const toMdCodeBlock = ( type: string, code: string ) =>
+			`\`\`\`${ type }\n${ code.replace( /\t/g, '    ' ) }\n\`\`\``;
+		mdTuto = mdTuto.replace( '```HTML```', toMdCodeBlock( 'html', htmlAppCode ) );
+		if ( scripts ) {
+			mdTuto = mdTuto.replace( '```TS```',   toMdCodeBlock( 'ts', scripts.display ) );
+		}
+
+		if ( scripts ) {
+			try {
+				const demoScriptName = `demo-${dir}.js`;
+
+				mdTuto = mdTuto.replace( '<script id="demo-script"></script>', `<script src="{{relativeURLToRoot /assets/js/tutorials/${demoScriptName}}}" defer></script>` );
+				await writeFile( resolve( tutorialOutDir, demoScriptName ), scripts.exec, 'UTF-8' );
+			} catch ( e ) {
+				// tslint:disable-next-line: no-console
+				console.warn( `For demo "${ dir }":`, e );
+			}
+		} else {
+			throw new Error();
+		}
 	}
 
 	mdTuto = mdTuto.replace(

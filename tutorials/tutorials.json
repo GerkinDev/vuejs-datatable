@@ -5,17 +5,29 @@
     "pager-types": {
         "title": "Pager types"
     },
-    "ajax-handler": {
-        "title": "Ajax table (with handler customization)"
-    },
-    "ajax-data": {
-        "title": "Ajax table (via <code>data</code> function)"
+    "ajax": {
+        "title": "Ajax table",
+        "description": "Source your data table from an API",
+        "children": {
+            "ajax-handler": {
+                "title": "Ajax table (with handler customization)"
+            },
+            "ajax-data": {
+                "title": "Ajax table (via <code>data</code> function)"
+            }
+        }
     },
     "custom-template": {
         "title": "Custom template"
     },
     "custom-theme": {
-        "title": "Custom theme"
+        "title": "Custom theme",
+        "description": "See how to set custom themes on your data tables.",
+        "children": {
+            "prebuilt-theme": {
+                "title": "Prebuilt theme"
+            }
+        }
     },
     "multiple-tables": {
         "title": "Multiple tables"
@@ -25,8 +37,5 @@
     },
     "limit-rows-processing": {
         "title": "Limit rows processing"
-    },
-    "prebuilt-theme": {
-        "title": "Prebuilt theme"
     }
 }
