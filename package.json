@@ -120,8 +120,9 @@
     "standard-version": {
         "scripts": {
             "postbump": "npm run version"
-        }
-    },
+        },
+        "message": "chore: 🤖 release {{currentTag}} from {{previousTag}}"
+    },    
     "author": {
         "name": "Patrick Stephan",
         "email": "pstephan1187@gmail.com"
