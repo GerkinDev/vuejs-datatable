@@ -12,6 +12,7 @@ module.exports = {
 	collectCoverageFrom: [
 		'src/**/*.{[jt]s,vue}',
 		'!src/index-{esm,iife}.ts',
+		'!src/themes/**',
 		'!**/node_modules/**'
 	],
 	globals: {
