@@ -46,7 +46,7 @@ const app = new Vue( {
 				.then( sortedData => ensurePromise( this.handler.paginateHandler( outObj.sorted = sortedData, params.perPage, this.page ) ) )
 				.then( pagedData => ensurePromise( this.handler.displayHandler( Object.assign( { paged: pagedData }, outObj ) as IDisplayHandlerParam<IPeople, any, any, any, any> ) ) );
 			// Below is only for the displayed content in the demo page
-// #endif
+//#endif
 		},
 		page:       1,
 		callsCount: 0,

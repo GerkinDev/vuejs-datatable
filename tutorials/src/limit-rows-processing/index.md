@@ -32,7 +32,7 @@ In this example, we use the [`_.debounce` function from *lodash*](https://lodash
         <output id="calls-count" class="col-xs-6 col-md-4">{{callsCount}}</output>
         <div class="col-xs-12 table-responsive">
             <datatable :columns="columns" :data="someLongOperation" :filter="filter" name="debounced" :per-page="25"></datatable>
-            <datatable-pager v-model="page" per-page="10" table="debounced"></datatable-pager>
+            <datatable-pager v-model="page" table="debounced"></datatable-pager>
         </div>
     </div>
     <div class="row">

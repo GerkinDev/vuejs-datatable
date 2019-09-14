@@ -17,7 +17,7 @@ export const mergeClassVals = ( mainObj: TClassVal, ...objs: Array<TClassVal | n
 	Object.entries(
 		Object.assign(
 			canonicalClassVals( mainObj ),
-			...( objs.filter( <T>( v: T | null ): v is T => v !== null ).map( v => canonicalClassVals( v ) ) ) ) as IDict<boolean> )
+			...( objs.map( v => canonicalClassVals( v ) ) ) ) as IDict<boolean> )
 	.filter( ( [, enabled] ) => enabled )
 	.map( ( [className] ) => className );
 
