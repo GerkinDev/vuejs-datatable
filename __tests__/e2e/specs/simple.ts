@@ -63,9 +63,9 @@ describe( 'Basic table', () => {
 
 		cy.get( appId + ' table tbody' )
 			.children()
-			.should( 'have.length', 4 )
+			.should( 'have.length', 6 )
 
-			.get( appId + ' table tbody tr td:nth-child(2)' )
+			.get( `${appId} table tbody tr` )
 			.each( e => {
 				cy.wrap( e ).should( 'contain.html', 'cs' );
 			} );

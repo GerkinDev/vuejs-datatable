@@ -15,7 +15,7 @@
         "doc:copy-assets:data": "npx copyfiles -f tutorials/assets/rows.js docs/assets/js",
         "doc:examples": "rimraf tutorials/{dist,.tmp} && ts-node -P ./tsconfig.json -O {\\\"module\\\":\\\"commonjs\\\"} tutorials/build/build-examples.ts",
         "doc:typedoc": "rimraf docs && typedoc --options ./typedoc.json",
-        "test": "npm run test:unit && npm run test:integration",
+        "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
         "test:ci": "jest --config jest.config.js",
         "test:ci:watch": "npm run test:ci --watch",
         "test:unit": "jest --config jest.unit.config.js",
@@ -135,28 +135,5 @@
         "type": "git",
         "url": "https://github.com/GerkinDev/vue-datatable"
     },
-    "license": "MIT",
-    "jest": {
-        "preset": "ts-jest/presets/js-with-ts",
-        "moduleFileExtensions": [
-            "js",
-            "ts",
-            "vue"
-        ],
-        "transform": {
-            ".*\\.ts$": "ts-jest",
-            ".*\\.html$": "<rootDir>/__tests__/helpers/transform-vue-template.js"
-        },
-        "collectCoverageFrom": [
-            "src/**/*.{[jt]s,vue}",
-            "!src/index-{esm,iife}.ts",
-            "!**/node_modules/**"
-        ],
-        "collectCoverage": true,
-        "globals": {
-            "ts-jest": {
-                "diagnostics": false
-            }
-        }
-    }
+    "license": "MIT"
 }
