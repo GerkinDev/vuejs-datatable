@@ -12,3 +12,15 @@ stats/
 dist/
 
 docs/
+
+\.rpt2_cache/
+
+\.vscode/csak-timelog\.json
+
+tutorials/\.tmp/
+
+cypress/videos/
+
+cypress/screenshots/
+
+.env

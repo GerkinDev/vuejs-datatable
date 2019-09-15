@@ -1,8 +1,6 @@
-vuejs-datatable
-===
+# vuejs-datatable
 
-A VueJS plugin to manage data tables
----
+> A VueJS plugin to manage data tables
 
 Allows for quick and easy setup of filterable, sortable, and paginated tables. Currently supports Vue.js ^2.4.
 
@@ -13,7 +11,7 @@ Allows for quick and easy setup of filterable, sortable, and paginated tables. C
 [![Build Status](https://travis-ci.com/GerkinDev/vuejs-datatable.svg?branch=master)](https://travis-ci.com/GerkinDev/vuejs-datatable)
 [![Maintainability](https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/maintainability)](https://codeclimate.com/github/GerkinDev/vuejs-datatable/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/test_coverage)](https://codeclimate.com/github/GerkinDev/vuejs-datatable/test_coverage)
-[![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable.svg)](https://github.com/GerkinDev/vuejs-datatable)
+[![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable)](https://github.com/GerkinDev/vuejs-datatable)
 [![license](https://img.shields.io/github/license/GerkinDev/vuejs-datatable.svg)](https://github.com/GerkinDev/vuejs-datatable/blob/master/LICENSE)
 
 E2E testing over Travis realized using
@@ -34,14 +32,14 @@ To install this package, simply install `vuejs-datatable` with your favorite pac
 # Using npm
 npm install vuejs-datatable
 # Using yarn
-yarn add vuejs-datatable
+yarn add vuejs-datatable 
 ```
 
 ### Import the package
 
 #### Use the ESM build
 
-> The [*ESM*](https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358) build (**E**cma**S**cript **M**odule) implies that you target browsers that support *ESM* **OR** you use a bundler, like [*webpack*](https://webpack.js.org/), [*rollup.js*](https://rollupjs.org/guide/en) or [*Parcel*](https://parceljs.org/).
+> The [*ESM*](https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358) build (**E**cma**S**cript **M**odule) implies that your target browsers supports *ESM* **OR** you use a bundler, like [*webpack*](https://webpack.js.org/), [*rollup.js*](https://rollupjs.org/guide/en) or [*Parcel*](https://parceljs.org/).
 
 Import & register the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html) in Vue:
 
@@ -56,7 +54,7 @@ Check out [*how to customize table types*](#customize-the-datatable) to see some
 
 #### Use the IIFE build
 
-> The [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) build (**I**mmediately **I**nvoked **F**unction **E**xpression) should be prefered only for small applications without bundlers, or if you privilegiate the use of a *CDN*
+> The [*IIFE*](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) build (**I**mmediately **I**nvoked **F**unction **E**xpression) should be prefered only for small applications without bundlers, or if you privilegiate the use of a *CDN*.
 
 In your HTML, load the *IIFE* build directly, if possible right before the closing `</body>` tag. You **must** make sure that the loading order is preserved, like below.
 
@@ -90,24 +88,24 @@ new Vue({
         columns: [
             {label: 'id', field: 'id'},
             {label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
-            {label: 'First Name', field: 'user.first_name'},
-            {label: 'Last Name', field: 'user.last_name'},
+            {label: 'First Name', field: 'user.firstName'},
+            {label: 'Last Name', field: 'user.lastName'},
             {label: 'Email', field: 'user.email'},
-            {label: 'address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${row.state}`, interpolate: true}
+            {label: 'Address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${row.state}`, interpolate: true}
         ],
         rows: [
             //...
             {
-                "id": 1,
-                "user": {
-                    "username": "dprice0",
-                    "first_name": "Daniel",
-                    "last_name": "Price",
-                    "email": "dprice0@blogs.com"
+                id: 1,
+                user: {
+                    username: "dprice0",
+                    firstName: "Daniel",
+                    lastName: "Price",
+                    email: "dprice0@blogs.com"
                 },
-                "address": "3 Toban Park",
-                "city": "Pocatello",
-                "state": "Idaho"
+                address: "3 Toban Park",
+                city: "Pocatello",
+                state: "Idaho"
             }
             //...
         ]
@@ -132,6 +130,40 @@ VuejsDatatable
 ## Documentation
 
 Browse the full documentation at [https://gerkindev.github.io/vuejs-datatable/](https://gerkindev.github.io/vuejs-datatable/).
+
+## Use a development version
+
+Sometimes, you'll need to use a development version of the module. This allow you to modify source code, run tests, and build custom versions of the module.
+
+Always existing branches are:
+
+* [`develop`](https://github.com/GerkinDev/vuejs-datatable/tree/develop): Latest changes, not yet validated.
+* [`staging`](https://github.com/GerkinDev/vuejs-datatable/tree/staging): Changes considered as stable and planned for next release.
+* [`master`](https://github.com/GerkinDev/vuejs-datatable/tree/master): Releases, stable versions.
+
+You may use other branches (for features, hotfixes, etc etc). Check out the [list of branches](https://github.com/GerkinDev/vuejs-datatable/branches).
+
+```sh
+# First, clone the repo
+# replace `my-branch` with the name of the branch you want to use
+git clone https://github.com/GerkinDev/vuejs-datatable.git#my-branch
+# Go to the repo directory
+cd vuejs-datatable
+# Install dependencies
+npm install
+# Run tests
+npm run test
+# Build the package
+npm run build
+```
+
+Optionaly, [link your local modules](https://docs.npmjs.com/cli/link.html) so you can use it in other modules.
+
+> You may need to run the following command as `sudo`
+
+```sh
+npm link
+```
 
 ## Attributions
 

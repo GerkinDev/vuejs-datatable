@@ -1,25 +1,36 @@
 {
     "name": "vuejs-datatable",
-    "version": "2.0.0-alpha.1",
+    "version": "2.0.0-alpha.2",
     "description": "A Vue.js component for filterable, sortable, and paginated tables.",
-    "main": "dist/vuejs-datatable.esm.js",
-    "module": "dist/vuejs-datatable.esm.js",
-    "browser": "dist/vuejs-datatable.esm.js",
-    "types": "types/index.d.ts",
+    "main": "dist/vuejs-datatable.esm",
+    "module": "dist/vuejs-datatable.esm",
+    "browser": "dist/vuejs-datatable.esm",
+    "types": "dist/vuejs-datatable.esm",
     "scripts": {
-        "doc": "npm run doc:examples && npm run doc:copy-assets && npm run doc:jsdoc",
-        "doc:copy-assets": "cp-cli dist/vuejs-datatable.js tutorials/assets/assets/vuejs-datatable.js",
-        "doc:examples": "rimraf tutorials/builds && node --experimental-modules tutorials/build-examples.mjs",
-        "doc:jsdoc": "rimraf docs && jsdoc -c jsdoc.conf.js .",
-        "test": "jest",
-        "test:ci": "jest --coverage --no-cache",
-        "test:watch": "jest --watch",
+        "ci": "ts-node -P tsconfig.json  -O {\\\"module\\\":\\\"commonjs\\\"} ci/run-ci.ts",
+        "doc": "npm run doc:examples && npm run doc:typedoc && npm run doc:copy-assets",
+        "doc:copy-assets": "npm run doc:copy-assets:demos && npm run doc:copy-assets:lib && npm run doc:styles && npm run doc:copy-assets:data",
+        "doc:copy-assets:demos": "npx copyfiles -f tutorials/dist/*.js docs/assets/js/tutorials",
+        "doc:copy-assets:lib": "npx copyfiles -f dist/vuejs-datatable.js dist/vuejs-datatable.js.map dist/themes/bootstrap-3.js docs/assets/js",
+        "doc:styles": "node-sass --output-style compressed ./tutorials/assets/additional-styles.scss --output ./docs/assets/css",
+        "doc:copy-assets:data": "npx copyfiles -f tutorials/assets/rows.js docs/assets/js",
+        "doc:examples": "rimraf tutorials/{dist,.tmp} && ts-node -P ./tsconfig.json -O {\\\"module\\\":\\\"commonjs\\\"} tutorials/build/build-examples.ts",
+        "doc:typedoc": "rimraf docs && typedoc --options ./typedoc.json",
+        "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
+        "test:ci:watch": "npm run test:ci --watch",
+        "test:unit": "jest --config jest.unit.config.js",
+        "test:unit:watch": "npm run test:unit -- --watch",
+        "test:integration": "jest --config jest.integration.config.js",
+        "test:integration:watch": "npm run test:integration -- --watch",
+        "test:e2e": "if [ -z \"$CYPRESS_KEY\" ]; then cypress run; else cypress run --record --key $CYPRESS_KEY; fi",
+        "test:e2e:gui": "cypress open",
+        "lint": "tslint --project tsconfig.json",
+        "lint:fix": "tslint --fix --project tsconfig.json",
         "build": "npm run build:production",
         "build:dev": "rollup -c rollup.config.js",
         "build:production": "rollup -c rollup.config.js --environment BUILD:production",
         "build:watch": "rollup -c rollup.config.js --watch",
-        "version": "npm run prepublishOnly && git add docs --force",
-        "prepublishOnly": "npm run test && npm run build && npm run doc",
+        "version": "npm run build && git add dist --force && npm run doc && git add docs --force",
         "release": "standard-version -a",
         "prerelease": "standard-version -a --prerelease"
     },
@@ -34,66 +45,81 @@
         "paginate",
         "pagination"
     ],
-    "dependencies": {
-        "object-path": "^0.11.4"
-    },
     "files": [
         "types",
         "dist",
         "docs"
     ],
+    "dependencies": {
+        "core-js": "^3.2.1",
+        "object-path": "^0.11.4",
+        "vue-property-decorator": "^8.2.2"
+    },
     "devDependencies": {
-        "@babel/core": "^7.3.3",
-        "@babel/preset-env": "^7.3.1",
-        "@diaspora/dev-tslint": "^1.0.3",
-        "@types/jest": "^24.0.6",
+        "@babel/core": "^7.6.0",
+        "@babel/preset-env": "^7.6.0",
+        "@diaspora/dev-tslint": "^1.2.0",
+        "@types/axios": "^0.14.0",
+        "@types/fs-extra": "^8.0.0",
+        "@types/jest": "^24.0.18",
+        "@types/jsdom": "^12.2.4",
+        "@types/lodash": "^4.14.138",
+        "@types/object-path": "^0.11.0",
+        "@types/semver": "^6.0.2",
         "@vue/test-utils": "^1.0.0-beta.29",
         "axios": "^0.19.0",
         "babel-core": "^7.0.0-bridge.0",
-        "babel-jest": "^24.1.0",
+        "babel-jest": "^24.9.0",
         "babel-preset-env": "^1.7.0",
-        "cp-cli": "^2.0.0",
-        "datatables.net": "1.10.19",
-        "eslint": "^5.12.1",
-        "eslint-plugin-html": "^5.0.0",
-        "eslint-plugin-standard": "^4.0.0",
-        "eslint-plugin-vue": "^5.1.0",
+        "chalk": "^2.4.2",
+        "copyfiles": "2.1.1",
+        "cypress": "^3.4.1",
         "flush-promises": "^1.0.2",
-        "foodoc": "0.0.9",
-        "jasmine-core": "^3.2.1",
-        "jest": "^24.1.0",
-        "jsdoc": "^3.5.5",
-        "jsdoc-vuejs": "^2.4.0",
-        "jsdom": "^14.0.0",
-        "karma": "^4.0.0",
-        "karma-chrome-launcher": "^2.2.0",
-        "karma-jasmine": "^2.0.0",
-        "rimraf": "^2.6.3",
-        "rollup": "^1.0.0",
-        "rollup-plugin-babel": "^4.0.3",
-        "rollup-plugin-commonjs": "^9.1.8",
-        "rollup-plugin-json": "^3.1.0",
-        "rollup-plugin-license": "^0.12.0",
+        "fs-extra": "^8.1.0",
+        "git-cz": "^3.2.1",
+        "jasmine-core": "^3.4.0",
+        "jest": "^24.9.0",
+        "jscc": "^1.1.1",
+        "jsdom": "^15.1.1",
+        "lodash": "^4.17.15",
+        "mkdirp": "^0.5.1",
+        "moment": "^2.24.0",
+        "node-sass": "^4.12.0",
+        "rimraf": "^3.0.0",
+        "rollup": "^1.21.2",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-json": "^4.0.0",
+        "rollup-plugin-license": "^0.12.1",
         "rollup-plugin-node-globals": "^1.4.0",
-        "rollup-plugin-node-resolve": "^4.0.0",
-        "rollup-plugin-string": "^3.0.0",
-        "rollup-plugin-terser": "^4.0.0",
-        "rollup-plugin-visualizer": "^1.0.2",
-        "rollup-plugin-vue": "^4.3.2",
-        "standard-version": "^5.0.0",
-        "ts-jest": "^24.0.0",
-        "typescript": "^3.3.3",
-        "vue": ">2.5.18",
-        "vue-jest": "^3.0.3",
-        "vue-template-compiler": ">2.5.18"
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-replace": "^2.2.0",
+        "rollup-plugin-terser": "^5.1.2",
+        "rollup-plugin-typescript2": "^0.24.2",
+        "rollup-plugin-visualizer": "^2.6.0",
+        "rollup-plugin-vue-template-compiler": "git+https://github.com/GerkinDev/rollup-plugin-vue-template-compiler.git",
+        "semver": "^6.3.0",
+        "standard-version": "^7.0.0",
+        "ts-jest": "^24.1.0",
+        "ts-node": "^8.3.0",
+        "tsconfig": "^7.0.0",
+        "tslint": "^5.20.0",
+        "tslint-eslint-rules": "^5.4.0",
+        "typedoc": "^0.15.0",
+        "typedoc-plugin-tutorials": "0.0.1-alpha.1",
+        "typescript": "^3.6.3",
+        "vue": "^2.6.10",
+        "vue-jest": "^3.0.5",
+        "vue-template-compiler": "^2.6.10"
     },
     "peerDependencies": {
-        "vue": ">2.5.18"
+        "vue": "^2.6.10"
     },
     "standard-version": {
         "scripts": {
             "postbump": "npm run version"
-        }
+        },
+        "releaseCommitMessageFormat": "chore: 🤖 release {{currentTag}} from {{previousTag}}"
     },
     "author": {
         "name": "Patrick Stephan",
@@ -108,34 +134,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/GerkinDev/vue-datatable"
+        "url": "https://github.com/GerkinDev/vuejs-datatable"
     },
     "license": "MIT",
-    "jest": {
-        "preset": "ts-jest/presets/js-with-ts",
-        "moduleFileExtensions": [
-            "js",
-            "ts",
-            "vue"
-        ],
-        "transform": {
-            "^.+\\.js$": "babel-jest",
-            ".*\\.vue$": "vue-jest",
-            ".*\\.ts$": "ts-jest"
-        },
-        "collectCoverageFrom": [
-            "src/**/*.{js,vue}",
-            "!**/node_modules/**"
-        ],
-        "testMatch": [
-            "**/__tests__/**/*.[jt]s?(x)",
-            "!**/__tests__/helpers/**/*.[jt]s?(x)",
-            "**/?(*.)+(spec|test).[jt]s?(x)"
-        ],
-        "globals": {
-            "ts-jest": {
-                "diagnostics": false
-            }
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/git-cz"
         }
     }
 }

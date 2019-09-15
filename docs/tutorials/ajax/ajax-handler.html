@@ -1,0 +1,304 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Ajax table (with handler customization) | vuejs-datatable</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../../assets/js/search.js" data-base="../..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../../index.html" class="title">vuejs-datatable</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+			</ul>
+			<h1> Ajax table (with handler customization)</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
+					<h2>Introduction</h2>
+				</a>
+				<p>You can create a custom <a href="../../classes/tabletype.html">Table Type</a> dedicated to AJAX-sourced data. This approach has the advantage of being totally reuasble, while the <a href="./ajax-data.html">AJAX via data function</a> may be less reuasble across multiple table instances.</p>
+				<p>The example bellow reuses 2 times the same logic, changing only the <code>data</code> parameter to a different endpoint.</p>
+				<div class="alert alert-info">
+					<i class="fas fa-info-circle"></i>
+					If you want to customize the behavior of your table for a <b>single use</b>, you may want to check the use of <a href="./ajax-data.html">the <code>data</code> function</a>. You may also want to <a href="./limit-rows-processing.html">debounce your data processing</a> to avoid requests spamming.
+				</div>
+				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+					<h2>Demo</h2>
+				</a>
+				<div id="demo-app" class="tutorial-ajax-handler"><div class="row"><div class="col-xs-12 table-responsive"><h3>Past launches</h3><ajaxtable :columns="columns" :data="apiUrlPast" name="pastLaunches" :per-page="10"></ajaxtable><datatable-pager table="pastLaunches"></datatable-pager></div><div class="col-xs-12 table-responsive"><h3>Upcoming launches</h3><ajaxtable :columns="columns" :data="apiUrlUpcoming" name="upcomingLaunches" :per-page="10"></ajaxtable><datatable-pager table="upcomingLaunches"></datatable-pager></div></div></div>
+				<a href="#code" id="code" style="color: inherit; text-decoration: none;">
+					<h2>Code</h2>
+				</a>
+				<a href="#typescript" id="typescript" style="color: inherit; text-decoration: none;">
+					<h3>Typescript</h3>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>;
+<span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
+<span class="hljs-keyword">import</span> { TColumnsDefinition, VuejsDatatableFactory } <span class="hljs-keyword">from</span> <span class="hljs-string">'vuejs-datatable'</span>;
+
+<span class="hljs-keyword">import</span> { colFieldToStr, formatUtcDate, ISpaceXLaunch, makeQueryStringFromObj } <span class="hljs-keyword">from</span> <span class="hljs-string">'../utils'</span>;
+
+VuejsDatatableFactory.registerTableType&lt;<span class="hljs-built_in">any</span>, <span class="hljs-built_in">any</span>, <span class="hljs-built_in">any</span>, <span class="hljs-built_in">any</span>, <span class="hljs-built_in">any</span>&gt;( <span class="hljs-string">'ajaxtable'</span>, <span class="hljs-function"><span class="hljs-params">tableType</span> =&gt;</span> tableType
+    .setFilterHandler( <span class="hljs-function">(<span class="hljs-params"> source, filter, columns </span>) =&gt;</span> ( {
+        <span class="hljs-comment">// See https://documenter.getpostman.com/view/2025350/RWaEzAiG#json-field-masking</span>
+        filter: columns.map( <span class="hljs-function"><span class="hljs-params">col</span> =&gt;</span> colFieldToStr( col.field! ).replace( <span class="hljs-regexp">/\./g</span>, <span class="hljs-string">'/'</span> ) ).join( <span class="hljs-string">','</span> ),
+    } ) )
+    .setSortHandler( <span class="hljs-function">(<span class="hljs-params"> endpointDesc, sortColumn, sortDir </span>) =&gt;</span> ( {
+        ...endpointDesc,
+
+        ...( sortColumn &amp;&amp; sortDir ? {
+            order: sortDir,
+            sort:  colFieldToStr( sortColumn.field! ).replace( <span class="hljs-regexp">/\./g</span>, <span class="hljs-string">'/'</span> ),
+        } : {} ),
+     } ) )
+    .setPaginateHandler( <span class="hljs-function">(<span class="hljs-params"> endpointDesc, perPage, pageIndex </span>) =&gt;</span> ( {
+        ...endpointDesc,
+
+        ...( perPage !== <span class="hljs-literal">null</span> ? {
+            limit:  perPage || <span class="hljs-number">10</span>,
+            offset: ( ( pageIndex - <span class="hljs-number">1</span> ) * perPage ) || <span class="hljs-number">0</span>,
+        } : {} ),
+    } ) )
+    <span class="hljs-comment">// Alias our process steps, because the source, here, is our API url, and paged is the complete query string</span>
+    .setDisplayHandler( <span class="hljs-keyword">async</span> ( { source: baseEndPoint, paged: endpointDesc } ) =&gt; {
+        <span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${ baseEndPoint }</span>?<span class="hljs-subst">${ makeQueryStringFromObj( endpointDesc ) }</span>`</span>;
+
+        <span class="hljs-keyword">const</span> {
+            <span class="hljs-comment">// Data to display</span>
+            data,
+            <span class="hljs-comment">// Get the total number of matched items</span>
+            headers: { <span class="hljs-string">'spacex-api-count'</span>: totalCount },
+        } = <span class="hljs-keyword">await</span> axios.get&lt;ISpaceXLaunch[]&gt;( url );
+
+        <span class="hljs-keyword">return</span> {
+            rows:          data,
+            totalRowCount: <span class="hljs-built_in">parseInt</span>( totalCount, <span class="hljs-number">10</span> ),
+        };
+    } ) );
+
+<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue( {
+    el:   <span class="hljs-string">'#demo-app'</span>,
+    data: {
+        columns: [
+            { label: <span class="hljs-string">'Flight number'</span>, field: <span class="hljs-string">'flight_number'</span> },
+            { label: <span class="hljs-string">'Mission name'</span>, field: <span class="hljs-string">'mission_name'</span> },
+            { label: <span class="hljs-string">'Launch date'</span>, field: <span class="hljs-string">'launch_date_utc'</span>, representedAs: <span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> formatUtcDate( <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>( row.launch_date_utc ) ) },
+            { label: <span class="hljs-string">'Rocket type'</span>, field: <span class="hljs-string">'rocket.rocket_name'</span>, sortable: <span class="hljs-literal">false</span> },
+            { label: <span class="hljs-string">'Launch site'</span>, field: <span class="hljs-string">'launch_site.site_name_long'</span>, sortable: <span class="hljs-literal">false</span> },
+            {
+                field:         <span class="hljs-string">'links.mission_patch_small'</span>,
+                interpolate:   <span class="hljs-literal">true</span>,
+                label:         <span class="hljs-string">'Mission patch'</span>,
+                representedAs: <span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.links.mission_patch_small ?
+                    <span class="hljs-string">`&lt;img src="<span class="hljs-subst">${ row.links.mission_patch_small }</span>" alt="<span class="hljs-subst">${ row.mission_name }</span> patch" style="height: 6em;"/&gt;`</span> :
+                    <span class="hljs-string">`&lt;img src="https://www.gvmc.gov.in/wss/images/noimageavailable.png" alt="No patch for mission &amp;quot;<span class="hljs-subst">${ row.mission_name }</span>&amp;quot; available" style="height: 6em;"/&gt;`</span>,
+                sortable:      <span class="hljs-literal">false</span>,
+            },
+            {
+                field:         <span class="hljs-string">'links.reddit_campaign'</span>,
+                interpolate:   <span class="hljs-literal">true</span>,
+                label:         <span class="hljs-string">'Reddit link'</span>,
+                representedAs: <span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> <span class="hljs-string">`&lt;a href="<span class="hljs-subst">${ row.links.reddit_campaign }</span>"&gt;<span class="hljs-subst">${ row.mission_name }</span> Reddit thread&lt;/a&gt;`</span>,
+                sortable:      <span class="hljs-literal">false</span>,
+            },
+        ] <span class="hljs-keyword">as</span> TColumnsDefinition&lt;ISpaceXLaunch&gt;,
+        page:           <span class="hljs-number">1</span>,
+
+        apiUrlPast:     <span class="hljs-string">'https://api.spacexdata.com/v3/launches/past'</span>,
+        apiUrlUpcoming: <span class="hljs-string">'https://api.spacexdata.com/v3/launches/upcoming'</span>,
+    },
+} );
+</code></pre>
+				<a href="#html" id="html" style="color: inherit; text-decoration: none;">
+					<h3>HTML</h3>
+				</a>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"demo-app"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"row"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-12 table-responsive"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Past launches<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ajaxtable</span> <span class="hljs-attr">:columns</span>=<span class="hljs-string">"columns"</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">"apiUrlPast"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"pastLaunches"</span> <span class="hljs-attr">:per-page</span>=<span class="hljs-string">"10"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ajaxtable</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">datatable-pager</span> <span class="hljs-attr">table</span>=<span class="hljs-string">"pastLaunches"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable-pager</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-12 table-responsive"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Upcoming launches<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ajaxtable</span> <span class="hljs-attr">:columns</span>=<span class="hljs-string">"columns"</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">"apiUrlUpcoming"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"upcomingLaunches"</span> <span class="hljs-attr">:per-page</span>=<span class="hljs-string">"10"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ajaxtable</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">datatable-pager</span> <span class="hljs-attr">table</span>=<span class="hljs-string">"upcomingLaunches"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable-pager</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous" defer></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" crossorigin="anonymous" defer></script>
+				<script src="../../assets/js/vuejs-datatable.js" defer></script>
+				<link rel="stylesheet" href="../../assets/css/additional-styles.css">
+				<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+				<script src="../../assets/js/tutorials/demo-ajax-handler.js" defer></script>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current ">
+						<a href="../index.html">Tutorial index</a>
+						<ul>
+							<li class=" ">
+								<a href="../basic.html">Basic table</a>
+							</li>
+							<li class=" ">
+								<a href="../pager-types.html">Pager types</a>
+							</li>
+							<li class="current ">
+								<a href="index.html">Ajax table</a>
+								<ul>
+									<li class="current ">
+										<a href="ajax-handler.html">Ajax table (with handler customization)</a>
+									</li>
+									<li class=" ">
+										<a href="ajax-data.html">Ajax table (via <code>data</code> function)</a>
+									</li>
+								</ul>
+							</li>
+							<li class=" ">
+								<a href="../custom-template.html">Custom template</a>
+							</li>
+							<li class=" ">
+								<a href="../custom-theme/index.html">Custom theme</a>
+							</li>
+							<li class=" ">
+								<a href="../multiple-tables.html">Multiple tables</a>
+							</li>
+							<li class=" ">
+								<a href="../no-pager.html">No pager</a>
+							</li>
+							<li class=" ">
+								<a href="../limit-rows-processing.html">Limit rows processing</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

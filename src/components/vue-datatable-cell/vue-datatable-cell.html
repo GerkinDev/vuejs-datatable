@@ -1,0 +1,18 @@
+<td
+	v-if="column.component"
+	:style="cellStyles">
+	<component
+		:is="column.component"
+		v-if="column.component"
+		:row="row"
+		:column="column" />
+</td>
+<td
+	v-else-if="column.interpolate"
+	:style="cellStyles"
+	v-html="content" />
+<td
+	v-else
+	:style="cellStyles">
+	{{ content }}
+</td>

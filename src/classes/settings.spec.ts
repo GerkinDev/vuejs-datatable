@@ -1,9 +1,9 @@
-import Settings from './settings';
+import { Settings } from './settings';
 
 it( 'can retrieve properties', () => {
 	const settings = new Settings();
 
-	expect( settings.get( 'table.class' ) ).toBe( 'table table-hover table-striped' );
+	expect( settings.get( 'table.sorting.sortAsc' ) ).toBe( '↓' );
 } );
 
 it( 'can set properties', () => {
@@ -39,7 +39,7 @@ describe( 'Settings merging', () => {
 			foo: {
 				bar: 'baz',
 			},
-		} );
+		} as any );
 
 		expect( settings.get( 'foo.bar' ) ).toBe( 'baz' );
 		expect( settings.get( 'table.sorting.sortAsc' ) ).toBe( '↓' );

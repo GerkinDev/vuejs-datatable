@@ -1,0 +1,11 @@
+{
+    "mode": "file",
+    "out": "docs",
+    "plugin": ["typedoc-plugin-tutorials"],
+    "includes": ["./src"],
+    "exclude": ["./**/*.spec.ts", "./**/__mocks__/*", "./tutorials/**/*"],
+    "readme": "README.md",
+
+    "tutorials-map": "./tutorials/tutorials.json",
+    "tutorials-directory": "./tutorials/dist"
+}

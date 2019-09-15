@@ -1,29 +1,48 @@
 language: node_js
 branches:
   only:
-    - master
-    - staging
-    - /^greenkeeper/.*$/
+  - master
+  - staging
+  - "/^greenkeeper/.*$/"
 notifications:
   email: false
 node_js:
-  - "10"
+- '10'
 matrix:
   include:
-  - node_js: "lts/*"
+  - node_js: lts/*
     env: CC_SAMPLE=true
+addons:
+  apt:
+    packages:
+    - libgconf-2-4
 cache:
   directories:
-    - "node_modules"
-
+  - node_modules
+  - "/home/travis/.cache"
 install: npm install
 before_script:
-  - |
-    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-    chmod +x ./cc-test-reporter
-    if [ "$CC_SAMPLE" = "true" ]; then echo "This run will be used for codeclimate";./cc-test-reporter before-build; fi
+- |
+  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  chmod +x ./cc-test-reporter
+  if [ "$CC_SAMPLE" = "true" ]; then echo "This run will be used for codeclimate";./cc-test-reporter before-build; fi
 script:
-  - npm run test:ci
+- npm run ci
 after_script:
-  - |
-    if [ "$CC_SAMPLE" = "true" ]; then echo "This run is used for codeclimate"; ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+- 'if [ "$CC_SAMPLE" = "true" ]; then echo "This run is used for codeclimate"; ./cc-test-reporter
+  after-build --exit-code $TRAVIS_TEST_RESULT; fi
+
+'
+env:
+  matrix:
+    secure: MjXS56QY72ddLPXbYhbKBwBCI07Iq2L8jzLsgGlrs6O2rv9+0ZJEY6t7NszhJn8nNa1mWTjwh/Px3g3j/2FIk7CUdynj1R5Ui+YuTYQBW70/o7Z9Lnr83yohx+RhM0vXYqtlNX4ry57CPgVo01ahelVj832wk351PaqKqwyBR2jy+p3l9vnGUPsb3w5XGYUYQ1l81q5sSo/t05DqCfeduVPpMbx+sEN/soBkUO0Pc8rxpW61UNJwfNpqGVQuX2NKeU3fhYdw0UA9mSJvyx6cRPntiUB8Dpl5r65qTfxJJToSIjAJEk73lVgnVaPrgE6fhgcqjA2obskA4Jx4IMiOuLHwiBjACZTQ5PClBmYcMrKpQkpMa6qQ/hz/q11VMKjY3UCsrdlUWgnlJhDrhJsHpgR55sVmQKZBTaFLoE1+IjOYavFVcMJha8RGZnYzcxw76F4XeoN9vq1/NjASWbwFEIjfGhDNSYwyaBUtIKkLb3JQNXW9wBc2od3Qw7LlkgxbEVUB6T7vGTW15aoMpvPImiiNg1dRBudVPRvCt8z3ViNWzpM67DcHDdhtGokoUsz/OHGyy7Dw435QqwgkAUAB/nNmA8uE1fYslMqYFga7AvOlA4+n7f+Avc+gRgrfebf1EFTkWFLXGSboUQSGVBMbxyKXWe4ImtuZaMsLH6QWvW8=
+deploy:
+  provider: npm
+  email: alexandre.j.p.germain@gmail.com
+  api_key:
+    secure: xB8qZxWoa3nNQzwGnBNRSOYsPgGnNGgmxQwe8s3mOmEOaTCRZmmz8la+uuEk2JIntCoF6TzNxnMnt4ctv3SO4Ncdy333+VgXNMPQr6m9njLlO9c+EL33VkUbdVbLvTV6WK2R1eyIzpZxQh1MERigFSOGRc0EJIfoe18kvk/yA2D8tQPL1gE/aaWCdgqcsSBtnaQI9YOErFj+EhBSrev2k2SAsrYrz0ATqhuTya9wSckmW2XTGCjvfWUc+EaQYnpFlH+yoprZABffL/RxsT2GiMpJhG7JRHKCVT6Nl20GQji5sZIlsznNcfc8EUuFiVRZuDb/nwouHpoYGMOQfnNsmmru6RGi2YpXgpFAZOvzuL0Vs8zuwxMZwym2sfSm0fml3TX5Ir5uqpnYRiGpTjJ6GrBu29IlzA5auKd+IZn7SRZo6ZSKCIxEzzN/e7+Gm4Tob/7echMZvxVx8Dr/yXMkcxqC4oYnQvxxn1ALQLIVscPrNthmajB5YY0em2xPIHjHMZEEw8A8Y+gdUt41gUpdT0b+Gu5Evci0m61i/rbedaA8Vlk/gOKeULP9+LKc+mJaOVSKwfLU7ydc4fvzB4ANvP6yWHP/QpyOY9tP3tP3H4/9laQF9rOs1AjgxURIfF+cBek0JzgUrU4E2VGacY1oArPW7q79wOpNvWRPFXltggw=
+  on:
+    tags: false
+    repo: GerkinDev/vuejs-datatable
+    branch: staging
+    condition: "-f ~/do-release"

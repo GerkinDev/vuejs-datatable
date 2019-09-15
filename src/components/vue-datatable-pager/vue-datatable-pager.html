@@ -1,0 +1,65 @@
+<nav v-if="show">
+	<ul :class="paginationClass">
+		<template v-if="type === 'abbreviated'">
+			<pager-button
+				v-if="page - sidesCount > 1"
+				:value="1" />
+			<pager-button
+				v-if="page - sidesCount > 2"
+				disabled>
+				...
+			</pager-button>
+			<template
+				v-for="val in sidesIndexes.slice().reverse()"
+				:key="val">
+				<pager-button
+					v-if="page - val >= 1"
+					:value="page - val" />
+			</template>
+
+			<pager-button
+				:value="page"
+				selected />
+
+			<template
+				v-for="val in sidesIndexes"
+				:key="val">
+				<pager-button
+					v-if="page + val <= totalPages"
+					:value="page + val" />
+			</template>
+			<pager-button
+				v-if="page + sidesCount < totalPages - 1"
+				disabled>
+				...
+			</pager-button>
+			<pager-button
+				v-if="page + sidesCount < totalPages"
+				:value="totalPages" />
+		</template>
+		<template
+			v-else-if="type === 'long'">
+			<pager-button
+				v-for="i in totalPages"
+				:key="i"
+				:value="i"
+				:selected="i === page" />
+		</template>
+		<template
+			v-else-if="type === 'short'">
+			<pager-button
+				v-if="page > 1"
+				:value="page - 1">
+				<span v-html="previousIcon" />
+			</pager-button>
+			<pager-button
+				:value="page"
+				selected />
+			<pager-button
+				v-if="page < totalPages"
+				:value="page + 1">
+				<span v-html="nextIcon" />
+			</pager-button>
+		</template>
+	</ul>
+</nav>

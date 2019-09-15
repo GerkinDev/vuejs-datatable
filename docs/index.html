@@ -1,251 +1,429 @@
-<!-- start:readme.hbs -->
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="default no-js">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-		<title>VueJS-Datatable</title>
-		<!--[if lt IE 9]>
-		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
-		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-		<link type="text/css" rel="stylesheet" href="css/prism.min.css">
-		<link type="text/css" rel="stylesheet" href="css/template.min.css">
-			<link type="text/css" rel="stylesheet" href="./assets/additional-styles.css">
-			<style>
-				.page-header,
-				pre.code-toolbar > .toolbar:hover {
-					background-color: #2779bd;
-				}
-				.callout-primary,
-				.toc .nav > li > a:hover,
-				.toc .nav > li > a:focus,
-				.toc .nav > li.active > a,
-				.toc .nav > li.active > a:hover,
-				.toc .nav > li.active > a:focus,
-				pre.code-toolbar > .toolbar:hover {
-					border-left-color: #2779bd;
-				}
-				pre.code-toolbar > .toolbar:hover {
-					border-bottom-color: #2779bd;
-				}
-				.callout-primary h5,
-				.symbol-title.collapsible-symbol .toggle-icon,
-				.breadcrumb li a,
-				.toc .nav > li > a:hover,
-				.toc .nav > li > a:focus,
-				.toc .nav > li.active > a,
-				.toc .nav > li.active > a:hover,
-				.toc .nav > li.active > a:focus {
-					color: #2779bd;
-				}
-			</style>
-		<script type="text/javascript">
-			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"Do MMM YYYY","systemName":"VueJS-Datatable","systemSummary":"A Vue.js component for filterable and paginated tables.","systemLogo":"","systemColor":"#2779bd","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.","linenums":true,"collapseSymbols":true,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":true,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":null,"stylesheets":["./assets/additional-styles.css"],"scripts":["https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js","./assets/vuejs-datatable.js"],"monospaceLinks":false,"cleverLinks":false,"default":{"staticFiles":{"include":["./tutorials/assets"]}}};
-			window.DOCLET_TOC_ENABLED = true;
-			window.DOCLET_AFILTER_ENABLED = false;
-		</script>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>vuejs-datatable</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-	<!-- start:navbar.hbs -->
-	<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<header>
+	<div class="tsd-page-toolbar">
 		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="index.html">
-					VueJS-Datatable
-				</a>
-				<!-- displayed on small devices -->
-				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-			</div>
-			<div class="navbar-collapse collapse" id="topNavigation">
-				<ul class="nav navbar-nav">
-								<li class="dropdown">
-									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
-									<ul class="dropdown-menu">
-											<li><a href="global.html#DataFnParams">DataFnParams</a></li>
-											<li><a href="global.html#DisplayHandlerResult">DisplayHandlerResult</a></li>
-											<li><a href="global.html#SettingsProps">SettingsProps</a></li>
-									</ul>
-								</li>
-								<li class="dropdown">
-									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-									<ul class="dropdown-menu">
-											<li><a href="Column.html">Column</a></li>
-											<li><a href="DatatableFactory.html">DatatableFactory</a></li>
-											<li><a href="Handler.html">Handler</a></li>
-											<li><a href="Settings.html">Settings</a></li>
-											<li><a href="TableType.html">TableType</a></li>
-									</ul>
-								</li>
-								<li class="dropdown">
-									<a href="list_module.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-									<ul class="dropdown-menu">
-											<li><a href="module-datatable.html">datatable</a></li>
-											<li><a href="module-datatable-cell.html">datatable-cell</a></li>
-											<li><a href="module-datatable-pager.html">datatable-pager</a></li>
-											<li><a href="module-datatable-pager-button.html">datatable-pager-button</a></li>
-											<li><a href="module-datatable-pager-button.html">datatable-pager-button</a></li>
-									</ul>
-								</li>
-								<li class="dropdown">
-									<a href="list_tutorial.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
-									<ul class="dropdown-menu">
-											<li><a href="tutorial-ajax-data.html">Ajax table (via <code>data</code> function)</a></li>
-											<li><a href="tutorial-ajax-handler.html">Ajax table (with handler customization)</a></li>
-											<li><a href="tutorial-basic.html">Basic table</a></li>
-											<li><a href="tutorial-custom-template.html">Custom template</a></li>
-											<li><a href="tutorial-custom-theme.html">Custom theme</a></li>
-											<li><a href="tutorial-multiple-tables.html">Multiple tables</a></li>
-											<li><a href="tutorial-no-pager.html">No pager</a></li>
-											<li><a href="tutorial-pager-types.html">Pager types</a></li>
-									</ul>
-								</li>
-				</ul>
-					<!-- start:lunr-search-navbar.hbs -->
-					<form class="navbar-form navbar-right" role="search">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Search" id="lunr-search-input">
-							<div class="input-group-btn">
-								<button class="btn btn-default" id="lunr-search-submit">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</div>
-						</div>
-					</form>
-					<!-- start:lunr-search-navbar.hbs -->		</div>
-		</div>
-	</header>
-	<!-- end:navbar.hbs -->		<div class="page-header">
-			<div class="container">
-				<span class="kind">readme</span>
-				<h1><span class="name">VueJS-Datatable</span></h1>
-				<div class="summary"><p>A Vue.js component for filterable and paginated tables.</p></div>			</div>
-		</div>
-	<div class="container content">
-		<div class="row">
-			<div class="col-md-9 main-content">
-		<section class="readme-section">
-			<article><h1>vuejs-datatable</h1><h2>A VueJS plugin to manage data tables</h2><p>Allows for quick and easy setup of filterable, sortable, and paginated tables. Currently supports Vue.js ^2.4.</p>
-<p><a href="https://www.npmjs.com/package/vuejs-datatable"><img src="https://img.shields.io/npm/dm/vuejs-datatable.svg" alt="npm"></a>
-<a href="https://www.npmjs.com/package/vuejs-datatable"><img src="https://badge.fury.io/js/vuejs-datatable.svg" alt="npm version"></a>
-<a href="https://renovatebot.com/"><img src="https://badges.renovateapi.com/github/GerkinDev/vuejs-datatable" alt="Renovate"></a>
-<a href="https://snyk.io/test/github/GerkinDev/vuejs-datatable?targetFile=package.json"><img src="https://snyk.io/test/github/GerkinDev/vuejs-datatable/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a>
-<a href="https://travis-ci.com/GerkinDev/vuejs-datatable"><img src="https://travis-ci.com/GerkinDev/vuejs-datatable.svg?branch=master" alt="Build Status"></a>
-<a href="https://codeclimate.com/github/GerkinDev/vuejs-datatable/maintainability"><img src="https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/maintainability" alt="Maintainability"></a>
-<a href="https://codeclimate.com/github/GerkinDev/vuejs-datatable/test_coverage"><img src="https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/test_coverage" alt="Test Coverage"></a>
-<a href="https://github.com/GerkinDev/vuejs-datatable"><img src="https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable.svg" alt="GitHub commit activity the past year"></a>
-<a href="https://github.com/GerkinDev/vuejs-datatable/blob/master/LICENSE"><img src="https://img.shields.io/github/license/GerkinDev/vuejs-datatable.svg" alt="license"></a></p>
-<p>E2E testing over Travis realized using</p>
-<p><a href="https://www.browserstack.com/"><img src="https://i1.wp.com/www.diogonunes.com/blog/wp-content/uploads/2016/07/browserstack-logo.png?resize=490%2C105" height="105.6" width="490.1" class="img-responsive"/></a></p>
-<p><a href="https://gerkindev.github.io/vuejs-datatable/">:point_right: Browse the documentation :books:</a></p>
-<hr>
-<h2>Getting started</h2><h3>Install the package</h3><p>To install this package, simply install <code>vuejs-datatable</code> with your favorite package manager:</p>
-<pre class="prettyprint source lang-sh"><code># Using npm
-npm install vuejs-datatable
-# Using yarn
-yarn add vuejs-datatable</code></pre><h3>Import the package</h3><h4>Use the ESM build</h4><blockquote>
-<p>The <a href="https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358"><em>ESM</em></a> build (<strong>E</strong>cma<strong>S</strong>cript <strong>M</strong>odule) implies that you target browsers that support <em>ESM</em> <strong>OR</strong> you use a bundler, like <a href="https://webpack.js.org/"><em>webpack</em></a>, <a href="https://rollupjs.org/guide/en"><em>rollup.js</em></a> or <a href="https://parceljs.org/"><em>Parcel</em></a>.</p>
-</blockquote>
-<p>Import &amp; register the <a href="https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html"><em>DatatableFactory</em></a> in Vue:</p>
-<pre class="prettyprint source lang-js"><code>import Vue from 'vue';
-import DatatableFactory from 'vuejs-datatable';
-
-Vue.use(DatatableFactory);</code></pre><p>Check out <a href="#customize-the-datatable"><em>how to customize table types</em></a> to see some usage of the <code>DatatableFactory</code>.</p>
-<h4>Use the IIFE build</h4><blockquote>
-<p>The <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE"><em>IIFE</em></a> build (<strong>I</strong>mmediately <strong>I</strong>nvoked <strong>F</strong>unction <strong>E</strong>xpression) should be prefered only for small applications without bundlers, or if you privilegiate the use of a <em>CDN</em></p>
-</blockquote>
-<p>In your HTML, load the <em>IIFE</em> build directly, if possible right before the closing <code>&lt;/body&gt;</code> tag. You <strong>must</strong> make sure that the loading order is preserved, like below.</p>
-<pre class="prettyprint source lang-html"><code>&lt;body>
-    &lt;!-- All your page content... -->
-    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js&quot; defer>&lt;/script>
-    &lt;script src=&quot;/dist/vuejs-datatable.js&quot; defer>&lt;/script>
-    &lt;script src=&quot;/myscript.js&quot; defer>&lt;/script>
-&lt;/body></code></pre><p>The <em>IIFE</em> build exposes the <a href="https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html"><em>DatatableFactory</em></a> as the global <code>VuejsDatatable</code>. Check out <a href="#customize-the-datatable"><em>how to customize table types</em></a> to see some usage of the <code>DatatableFactory</code>.</p>
-<h3>Use the component</h3><p>Use the component in your HTML or template:</p>
-<pre class="prettyprint source lang-html"><code>&lt;div id=&quot;vue-root&quot;>
-    &lt;datatable :columns=&quot;columns&quot; :data=&quot;rows&quot;>&lt;/datatable>
-&lt;/div></code></pre><p>Then pass in the columns and the data to your Vue instance:</p>
-<pre class="prettyprint source lang-js"><code>new Vue({
-    el: '#vue-root',
-    data: {
-        columns: [
-            {label: 'id', field: 'id'},
-            {label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
-            {label: 'First Name', field: 'user.first_name'},
-            {label: 'Last Name', field: 'user.last_name'},
-            {label: 'Email', field: 'user.email'},
-            {label: 'address', representedAs: ({address, city, state}) => `${address}&lt;br />${city}, ${row.state}`, interpolate: true}
-        ],
-        rows: [
-            //...
-            {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;username&quot;: &quot;dprice0&quot;,
-                    &quot;first_name&quot;: &quot;Daniel&quot;,
-                    &quot;last_name&quot;: &quot;Price&quot;,
-                    &quot;email&quot;: &quot;dprice0@blogs.com&quot;
-                },
-                &quot;address&quot;: &quot;3 Toban Park&quot;,
-                &quot;city&quot;: &quot;Pocatello&quot;,
-                &quot;state&quot;: &quot;Idaho&quot;
-            }
-            //...
-        ]
-    }
-});</code></pre><h3>Customize the datatable</h3><p>The DatatableFactory exposes several methods to allow you to add or modify other <code>datatable</code>-like components, with <a href="https://gerkindev.github.io/vuejs-datatable/tutorial-custom-theme.html">custom styles</a> or <a href="https://gerkindev.github.io/vuejs-datatable/tutorial-ajax-handler.html">behavior</a>.</p>
-<pre class="prettyprint source lang-js"><code>VuejsDatatable
-    .registerTableType( 'my-awesome-table', tableType => {
-        tableType
-            .mergeSettings( /* ... */ )
-            .setFilterHandler( /* ... */ )
-            .setSortHandler( /* ... */ );
-    } );</code></pre><h2>Documentation</h2><p>Browse the full documentation at <a href="https://gerkindev.github.io/vuejs-datatable/">https://gerkindev.github.io/vuejs-datatable/</a>.</p>
-<h2>Attributions</h2><ul>
-<li><a href="https://www.patrickstephan.me">Patrick Stephan</a>: Original author</li>
-<li><a href="https://github.com/GerkinDev/">Alexandre Germain</a>: Current maintainer</li>
-</ul></article>
-		</section>
-			</div>
-				<div class="col-md-3 side-content">
-					<nav class="toc hidden-print hidden-sm hidden-xs"></nav>
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">vuejs-datatable</a>
 				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
 		</div>
 	</div>
-	<footer>
-				<div class="copyright">FooDoc Copyright © 2016 The contributors to the JSDoc3 and FooDoc projects.</div>
-			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on 12th Mar 2019 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
-	</footer>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/clipboard.min.js"></script>
-	<script src="js/prism.min.js"></script>
-	<script src="js/template.min.js"></script>
-		<!-- start:lunr-search-modal.hbs -->
-		<div class="modal fade" id="lunr-search-modal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Search results</h4>
-					</div>
-					<div class="modal-body" id="lunr-search-body">
-					</div>
-					<div class="modal-footer" id="lunr-search-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> vuejs-datatable</h1>
 		</div>
-		<!-- end:lunr-search-modal.hbs -->		<script src="js/lunr.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.4/vue.min.js"></script>
-		<script src="./assets/vuejs-datatable.js"></script>
-	
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#vuejs-datatable" id="vuejs-datatable" style="color: inherit; text-decoration: none;">
+					<h1>vuejs-datatable</h1>
+				</a>
+				<blockquote>
+					<p>A VueJS plugin to manage data tables</p>
+				</blockquote>
+				<p>Allows for quick and easy setup of filterable, sortable, and paginated tables. Currently supports Vue.js ^2.4.</p>
+				<p><a href="https://www.npmjs.com/package/vuejs-datatable"><img src="https://img.shields.io/npm/dm/vuejs-datatable.svg" alt="npm"></a>
+					<a href="https://www.npmjs.com/package/vuejs-datatable"><img src="https://badge.fury.io/js/vuejs-datatable.svg" alt="npm version"></a>
+					<a href="https://renovatebot.com/"><img src="https://badges.renovateapi.com/github/GerkinDev/vuejs-datatable" alt="Renovate"></a>
+					<a href="https://snyk.io/test/github/GerkinDev/vuejs-datatable?targetFile=package.json"><img src="https://snyk.io/test/github/GerkinDev/vuejs-datatable/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a>
+					<a href="https://travis-ci.com/GerkinDev/vuejs-datatable"><img src="https://travis-ci.com/GerkinDev/vuejs-datatable.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codeclimate.com/github/GerkinDev/vuejs-datatable/maintainability"><img src="https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/maintainability" alt="Maintainability"></a>
+					<a href="https://codeclimate.com/github/GerkinDev/vuejs-datatable/test_coverage"><img src="https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/test_coverage" alt="Test Coverage"></a>
+					<a href="https://github.com/GerkinDev/vuejs-datatable"><img src="https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable" alt="GitHub commit activity the past year"></a>
+				<a href="https://github.com/GerkinDev/vuejs-datatable/blob/master/LICENSE"><img src="https://img.shields.io/github/license/GerkinDev/vuejs-datatable.svg" alt="license"></a></p>
+				<p>E2E testing over Travis realized using</p>
+				<p><a href="https://www.browserstack.com/"><img src="https://i1.wp.com/www.diogonunes.com/blog/wp-content/uploads/2016/07/browserstack-logo.png?resize=490%2C105" height="105.6" width="490.1" class="img-responsive"/></a></p>
+				<p><a href="https://gerkindev.github.io/vuejs-datatable/">:point_right: Browse the documentation :books:</a></p>
+				<hr>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting started</h2>
+				</a>
+				<a href="#install-the-package" id="install-the-package" style="color: inherit; text-decoration: none;">
+					<h3>Install the package</h3>
+				</a>
+				<p>To install this package, simply install <code>vuejs-datatable</code> with your favorite package manager:</p>
+				<pre><code class="language-sh"><span class="hljs-comment"># Using npm</span>
+npm install vuejs-datatable
+<span class="hljs-comment"># Using yarn</span>
+yarn add vuejs-datatable </code></pre>
+				<a href="#import-the-package" id="import-the-package" style="color: inherit; text-decoration: none;">
+					<h3>Import the package</h3>
+				</a>
+				<a href="#use-the-esm-build" id="use-the-esm-build" style="color: inherit; text-decoration: none;">
+					<h4>Use the ESM build</h4>
+				</a>
+				<blockquote>
+					<p>The <a href="https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358"><em>ESM</em></a> build (<strong>E</strong>cma<strong>S</strong>cript <strong>M</strong>odule) implies that your target browsers supports <em>ESM</em> <strong>OR</strong> you use a bundler, like <a href="https://webpack.js.org/"><em>webpack</em></a>, <a href="https://rollupjs.org/guide/en"><em>rollup.js</em></a> or <a href="https://parceljs.org/"><em>Parcel</em></a>.</p>
+				</blockquote>
+				<p>Import &amp; register the <a href="https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html"><em>DatatableFactory</em></a> in Vue:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
+<span class="hljs-keyword">import</span> DatatableFactory <span class="hljs-keyword">from</span> <span class="hljs-string">'vuejs-datatable'</span>;
+
+Vue.use(DatatableFactory);</code></pre>
+				<p>Check out <a href="#customize-the-datatable"><em>how to customize table types</em></a> to see some usage of the <code>DatatableFactory</code>.</p>
+				<a href="#use-the-iife-build" id="use-the-iife-build" style="color: inherit; text-decoration: none;">
+					<h4>Use the IIFE build</h4>
+				</a>
+				<blockquote>
+					<p>The <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE"><em>IIFE</em></a> build (<strong>I</strong>mmediately <strong>I</strong>nvoked <strong>F</strong>unction <strong>E</strong>xpression) should be prefered only for small applications without bundlers, or if you privilegiate the use of a <em>CDN</em>.</p>
+				</blockquote>
+				<p>In your HTML, load the <em>IIFE</em> build directly, if possible right before the closing <code>&lt;/body&gt;</code> tag. You <strong>must</strong> make sure that the loading order is preserved, like below.</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- All your page content... --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/dist/vuejs-datatable.js"</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/myscript.js"</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></code></pre>
+				<p>The <em>IIFE</em> build exposes the <a href="https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html"><em>DatatableFactory</em></a> as the global <code>VuejsDatatable</code>. Check out <a href="#customize-the-datatable"><em>how to customize table types</em></a> to see some usage of the <code>DatatableFactory</code>.</p>
+				<a href="#use-the-component" id="use-the-component" style="color: inherit; text-decoration: none;">
+					<h3>Use the component</h3>
+				</a>
+				<p>Use the component in your HTML or template:</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"vue-root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">datatable</span> <span class="hljs-attr">:columns</span>=<span class="hljs-string">"columns"</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">"rows"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+				<p>Then pass in the columns and the data to your Vue instance:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#vue-root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">columns</span>: [
+            {<span class="hljs-attr">label</span>: <span class="hljs-string">'id'</span>, <span class="hljs-attr">field</span>: <span class="hljs-string">'id'</span>},
+            {<span class="hljs-attr">label</span>: <span class="hljs-string">'Username'</span>, <span class="hljs-attr">field</span>: <span class="hljs-string">'user.username'</span>, <span class="hljs-attr">headerClass</span>: <span class="hljs-string">'class-in-header second-class'</span>},
+            {<span class="hljs-attr">label</span>: <span class="hljs-string">'First Name'</span>, <span class="hljs-attr">field</span>: <span class="hljs-string">'user.firstName'</span>},
+            {<span class="hljs-attr">label</span>: <span class="hljs-string">'Last Name'</span>, <span class="hljs-attr">field</span>: <span class="hljs-string">'user.lastName'</span>},
+            {<span class="hljs-attr">label</span>: <span class="hljs-string">'Email'</span>, <span class="hljs-attr">field</span>: <span class="hljs-string">'user.email'</span>},
+            {<span class="hljs-attr">label</span>: <span class="hljs-string">'Address'</span>, <span class="hljs-attr">representedAs</span>: <span class="hljs-function">(<span class="hljs-params">{address, city, state}</span>) =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${address}</span>&lt;br /&gt;<span class="hljs-subst">${city}</span>, <span class="hljs-subst">${row.state}</span>`</span>, <span class="hljs-attr">interpolate</span>: <span class="hljs-literal">true</span>}
+        ],
+        <span class="hljs-attr">rows</span>: [
+            <span class="hljs-comment">//...</span>
+            {
+                <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">user</span>: {
+                    <span class="hljs-attr">username</span>: <span class="hljs-string">"dprice0"</span>,
+                    <span class="hljs-attr">firstName</span>: <span class="hljs-string">"Daniel"</span>,
+                    <span class="hljs-attr">lastName</span>: <span class="hljs-string">"Price"</span>,
+                    <span class="hljs-attr">email</span>: <span class="hljs-string">"dprice0@blogs.com"</span>
+                },
+                <span class="hljs-attr">address</span>: <span class="hljs-string">"3 Toban Park"</span>,
+                <span class="hljs-attr">city</span>: <span class="hljs-string">"Pocatello"</span>,
+                <span class="hljs-attr">state</span>: <span class="hljs-string">"Idaho"</span>
+            }
+            <span class="hljs-comment">//...</span>
+        ]
+    }
+});</code></pre>
+				<a href="#customize-the-datatable" id="customize-the-datatable" style="color: inherit; text-decoration: none;">
+					<h3>Customize the datatable</h3>
+				</a>
+				<p>The DatatableFactory exposes several methods to allow you to add or modify other <code>datatable</code>-like components, with <a href="https://gerkindev.github.io/vuejs-datatable/tutorial-custom-theme.html">custom styles</a> or <a href="https://gerkindev.github.io/vuejs-datatable/tutorial-ajax-handler.html">behavior</a>.</p>
+				<pre><code class="language-js">VuejsDatatable
+    .registerTableType( <span class="hljs-string">'my-awesome-table'</span>, tableType =&gt; {
+        tableType
+            .mergeSettings( <span class="hljs-comment">/* ... */</span> )
+            .setFilterHandler( <span class="hljs-comment">/* ... */</span> )
+            .setSortHandler( <span class="hljs-comment">/* ... */</span> );
+    } );</code></pre>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>Browse the full documentation at <a href="https://gerkindev.github.io/vuejs-datatable/">https://gerkindev.github.io/vuejs-datatable/</a>.</p>
+				<a href="#use-a-development-version" id="use-a-development-version" style="color: inherit; text-decoration: none;">
+					<h2>Use a development version</h2>
+				</a>
+				<p>Sometimes, you&#39;ll need to use a development version of the module. This allow you to modify source code, run tests, and build custom versions of the module.</p>
+				<p>Always existing branches are:</p>
+				<ul>
+					<li><a href="https://github.com/GerkinDev/vuejs-datatable/tree/develop"><code>develop</code></a>: Latest changes, not yet validated.</li>
+					<li><a href="https://github.com/GerkinDev/vuejs-datatable/tree/staging"><code>staging</code></a>: Changes considered as stable and planned for next release.</li>
+					<li><a href="https://github.com/GerkinDev/vuejs-datatable/tree/master"><code>master</code></a>: Releases, stable versions.</li>
+				</ul>
+				<p>You may use other branches (for features, hotfixes, etc etc). Check out the <a href="https://github.com/GerkinDev/vuejs-datatable/branches">list of branches</a>.</p>
+				<pre><code class="language-sh"><span class="hljs-comment"># First, clone the repo</span>
+<span class="hljs-comment"># replace `my-branch` with the name of the branch you want to use</span>
+git <span class="hljs-built_in">clone</span> https://github.com/GerkinDev/vuejs-datatable.git<span class="hljs-comment">#my-branch</span>
+<span class="hljs-comment"># Go to the repo directory</span>
+<span class="hljs-built_in">cd</span> vuejs-datatable
+<span class="hljs-comment"># Install dependencies</span>
+npm install
+<span class="hljs-comment"># Run tests</span>
+npm run <span class="hljs-built_in">test</span>
+<span class="hljs-comment"># Build the package</span>
+npm run build</code></pre>
+				<p>Optionaly, <a href="https://docs.npmjs.com/cli/link.html">link your local modules</a> so you can use it in other modules.</p>
+				<blockquote>
+					<p>You may need to run the following command as <code>sudo</code></p>
+				</blockquote>
+				<pre><code class="language-sh">npm link</code></pre>
+				<a href="#attributions" id="attributions" style="color: inherit; text-decoration: none;">
+					<h2>Attributions</h2>
+				</a>
+				<ul>
+					<li><a href="https://www.patrickstephan.me">Patrick Stephan</a>: Original author</li>
+					<li><a href="https://github.com/GerkinDev/">Alexandre Germain</a>: Current maintainer</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" ">
+						<a href="tutorials/index.html">Tutorial index</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/ecolalign.html" class="tsd-kind-icon">ECol<wbr>Align</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/epagertype.html" class="tsd-kind-icon">EPager<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/esortdir.html" class="tsd-kind-icon">ESort<wbr>Dir</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/column.html" class="tsd-kind-icon">Column</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/datatablefactory.html" class="tsd-kind-icon">Datatable<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/defaulthandler.html" class="tsd-kind-icon">Default<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/settings.html" class="tsd-kind-icon">Settings</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/tabletype.html" class="tsd-kind-icon">Table<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/vuedatatable.html" class="tsd-kind-icon">Vue<wbr>Datatable</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/vuedatatablecell.html" class="tsd-kind-icon">Vue<wbr>Datatable<wbr>Cell</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/vuedatatableheader.html" class="tsd-kind-icon">Vue<wbr>Datatable<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/vuedatatablepager.html" class="tsd-kind-icon">Vue<wbr>Datatable<wbr>Pager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/vuedatatablepagerbutton.html" class="tsd-kind-icon">Vue<wbr>Datatable<wbr>Pager<wbr>Button</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icolumndefinition.html" class="tsd-kind-icon">IColumn<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idatafnparams.html" class="tsd-kind-icon">IData<wbr>FnParams</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idict.html" class="tsd-kind-icon">IDict</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idisplayhandlerparam.html" class="tsd-kind-icon">IDisplay<wbr>Handler<wbr>Param</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idisplayhandlerresult.html" class="tsd-kind-icon">IDisplay<wbr>Handler<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ihandler.html" class="tsd-kind-icon">IHandler</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/isettingsproperties.html" class="tsd-kind-icon">ISettings<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/itablecontentparam.html" class="tsd-kind-icon">ITable<wbr>Content<wbr>Param</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itabletypeconsumer.html" class="tsd-kind-icon">ITable<wbr>Type<wbr>Consumer</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#deeppartial" class="tsd-kind-icon">Deep<wbr>Partial</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#tclassval" class="tsd-kind-icon">TClass<wbr>Val</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tcolumnsdefinition" class="tsd-kind-icon">TColumns<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tdatafn" class="tsd-kind-icon">TData<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tdisplayhandler" class="tsd-kind-icon">TDisplay<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tfilterhandler" class="tsd-kind-icon">TFilter<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tmaybepromise" class="tsd-kind-icon">TMaybe<wbr>Promise</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tpaginatehandler" class="tsd-kind-icon">TPaginate<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tsorthandler" class="tsd-kind-icon">TSort<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#default_datatable" class="tsd-kind-icon">DEFAULT_<wbr>DATATABLE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#vuejsdatatablefactory" class="tsd-kind-icon">Vuejs<wbr>Datatable<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#classvaltype" class="tsd-kind-icon">class<wbr>Val<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#namespace" class="tsd-kind-icon">namespace</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#canonicalclassvals" class="tsd-kind-icon">canonical<wbr>Class<wbr>Vals</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#ensurepromise" class="tsd-kind-icon">ensure<wbr>Promise</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#ispromise" class="tsd-kind-icon">is<wbr>Promise</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#mergeclassvals" class="tsd-kind-icon">merge<wbr>Class<wbr>Vals</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#namespaceevent" class="tsd-kind-icon">namespace<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#stablesort" class="tsd-kind-icon">stable<wbr>Sort</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tabletypeconsumerfactory" class="tsd-kind-icon">table<wbr>Type<wbr>Consumer<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#valuetostring" class="tsd-kind-icon">value<wbr>ToString</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
-<!-- end:readme.hbs -->
