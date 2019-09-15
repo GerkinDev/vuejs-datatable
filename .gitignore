@@ -22,3 +22,5 @@ tutorials/\.tmp/
 cypress/videos/
 
 cypress/screenshots/
+
+.env

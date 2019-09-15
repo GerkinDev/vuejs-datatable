@@ -7,7 +7,9 @@
   "major": {
     "automerge": false
   },
+  "baseBranches": ["staging"],
   "branchPrefix": "greenkeeper/",
   "groupName": "all",
-  "rangeStrategy": "replace"
+  "rangeStrategy": "replace",
+  "commitMessagePrefix": "chore: 🤖 Renovate auto-bump"
 }

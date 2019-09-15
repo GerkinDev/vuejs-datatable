@@ -11,7 +11,7 @@ Allows for quick and easy setup of filterable, sortable, and paginated tables. C
 [![Build Status](https://travis-ci.com/GerkinDev/vuejs-datatable.svg?branch=master)](https://travis-ci.com/GerkinDev/vuejs-datatable)
 [![Maintainability](https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/maintainability)](https://codeclimate.com/github/GerkinDev/vuejs-datatable/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/824c7a7811b5fc8e39d7/test_coverage)](https://codeclimate.com/github/GerkinDev/vuejs-datatable/test_coverage)
-[![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable.svg)](https://github.com/GerkinDev/vuejs-datatable)
+[![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/y/GerkinDev/vuejs-datatable)](https://github.com/GerkinDev/vuejs-datatable)
 [![license](https://img.shields.io/github/license/GerkinDev/vuejs-datatable.svg)](https://github.com/GerkinDev/vuejs-datatable/blob/master/LICENSE)
 
 E2E testing over Travis realized using
@@ -32,7 +32,7 @@ To install this package, simply install `vuejs-datatable` with your favorite pac
 # Using npm
 npm install vuejs-datatable
 # Using yarn
-yarn add vuejs-datatable
+yarn add vuejs-datatable 
 ```
 
 ### Import the package

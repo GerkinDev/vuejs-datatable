@@ -11,7 +11,7 @@ module.exports = {
 	},
 	collectCoverageFrom: [
 		'src/**/*.{[jt]s,vue}',
-		'!src/index-{esm,iife}.ts',
+		'!src/vuejs-datatable-{esm,}.ts',
 		'!src/themes/**',
 		'!**/node_modules/**'
 	],

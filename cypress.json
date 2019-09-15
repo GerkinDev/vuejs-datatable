@@ -1,5 +1,6 @@
 {
-    "integrationFolder": "__tests__/e2e/specs",
-    "supportFile": "__tests__/e2e/support/index.ts",
-    "pluginsFile": "__tests__/e2e/plugins/index.js"
+  "integrationFolder": "__tests__/e2e/specs",
+  "supportFile": "__tests__/e2e/support/index.ts",
+  "pluginsFile": "__tests__/e2e/plugins/index.js",
+  "projectId": "dbqwx7"
 }

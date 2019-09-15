@@ -7,6 +7,7 @@
     "browser": "dist/vuejs-datatable.esm",
     "types": "dist/vuejs-datatable.esm",
     "scripts": {
+        "ci": "ts-node -P tsconfig.json  -O {\\\"module\\\":\\\"commonjs\\\"} ci/run-ci.ts",
         "doc": "npm run doc:examples && npm run doc:typedoc && npm run doc:copy-assets",
         "doc:copy-assets": "npm run doc:copy-assets:demos && npm run doc:copy-assets:lib && npm run doc:styles && npm run doc:copy-assets:data",
         "doc:copy-assets:demos": "npx copyfiles -f tutorials/dist/*.js docs/assets/js/tutorials",
@@ -16,13 +17,12 @@
         "doc:examples": "rimraf tutorials/{dist,.tmp} && ts-node -P ./tsconfig.json -O {\\\"module\\\":\\\"commonjs\\\"} tutorials/build/build-examples.ts",
         "doc:typedoc": "rimraf docs && typedoc --options ./typedoc.json",
         "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
-        "test:ci": "jest --config jest.config.js",
         "test:ci:watch": "npm run test:ci --watch",
         "test:unit": "jest --config jest.unit.config.js",
         "test:unit:watch": "npm run test:unit -- --watch",
         "test:integration": "jest --config jest.integration.config.js",
         "test:integration:watch": "npm run test:integration -- --watch",
-        "test:e2e": "cypress run",
+        "test:e2e": "if [ -z \"$CYPRESS_KEY\" ]; then cypress run; else cypress run --record --key $CYPRESS_KEY; fi",
         "test:e2e:gui": "cypress open",
         "lint": "tslint --project tsconfig.json",
         "lint:fix": "tslint --fix --project tsconfig.json",
@@ -30,8 +30,7 @@
         "build:dev": "rollup -c rollup.config.js",
         "build:production": "rollup -c rollup.config.js --environment BUILD:production",
         "build:watch": "rollup -c rollup.config.js --watch",
-        "version": "npm run prepublishOnly && git add docs --force",
-        "prepublishOnly": "npm run test && npm run build && npm run doc",
+        "version": "npm run build && git add dist --force && npm run doc && git add docs --force",
         "release": "standard-version -a",
         "prerelease": "standard-version -a --prerelease"
     },
@@ -66,6 +65,7 @@
         "@types/jsdom": "^12.2.4",
         "@types/lodash": "^4.14.138",
         "@types/object-path": "^0.11.0",
+        "@types/semver": "^6.0.2",
         "@vue/test-utils": "^1.0.0-beta.29",
         "axios": "^0.19.0",
         "babel-core": "^7.0.0-bridge.0",
@@ -98,6 +98,7 @@
         "rollup-plugin-typescript2": "^0.24.2",
         "rollup-plugin-visualizer": "^2.6.0",
         "rollup-plugin-vue-template-compiler": "git+https://github.com/GerkinDev/rollup-plugin-vue-template-compiler.git",
+        "semver": "^6.3.0",
         "standard-version": "^7.0.0",
         "ts-jest": "^24.1.0",
         "ts-node": "^8.3.0",
@@ -118,7 +119,7 @@
         "scripts": {
             "postbump": "npm run version"
         },
-        "message": "chore: 🤖 release {{currentTag}} from {{previousTag}}"
+        "releaseCommitMessageFormat": "chore: 🤖 release {{currentTag}} from {{previousTag}}"
     },
     "author": {
         "name": "Patrick Stephan",
@@ -133,7 +134,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/GerkinDev/vue-datatable"
+        "url": "https://github.com/GerkinDev/vuejs-datatable"
     },
     "license": "MIT",
     "config": {

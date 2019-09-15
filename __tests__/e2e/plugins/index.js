@@ -1,7 +1,8 @@
-const { writeFile: _writeFile } = require( 'fs' );
-const { dirname } = require( 'path' );
-
+const { writeFile: _writeFile, access } = require( 'fs' );
+const { dirname, resolve: resolvePath } = require( 'path' );
+const { exec } = require( 'child_process' );
 const mkdirp = require( 'mkdirp' );
+const { F_OK } = require( 'constants' );
 
 const { rollup } = require( 'rollup' );
 const typescript = require( 'rollup-plugin-typescript2' );
@@ -13,7 +14,28 @@ const writeFile = ( path, data, opts ) => new Promise( ( res, rej ) => _writeFil
 const mkdir = ( path, opts ) => new Promise( ( res, rej ) => mkdirp( path, opts, err => err ? rej( err ) : res() ) );
 
 module.exports = on => {
-	on('file:preprocessor', async (file) => {
+	// Trigger build if the module is not already built
+	on( 'before:browser:launch', () => {
+		return new Promise( ( res, rej ) => {
+			access( resolvePath( '../../../dist/vuejs-datatable.js' ), F_OK, err => {
+				if ( err ) {
+					console.log( 'Missing built library, build it on-the-fly.' );
+					exec( 'npm run build', err2 => {
+						if ( err2 ) {
+							console.error( 'Build failed !' );
+							return rej( err2 );
+						} else {
+							console.info( 'Build succeeded !' );
+							return res();
+						}
+					} );
+				} else {
+					return res();
+				}
+			} );
+		});
+	}),
+	on( 'file:preprocessor', async file => {
 		const confBundle = await rollup( {
 			input: file.filePath,
 			plugins: [
