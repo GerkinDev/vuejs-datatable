@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Basic table | vuejs-datatable</title>
+	<title>Configuring bundlers &amp; common issues | vuejs-datatable</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,7 +53,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 			</ul>
-			<h1> Basic table</h1>
+			<h1> Configuring bundlers &amp; common issues</h1>
 		</div>
 	</div>
 </header>
@@ -61,68 +61,91 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
-					<h2>Introduction</h2>
+				<a href="#common-issues" id="common-issues" style="color: inherit; text-decoration: none;">
+					<h2>Common issues</h2>
 				</a>
-				<p>Here is the bare minimum example to use <strong>vuejs-datatable</strong>. You can check out other tutorials for more advanced usages.</p>
-				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
-					<h2>Demo</h2>
+				<a href="#all-bundlers" id="all-bundlers" style="color: inherit; text-decoration: none;">
+					<h3>All bundlers</h3>
 				</a>
-				<div id="demo-app" class="tutorial-basic"><div class="row"><div class="col-xs-12 form-inline"><div class="form-group"><label for="filter" class="sr-only">Filter</label><input type="text" class="form-control" v-model="filter" placeholder="Filter" @keydown="$event.stopImmediatePropagation()"></div></div><div class="col-xs-12 table-responsive"><datatable :columns="columns" :data="rows" :filter="filter" :per-page="25"></datatable><datatable-pager v-model="page"></datatable-pager></div></div></div>
-				<a href="#code" id="code" style="color: inherit; text-decoration: none;">
-					<h2>Code</h2>
+				<a href="#codeunknown-custom-element-ltdatatable-headergt---did-you-register-the-component-correctly-for-recursive-components-make-sure-to-provide-the-quotnamequot-optioncode" id="codeunknown-custom-element-ltdatatable-headergt---did-you-register-the-component-correctly-for-recursive-components-make-sure-to-provide-the-quotnamequot-optioncode" style="color: inherit; text-decoration: none;">
+					<h3><code>Unknown custom element: &lt;datatable-header&gt; - did you register the component correctly? For recursive components, make sure to provide the &quot;name&quot; option.</code></h3>
 				</a>
-				<a href="#typescript" id="typescript" style="color: inherit; text-decoration: none;">
-					<h3>Typescript</h3>
+				<p>This usually means that <em>vuejs-datatable</em> is not correctly installed on the instance of <em>vue</em> you are trying to use.</p>
+				<a href="#if-you-are-using-the-iife-build" id="if-you-are-using-the-iife-build" style="color: inherit; text-decoration: none;">
+					<h4>If you are using the IIFE build</h4>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
-<span class="hljs-keyword">import</span> { TColumnsDefinition } <span class="hljs-keyword">from</span> <span class="hljs-string">'vuejs-datatable'</span>;
+				<p>Make sure that your application is not shipping its own copy of <em>vue</em>. Scripts should be loaded in the following order:</p>
+				<ol>
+					<li>Vue</li>
+					<li>Vuejs-datatable</li>
+					<li>Your application code</li>
+				</ol>
+				<a href="#if-you-are-using-the-esm-build" id="if-you-are-using-the-esm-build" style="color: inherit; text-decoration: none;">
+					<h4>If you are using the ESM build</h4>
+				</a>
+				<p>Make sure that your application code &amp; <em>vuejs-datatable</em> share the same instance of Vue.</p>
+				<p>This library simply imports the module <code>vue</code>, so make sure that your application imports <code>vue</code> also.</p>
+				<pre><code class="language-ts"><span class="hljs-comment">// Wrong</span>
+<span class="hljs-keyword">const</span> Vue = <span class="hljs-built_in">require</span>( <span class="hljs-string">'vue/dist/vue.esm.js'</span> );
+<span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue/dist/vue.min.js'</span>;
+<span class="hljs-comment">// Right</span>
+<span class="hljs-keyword">const</span> Vue = <span class="hljs-built_in">require</span>( <span class="hljs-string">'vue'</span> );
+<span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;</code></pre>
+				<p>Instead of targeting the right build in your code, configure your bundler to alias the <code>vue</code> module as your desired <code>vue</code> dist file. Check below for <a href="#alias-the-vue-module">how to alias <code>vue</code></a>.</p>
+				<a href="#codeyou-are-using-the-runtime-only-build-of-vue-where-the-template-compiler-is-not-available-either-pre-compile-the-templates-into-render-functions-or-use-the-compiler-included-buildcode" id="codeyou-are-using-the-runtime-only-build-of-vue-where-the-template-compiler-is-not-available-either-pre-compile-the-templates-into-render-functions-or-use-the-compiler-included-buildcode" style="color: inherit; text-decoration: none;">
+					<h4><code>You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.</code></h4>
+				</a>
+				<a href="#rollup" id="rollup" style="color: inherit; text-decoration: none;">
+					<h3>Rollup</h3>
+				</a>
+				<a href="#code39get39-is-not-exported-by-node_modulesobject-pathindexjscode-amp-code39set39-is-not-exported-by-node_modulesobject-pathindexjscode" id="code39get39-is-not-exported-by-node_modulesobject-pathindexjscode-amp-code39set39-is-not-exported-by-node_modulesobject-pathindexjscode" style="color: inherit; text-decoration: none;">
+					<h4><code>&#39;get&#39; is not exported by node_modules/object-path/index.js</code> &amp; <code>&#39;set&#39; is not exported by node_modules/object-path/index.js</code></h4>
+				</a>
+				<p><code>object-path</code> being a <em>commonjs</em> module, you need to configure rollup to handle it properly. First, install the <a href="https://www.npmjs.com/package/rollup-plugin-commonjs">plugin <code>rollup-plugin-commonjs</code></a>.</p>
+				<pre><code class="language-bash">npm install --save-dev rollup-plugin-commonjs</code></pre>
+				<p>Then, set up rollup:</p>
+				<pre><code class="language-js"><span class="hljs-comment">// ...</span>
+<span class="hljs-keyword">import</span> commonjs <span class="hljs-keyword">from</span> <span class="hljs-string">'rollup-plugin-commonjs'</span>;
 
-<span class="hljs-keyword">import</span> { IPeople } <span class="hljs-keyword">from</span> <span class="hljs-string">'../utils'</span>;
-
-<span class="hljs-comment">// Defined on window</span>
-<span class="hljs-keyword">declare</span> <span class="hljs-keyword">var</span> rows: IPeople[];
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue( {
-    el:   <span class="hljs-string">'#demo-app'</span>,
-    data: {
-        filter:  <span class="hljs-string">''</span>,
-        columns: [
-            { label: <span class="hljs-string">'ID'</span>, field: <span class="hljs-string">'id'</span>, align: <span class="hljs-string">'center'</span>, filterable: <span class="hljs-literal">false</span> },
-            { label: <span class="hljs-string">'Username'</span>, field: <span class="hljs-string">'user.username'</span> },
-            { label: <span class="hljs-string">'First Name'</span>, field: <span class="hljs-string">'user.first_name'</span> },
-            { label: <span class="hljs-string">'Last Name'</span>, field: <span class="hljs-string">'user.last_name'</span> },
-            { label: <span class="hljs-string">'Email'</span>, field: <span class="hljs-string">'user.email'</span>, align: <span class="hljs-string">'right'</span>, sortable: <span class="hljs-literal">false</span> },
-            { label: <span class="hljs-string">'Address'</span>, representedAs: <span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${ row.address  }</span>, <span class="hljs-subst">${  row.city  }</span>, <span class="hljs-subst">${  row.state }</span>`</span>, align: <span class="hljs-string">'right'</span>, sortable: <span class="hljs-literal">false</span> },
-        ] <span class="hljs-keyword">as</span> TColumnsDefinition&lt;IPeople&gt;,
-        rows,
-        page: <span class="hljs-number">1</span>,
-    },
-} );
-</code></pre>
-				<a href="#html" id="html" style="color: inherit; text-decoration: none;">
-					<h3>HTML</h3>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+    <span class="hljs-comment">// ...</span>
+    plugins:  [
+        <span class="hljs-comment">// ...</span>
+        commonjs( {
+            <span class="hljs-attr">namedExports</span>: {
+                <span class="hljs-string">'object-path'</span>: [ <span class="hljs-string">'get'</span>, <span class="hljs-string">'set'</span> ],
+            }
+        } ),
+        <span class="hljs-comment">// ...</span>
+    ],
+};</code></pre>
+				<a href="#tips-amp-tricks" id="tips-amp-tricks" style="color: inherit; text-decoration: none;">
+					<h2>Tips &amp; tricks</h2>
 				</a>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"demo-app"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-12 form-inline"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"filter"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sr-only"</span>&gt;</span>Filter<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"filter"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Filter"</span> @<span class="hljs-attr">keydown</span>=<span class="hljs-string">"$event.stopImmediatePropagation()"</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+				<a href="#alias-the-codevuecode-module" id="alias-the-codevuecode-module" style="color: inherit; text-decoration: none;">
+					<h3>Alias the <code>vue</code> module</h3>
+				</a>
+				<p>Because <em>vuejs-datatable</em> imports bare <code>vue</code>, you should configure your bundler to alias the distribution you want to use.</p>
+				<a href="#rollup-1" id="rollup-1" style="color: inherit; text-decoration: none;">
+					<h4>Rollup</h4>
+				</a>
+				<p>Install the <a href="https://www.npmjs.com/package/rollup-plugin-commonjs">plugin <code>rollup-plugin-alias</code></a>.</p>
+				<pre><code class="language-bash">npm install --save-dev rollup-plugin-alias</code></pre>
+				<p>Configure rollup to alias <code>vue</code> to the distribution you want.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> alias <span class="hljs-keyword">from</span> <span class="hljs-string">'rollup-plugin-alias'</span>;
 
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-12 table-responsive"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">datatable</span> <span class="hljs-attr">:columns</span>=<span class="hljs-string">"columns"</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">"rows"</span> <span class="hljs-attr">:filter</span>=<span class="hljs-string">"filter"</span> <span class="hljs-attr">:per-page</span>=<span class="hljs-string">"25"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">datatable-pager</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"page"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable-pager</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
-				<script src="../assets/js/rows.js" defer></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" crossorigin="anonymous" defer></script>
-				<script src="../assets/js/vuejs-datatable.js" defer></script>
-				<link rel="stylesheet" href="../assets/css/additional-styles.css">
-				<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-				<script src="../assets/js/tutorials/demo-basic.js" defer></script>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+    <span class="hljs-comment">// ...</span>
+    plugins:  [
+        <span class="hljs-comment">// ...</span>
+        alias( {
+            <span class="hljs-attr">entries</span>: [
+                { <span class="hljs-attr">find</span>:<span class="hljs-string">'vue'</span>, <span class="hljs-attr">replacement</span>: <span class="hljs-built_in">require</span>.resolve( <span class="hljs-string">'vue/dist/vue.esm.js'</span> ) },
+            ]
+        } ),
+        <span class="hljs-comment">// ...</span>
+    ],
+};</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -134,10 +157,10 @@
 					<li class="current ">
 						<a href="index.html">Tutorial index</a>
 						<ul>
-							<li class=" ">
+							<li class="current ">
 								<a href="bundlers.html">Configuring bundlers & common issues</a>
 							</li>
-							<li class="current ">
+							<li class=" ">
 								<a href="basic.html">Basic table</a>
 							</li>
 							<li class=" ">

@@ -1,6 +1,6 @@
 {
     "name": "vuejs-datatable",
-    "version": "2.0.0-alpha.2",
+    "version": "2.0.0-alpha.3",
     "description": "A Vue.js component for filterable, sortable, and paginated tables.",
     "main": "dist/vuejs-datatable.esm",
     "module": "dist/vuejs-datatable.esm",
@@ -134,12 +134,19 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/GerkinDev/vuejs-datatable"
+        "url": "git+https://github.com/GerkinDev/vuejs-datatable.git"
     },
     "license": "MIT",
     "config": {
         "commitizen": {
             "path": "./node_modules/git-cz"
         }
+    },
+    "bugs": {
+        "url": "https://github.com/GerkinDev/vuejs-datatable/issues"
+    },
+    "homepage": "https://github.com/GerkinDev/vuejs-datatable#readme",
+    "directories": {
+        "doc": "docs"
     }
 }
