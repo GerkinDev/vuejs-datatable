@@ -89,7 +89,8 @@ By ${ allContributorsString }`,
 			compress: {
 				passes: 2,
 				unsafe: true,
-			}
+                keep_classnames: true
+			},
 		}) : undefined,
 
 		environment === 'production' ? visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } ) : undefined,
