@@ -1,5 +1,5 @@
 import { terser } from 'rollup-plugin-terser';
-import resolve from 'rollup-plugin-node-resolve';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import license from 'rollup-plugin-license';
@@ -13,6 +13,7 @@ import { isString } from 'util';
 import moment from 'moment';
 import _ from 'lodash';
 import { readFileSync } from 'tsconfig';
+import { resolve } from 'path'
 
 // eslint-disable-next-line no-undef
 const pkg = require( './package.json' );
@@ -31,7 +32,13 @@ const userToString = p => {
 };
 const allContributorsString = allContributors.map( userToString ).join( ', ' );
 // Plugins used for build
-export const getPlugins = (iife, environment) => {
+/**
+ * 
+ * @param {boolean} iife 
+ * @param {'test' | 'production' | 'demo'} environment 
+ * @param {string} moduleName 
+ */
+export const getPlugins = (iife, environment, moduleName) => {
 	const tsconfigOverride = {
 		compilerOptions: {
 			declaration: environment === 'production' && iife,
@@ -48,7 +55,7 @@ export const getPlugins = (iife, environment) => {
 			}
 		}) : undefined,
 
-		resolve({
+		nodeResolve({
 			extensions: [ '.ts', '.js', '.json' ],
 			browser: true,
 		}),
@@ -77,27 +84,31 @@ export const getPlugins = (iife, environment) => {
 			'process.env.NODE_ENV': JSON.stringify( environment ),
 		}),
 
-		environment === 'production' ?  license( {
-			banner: `${ pkg.name } v${ pkg.version }
-License: ${ pkg.license }
-Repository: ${ pkg.repository.url }
-Generated on ${ moment().format( 'YYYY-MM-DD [at] HH:mm:ss' ) }.
-By ${ allContributorsString }`,
-		} ) : undefined,
-
 		environment === 'production' ? terser({
 			compress: {
 				passes: 2,
 				unsafe: true,
-                keep_classnames: true
+				keep_classnames: true
 			},
 		}) : undefined,
 
-		environment === 'production' ? visualizer( { filename: `./stats/${ iife ? 'iife' : 'esm' }.html` } ) : undefined,
+		environment === 'production' ? visualizer( { filename: `./stats/${moduleName}-${ iife ? 'iife' : 'esm' }.html` } ) : undefined,
 
 		iife ? babel( {
 			exclude: 'node_modules/**',
 			extensions: ['.js', '.ts', '.html'],
+		} ) : undefined,
+
+		environment === 'production' ?  license( {
+			thirdParty: {
+				includePrivate: true,
+				output: resolve('dist', 'dependencies.txt'),
+			},
+			banner: `${ pkg.name } v${ pkg.version }, module ${moduleName} build ${iife ? 'iife' : 'esm'}
+License: ${ pkg.license } (see ${pkg.repository.url}/blob/master/LICENSE for the full license)
+Repository: ${ pkg.repository.url }
+Generated on ${ moment().format( 'YYYY-MM-DD [at] HH:mm:ss' ) }.
+By ${ allContributorsString }`,
 		} ) : undefined,
 	] );
 }
@@ -120,7 +131,6 @@ const makeThemeConfig = themeName => {
 			sourcemap,
 			globals: { [pkgName]: globalName },
 		},
-		plugins:  getPlugins( false, env ),
 		external: externalDeps.concat( [ pkgName ] ),
 	};
 	return [
@@ -131,6 +141,7 @@ const makeThemeConfig = themeName => {
 				file:   `${ outDir }/themes/${themeName}.js`,
 				format: 'iife',
 			},
+			plugins:  getPlugins( true, env, `theme:${themeName}` ),
 		},
 		{
 			...baseConfig,
@@ -139,6 +150,7 @@ const makeThemeConfig = themeName => {
 				file:   `${ outDir }/themes/${themeName}.esm.js`,
 				format: 'esm',
 			},
+			plugins:  getPlugins( false, env, `theme:${themeName}` ),
 		},
 	]
 }
@@ -156,7 +168,7 @@ export default () => [
 			sourcemap,
 			globals: { vue: 'Vue' },
 		},
-		plugins:  getPlugins( true, env ),
+		plugins:  getPlugins( true, env, 'vuejs-datatable' ),
 		external: [ 'vue' ],
 	},
 	{
@@ -167,7 +179,7 @@ export default () => [
 			name: pkgName,
 			sourcemap,
 		},
-		plugins:  getPlugins( false, env ),
+		plugins:  getPlugins( false, env, 'vuejs-datatable' ),
 		external: externalDeps,
 	},
 	
