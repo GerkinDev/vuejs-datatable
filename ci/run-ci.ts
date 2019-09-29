@@ -149,7 +149,11 @@ github.com ${await readFile( githubKeyPub, 'utf-8' )}
 	await execStream( `git config --global user.email "${travisGit.email}"` );
 	await execStream( `git config --global user.name "${travisGit.name}"` );
 	// Set the origin so that it uses ssh
-	const originUrl = `git@github.com:${packageFile.repository.url.replace( 'https://github.com/', '' )}.git`;
+	const matchRepoName = packageFile.repository.url.match( /^(?:git\+)?https?:\/\/github\.com\/(.*?)(?:\.git)$/ );
+	if ( !matchRepoName ) {
+		throw new Error( 'Invalid repository url: did not matched the expected pattern.' );
+	}
+	const originUrl = `git@github.com:${matchRepoName[1]}.git`;
 	await execStream( `git remote set-url origin ${originUrl}` );
 	// Fetch all branches, not just the current one (default per travis init script)
 	await execStream( 'git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"' );

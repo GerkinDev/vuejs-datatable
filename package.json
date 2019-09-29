@@ -134,12 +134,19 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/GerkinDev/vuejs-datatable"
+        "url": "git+https://github.com/GerkinDev/vuejs-datatable.git"
     },
     "license": "MIT",
     "config": {
         "commitizen": {
             "path": "./node_modules/git-cz"
         }
+    },
+    "bugs": {
+        "url": "https://github.com/GerkinDev/vuejs-datatable/issues"
+    },
+    "homepage": "https://github.com/GerkinDev/vuejs-datatable#readme",
+    "directories": {
+        "doc": "docs"
     }
 }

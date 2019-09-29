@@ -1,4 +1,7 @@
 {
+    "bundlers": {
+        "title": "Configuring bundlers & common issues"
+    },
     "basic": {
         "title": "Basic table"
     },
