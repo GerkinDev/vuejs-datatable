@@ -32,7 +32,7 @@ To install this package, simply install `vuejs-datatable` with your favorite pac
 # Using npm
 npm install vuejs-datatable
 # Using yarn
-yarn add vuejs-datatable 
+yarn add vuejs-datatable
 ```
 
 ### Import the package
@@ -45,12 +45,12 @@ Import & register the [*DatatableFactory*](https://gerkindev.github.io/vuejs-dat
 
 ```js
 import Vue from 'vue';
-import DatatableFactory from 'vuejs-datatable';
+import { VuejsDatatableFactory } from 'vuejs-datatable';
 
-Vue.use(DatatableFactory);
+Vue.use( VuejsDatatableFactory );
 ```
 
-Check out [*how to customize table types*](#customize-the-datatable) to see some usage of the `DatatableFactory`.
+Check out [*how to customize table types*](#customize-the-datatable) to see some usage of the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html) and the possible reasons not to use the default instance exported as `VuejsDatatableFactory`.
 
 #### Use the IIFE build
 
