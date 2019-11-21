@@ -4,9 +4,6 @@
   ],
   "schedule": "before 10pm on Monday",
   "automerge": true,
-  "major": {
-    "automerge": false
-  },
   "baseBranches": ["staging"],
   "branchPrefix": "greenkeeper/",
   "groupName": "all",
