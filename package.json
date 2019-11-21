@@ -113,7 +113,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "peerDependencies": {
-        "vue": "^2.6.10"
+        "vue": "^2.2.0"
     },
     "standard-version": {
         "scripts": {
