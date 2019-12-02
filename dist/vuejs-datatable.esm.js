@@ -1,8 +1,8 @@
 /**
- * vuejs-datatable v2.0.0-alpha.4, module vuejs-datatable build esm
+ * vuejs-datatable v2.0.0-alpha.5, module vuejs-datatable build esm
  * License: MIT (see git+https://github.com/GerkinDev/vuejs-datatable.git/blob/master/LICENSE for the full license)
  * Repository: git+https://github.com/GerkinDev/vuejs-datatable.git
- * Generated on 2019-11-21 at 15:02:36.
+ * Generated on 2019-12-02 at 01:56:10.
  * By Patrick Stephan<pstephan1187@gmail.com>, GerkinDev<agermain@ithoughts.io> (https://ithoughts.io/)
  */
 
