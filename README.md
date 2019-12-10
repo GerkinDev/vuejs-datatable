@@ -91,7 +91,7 @@ new Vue({
             {label: 'First Name', field: 'user.firstName'},
             {label: 'Last Name', field: 'user.lastName'},
             {label: 'Email', field: 'user.email'},
-            {label: 'Address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${row.state}`, interpolate: true}
+            {label: 'Address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${state}`, interpolate: true}
         ],
         rows: [
             //...
