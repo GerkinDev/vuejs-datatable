@@ -1,6 +1,6 @@
 {
     "name": "vuejs-datatable",
-    "version": "2.0.0-alpha.5",
+    "version": "2.0.0-alpha.6",
     "description": "A Vue.js component for filterable, sortable, and paginated tables.",
     "main": "dist/vuejs-datatable.esm",
     "module": "dist/vuejs-datatable.esm",
