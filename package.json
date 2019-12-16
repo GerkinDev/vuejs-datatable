@@ -1,6 +1,6 @@
 {
     "name": "vuejs-datatable",
-    "version": "2.0.0-alpha.5",
+    "version": "2.0.0-alpha.6",
     "description": "A Vue.js component for filterable, sortable, and paginated tables.",
     "main": "dist/vuejs-datatable.esm",
     "module": "dist/vuejs-datatable.esm",
@@ -98,7 +98,7 @@
         "rollup-plugin-typescript2": "^0.25.0",
         "rollup-plugin-visualizer": "^3.2.2",
         "rollup-plugin-vue-template-compiler": "git+https://github.com/GerkinDev/rollup-plugin-vue-template-compiler.git",
-        "semver": "^6.3.0",
+        "semver": "^7.0.0",
         "standard-version": "^7.0.0",
         "ts-jest": "^24.1.0",
         "ts-node": "^8.3.0",
