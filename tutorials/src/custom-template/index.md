@@ -55,3 +55,22 @@ This slot is used to render each rows. It completely overrides the default row r
     </template>
 </datatable>
 ```
+
+#### `no-results` slot
+
+This slot is displayed if the table do not contain any rows.
+
+##### Signature
+
+| Prop | Type   | Description |
+|------|--------|-------------|
+
+##### Example
+
+```html
+<datatable>
+    <template name="no-result">
+        Nothing to see here
+    </template>
+</datatable>
+```

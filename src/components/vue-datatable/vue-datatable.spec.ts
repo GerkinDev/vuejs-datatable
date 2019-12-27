@@ -161,4 +161,36 @@ describe( 'Slots', () => {
 			} ) );
 		} );
 	} );
+	describe( '`no-results`', () => {
+		it( 'should call correctly slot `no-results` if no data', async () => {
+			const propsData = {
+				columns: [{ field: 'bar' }],
+				data: [],
+			};
+			const noResults = jest.fn().mockImplementation( function() {
+				return this.$createElement( 'div' );
+			} );
+			displayHandler.mockReturnValue( { rows: propsData.data, totalRowCount: propsData.data.length } );
+			const wrapper = _mountVueDatatable( false, new TableType( 'foo' ), { localVue, propsData, scopedSlots: { 'no-results': noResults }, stubs: { 'datatable-header': true, 'datatable-cell': true }} );
+			noResults.mockClear();
+
+			await flushPromises();
+			expect( noResults ).toHaveBeenCalledTimes( 1 );
+		} );
+		it( 'should not call slot `no-results` if data', async () => {
+			const propsData = {
+				columns: [{ field: 'bar' }],
+				data: [{}],
+			};
+			const noResults = jest.fn().mockImplementation( function() {
+				return this.$createElement( 'div' );
+			} );
+			displayHandler.mockReturnValue( { rows: propsData.data, totalRowCount: propsData.data.length } );
+			const wrapper = _mountVueDatatable( false, new TableType( 'foo' ), { localVue, propsData, scopedSlots: { 'no-results': noResults }, stubs: { 'datatable-header': true, 'datatable-cell': true }} );
+			noResults.mockClear();
+
+			await flushPromises();
+			expect( noResults ).not.toHaveBeenCalled();
+		} );
+	} );
 } );
