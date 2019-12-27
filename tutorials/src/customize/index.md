@@ -1,0 +1,1 @@
+This plugin's goal is to be as versatile as possible. It can be configured for CSS frameworks such as Bootstrap 3 & 4, and several parts of the templates can be overriden. Check the tutorials below for more infos.
