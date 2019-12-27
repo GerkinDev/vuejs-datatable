@@ -14,9 +14,9 @@ This footer is displayed at the bottom of your data table.
 
 | Prop | Type   | Description |
 |------|--------|-------------|
-|`rows` | `TRow[]` | The list of rows currently displayed by the table. It only contains the current page. |
-|`columns` | [`Column[]`](../classes/column.html) | The columns of the table |
-|`pagination` | [`IPageRange`](../interfaces/ipagerange.html) | An object describing the current pagination status |
+| `rows` | `TRow[]` | The list of rows currently displayed by the table. It only contains the current page. |
+| `columns` | [`Column[]`](../classes/column.html) | The columns of the table |
+| `pagination` | [`IPageRange`](../interfaces/ipagerange.html) | An object describing the current pagination status |
 
 ##### Example
 
@@ -38,8 +38,9 @@ This slot is used to render each rows. It completely overrides the default row r
 
 | Prop | Type   | Description |
 |------|--------|-------------|
-|`row` | `TRow` | The current row that it is appending to the table. |
-|`columns` | `Column[]` | The [columns](../classes/column.html) of the table |
+| `row` | `TRow` | The current row that it is appending to the table. |
+| `index` | `number` | The current index of the row in the displayed page. |
+| `columns` | `Column[]` | The [columns](../classes/column.html) of the table |
 
 ##### Example
 

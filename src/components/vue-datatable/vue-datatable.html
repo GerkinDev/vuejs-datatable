@@ -13,6 +13,7 @@
 		<slot
 			v-for="(row, i) in displayedRows"
 			:row="row"
+			:index="i"
 			:columns="normalizedColumns">
 			<tr
 				:key="i"

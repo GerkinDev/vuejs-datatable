@@ -135,4 +135,30 @@ describe( 'Slots', () => {
 			} ) );
 		} );
 	} );
+	describe( '`default`', () => {
+		it( 'should call correctly slot `default`', async () => {
+			const propsData = {
+				columns: [{ field: 'bar' }],
+				data: [{ bar: 'baz' }, { bar: 'qux' }],
+			};
+			const defaultSlot = jest.fn().mockImplementation( function() {
+				return this.$createElement( 'div' );
+			} );
+			displayHandler.mockReturnValue( { rows: propsData.data, totalRowCount: propsData.data.length } );
+			const wrapper = _mountVueDatatable( false, new TableType( 'foo' ), { localVue, propsData, scopedSlots: { default: defaultSlot }, stubs: { 'datatable-header': true, 'datatable-cell': true }} );
+
+			await flushPromises();
+			expect( defaultSlot ).toHaveBeenCalled();
+			expect( defaultSlot ).toHaveBeenCalledWith( expect.objectContaining( {
+				columns: wrapper.vm.normalizedColumns,
+				index: 0,
+				row: propsData.data[0],
+			} ) );
+			expect( defaultSlot ).toHaveBeenCalledWith( expect.objectContaining( {
+				columns: wrapper.vm.normalizedColumns,
+				index: 1,
+				row: propsData.data[1],
+			} ) );
+		} );
+	} );
 } );
