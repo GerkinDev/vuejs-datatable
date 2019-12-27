@@ -15,14 +15,16 @@ This footer is displayed at the bottom of your data table.
 | Prop | Type   | Description |
 |------|--------|-------------|
 |`rows` | `TRow[]` | The list of rows currently displayed by the table. It only contains the current page. |
+|`columns` | [`Column[]`](../classes/column.html) | The columns of the table |
+|`pagination` | [`IPageRange`](../interfaces/ipagerange.html) | An object describing the current pagination status |
 
 ##### Example
 
 ```html
 <datatable>
-    <template name="footer" scope="{ rows }">
+    <template name="footer" scope="{ rows, columns, pagination }">
         <tr>
-            <td>Displayed {{row.length}} rows</td>
+            <td :colspan="columns.length">Showing rows {{pagination.from}} to {{pagination.to}} of {{pagination.of}} items.</td>
         </tr>
     </template>
 </datatable>

@@ -33,6 +33,8 @@
 	<tfoot v-if="$slots.footer || $scopedSlots.footer">
 		<slot
 			name="footer"
-			:rows="displayedRows" />
+			:rows="displayedRows"
+			:columns="normalizedColumns"
+			:pagination="currentPageRange" />
 	</tfoot>
 </table>

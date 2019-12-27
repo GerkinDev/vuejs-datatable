@@ -112,3 +112,27 @@ describe( 'Pages count calculation', () => {
 		expect( wrapper.vm['totalPages' as any] ).toBe( pages );
 	} );
 } );
+
+describe( 'Slots', () => {
+	describe( '`footer`', () => {
+		it( 'should call correctly slot `footer`', async () => {
+			const propsData = {
+				columns: [{ field: 'bar' }],
+				data: [{ bar: 'baz' }],
+			};
+			const footer = jest.fn().mockImplementation( function() {
+				return this.$createElement( 'div' );
+			} );
+			displayHandler.mockReturnValue( { rows: propsData.data, totalRowCount: propsData.data.length } );
+			const wrapper = _mountVueDatatable( false, new TableType( 'foo' ), { localVue, propsData, scopedSlots: { footer }, stubs: { 'datatable-header': true, 'datatable-cell': true }} );
+
+			await flushPromises();
+			expect( footer ).toHaveBeenCalled();
+			expect( footer ).toHaveBeenCalledWith( expect.objectContaining( {
+				columns: wrapper.vm.normalizedColumns,
+				pagination: { from: 1, to: 2, of: 1 },
+				rows: propsData.data,
+			} ) );
+		} );
+	} );
+} );

@@ -28,6 +28,15 @@ export interface ITableContentParam<TRow extends {}> {
 export type TDataFn<TRow extends {}> = ( ( search: IDataFnParams<TRow> ) => ITableContentParam<TRow> );
 export type TColumnsDefinition<TRow extends {}> = Array<IColumnDefinition<TRow>>;
 
+interface IPageRange {
+	/** Index of the first element of the page. 1-indexed */
+	from: number;
+	/** Index of the last element of the page. 1-indexed */
+	to: number;
+	/** The total number of items */
+	of: number;
+}
+
 /**
  * The main component of the module, used to display a datatable.
  */
@@ -105,6 +114,22 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 		}
 
 		return Math.ceil( this.totalRows / this.perPage );
+	}
+
+	public get currentPageRange(): IPageRange {
+		if ( this.perPage === Infinity ) {
+			return {
+				from: 1,
+				of: this.totalRows,
+				to: this.totalRows + 1,
+			};
+		} else {
+			return {
+				from: Math.min( ( ( this.page - 1 ) * this.perPage ) + 1, Math.max( this.totalRows, 1 ) ),
+				of: this.totalRows,
+				to: Math.min( this.page * this.perPage, this.totalRows + 1 ),
+			};
+		}
 	}
 
 	/** Array of rows displayed by the table. */
