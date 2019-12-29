@@ -14,14 +14,14 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	/**
 	 * The current sort direction for the current column.
 	 *
-	 * @vue Model
+	 * @vue-model
 	 */
 	@Model( 'change', { type: String } ) private readonly direction!: ESortDir | null;
 
 	/**
 	 * The [[Column]] instance this header is for.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: Object, required: true } ) private readonly column!: Column<TRow>;
 
@@ -63,7 +63,9 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	/**
 	 * Toggles the sort order, looping between states `null => 'asc' => 'desc'`.
 	 *
-	 * @emits change
+	 * @vue-event change Emitted when the sort direction or column is changed.
+	 * @vue-event-param change newDirection <ESortDir | null> - The new direction.
+	 * @vue-event-param change sortedColumn <Column> - The column the sort is done on.
 	 * @returns nothing.
 	 */
 	public toggleSort(): void {

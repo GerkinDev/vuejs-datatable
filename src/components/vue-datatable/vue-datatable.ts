@@ -39,6 +39,18 @@ interface IPageRange {
 
 /**
  * The main component of the module, used to display a datatable.
+ *
+ * @vue-slot no-results Shown only if no rows are displayed
+ *
+ * @vue-slot default Used to render each row
+ * @vue-slot-param default row <TRow> - The current row to display.
+ * @vue-slot-param default index <number> - The current row index.
+ * @vue-slot-param default columns <Column[]> - The list of columns.
+ *
+ * @vue-slot footer Displayed at the bottom of the table.
+ * @vue-slot-param footer rows <TRow[]> - The current list of displayed rows.
+ * @vue-slot-param footer pagination <IPageRange> - The current pagination range of the table.
+ * @vue-slot-param footer columns <Column[]> - The list of columns.
  */
 @Component( {
 	...template,
@@ -47,49 +59,49 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/**
 	 * The name of the datatable. It should be unique per page.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: String, default: 'default' } ) public readonly name!: string;
 
 	/**
 	 * Set to `true` to defer the initialization of the table after a pager has been attached. It may resolve issues related to double execution of data function.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: Boolean, default: false } ) public readonly waitForPager!: boolean;
 
 	/**
 	 * List of columns definitions displayed by this datatable.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: Array, required: true } ) public readonly columns!: TColumnsDefinition<TRow>;
 
 	/**
 	 * The list of items to display, or a getter function.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { required: true } ) public readonly data!: TRow[] | TDataFn<TRow> | unknown;
 
 	/**
 	 * Value to match in rows for display filtering.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: [ String, Array ], default: null } ) public readonly filter!: string | string[];
 
 	/**
 	 * Maximum number of rows displayed per page.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: Number, default: Infinity } ) public readonly perPage!: number;
 
 	/**
 	 * Class(es) or getter function to get row classes.
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: classValType.concat( [ Function ] ), default: null } ) public readonly rowClasses!: TClassVal | ( ( row: TRow ) => TClassVal ) | null;
 
@@ -159,7 +171,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	 * Register the table in the global registry of tables.
 	 * Additionnaly, it may wait for a pager before starting watch data properties.
 	 *
-	 * @emits vuejs-datatable::ready Emitted with the table name
+	 * @vue-event vuejs-datatable::ready Emitted when the table has been initialized.
+	 * @vue-event-param vuejs-datatable::ready tableName <string> - The table name.
 	 */
 	public created() {
 		this.$datatables[this.name] = this;
@@ -259,7 +272,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/**
 	 * Propagate the `page-changed` event when the page data is changed.
 	 *
-	 * @emits vuejs-datatable::page-changed
+	 * @vue-event vuejs-datatable::page-changed Emitted when the page has changed.
+	 * @vue-event-param vuejs-datatable::page-changed newPage <number> - The index of the new page.
 	 */
 	@Watch( 'page', { immediate: true } )
 	@Emit( namespaceEvent( 'page-changed' ) )
@@ -299,7 +313,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/**
 	 * Recalculates the new page count, and emit `page-count-changed` with the new count.
 	 *
-	 * @emits vuejs-datatable::page-count-changed
+	 * @vue-event vuejs-datatable::page-count-changed Emitted when the page count has changed.
+	 * @vue-event-param vuejs-datatable::page-count-changed newCount <number> - The new total number of pages.
 	 */
 	@Watch( 'totalRows' )
 	@Watch( 'perPage' )
@@ -309,9 +324,9 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	}
 
 	/**
-	 * Recalculates the new page count, and emit `page-count-changed` with the new count.
+	 * Re-emit the current page.
 	 *
-	 * @emits vuejs-datatable::page-count-changed
+	 * @vue-event vuejs-datatable::page-changed
 	 */
 	@Watch( 'page' )
 	@Emit( namespaceEvent( 'page-changed' ) )
