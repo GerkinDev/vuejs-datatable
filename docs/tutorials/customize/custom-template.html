@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Ajax table | vuejs-datatable</title>
+	<title>Custom template | vuejs-datatable</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../assets/css/main.css">
@@ -53,7 +53,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 			</ul>
-			<h1> Ajax table</h1>
+			<h1> Custom template</h1>
 		</div>
 	</div>
 </header>
@@ -61,16 +61,124 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<p>You may want to use <em>ajax requests</em> to populate your table with data sourced from an API. In those cases, you can check out the following tutorials:</p>
-				<ul>
-					<li><a href="./ajax-data.html">Using <code>data</code> function</a> if you want to use the <em>ajax</em> logic once</li>
-					<li><a href="./ajax-handler.html">Create a <code>handler</code></a> if you want to use the <em>ajax</em> logic several times.</li>
-				</ul>
-				<hr>
-				<ul>
-					<li><a href="ajax-handler.html">Ajax table (with handler customization)</a></li>
-					<li><a href="ajax-data.html">Ajax table (via <code>data</code> function)</a></li>
-				</ul>
+				<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
+					<h2>Introduction</h2>
+				</a>
+				<p>This plugin is built to be as versatile as possible, and allow you to inject your own HTML rendering using several <a href="https://vuejs.org/v2/guide/components-slots.html">slots</a>.</p>
+				<a href="#datatable" id="datatable" style="color: inherit; text-decoration: none;">
+					<h3>Datatable</h3>
+				</a>
+				<blockquote>
+					<p>See the <a href="../classes/vuedatatable.html">Datatable API doc</a></p>
+				</blockquote>
+				<a href="#codefootercode-slot" id="codefootercode-slot" style="color: inherit; text-decoration: none;">
+					<h4><code>footer</code> slot</h4>
+				</a>
+				<p>This footer is displayed at the bottom of your data table.</p>
+				<a href="#signature" id="signature" style="color: inherit; text-decoration: none;">
+					<h5>Signature</h5>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Prop</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>rows</code></td>
+							<td><code>TRow[]</code></td>
+							<td>The list of rows currently displayed by the table. It only contains the current page.</td>
+						</tr>
+						<tr>
+							<td><code>columns</code></td>
+							<td><a href="../classes/column.html"><code>Column[]</code></a></td>
+							<td>The columns of the table</td>
+						</tr>
+						<tr>
+							<td><code>pagination</code></td>
+							<td><a href="../interfaces/ipagerange.html"><code>IPageRange</code></a></td>
+							<td>An object describing the current pagination status</td>
+						</tr>
+				</tbody></table>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h5>Example</h5>
+				</a>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">datatable</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"footer"</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"{ rows, columns, pagination }"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">:colspan</span>=<span class="hljs-string">"columns.length"</span>&gt;</span>Showing rows {{pagination.from}} to {{pagination.to}} of {{pagination.of}} items.<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span></code></pre>
+				<a href="#codedefaultcode-slot" id="codedefaultcode-slot" style="color: inherit; text-decoration: none;">
+					<h4><code>default</code> slot</h4>
+				</a>
+				<p>This slot is used to render each rows. It completely overrides the default row rendering process.</p>
+				<a href="#signature-1" id="signature-1" style="color: inherit; text-decoration: none;">
+					<h5>Signature</h5>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Prop</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>row</code></td>
+							<td><code>TRow</code></td>
+							<td>The current row that it is appending to the table.</td>
+						</tr>
+						<tr>
+							<td><code>index</code></td>
+							<td><code>number</code></td>
+							<td>The current index of the row in the displayed page.</td>
+						</tr>
+						<tr>
+							<td><code>columns</code></td>
+							<td><code>Column[]</code></td>
+							<td>The <a href="../classes/column.html">columns</a> of the table</td>
+						</tr>
+				</tbody></table>
+				<a href="#example-1" id="example-1" style="color: inherit; text-decoration: none;">
+					<h5>Example</h5>
+				</a>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">datatable</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"{ row, columns }"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.id }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.user.email }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.address + ', ' + row.city + ', ' + row.state }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span></code></pre>
+				<a href="#codeno-resultscode-slot" id="codeno-resultscode-slot" style="color: inherit; text-decoration: none;">
+					<h4><code>no-results</code> slot</h4>
+				</a>
+				<p>This slot is displayed if the table do not contain any rows.</p>
+				<a href="#signature-2" id="signature-2" style="color: inherit; text-decoration: none;">
+					<h5>Signature</h5>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Prop</th>
+							<th>Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+				</table>
+				<a href="#example-2" id="example-2" style="color: inherit; text-decoration: none;">
+					<h5>Example</h5>
+				</a>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">datatable</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"no-result"</span>&gt;</span>
+        Nothing to see here
+    <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span></code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -91,19 +199,19 @@
 							<li class=" ">
 								<a href="../pager-types.html">Pager types</a>
 							</li>
+							<li class=" ">
+								<a href="../ajax/index.html">Ajax table</a>
+							</li>
 							<li class="current ">
-								<a href="index.html">Ajax table</a>
+								<a href="index.html">Tables customization</a>
 								<ul>
-									<li class=" ">
-										<a href="ajax-handler.html">Ajax table (with handler customization)</a>
+									<li class="current ">
+										<a href="custom-template.html">Custom template</a>
 									</li>
 									<li class=" ">
-										<a href="ajax-data.html">Ajax table (via <code>data</code> function)</a>
+										<a href="custom-theme/index.html">Custom theme</a>
 									</li>
 								</ul>
-							</li>
-							<li class=" ">
-								<a href="../customize/index.html">Tables customization</a>
 							</li>
 							<li class=" ">
 								<a href="../multiple-tables.html">Multiple tables</a>

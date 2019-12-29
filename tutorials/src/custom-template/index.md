@@ -1,55 +1,76 @@
 ## Introduction
 
-You can customize the tempplate of the row by using the `default` [slot](https://vuejs.org/v2/guide/components-slots.html) in the Datatable component.
+This plugin is built to be as versatile as possible, and allow you to inject your own HTML rendering using several [slots](https://vuejs.org/v2/guide/components-slots.html).
 
-This slot uses 2 variables:
+### Datatable
 
-1. `row`: The data object representing the current row.
-2. `columns`: The array of [columns](../classes/column.html) of this datatable.
+> See the [Datatable API doc](../classes/vuedatatable.html)
 
-## Demo
+#### `footer` slot
 
-<div id="demo-app">
-    <div class="row">
-        <div class="col-xs-12 form-inline">
-            <div class="form-group">
-                <label for="filter" class="sr-only">Filter</label>
-                <input type="text" class="form-control" v-model="filter" placeholder="Filter" @keydown="$event.stopImmediatePropagation()">
-            </div>
-        </div>
-        <div class="col-xs-12 table-responsive">
-            <datatable :columns="columns" :data="rows" :filter="filter" :per-page="10">
-                <template scope="{ row }">
-                    <tr>
-                        <td>{{ row.id }}</td>
-                        <td>{{ row.user.username }}</td>
-                        <td>{{ row.user.first_name }}</td>
-                        <td>{{ row.user.last_name }}</td>
-                        <td>{{ row.user.email }}</td>
-                        <td>{{ row.address + ', ' + row.city + ', ' + row.state }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
-                            <p>Some cool content here!</p>
-                        </td>
-                    </tr>
-                </template>
-            </datatable>
-            <datatable-pager v-model="page"></datatable-pager>
-        </div>
-    </div>
-</div>
+This footer is displayed at the bottom of your data table.
 
-## Code
+##### Signature
 
-### Typescript
+| Prop | Type   | Description |
+|------|--------|-------------|
+| `rows` | `TRow[]` | The list of rows currently displayed by the table. It only contains the current page. |
+| `columns` | [`Column[]`](../classes/column.html) | The columns of the table |
+| `pagination` | [`IPageRange`](../interfaces/ipagerange.html) | An object describing the current pagination status |
 
-```TS```
+##### Example
 
-### HTML
+```html
+<datatable>
+    <template name="footer" scope="{ rows, columns, pagination }">
+        <tr>
+            <td :colspan="columns.length">Showing rows {{pagination.from}} to {{pagination.to}} of {{pagination.of}} items.</td>
+        </tr>
+    </template>
+</datatable>
+```
 
-```HTML```
+#### `default` slot
 
-<script src="{{relativeURLToRoot /assets/js/rows.js}}" defer></script>
-<script id="deps"></script>
-<script id="demo-script"></script>
+This slot is used to render each rows. It completely overrides the default row rendering process.
+
+##### Signature
+
+| Prop | Type   | Description |
+|------|--------|-------------|
+| `row` | `TRow` | The current row that it is appending to the table. |
+| `index` | `number` | The current index of the row in the displayed page. |
+| `columns` | `Column[]` | The [columns](../classes/column.html) of the table |
+
+##### Example
+
+```html
+<datatable>
+    <template scope="{ row, columns }">
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.user.email }}</td>
+            <td>{{ row.address + ', ' + row.city + ', ' + row.state }}</td>
+        </tr>
+    </template>
+</datatable>
+```
+
+#### `no-results` slot
+
+This slot is displayed if the table do not contain any rows.
+
+##### Signature
+
+| Prop | Type   | Description |
+|------|--------|-------------|
+
+##### Example
+
+```html
+<datatable>
+    <template name="no-result">
+        Nothing to see here
+    </template>
+</datatable>
+```

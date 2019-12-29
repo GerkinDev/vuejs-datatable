@@ -6,13 +6,13 @@ export declare class VueDatatableHeader<TRow extends {}> extends Vue {
     /**
      * The current sort direction for the current column.
      *
-     * @vue Model
+     * @vue-model
      */
     private readonly direction;
     /**
      * The [[Column]] instance this header is for.
      *
-     * @vue Prop
+     * @vue-prop
      */
     private readonly column;
     /**
@@ -22,17 +22,19 @@ export declare class VueDatatableHeader<TRow extends {}> extends Vue {
      */
     private readonly tableType;
     /** `true` if this column is sortable. */
-    private readonly canSort;
+    private get canSort();
     /** `true` if this column is sorted in *ascending* mode. */
-    private readonly isSortedAscending;
+    private get isSortedAscending();
     /** `true` if this column is sorted in *descending* mode. */
-    private readonly isSortedDescending;
+    private get isSortedDescending();
     /** Get the HTML content of the header's sort icon */
-    readonly sortButtonHtml: string;
+    get sortButtonHtml(): string;
     /**
      * Toggles the sort order, looping between states `null => 'asc' => 'desc'`.
      *
-     * @emits change
+     * @vue-event change Emitted when the sort direction or column is changed.
+     * @vue-event-param change newDirection <ESortDir | null> - The new direction.
+     * @vue-event-param change sortedColumn <Column> - The column the sort is done on.
      * @returns nothing.
      */
     toggleSort(): void;

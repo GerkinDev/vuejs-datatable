@@ -11,7 +11,7 @@ export declare class TableType<TRow extends {}, TSource = TRow[], TFiltered = TR
     readonly handler: IHandler<TRow, TSource, TFiltered, TSorted, TPaged>;
     /** Settings object used to get various values for the datatable & other components */
     readonly settings: Settings;
-    readonly tableTypeConsumer: import("vue").VueConstructor<import("vue-property-decorator").Vue> & (new () => import("../components/mixins/table-type-consumer-factory").ITableTypeConsumer);
+    get tableTypeConsumer(): import("vue").VueConstructor<import("vue-property-decorator").Vue> & (new () => import("../components/mixins/table-type-consumer-factory").ITableTypeConsumer);
     /**
      * Creates a new datatable type, instanciating a new [[Settings]] object.
      *

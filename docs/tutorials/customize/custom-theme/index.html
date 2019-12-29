@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Custom template | vuejs-datatable</title>
+	<title>Custom theme | vuejs-datatable</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
+	<link rel="stylesheet" href="../../../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../../../assets/js/search.js" data-base="../../..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">vuejs-datatable</a>
+					<a href="../../../index.html" class="title">vuejs-datatable</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,7 +53,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 			</ul>
-			<h1> Custom template</h1>
+			<h1> Custom theme</h1>
 		</div>
 	</div>
 </header>
@@ -64,16 +64,15 @@
 				<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
 					<h2>Introduction</h2>
 				</a>
-				<p>You can customize the tempplate of the row by using the <code>default</code> <a href="https://vuejs.org/v2/guide/components-slots.html">slot</a> in the Datatable component.</p>
-				<p>This slot uses 2 variables:</p>
-				<ol>
-					<li><code>row</code>: The data object representing the current row.</li>
-					<li><code>columns</code>: The array of <a href="../classes/column.html">columns</a> of this datatable.</li>
-				</ol>
+				<p>You can customize the appearance of your table by merging a <a href="../interfaces/isettingsproperties.html">Settings Props object</a> in your <a href="../classes/tabletype.html">Table Type</a>, by using <a href="../classes/tabletype.html#mergesettings">TableType.mergeSettings</a>.</p>
+				<div class="alert alert-info">
+					<i class="fas fa-info-circle"></i>
+					The example bellow shows a configuration using <a href="https://fontawesome.com/" target="_blank">FontAwesome icons</a>.
+				</div>
 				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
 					<h2>Demo</h2>
 				</a>
-				<div id="demo-app" class="tutorial-custom-template"><div class="row"><div class="col-xs-12 form-inline"><div class="form-group"><label for="filter" class="sr-only">Filter</label><input type="text" class="form-control" v-model="filter" placeholder="Filter" @keydown="$event.stopImmediatePropagation()"></div></div><div class="col-xs-12 table-responsive"><datatable :columns="columns" :data="rows" :filter="filter" :per-page="10"><template scope="{ row }"><tr><td>{{ row.id }}</td><td>{{ row.user.username }}</td><td>{{ row.user.first_name }}</td><td>{{ row.user.last_name }}</td><td>{{ row.user.email }}</td><td>{{ row.address + ', ' + row.city + ', ' + row.state }}</td></tr><tr><td colspan="7"><p>Some cool content here!</p></td></tr></template></datatable><datatable-pager v-model="page"></datatable-pager></div></div></div>
+				<div id="demo-app" class="tutorial-custom-theme"><div class="row"><div class="col-xs-12 table-responsive"><datatable :columns="columns" :data="rows" :per-page="10"></datatable><datatable-pager v-model="page" type="short"></datatable-pager></div></div></div>
 				<a href="#code" id="code" style="color: inherit; text-decoration: none;">
 					<h2>Code</h2>
 				</a>
@@ -81,23 +80,52 @@
 					<h3>Typescript</h3>
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
-<span class="hljs-keyword">import</span> { TColumnsDefinition } <span class="hljs-keyword">from</span> <span class="hljs-string">'vuejs-datatable'</span>;
+<span class="hljs-keyword">import</span> { TColumnsDefinition, VuejsDatatableFactory } <span class="hljs-keyword">from</span> <span class="hljs-string">'vuejs-datatable'</span>;
 
 <span class="hljs-keyword">import</span> { IPeople } <span class="hljs-keyword">from</span> <span class="hljs-string">'../utils'</span>;
 
+VuejsDatatableFactory.useDefaultType( <span class="hljs-literal">false</span> )
+    .registerTableType( <span class="hljs-string">'datatable'</span>, <span class="hljs-function"><span class="hljs-params">tableType</span> =&gt;</span> tableType.mergeSettings( {
+        table: {
+            <span class="hljs-keyword">class</span>:   <span class="hljs-string">'table table-hover table-striped'</span>,
+            sorting: {
+                sortAsc:  <span class="hljs-string">'&lt;i class="fas fa-sort-amount-up" title="Sort ascending"&gt;&lt;/i&gt;'</span>,
+                sortDesc: <span class="hljs-string">'&lt;i class="fas fa-sort-amount-down" title="Sort descending"&gt;&lt;/i&gt;'</span>,
+                sortNone: <span class="hljs-string">'&lt;i class="fas fa-sort" title="Sort"&gt;&lt;/i&gt;'</span>,
+            },
+        },
+        pager: {
+            classes: {
+                pager:    <span class="hljs-string">'pagination text-center'</span>,
+                selected: <span class="hljs-string">'active'</span>,
+            },
+            icons: {
+                next:     <span class="hljs-string">'&lt;i class="fas fa-chevron-right" title="Next page"&gt;&lt;/i&gt;'</span>,
+                previous: <span class="hljs-string">'&lt;i class="fas fa-chevron-left" title="Previous page"&gt;&lt;/i&gt;'</span>,
+            },
+        },
+    } ) );
+
 <span class="hljs-comment">// Defined on window</span>
 <span class="hljs-keyword">declare</span> <span class="hljs-keyword">var</span> rows: IPeople[];
+
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Vue( {
     el:   <span class="hljs-string">'#demo-app'</span>,
     data: {
         filter:  <span class="hljs-string">''</span>,
         columns: [
-            { label: <span class="hljs-string">'ID'</span>, field: <span class="hljs-string">'id'</span>, align: <span class="hljs-string">'center'</span>, filterable: <span class="hljs-literal">false</span> },
+            { label: <span class="hljs-string">'id'</span>, field: <span class="hljs-string">'id'</span> },
             { label: <span class="hljs-string">'Username'</span>, field: <span class="hljs-string">'user.username'</span> },
             { label: <span class="hljs-string">'First Name'</span>, field: <span class="hljs-string">'user.first_name'</span> },
             { label: <span class="hljs-string">'Last Name'</span>, field: <span class="hljs-string">'user.last_name'</span> },
-            { label: <span class="hljs-string">'Email'</span>, field: <span class="hljs-string">'user.email'</span>, align: <span class="hljs-string">'right'</span>, sortable: <span class="hljs-literal">false</span> },
-            { label: <span class="hljs-string">'Address'</span>, representedAs: <span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${ row.address  }</span>, <span class="hljs-subst">${  row.city  }</span>, <span class="hljs-subst">${  row.state }</span>`</span>, align: <span class="hljs-string">'right'</span>, sortable: <span class="hljs-literal">false</span> },
+            { label: <span class="hljs-string">'Email'</span>, field: <span class="hljs-string">'user.email'</span> },
+            {
+                label:         <span class="hljs-string">'Address'</span>,
+                representedAs: <span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${ row.address  }</span>&lt;br /&gt;<span class="hljs-subst">${  row.city  }</span>, <span class="hljs-subst">${  row.state }</span>`</span>,
+                interpolate:   <span class="hljs-literal">true</span>,
+                sortable:      <span class="hljs-literal">false</span>,
+                filterable:    <span class="hljs-literal">false</span>,
+            },
         ] <span class="hljs-keyword">as</span> TColumnsDefinition&lt;IPeople&gt;,
         rows,
         page: <span class="hljs-number">1</span>,
@@ -109,77 +137,69 @@
 				</a>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"demo-app"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-12 form-inline"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"filter"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sr-only"</span>&gt;</span>Filter<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"filter"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Filter"</span> @<span class="hljs-attr">keydown</span>=<span class="hljs-string">"$event.stopImmediatePropagation()"</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-12 table-responsive"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">datatable</span> <span class="hljs-attr">:columns</span>=<span class="hljs-string">"columns"</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">"rows"</span> <span class="hljs-attr">:filter</span>=<span class="hljs-string">"filter"</span> <span class="hljs-attr">:per-page</span>=<span class="hljs-string">"10"</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"{ row }"</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.id }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.user.username }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.user.first_name }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.user.last_name }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.user.email }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>{{ row.address + ', ' + row.city + ', ' + row.state }}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">colspan</span>=<span class="hljs-string">"7"</span>&gt;</span>
-                            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Some cool content here!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-                        <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
-                <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">datatable-pager</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"page"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable-pager</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">datatable</span> <span class="hljs-attr">:columns</span>=<span class="hljs-string">"columns"</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">"rows"</span> <span class="hljs-attr">:per-page</span>=<span class="hljs-string">"10"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">datatable-pager</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"page"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"short"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">datatable-pager</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
-				<script src="../assets/js/rows.js" defer></script>
+				<script src="../../../assets/js/rows.js" defer></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" crossorigin="anonymous" defer></script>
-				<script src="../assets/js/vuejs-datatable.js" defer></script>
-				<link rel="stylesheet" href="../assets/css/additional-styles.css">
+				<script src="../../../assets/js/vuejs-datatable.js" defer></script>
+				<link rel="stylesheet" href="../../../assets/css/additional-styles.css">
 				<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-				<script src="../assets/js/tutorials/demo-custom-template.js" defer></script>
+				<script src="../../../assets/js/tutorials/demo-custom-theme.js" defer></script>
+				<hr>
+				<ul>
+					<li><a href="prebuilt-theme.html">Prebuilt theme</a></li>
+				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+						<a href="../../../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current ">
-						<a href="index.html">Tutorial index</a>
+						<a href="../../index.html">Tutorial index</a>
 						<ul>
 							<li class=" ">
-								<a href="bundlers.html">Configuring bundlers & common issues</a>
+								<a href="../../bundlers.html">Configuring bundlers & common issues</a>
 							</li>
 							<li class=" ">
-								<a href="basic.html">Basic table</a>
+								<a href="../../basic.html">Basic table</a>
 							</li>
 							<li class=" ">
-								<a href="pager-types.html">Pager types</a>
+								<a href="../../pager-types.html">Pager types</a>
 							</li>
 							<li class=" ">
-								<a href="ajax/index.html">Ajax table</a>
+								<a href="../../ajax/index.html">Ajax table</a>
 							</li>
 							<li class="current ">
-								<a href="custom-template.html">Custom template</a>
+								<a href="../index.html">Tables customization</a>
+								<ul>
+									<li class=" ">
+										<a href="../custom-template.html">Custom template</a>
+									</li>
+									<li class="current ">
+										<a href="index.html">Custom theme</a>
+										<ul>
+											<li class=" ">
+												<a href="prebuilt-theme.html">Prebuilt theme</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
 							</li>
 							<li class=" ">
-								<a href="custom-theme/index.html">Custom theme</a>
+								<a href="../../multiple-tables.html">Multiple tables</a>
 							</li>
 							<li class=" ">
-								<a href="multiple-tables.html">Multiple tables</a>
+								<a href="../../no-pager.html">No pager</a>
 							</li>
 							<li class=" ">
-								<a href="no-pager.html">No pager</a>
-							</li>
-							<li class=" ">
-								<a href="limit-rows-processing.html">Limit rows processing</a>
+								<a href="../../limit-rows-processing.html">Limit rows processing</a>
 							</li>
 						</ul>
 					</li>
@@ -256,7 +276,7 @@
 	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script src="../../../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../../../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

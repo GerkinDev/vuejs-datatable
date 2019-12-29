@@ -9,40 +9,40 @@ export declare class VueDatatablePager<TSub extends VueDatatablePager<TSub>> ext
     /**
      * The id of the associated [[VueDatatable]].
      *
-     * @vue Prop
+     * @vue-prop
      */
     readonly table: string;
     /**
      * The kind of the pager
      *
-     * @vue Prop
+     * @vue-prop
      */
     readonly type: EPagerType;
     /**
      * The number of pages visible on each side (only for [[EPageType.Abbreviated]])
      *
-     * @vue Prop
+     * @vue-prop
      */
     readonly sidesCount: number;
-    readonly sidesIndexes: number[];
+    get sidesIndexes(): number[];
     private ptableInstance;
-    readonly tableInstance: VueDatatable<any, any>;
+    get tableInstance(): VueDatatable<any, any>;
     /** Returns `true` if the pager has an associated [[VueDatatable]] with some rows. */
-    readonly show: boolean;
+    get show(): boolean;
     /** The total number of rows in the associated [[VueDatatable]]. */
-    private readonly totalRows;
+    private get totalRows();
     /** The total number of pages in the associated [[VueDatatable]]. */
     totalPages: number;
     /** The current page index in the associated [[VueDatatable]]. */
     page: number;
     /** HTML class on the wrapping `ul` around the pager buttons. */
-    readonly paginationClass: string;
+    get paginationClass(): string;
     /** HTML content of the previous page's button. */
-    readonly previousIcon: string;
+    get previousIcon(): string;
     /** HTML content of the next page's button. */
-    readonly nextIcon: string;
+    get nextIcon(): string;
     protected readonly tableType: TableType<any>;
-    readonly identifier: string;
+    get identifier(): string;
     /**
      * Try to link the pager with the table, or bind the `vuejs-datatable::ready` event to watch for new tables addition.
      */
@@ -50,9 +50,9 @@ export declare class VueDatatablePager<TSub extends VueDatatablePager<TSub>> ext
     /**
      * Link the pager with the table, assign to the table some properties, and trigger an event on the table.
      *
-     * @emits VueDatatable.vuejs-datatable::pager-bound
-     * @emits VueDatatable.vuejs-datatable::page-count-changed
-     * @emits VueDatatable.vuejs-datatable::page-changed
+     * @vue-event VueDatatable.vuejs-datatable::pager-bound
+     * @vue-event VueDatatable.vuejs-datatable::page-count-changed
+     * @vue-event VueDatatable.vuejs-datatable::page-changed
      * @param tableName - The name of the table to bind the pager with.
      * @returns `true` if the link is succesfull, or `false` if it could not find a table to associate with.
      */

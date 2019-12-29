@@ -103,6 +103,24 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Vue Model</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vuedatatableheader.html#direction" class="tsd-kind-icon">direction</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Vue Props</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vuedatatableheader.html#column" class="tsd-kind-icon">column</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Vue Events</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-event tsd-parent-kind-class"><a href="" class="tsd-kind-icon">change</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="vuedatatableheader.html#_attrs" class="tsd-kind-icon">$attrs</a></li>
@@ -124,8 +142,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="vuedatatableheader.html#_slots" class="tsd-kind-icon">$slots</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="vuedatatableheader.html#_ssrcontext" class="tsd-kind-icon">$ssr<wbr>Context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="vuedatatableheader.html#_vnode" class="tsd-kind-icon">$vnode</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="vuedatatableheader.html#column" class="tsd-kind-icon">column</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="vuedatatableheader.html#direction" class="tsd-kind-icon">direction</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="vuedatatableheader.html#tabletype" class="tsd-kind-icon">table<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="vuedatatableheader.html#vue" class="tsd-kind-icon">Vue</a></li>
 							</ul>
@@ -155,6 +171,82 @@
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Vue Model</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="direction" class="tsd-anchor"></a>
+					<h3>direction</h3>
+					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="../enums/esortdir.html" class="tsd-signature-type">ESortDir</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L19">components/vue-datatable-header/vue-datatable-header.ts:19</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The current sort direction for the current column.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Vue Props</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="column" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> column</h3>
+					<div class="tsd-signature tsd-kind-icon">column<span class="tsd-signature-symbol">:</span> <a href="column.html" class="tsd-signature-type">Column</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRow</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L26">components/vue-datatable-header/vue-datatable-header.ts:26</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The <a href="column.html">Column</a> instance this header is for.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Vue Events</h2>
+				<section class="tsd-panel tsd-member tsd-kind-event tsd-parent-kind-class">
+					<a name="" class="tsd-anchor"></a>
+					<h3>change</h3>
+					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">change<span class="tsd-signature-symbol">(</span>newDirection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ESortDir | null</span>, sortedColumn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Column</span><span class="tsd-signature-symbol">)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Emitted when the sort direction or column is changed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>newDirection: <span class="tsd-signature-type">ESortDir | null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The new direction.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>sortedColumn: <span class="tsd-signature-type">Column</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The column the sort is done on.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -210,7 +302,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from Vue.$datatables</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/global.d.ts#L9">global.d.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/global.d.ts#L9">global.d.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -393,52 +485,12 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="column" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> column</h3>
-					<div class="tsd-signature tsd-kind-icon">column<span class="tsd-signature-symbol">:</span> <a href="column.html" class="tsd-signature-type">Column</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TRow</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L26">components/vue-datatable-header/vue-datatable-header.ts:26</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The <a href="column.html">Column</a> instance this header is for.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>vue</dt>
-							<dd><p>Prop</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="direction" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> direction</h3>
-					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="../enums/esortdir.html" class="tsd-signature-type">ESortDir</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L19">components/vue-datatable-header/vue-datatable-header.ts:19</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The current sort direction for the current column.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>vue</dt>
-							<dd><p>Model</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="tabletype" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> table<wbr>Type</h3>
 					<div class="tsd-signature tsd-kind-icon">table<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="tabletype.html" class="tsd-signature-type">TableType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L33">components/vue-datatable-header/vue-datatable-header.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L33">components/vue-datatable-header/vue-datatable-header.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -475,7 +527,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L36">components/vue-datatable-header/vue-datatable-header.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L36">components/vue-datatable-header/vue-datatable-header.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -497,7 +549,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L41">components/vue-datatable-header/vue-datatable-header.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L41">components/vue-datatable-header/vue-datatable-header.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -519,7 +571,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L46">components/vue-datatable-header/vue-datatable-header.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L46">components/vue-datatable-header/vue-datatable-header.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -541,7 +593,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L51">components/vue-datatable-header/vue-datatable-header.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L51">components/vue-datatable-header/vue-datatable-header.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -937,18 +989,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/b5b30ae/src/components/vue-datatable-header/vue-datatable-header.ts#L69">components/vue-datatable-header/vue-datatable-header.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/GerkinDev/vuejs-datatable/blob/125ca58/src/components/vue-datatable-header/vue-datatable-header.ts#L71">components/vue-datatable-header/vue-datatable-header.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Toggles the sort order, looping between states <code>null =&gt; &#39;asc&#39; =&gt; &#39;desc&#39;</code>.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>emits</dt>
-									<dd><p>change</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 							<p>nothing.</p>
@@ -1032,10 +1079,10 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="vuedatatableheader.html#_vnode" class="tsd-kind-icon">$vnode</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="vuedatatableheader.html#column" class="tsd-kind-icon">column</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="vuedatatableheader.html#direction" class="tsd-kind-icon">direction</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">

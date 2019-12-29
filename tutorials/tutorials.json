@@ -20,15 +20,22 @@
             }
         }
     },
-    "custom-template": {
-        "title": "Custom template"
-    },
-    "custom-theme": {
-        "title": "Custom theme",
-        "description": "See how to set custom themes on your data tables.",
+    "customize": {
+        "title": "Tables customization",
+        "Description": "Adapt the plugin's appearance the way you want",
         "children": {
-            "prebuilt-theme": {
-                "title": "Prebuilt theme"
+            "custom-template": {
+                "title": "Custom template",
+                "description": "Change the way HTML is built"
+            },
+            "custom-theme": {
+                "title": "Custom theme",
+                "description": "See how to set custom themes on your data tables.",
+                "children": {
+                    "prebuilt-theme": {
+                        "title": "Prebuilt theme"
+                    }
+                }
             }
         }
     },

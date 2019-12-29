@@ -1,4 +1,5 @@
 import { Vue } from 'vue-property-decorator';
+import { TClassVal } from '../../utils';
 /**
  * This component is responsible of the display of a single table cell.
  */
@@ -11,9 +12,10 @@ export declare class VueDatatableCell<TRow extends {}> extends Vue {
      * The representation of the row in the current column.
      * You can customize the cell content by changing [[IColumnDefinition.field]] or [[IColumnDefinition.representedAs]]
      */
-    readonly content: string;
+    get content(): string;
     /** The styles to apply to this cell */
-    readonly cellStyles: {
+    get cellStyles(): {
         [key: string]: string;
     };
+    get cellClass(): TClassVal | undefined;
 }

@@ -1,6 +1,6 @@
 {
     "name": "vuejs-datatable",
-    "version": "2.0.0-alpha.6",
+    "version": "2.0.0-alpha.7",
     "description": "A Vue.js component for filterable, sortable, and paginated tables.",
     "main": "dist/vuejs-datatable.esm",
     "module": "dist/vuejs-datatable.esm",
@@ -106,8 +106,10 @@
         "tslint": "^5.20.0",
         "tslint-eslint-rules": "^5.4.0",
         "typedoc": "^0.15.0",
+        "typedoc-plugin-sourcefile-url": "^1.0.4",
         "typedoc-plugin-tutorials": "0.0.1-alpha.1",
-        "typescript": "^3.6.3",
+        "typedoc-plugin-vue": "git+https://github.com/GerkinDev/typedoc-plugin-vue.git#release",
+        "typescript": "^3.7.4",
         "vue": "^2.6.10",
         "vue-jest": "^3.0.5",
         "vue-template-compiler": "^2.6.10"

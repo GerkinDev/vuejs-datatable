@@ -1,6 +1,6 @@
 import { Path } from 'object-path';
 import Vue, { Component } from 'vue';
-import { EColAlign } from '../utils';
+import { EColAlign, TClassVal } from '../utils';
 /**
  * Description of a single column of a datatable.
  *
@@ -61,12 +61,18 @@ export interface IColumnDefinition<TRow> {
     /**
      * The base CSS class to apply to the header component.
      */
-    headerClass?: string;
+    headerClass?: TClassVal;
+    /**
+     * The CSS class or a function returning CSS class(es) for cells of this column.
+     */
+    class?: TClassVal | ((row: TRow) => TClassVal);
 }
 /**
  * A class responsible for handling a full column with its header.
  */
 export declare class Column<TRow extends {}> {
+    /** The CSS class or a function returning CSS class(es) for cells of this column. */
+    readonly class: TClassVal | ((row: TRow) => TClassVal) | null;
     /** The alignment direction of the cells in this column. */
     readonly align: EColAlign;
     /** The component used to represent this cell. */

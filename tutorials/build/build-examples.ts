@@ -33,9 +33,9 @@ const allOperations = dirs.map( ( dir, index ) => async () => {
 	const htmlFile = join( absDir, 'index.md' );
 	const [ scripts, mdTutoCst ] = await Promise.all( [
 		rollupize( jsFile ),
-		readFile( htmlFile, 'UTF-8' ) as Promise<string>,
+		readFile( htmlFile, 'utf-8' ),
 	] );
-	let mdTuto = mdTutoCst;
+	let mdTuto = mdTutoCst!;
 
 	ensureDirSync( tutorialOutDir );
 

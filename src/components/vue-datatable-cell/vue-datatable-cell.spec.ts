@@ -82,3 +82,37 @@ it( 'can change text alignment', () => {
 	} );
 	expect( wrapperR.element.style.textAlign ).toBe( 'right' );
 } );
+describe( 'Cells classes', () => {
+	it( 'should not use any class if the column `class` property is not set', () => {
+		const col = new Column<any>( { label: '' } );
+		const row = {};
+		const wrapper = mount( VueDatatableCell, {
+			localVue,
+			propsData: { column: col, row },
+		} );
+
+		expect( wrapper.vm.cellClass ).toBeUndefined();
+	} );
+	it( 'should call the class function if the column `class` property is set to a function', () => {
+		const classFn = jest.fn().mockReturnValue( ['hello', 'world'] );
+		const col = new Column<any>( { label: '', class: classFn } );
+		const row = {};
+		const wrapper = mount( VueDatatableCell, {
+			localVue,
+			propsData: { column: col, row },
+		} );
+
+		expect( wrapper.vm.cellClass ).toEqual( ['hello', 'world'] );
+		expect( classFn ).toHaveBeenCalledWith( row );
+	} );
+	it( 'should return column classes if not nil nor a function', () => {
+		const col = new Column<any>( { label: '', class: ['hello', 'world'] } );
+		const row = {};
+		const wrapper = mount( VueDatatableCell, {
+			localVue,
+			propsData: { column: col, row },
+		} );
+
+		expect( wrapper.vm.cellClass ).toEqual( ['hello', 'world'] );
+	} );
+} );
