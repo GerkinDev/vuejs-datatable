@@ -20,21 +20,21 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 	/**
 	 * The id of the associated [[VueDatatable]].
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: String, default: 'default' } ) public readonly table!: string;
 
 	/**
 	 * The kind of the pager
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: String, default: EPagerType.Long } ) public readonly type!: EPagerType;
 
 	/**
 	 * The number of pages visible on each side (only for [[EPageType.Abbreviated]])
 	 *
-	 * @vue Prop
+	 * @vue-prop
 	 */
 	@Prop( { type: Number, default: 2 } ) public readonly sidesCount!: number;
 
@@ -105,9 +105,9 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 	/**
 	 * Link the pager with the table, assign to the table some properties, and trigger an event on the table.
 	 *
-	 * @emits VueDatatable.vuejs-datatable::pager-bound
-	 * @emits VueDatatable.vuejs-datatable::page-count-changed
-	 * @emits VueDatatable.vuejs-datatable::page-changed
+	 * @vue-event VueDatatable.vuejs-datatable::pager-bound
+	 * @vue-event VueDatatable.vuejs-datatable::page-count-changed
+	 * @vue-event VueDatatable.vuejs-datatable::page-changed
 	 * @param tableName - The name of the table to bind the pager with.
 	 * @returns `true` if the link is succesfull, or `false` if it could not find a table to associate with.
 	 */

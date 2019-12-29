@@ -1,5 +1,6 @@
 <td
 	v-if="column.component"
+	:class="cellClass"
 	:style="cellStyles">
 	<component
 		:is="column.component"
@@ -9,10 +10,12 @@
 </td>
 <td
 	v-else-if="column.interpolate"
+	:class="cellClass"
 	:style="cellStyles"
 	v-html="content" />
 <td
 	v-else
+	:class="cellClass"
 	:style="cellStyles">
 	{{ content }}
 </td>

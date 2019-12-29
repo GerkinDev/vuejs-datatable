@@ -1,7 +1,7 @@
 import { get, Path } from 'object-path';
 import Vue, { Component } from 'vue';
 
-import { EColAlign, valueToString } from '../utils';
+import { EColAlign, TClassVal, valueToString } from '../utils';
 
 /**
  * Description of a single column of a datatable.
@@ -60,13 +60,19 @@ export interface IColumnDefinition<TRow> {
 	/**
 	 * The base CSS class to apply to the header component.
 	 */
-	headerClass?: string;
+	headerClass?: TClassVal;
+	/**
+	 * The CSS class or a function returning CSS class(es) for cells of this column.
+	 */
+	class?: TClassVal | ( ( row: TRow ) => TClassVal );
 }
 
 /**
  * A class responsible for handling a full column with its header.
  */
 export class Column<TRow extends {}> {
+	/** The CSS class or a function returning CSS class(es) for cells of this column. */
+	public readonly class!: TClassVal | ( ( row: TRow ) => TClassVal ) | null;
 	/** The alignment direction of the cells in this column. */
 	public readonly align!: EColAlign;
 	/** The component used to represent this cell. */
@@ -77,8 +83,8 @@ export class Column<TRow extends {}> {
 	private readonly representedAs!: ( ( row: TRow ) => string ) | null;
 	/** Set to true to convert the return value of `props.representedAs` to HTML. */
 	public readonly interpolate = false;
-	/** The alignment direction of the header of this column. */
 
+	/** The alignment direction of the header of this column. */
 	public readonly headerAlign!: EColAlign;
 	/** The header cell component of the column. */
 	public readonly headerComponent?: Vue;
@@ -94,6 +100,7 @@ export class Column<TRow extends {}> {
 
 	public constructor( props: IColumnDefinition<TRow> ) {
 		const defaultedProps = {
+			class: null,
 			component: null,
 			field: null,
 			representedAs: null,

@@ -13,6 +13,7 @@
 		<slot
 			v-for="(row, i) in displayedRows"
 			:row="row"
+			:index="i"
 			:columns="normalizedColumns">
 			<tr
 				:key="i"
@@ -33,6 +34,8 @@
 	<tfoot v-if="$slots.footer || $scopedSlots.footer">
 		<slot
 			name="footer"
-			:rows="displayedRows" />
+			:rows="displayedRows"
+			:columns="normalizedColumns"
+			:pagination="currentPageRange" />
 	</tfoot>
 </table>
