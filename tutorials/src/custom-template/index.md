@@ -67,9 +67,21 @@ This slot is displayed if the table do not contain any rows.
 
 ##### Example
 
+**In Vue.js 2.6.0+**:
+
 ```html
 <datatable>
-    <template name="no-result">
+    <template v-slot:no-results>
+        Nothing to see here
+    </template>
+</datatable>
+```
+
+**In versions before 2.6.0:**
+
+```html
+<datatable>
+    <template name="no-results">
         Nothing to see here
     </template>
 </datatable>
