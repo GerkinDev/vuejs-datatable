@@ -73,7 +73,7 @@
         "babel-preset-env": "^1.7.0",
         "chalk": "^3.0.0",
         "copyfiles": "2.2.0",
-        "cypress": "^3.4.1",
+        "cypress": "^4.0.0",
         "flush-promises": "^1.0.2",
         "fs-extra": "^8.1.0",
         "git-cz": "^4.0.0",
