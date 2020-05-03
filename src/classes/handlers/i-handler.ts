@@ -17,13 +17,13 @@ export interface IDisplayHandlerResult<TRow extends {}> {
 }
 
 export interface IDisplayHandlerParam<TRow extends {}, TSource, TFiltered, TSorted, TPaged> {
-	/** The original [[Datatable.data]] property of the datatable. */
+	/** The original [[VueDatatable.data]] property of the datatable. */
 	source: TRow[] | TSource;
-	/** The return value of [[Handler.filterHandler]]. */
+	/** The return value of [[IHandler.filterHandler]]. */
 	filtered: TRow[] | TFiltered;
-	/** The return value of [[Handler.sortHandler]]. */
+	/** The return value of [[IHandler.sortHandler]]. */
 	sorted: TRow[] | TSorted;
-	/** The return value of [[Handler.paginateHandler]]. */
+	/** The return value of [[IHandler.paginateHandler]]. */
 	paged: TRow[] | TPaged;
 }
 
@@ -44,12 +44,12 @@ export type TDisplayHandler<TRow, TSource = TRow[], TFiltered = TRow[], TSorted 
  * @tutorial ajax-handler
  */
 export interface IHandler<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TSorted = TRow[], TPaged = TRow[]> {
-	/** Filter the provided rows, checking if at least a cell contains one of the specified filters. It supports promises. Defaults to [[Handler.defaultFilterHandler]]. */
+	/** Filter the provided rows, checking if at least a cell contains one of the specified filters. It supports promises. Defaults to [[DefaultHandler.filterHandler]]. */
 	filterHandler: TFilterHandler<TRow, TSource, TFiltered>;
-	/** Sort the given rows depending on a specific column & sort order. It suports promises. Defaults to [[Handler.defaultSortHandler]].  */
+	/** Sort the given rows depending on a specific column & sort order. It suports promises. Defaults to [[DefaultHandler.sortHandler]].  */
 	sortHandler: TSortHandler<TRow, TFiltered, TSorted>;
-	/** Split the rows list to display the requested page index. It supports promises. Defaults to [[Handler.defaultPaginateHandler]]. */
+	/** Split the rows list to display the requested page index. It supports promises. Defaults to [[DefaultHandler.paginateHandler]]. */
 	paginateHandler: TPaginateHandler<TRow, TSorted, TPaged>;
-	/** Handler to post-process the paginated data, and determine which data to actually display. It supports promises. Defaults to [[Handler.defaultDisplayHandler]]. */
+	/** Handler to post-process the paginated data, and determine which data to actually display. It supports promises. Defaults to [[DefaultHandler.displayHandler]]. */
 	displayHandler: TDisplayHandler<TRow, TSource, TFiltered, TSorted, TPaged>;
 }

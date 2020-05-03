@@ -6,6 +6,7 @@ import { Column, IColumnDefinition } from '../../classes/column';
 import { ESortDir, IDisplayHandlerParam, IDisplayHandlerResult } from '../../classes/handlers';
 import { classValType, ensurePromise, mergeClassVals, namespaceEvent, TClassVal, TMaybePromise } from '../../utils';
 import { VueDatatablePager } from '../vue-datatable-pager/vue-datatable-pager';
+import { ITableTypeConsumer } from '../mixins/table-type-consumer-factory';
 
 import template from './vue-datatable.html';
 
@@ -25,15 +26,18 @@ export interface ITableContentParam<TRow extends {}> {
 	rows: TRow[];
 	totalRowCount: number;
 }
-export type TDataFn<TRow extends {}> = ( ( search: IDataFnParams<TRow> ) => ITableContentParam<TRow> );
+export type TDataFn<TRow extends {}> = ( ( search: IDataFnParams<TRow> ) => TMaybePromise<ITableContentParam<TRow>> );
 export type TColumnsDefinition<TRow extends {}> = Array<IColumnDefinition<TRow>>;
 
+/**
+ * Defines a pagination range. It orders to display the interval [`from`, `to`] in a list of a total of `of` items.
+ */
 interface IPageRange {
-	/** Index of the first element of the page. 1-indexed */
+	/** Index of the first element of the pagination to display. 1-indexed */
 	from: number;
-	/** Index of the last element of the page. 1-indexed */
+	/** Index of the last element of the pagination to display. 1-indexed */
 	to: number;
-	/** The total number of items */
+	/** The total number of items in the list. */
 	of: number;
 }
 
@@ -55,7 +59,7 @@ interface IPageRange {
 @Component( {
 	...template,
 } )
-export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>> extends Vue {
+export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>> extends Vue implements ITableTypeConsumer {
 	/**
 	 * The name of the datatable. It should be unique per page.
 	 *
@@ -117,7 +121,7 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 	/** Total number of rows contained by this data table. */
 	public totalRows = 0;
 
-	/** The total number of pages in the associated [[datatable]]. */
+	/** The total number of pages in the datatable. */
 	private get totalPages(): number | null {
 		if ( this.totalRows <= 0 || this.perPage <= 0 ) {
 			return 0;
@@ -159,7 +163,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 			.join( ' ' );
 	}
 
-	protected readonly tableType!: TableType<any>;
+	public readonly tableType!: TableType<any>;
+
 	public get handler() {
 		return this.tableType.handler;
 	}
@@ -296,8 +301,8 @@ export class VueDatatable<TRow extends {}, TSub extends VueDatatable<TRow, TSub>
 
 	/**
 	 * Starts the watching of following properties: `filter`, `perPage`, `page`, `sortBy`, `sortDir`.
-	 * When a change is detected, the component runs [[datatable#processRows]].
-	 * Because the watch is immediate, [[datatable#processRows]] is run immediately when this method is called.
+	 * When a change is detected, the component runs [[processRows]].
+	 * Because the watch is immediate, [[processRows]] is run immediately when this method is called.
 	 *
 	 * @see datatable#processRows
 	 * @see https://vuejs.org/v2/api/#vm-watch

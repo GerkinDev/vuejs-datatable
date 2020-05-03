@@ -26,7 +26,7 @@ export class VueDatatableHeader<TRow extends {}> extends Vue {
 	@Prop( { type: Object, required: true } ) private readonly column!: Column<TRow>;
 
 	/**
-	 * The [[TableType]] instance provided through [[TableTypeConsumer.tableType]].
+	 * The [[TableType]] instance provided through [[ITableTypeConsumer.tableType]].
 	 *
 	 * @vue Inject `table-type`
 	 */

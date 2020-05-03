@@ -4,7 +4,7 @@ This plugin is built to be as versatile as possible, and allow you to inject you
 
 ### Datatable
 
-> See the [Datatable API doc](../classes/vuedatatable.html)
+> See the [Datatable API doc](../../classes/vuedatatable.html)
 
 #### `footer` slot
 
@@ -15,8 +15,8 @@ This footer is displayed at the bottom of your data table.
 | Prop | Type   | Description |
 |------|--------|-------------|
 | `rows` | `TRow[]` | The list of rows currently displayed by the table. It only contains the current page. |
-| `columns` | [`Column[]`](../classes/column.html) | The columns of the table |
-| `pagination` | [`IPageRange`](../interfaces/ipagerange.html) | An object describing the current pagination status |
+| `columns` | [`Column[]`](../../classes/column.html) | The columns of the table |
+| `pagination` | [`IPageRange`](../../interfaces/ipagerange.html) | An object describing the current pagination status |
 
 ##### Example
 
@@ -40,7 +40,7 @@ This slot is used to render each rows. It completely overrides the default row r
 |------|--------|-------------|
 | `row` | `TRow` | The current row that it is appending to the table. |
 | `index` | `number` | The current index of the row in the displayed page. |
-| `columns` | `Column[]` | The [columns](../classes/column.html) of the table |
+| `columns` | `Column[]` | The [columns](../../classes/column.html) of the table |
 
 ##### Example
 

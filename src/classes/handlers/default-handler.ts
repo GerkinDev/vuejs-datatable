@@ -42,7 +42,7 @@ export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], T
 	/**
 	 * Sort the given rows depending on a specific column & sort order.
 	 *
-	 * @param filteredData - Data outputed from [[Handler.filterHandler]].
+	 * @param filteredData - Data outputed from [[filterHandler]].
 	 * @param sortColumn   - The column used for sorting.
 	 * @param sortDir      - The direction of the sort.
 	 * @returns the sorted rows.
@@ -73,7 +73,7 @@ export class DefaultHandler<TRow extends {}> implements IHandler<TRow, TRow[], T
 	/**
 	 * Split the rows list to display the requested page index.
 	 *
-	 * @param sortedData - Data outputed from [[Handler.sortHandler]].
+	 * @param sortedData - Data outputed from [[sortHandler]].
 	 * @param perPage    - The total number of items per page.
 	 * @param pageNumber - The index of the page to display.
 	 * @returns the requested page's rows.

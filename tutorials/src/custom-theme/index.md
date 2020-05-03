@@ -1,6 +1,6 @@
 ## Introduction
 
-You can customize the appearance of your table by merging a [Settings Props object](../interfaces/isettingsproperties.html) in your [Table Type](../classes/tabletype.html), by using [TableType.mergeSettings](../classes/tabletype.html#mergesettings).
+You can customize the appearance of your table by merging a [Settings Props object](../../../interfaces/isettingsproperties.html) in your [Table Type](../../../classes/tabletype.html), by using [TableType.mergeSettings](../../../classes/tabletype.html#mergesettings).
 
 <div class="alert alert-info">
     <i class="fas fa-info-circle"></i>

@@ -1,6 +1,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import { EPagerType, namespaceEvent } from '../../utils';
+import { ITableTypeConsumer } from '../mixins/table-type-consumer-factory';
 import { VueDatatable } from '../vue-datatable/vue-datatable';
 import { TableType } from './../../classes';
 
@@ -16,7 +17,7 @@ import template from './vue-datatable-pager.html';
 		PagerButton: VueDatatablePagerButton,
 	},
 } )
-export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue {
+export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue implements ITableTypeConsumer {
 	/**
 	 * The id of the associated [[VueDatatable]].
 	 *
@@ -32,7 +33,7 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 	@Prop( { type: String, default: EPagerType.Long } ) public readonly type!: EPagerType;
 
 	/**
-	 * The number of pages visible on each side (only for [[EPageType.Abbreviated]])
+	 * The number of pages visible on each side (only for [[EPagerType.Abbreviated]])
 	 *
 	 * @vue-prop
 	 */
@@ -79,7 +80,7 @@ export class VueDatatablePager<TSub extends VueDatatablePager<TSub>> extends Vue
 		return this.tableType.setting( 'pager.icons.next' );
 	}
 
-	protected readonly tableType!: TableType<any>;
+	public readonly tableType!: TableType<any>;
 	public get identifier() {
 		return this.tableType.id + '-pager';
 	}

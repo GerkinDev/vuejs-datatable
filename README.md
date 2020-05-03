@@ -18,8 +18,9 @@ E2E testing over Travis realized using
 
 [<img src="https://i1.wp.com/www.diogonunes.com/blog/wp-content/uploads/2016/07/browserstack-logo.png?resize=490%2C105" height="105.6" width="490.1" class="img-responsive"/>](https://www.browserstack.com/)
 
-[:point_right: Browse the documentation :books:](https://gerkindev.github.io/vuejs-datatable/)
 [:point_right: Check out the tutorials :books:](https://gerkindev.github.io/vuejs-datatable/tutorials/index.html)
+
+[:point_right: Browse the documentation :books:](https://gerkindev.github.io/vuejs-datatable/)
 
 ---
 
@@ -42,7 +43,7 @@ yarn add vuejs-datatable
 
 > The [*ESM*](https://medium.com/webpack/the-state-of-javascript-modules-4636d1774358) build (**E**cma**S**cript **M**odule) implies that your target browsers supports *ESM* **OR** you use a bundler, like [*webpack*](https://webpack.js.org/), [*rollup.js*](https://rollupjs.org/guide/en) or [*Parcel*](https://parceljs.org/).
 
-Import & register the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html) in Vue:
+Import & register the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/classes/datatablefactory.html) in Vue:
 
 ```js
 import Vue from 'vue';
@@ -51,7 +52,7 @@ import { VuejsDatatableFactory } from 'vuejs-datatable';
 Vue.use( VuejsDatatableFactory );
 ```
 
-Check out [*how to customize table types*](#customize-the-datatable) to see some usage of the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html) and the possible reasons not to use the default instance exported as `VuejsDatatableFactory`.
+Check out [*how to customize table types*](#customize-the-datatable) to see some usage of the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/classes/datatablefactory.html) and the possible reasons not to use the default instance exported as `VuejsDatatableFactory`.
 
 #### Use the IIFE build
 
@@ -68,7 +69,7 @@ In your HTML, load the *IIFE* build directly, if possible right before the closi
 </body>
 ```
 
-The *IIFE* build exposes the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/DatatableFactory.html) as the global `VuejsDatatable`. Check out [*how to customize table types*](#customize-the-datatable) to see some usage of the `DatatableFactory`.
+The *IIFE* build exposes the [*DatatableFactory*](https://gerkindev.github.io/vuejs-datatable/classes/datatablefactory.html) as the global `VuejsDatatable`. Check out [*how to customize table types*](https://gerkindev.github.io/vuejs-datatable/tutorials/customize/custom-theme/index.html) to see some usage of the `DatatableFactory`.
 
 ### Use the component
 
@@ -116,7 +117,7 @@ new Vue({
 
 ### Customize the datatable
 
-The DatatableFactory exposes several methods to allow you to add or modify other `datatable`-like components, with [custom styles](https://gerkindev.github.io/vuejs-datatable/tutorial-custom-theme.html) or [behavior](https://gerkindev.github.io/vuejs-datatable/tutorial-ajax-handler.html).
+The DatatableFactory exposes several methods to allow you to add or modify other `datatable`-like components, with [custom styles](https://gerkindev.github.io/vuejs-datatable/tutorials/customize/custom-theme/index.html) or [behavior](https://gerkindev.github.io/vuejs-datatable/tutorials/ajax/ajax-handler.html).
 
 ```js
 VuejsDatatable

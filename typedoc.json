@@ -4,11 +4,13 @@
     "readme": "README.md",
     "exclude": [
         "./**/*.spec.*",
+        "./**/__mocks__/**/*",
         "./dist/**/*",
         "./ci/**/*",
         "./docs/**/*",
         "./tutorials/**/*"
     ],
+    "listInvalidSymbolLinks": true,
 
     "tutorials-map": "./tutorials/tutorials.json",
     "tutorials-directory": "./tutorials/dist"

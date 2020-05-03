@@ -32,7 +32,7 @@ export class VueDatatablePagerButton extends Vue {
 	@Prop( { type: Number } ) private readonly value!: number | null;
 
 	/**
-	 * The [[TableType]] instance provided through [[TableTypeConsumer.tableType]].
+	 * The [[TableType]] instance provided through [[ITableTypeConsumer.tableType]].
 	 *
 	 * @vue Inject `table-type`
 	 */

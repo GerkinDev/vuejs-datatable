@@ -29,7 +29,7 @@ const Vue = require( 'vue' );
 import Vue from 'vue';
 ```
 
-Instead of targeting the right build in your code, configure your bundler to alias the `vue` module as your desired `vue` dist file. Check below for [how to alias `vue`](#alias-the-vue-module).
+Instead of targeting the right build in your code, configure your bundler to alias the `vue` module as your desired `vue` dist file. Check below for [how to alias `vue`](#alias-the-codevuecode-module).
 
 #### `You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.`
 

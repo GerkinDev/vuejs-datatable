@@ -1,7 +1,9 @@
 
 export type TMaybePromise<T> = T | Promise<T>;
 
+/** @ignore */
 const isPromise = <T>( value: any ): value is Promise<T> => value && typeof value.then === 'function';
+/** @ignore */
 export const ensurePromise = <T>( value: TMaybePromise<T> ): Promise<T> => {
 	if ( isPromise( value ) )  {
 		return value;
@@ -12,7 +14,9 @@ export const ensurePromise = <T>( value: TMaybePromise<T> ): Promise<T> => {
 
 export interface IDict<T> {[key: string]: T; }
 export type TClassVal = string | string[] | IDict<boolean>;
+/** @ignore */
 export const classValType: any[] = [ String, Array, Object ];
+/** @ignore */
 export const mergeClassVals = ( mainObj: TClassVal, ...objs: Array<TClassVal | null | undefined> ): string[] =>
 	Object.entries(
 		Object.assign(
@@ -34,7 +38,9 @@ const canonicalClassVals = ( classVal: TClassVal | null | undefined ): IDict<boo
 	return classVal || {};
 };
 
+/** @ignore */
 export const namespace = 'vue-datatable';
+/** @ignore */
 export const namespaceEvent = ( event: string ) => `${namespace}::${event}`;
 
 /**
@@ -57,6 +63,7 @@ export const enum EPagerType {
 	Long = 'long',
 }
 
+/** @ignore */
 export const valueToString = ( val: any ): string => {
 	if ( val === null || typeof val === 'undefined' ) {
 		return '';
