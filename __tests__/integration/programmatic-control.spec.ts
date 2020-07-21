@@ -2,18 +2,11 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
 
-import { inspect } from 'util';
 import { DatatableFactory } from '../../src/classes';
 import { VueDatatablePagerButton } from '../../src/components/vue-datatable-pager/vue-datatable-pager-button/vue-datatable-pager-button';
-import { VueDatatable } from '../../src/components/vue-datatable/vue-datatable';
+import { sampleData } from './sample-data';
 
 // tslint:disable: no-string-literal
-
-interface ISampleData {
-	id: number;
-	title: string;
-}
-const sampleData = require( './sample-data.json' ) as ISampleData[];
 describe( 'Pagination control', () => {
 	it( 'Should change page', async () => {
 		const localVue = createLocalVue();
@@ -23,7 +16,7 @@ describe( 'Pagination control', () => {
 		const datatable = mount( tableType.getTableDefinition(), { localVue, propsData: {
 			columns: [
 				{ label: 'ID', field: 'id' },
-				{ label: 'Title', field: 'title' },
+				{ label: 'Text', field: 'text' },
 			],
 			data: sampleData,
 			perPage: 5,

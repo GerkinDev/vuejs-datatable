@@ -22,7 +22,7 @@
         "test:unit:watch": "npm run test:unit -- --watch",
         "test:integration": "jest --config jest.integration.config.js",
         "test:integration:watch": "npm run test:integration -- --watch",
-        "test:e2e": "if [ -z \"$CYPRESS_KEY\" ]; then cypress run; else cypress run --record --key $CYPRESS_KEY; fi",
+        "test:e2e": "if [ -z \"$CYPRESS_KEY\" ]; then cypress run; else cypress run --record --key $CYPRESS_KEY --ci-build-id $TRAVIS_BUILD_ID; fi",
         "test:e2e:gui": "cypress open",
         "lint": "tslint --project tsconfig.json",
         "lint:fix": "tslint --fix --project tsconfig.json",
