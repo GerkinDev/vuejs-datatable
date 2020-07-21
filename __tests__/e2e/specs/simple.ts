@@ -74,59 +74,72 @@ describe( 'Basic table', () => {
 			.children()
 			.should( 'have.length', 1 );
 	} );
-	it( 'Sorting should reorder elements', () => {
-		cy.visit( '__tests__/e2e/mocks/simple.html' );
-		let prevCellVal: string | undefined;
+	describe( 'Sorting', () => {
+		it( 'should reorder text elements in ascending order', () => {
+			cy.visit( '__tests__/e2e/mocks/simple.html' );
+			let prevCellVal: string | undefined;
 
-		// Change sort
-		cy.get( 'th:nth-child(2)' )
-			.click();
+			// Change sort
+			cy.get( 'th:nth-child(2)' )
+				.click();
 
-		cy.get( appId + ' table tbody' )
-			.children()
-			.each( row => {
-				const cell = row.children()[1];
-				const cellVal = cell.innerHTML.trim();
-				if ( prevCellVal ) {
-					cy.wrap( cellVal ).should( 'be.above', prevCellVal );
-				}
-				prevCellVal = cellVal;
-			} ).then( () => {
-				prevCellVal = undefined;
-			} );
+			cy.get( appId + ' table tbody' )
+				.children()
+				.each( row => {
+					const cell = row.children()[1];
+					const cellVal = cell.innerHTML.trim();
+					if ( prevCellVal ) {
+						cy.wrap( cellVal.localeCompare( prevCellVal ) ).should( 'be.above', 0 );
+					}
+					prevCellVal = cellVal;
+				} ).then( () => {
+					prevCellVal = undefined;
+				} );
+		} );
+		it( 'should reorder text elements in descending order', () => {
+			cy.visit( '__tests__/e2e/mocks/simple.html' );
+			let prevCellVal: string | undefined;
 
-		// Reverse sort
-		cy.get( 'th:nth-child(2)' )
-			.click();
+			// Change sort
+			cy.get( 'th:nth-child(2)' )
+				.click()
+				.click();
 
-		cy.get( appId + ' table tbody' )
-			.children()
-			.each( row => {
-				const cell = row.children()[1];
-				const cellVal = cell.innerHTML.trim();
-				if ( prevCellVal ) {
-					cy.wrap( cellVal ).should( 'be.below', prevCellVal );
-				}
-				prevCellVal = cellVal;
-			} ).then( () => {
-				prevCellVal = undefined;
-			} );
+			cy.get( appId + ' table tbody' )
+				.children()
+				.each( row => {
+					const cell = row.children()[1];
+					const cellVal = cell.innerHTML.trim();
+					if ( prevCellVal ) {
+						cy.wrap( cellVal.localeCompare( prevCellVal ) ).should( 'be.below', 0 );
+					}
+					prevCellVal = cellVal;
+				} ).then( () => {
+					prevCellVal = undefined;
+				} );
+		} );
+		it( 'should reorder text elements in base order', () => {
+			cy.visit( '__tests__/e2e/mocks/simple.html' );
+			let prevRowId: number | undefined;
 
-		// Disable sort
-		cy.get( 'th:nth-child(2)' )
-			.click();
+			// Change sort
+			cy.get( 'th:nth-child(2)' )
+				.click()
+				.click()
+				.click();
 
-		cy.get( appId + ' table tbody' )
-			.children()
-			.each( row => {
-				const cell = row.children()[0];
-				const cellVal = cell.innerHTML.trim();
-				if ( prevCellVal ) {
-					cy.wrap( parseInt( cellVal, 10 ) ).should( 'be.above', parseInt( prevCellVal, 10 ) );
-				}
-				prevCellVal = cellVal;
-			} ).then( () => {
-				prevCellVal = undefined;
-			} );
-	} );
+			cy.get( appId + ' table tbody' )
+				.children()
+				.each( row => {
+					const cell = row.children()[0];
+					const rowId = parseInt( cell.innerHTML.trim(), 10 );
+					if ( prevRowId ) {
+						cy.wrap( rowId ).should( 'be.above', prevRowId );
+					}
+					prevRowId = rowId;
+				} ).then( () => {
+					prevRowId = undefined;
+				} );
+		} );
+	} )
 } );

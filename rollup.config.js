@@ -70,7 +70,6 @@ export const getPlugins = (iife, environment, moduleName) => {
 			},
 		} ),
 		typescript({
-			objectHashIgnoreUnknownHack: true,
 			clean: true,//environment === 'production',
 			include: _.compact( [
 				"src/*.ts",
