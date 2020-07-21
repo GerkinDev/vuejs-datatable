@@ -1,10 +1,11 @@
 import { Path } from 'object-path';
 import { Mixins } from 'vue-property-decorator';
+import { VueConstructor } from 'vue';
 
 import { DefaultHandler, IHandler, TDisplayHandler, TFilterHandler, TPaginateHandler, TSortHandler } from './handlers';
 import { DeepPartial, ISettingsProperties, Settings } from './settings';
 
-import { tableTypeConsumerFactory } from '../components/mixins/table-type-consumer-factory';
+import { tableTypeConsumerFactory, ITableTypeConsumer } from '../components/mixins/table-type-consumer-factory';
 import { VueDatatablePager } from '../components/vue-datatable-pager/vue-datatable-pager';
 import { VueDatatable } from '../components/vue-datatable/vue-datatable';
 
@@ -15,8 +16,8 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	/** Settings object used to get various values for the datatable & other components */
 	public readonly settings = new Settings();
 
-	public get tableTypeConsumer() {
-		return tableTypeConsumerFactory( this as any );
+	public get tableTypeConsumer(): VueConstructor<Vue> & ( new () => ITableTypeConsumer ) {
+		return tableTypeConsumerFactory( this );
 	}
 
 	/**
@@ -131,7 +132,7 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	 *
 	 * @returns a new factored [[VueDatatable]] constructor.
 	 */
-	public getTableDefinition(): typeof VueDatatable {
+	public getTableDefinition() {
 		// tslint:disable-next-line: max-classes-per-file
 		return Mixins( VueDatatable, this.tableTypeConsumer );
 	}
@@ -141,7 +142,7 @@ export class TableType<TRow extends {}, TSource = TRow[], TFiltered = TRow[], TS
 	 *
 	 * @returns a new factored [[VueDatatablePager]] constructor.
 	 */
-	public getPagerDefinition(): typeof VueDatatablePager {
+	public getPagerDefinition() {
 		// tslint:disable-next-line: max-classes-per-file
 		return Mixins( VueDatatablePager, this.tableTypeConsumer );
 	}

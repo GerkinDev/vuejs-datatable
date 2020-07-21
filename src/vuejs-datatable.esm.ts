@@ -4,7 +4,7 @@
  */
 
 import { DatatableFactory } from './classes';
-export * from './classes/handlers';
+export { ESortDir, DefaultHandler, IHandler } from './classes/handlers';
 
 export { TColumnsDefinition, TDataFn, IDataFnParams, ITableContentParam, VueDatatable } from './components/vue-datatable/vue-datatable';
 

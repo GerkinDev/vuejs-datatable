@@ -89,9 +89,9 @@ export class Column<TRow extends {}> {
 	/** The header cell component of the column. */
 	public readonly headerComponent?: Vue;
 	/** The base CSS class to apply to the header component. */
-	public readonly headerClass = '';
+	public readonly headerClass: string = '';
 	/** The label displayed in the header. */
-	public readonly label = '';
+	public readonly label: string = '';
 
 	/** Controls whetever this column can be sorted. */
 	public sortable!: boolean;

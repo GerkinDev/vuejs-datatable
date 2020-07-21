@@ -11,7 +11,7 @@ export interface ITableTypeConsumer extends Vue {
 }
 
 /** @ignore */
-export const tableTypeConsumerFactory = ( tableType: TableType<any> ): typeof Vue & ( new() => ITableTypeConsumer ) => {
+export const tableTypeConsumerFactory = <TTableType extends TableType<any, any, any, any, any>>( tableType: TTableType ): typeof Vue & ( new() => ITableTypeConsumer ) => {
 	/**
 	 * This mixin provide a [[TableType]] to inner components, which allow them to access [[Settings]] (through [[TableType.setting]])
 	 */

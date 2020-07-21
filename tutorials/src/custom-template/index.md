@@ -46,8 +46,9 @@ This slot is used to render each rows. It completely overrides the default row r
 
 ```html
 <datatable>
-    <template scope="{ row, columns }">
+    <template scope="{ row, columns, index }">
         <tr>
+            <td>Row n*{{ index + 1 }}</td>
             <td>{{ row.id }}</td>
             <td>{{ row.user.email }}</td>
             <td>{{ row.address + ', ' + row.city + ', ' + row.state }}</td>
