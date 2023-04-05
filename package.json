@@ -99,7 +99,7 @@
         "rollup-plugin-visualizer": "^4.0.1",
         "rollup-plugin-vue-template-compiler": "git+https://github.com/GerkinDev/rollup-plugin-vue-template-compiler.git",
         "semver": "^7.0.0",
-        "standard-version": "^8.0.0",
+        "standard-version": "^9.0.0",
         "ts-jest": "^26.0.0",
         "ts-node": "^8.3.0",
         "tsconfig": "^7.0.0",
