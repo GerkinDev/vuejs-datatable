@@ -71,7 +71,7 @@
         "babel-core": "^7.0.0-bridge.0",
         "babel-jest": "^30.0.0",
         "babel-preset-env": "^1.7.0",
-        "chalk": "^5.0.0",
+        "chalk": "^6.0.0",
         "copyfiles": "2.4.1",
         "cypress": "^15.0.0",
         "flush-promises": "^1.0.2",
